@@ -5,7 +5,9 @@ This is a work following Yi Zheng's work(https://hnbes3.ihep.ac.cn/HyperNews/get
 ## Install
 
 > mkdir -p $HOME/bes/DDPIPI
+
 > cd $HOME/bes/DDPIPI
+
 > git clone https://github.com/zhixing1996/DDPIPI.git
 
 ## Initialize BOSS
