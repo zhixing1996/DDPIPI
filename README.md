@@ -4,15 +4,15 @@ This is a work following Yi Zheng's work(https://hnbes3.ihep.ac.cn/HyperNews/get
 
 ## Install
 
-> mkdir -p $HOME/bes/DDPIPI
+> mkdir -p $HOME/bes
 
-> cd $HOME/bes/DDPIPI
+> cd $HOME/bes
 
 > git clone https://github.com/zhixing1996/DDPIPI.git
 
 ## Initialize BOSS
 
-BOSS version 6.6.4.p01(Login with lxslc7 and use hep_container shell SL5 to enter lxslc5)
+BOSS version 6.6.4.p01(Login with lxslc7 and use hep_container shell SL5 to enter lxslc5, login SL5 after installing as well as pushing codes)
 
 This is only need to be done for the first time after clone the code:
 
