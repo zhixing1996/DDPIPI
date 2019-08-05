@@ -10,9 +10,17 @@ This is a work following Yi Zheng's work(https://hnbes3.ihep.ac.cn/HyperNews/get
 
 > git clone https://github.com/zhixing1996/DDPIPI.git
 
+## Login container
+
+Login with lxslc7 and use hep_container shell SL5 to enter lxslc5
+
+> NOTE: *****Login SL5 after installing as well as pushing codes(git version problem)*****
+
+> source login-container.sh
+
 ## Initialize BOSS
 
-BOSS version 6.6.4.p01(Login with lxslc7 and use hep_container shell SL5 to enter lxslc5, login SL5 after installing as well as pushing codes)
+BOSS version 6.6.4.p01
 
 This is only need to be done for the first time after clone the code:
 
@@ -22,7 +30,7 @@ This is only need to be done for the first time after clone the code:
  
 - Fork the code with your personal github ID. See [details](https://help.github.com/articles/fork-a-repo/)
  
-> git clone https://github.com/zhixing1996/DDPIPI.git .
+> git clone https://github.com/zhixing1996/DDPIPI.git
  
 - Make your change, commit and push
  
