@@ -2,13 +2,13 @@
 
 This is a work following Yi Zheng's work(https://hnbes3.ihep.ac.cn/HyperNews/get/paper224.html)
 
-## Install
+## Install v0.1
 
-> mkdir -p $HOME/bes
+> mkdir -p $HOME/bes/DDPIPI
 
-> cd $HOME/bes
+> cd $HOME/bes/DDPIPI
 
-> git clone https://github.com/zhixing1996/DDPIPI.git
+> git clone https://github.com/zhixing1996/DDPIPI.git v0.1
 
 ## Login container
 
