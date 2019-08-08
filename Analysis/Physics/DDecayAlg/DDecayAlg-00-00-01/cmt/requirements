@@ -1,0 +1,12 @@
+package DDecayAlg
+
+use BesPolicy BesPolicy-*
+use GaudiInterface GaudiInterface-* External
+
+use BesROOT      BesROOT-00-*     External
+use ReconEvent   ReconEvent-*  Event
+use ParticleID   ParticleID-*  Analysis
+use VertexFit    VertexFit-*   Analysis
+
+apply_pattern component_library
+library DDecayAlg  *.cxx
