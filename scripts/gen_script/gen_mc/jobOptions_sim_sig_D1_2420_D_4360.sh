@@ -32,7 +32,7 @@ do
     echo "KKMC.BeamEnergySpread=0.0011;" >> $SIM_NAME
     echo "KKMC.NumberOfEventPrinted=10;" >> $SIM_NAME
     echo "KKMC.GeneratePsi4415=true;" >> $SIM_NAME
-    echo "KKMC.ResParameterPs6 = {4.358, 74e-3, 0.47e-6}" >> $SIM_NAME
+    echo "KKMC.ResParameterPs6 = {4.358, 74e-3, 0.47e-6};" >> $SIM_NAME
     echo "KKMC.ParticleDecayThroughEvtGen = true;" >> $SIM_NAME
     echo "KKMC.ThresholdCut = 4.32;" >> $SIM_NAME
     echo "KKMC.RadiationCorrection = 1;" >> $SIM_NAME
@@ -41,8 +41,8 @@ do
     echo "" >> $SIM_NAME
     echo "//**************job options for EvtGen************************" >> $SIM_NAME
     echo "#include \"\$BESEVTGENROOT/share/BesEvtGen.txt\"" >> $SIM_NAME
-    echo "EvtDecay.userDecayTableName = \"$HOME/bes/DDPIPI/v0.1/run/gen_mc/decay/psi4415_D1_2420_D.dec\";" >> $SIM_NAME
-    echo "EvtDecay.PdtTableDir = \"mypdt.table\";" >> $SIM_NAME
+    echo "EvtDecay.userDecayTableName = \"$HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/decay/psi4415_D1_2420_D.dec\";" >> $SIM_NAME
+    echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/decay/mypdt.table\";" >> $SIM_NAME
     echo "EvtDecay.statDecays = true;" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "//**************job options for random number************************" >> $SIM_NAME
