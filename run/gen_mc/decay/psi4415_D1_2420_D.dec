@@ -1,0 +1,37 @@
+Alias A_D+  D+
+Alias A_D-  D-
+Alias A_D_1+ D_1+
+Alias A_D_1- D_1-
+
+Decay  psi(4415)
+1    A_D_1-   D+   HELAMP 0 0 1 0 0 0 ;
+1    D_1-   A_D+   HELAMP 0 0 1 0 0 0 ;
+1    A_D_1+   D-   HELAMP 0 0 1 0 0 0 ;
+1    D_1+   A_D-   HELAMP 0 0 1 0 0 0 ;
+Enddecay
+
+Decay A_D_1+
+1.00  A_D+   pi+  pi-  PHSP;
+Enddecay
+
+Decay A_D_1-
+1.00  A_D-   pi+  pi-  PHSP;
+Enddecay
+
+Decay D_1+
+1.00  D+   pi+  pi-  PHSP;
+Enddecay
+
+Decay D_1-
+1.00  D-   pi+  pi-  PHSP;
+Enddecay
+
+Decay A_D+
+1.00  K-  pi+  pi+     D_DALITZ;
+Enddecay
+
+Decay A_D-
+1.00  K+  pi-  pi-     D_DALITZ;
+Enddecay
+
+End
