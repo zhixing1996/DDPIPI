@@ -5,20 +5,23 @@ mkdir job.out
 rm -rf job.err
 mkdir job.err
 
-INPUT=1
-UPLIMIT=1
-
-SIM="jobOptions_sim_sig_D1_2420_D_4360"
-REC="jobOptions_rec_sig_D1_2420_D_4360"
-
-SUB="jobOptions_sub_sig_D1_2420_D_4360"
+SIM=$1
+REC=$2
+SUB=$3
+INPUT=$4
+UPLIMIT=$5
+echo "./subjectSimRec.sh [SIM] [REC] [SUM] [NUM1] [NUM2]"
+echo "[SIM]: name of sim scripts"
+echo "[REC]: name of rec scripts"
+echo "[SUB]: name of sub scripts"
+echo "[NUM1]: the minimum number range of job subjected"
+echo "[NUM2]: the maximum number range of job subjected"
 
 # subject jobs
 echo "subject jobs"
 
 until [ $INPUT -gt $UPLIMIT ]
 do
-
     
     SIM_NAME="boss.exe "$SIM"_"$INPUT".txt"
     REC_NAME="boss.exe "$REC"_"$INPUT".txt"
@@ -33,7 +36,7 @@ do
     
     echo $SUB_NAME" done!"
 
-    hep_sub -g physics $SUB_NAME -o ./job.out -e ./job.err
+    # hep_sub -g physics $SUB_NAME -o ./job.out -e ./job.err
 
     INPUT=$(($INPUT+1))
   

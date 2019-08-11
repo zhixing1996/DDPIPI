@@ -4,8 +4,8 @@
 #include "GaudiKernel/Algorithm.h"
 #include "GaudiKernel/DeclareFactoryEntries.h"
 #include "GaudiKernel/LoadFactoryEntries.h"
-#include "GaudiKernel/NTuple.h"
 #include "GaudiKernel/INTupleSvc.h"
+#include "GaudiKernel/NTuple.h"
 #include "GaudiKernel/ISvcLocator.h"
 #include "GaudiKernel/PropertyMgr.h"
 #include "GaudiKernel/SmartDataPtr.h"
@@ -109,6 +109,7 @@ class DDecayAlg : public Algorithm {
         int n_othershws;
         double rawp4_othershw[50][4];
         double mDcand;
+        int n_count;
 
         // Ntuple info
         NTuple::Tuple* m_tuple;
@@ -135,6 +136,7 @@ class DDecayAlg : public Algorithm {
         NTuple::Matrix<double> m_rawp4_otherMdcKaltrk;
         NTuple::Item<int> m_n_othershws;
         NTuple::Matrix<double> m_rawp4_othershw;
+        NTuple::Item<int> m_n_count;
 
         // functions
         void clearVariables();

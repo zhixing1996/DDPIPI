@@ -50,7 +50,7 @@ StatusCode DDecayAlg::initialize() {
     NTuplePtr nt(ntupleSvc(), "FILE1/STD");
     if (nt) m_tuple = nt;
     else {
-        m_tuple = ntupleSvc()->book("FIFLE1/STD", CLID_ColumnWiseTuple, "Single tag D decay");
+        m_tuple = ntupleSvc()->book("FILE1/STD", CLID_ColumnWiseTuple, "Single tag D decay");
         if (m_tuple) {
             status = m_tuple->addItem("run", m_runNo);
             status = m_tuple->addItem("evt", m_evtNo);
@@ -61,6 +61,7 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple->addIndexedItem("DtrkP4", m_n_trkD, 4, m_p4_Dtrk);
             status = m_tuple->addItem("nshwD", m_n_shwD, 0, 2); 
             status = m_tuple->addIndexedItem("DshwP4_raw", m_n_shwD, 4, m_rawp4_Dshw);
+            status = m_tuple->addIndexedItem("DshwP4", m_n_shwD, 4, m_p4_Dshw);
             status = m_tuple->addItem("decay mode", m_mode);
             status = m_tuple->addItem("type of charm quark", m_charm);
             status = m_tuple->addItem("chi2 of vertex fit", m_chi2_vf);
@@ -70,6 +71,7 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple->addIndexedItem("otherMdcKalTrkP4_raw", m_n_othertrks, 6, m_rawp4_otherMdcKaltrk);
             status = m_tuple->addItem("number of other showers", m_n_othershws, 0, 50);
             status = m_tuple->addIndexedItem("otherShwP4_raw", m_n_othershws, 4, m_rawp4_othershw);
+            status = m_tuple->addItem("Multi-counting D in one event", m_n_count);
 
             if (m_isMonteCarlo) {
                 status = m_tuple->addItem("indexmc", m_idxmc, 0, 100);
@@ -118,12 +120,13 @@ StatusCode DDecayAlg::execute() {
 
     // record all McTruth info
     if (runNo < 0 && m_isMonteCarlo) stat_McTruth = saveMcTruthInfo();
+    if (runNo < 0 && stat_McTruth == false) std::cout << "There are some errors when recording McTruth Info in event: " << evtNo << std::endl;
 
     // use DTagTool
-    if (stat_McTruth) stat_DTagTool = useDTagTool();
+    stat_DTagTool = useDTagTool();
+    if (stat_DTagTool == false) std::cout << "Please check chi2_vf/kf, other trks/shws or no wanted D in run, event: " << runNo << ", " << evtNo << std::endl;
 
-    if (stat_McTruth && stat_DTagTool) return StatusCode::SUCCESS;
-    else return StatusCode::FAILURE;
+    return StatusCode::SUCCESS;
 }
 
 StatusCode DDecayAlg::finalize() {
@@ -210,6 +213,8 @@ void DDecayAlg::clearVariables() {
             m_rawp4_othershw[i][j] = -999;
         }
     }
+    n_count = 0;
+    m_n_count = 0;
 
     // judgement variables
     stat_McTruth = false;
@@ -338,17 +343,23 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
     for (; dtag_iter != dtag_iter_end; dtag_iter++) {
         // whether to use pid
         if (m_pid) {
-            if ((*dtag_iter)->type() !=1 || (*dtag_iter)->decayMode() != mode) continue; // type = 1: PID has been performed, type = 0, PID hasn't been performed
+            if ((*dtag_iter)->type() !=1 || (*dtag_iter)->decayMode() != mode) {
+                continue; // type = 1: PID has been performed, type = 0, PID hasn't been performed
+            }
         }
         else {
-            if ((*dtag_iter)->decayMode() != mode) continue;
+            if ((*dtag_iter)->decayMode() != mode) {
+                continue;
+            }
         }
 
         if (m_debug) std::cout << " --> dtag found : " << mode << std::endl;
-        if (m_debug) std::cout<<" D charm number: " << (*dtag_iter)->charm() << std::endl; // (*dtag_iter)->charm() = 1: c, -1: cbar
+        if (m_debug) std::cout<< " D charm number: " << (*dtag_iter)->charm() << std::endl; // (*dtag_iter)->charm() = 1: c, -1: cbar
 
         // very broad mass window requirement
-        if (fabs((*dtag_iter)->mass() - mDcand) > 0.07) continue;
+        if (fabs((*dtag_iter)->mass() - mDcand) > 0.07) {
+            continue;
+        }
 
         SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
         SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
@@ -381,7 +392,7 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         // to check the vector in each dtag item
         if (m_debug) {
             double index_vector=0;
-            std::cout << "total: " << vwtrkpara_charge.size() << std::endl;
+            std::cout << "total cahrged: " << vwtrkpara_charge.size() << std::endl;
             while(index_vector < vwtrkpara_charge.size()) {
                 std::cout << " Add charged tracks: " << index_vector 
                 << " with charge: " << vwtrkpara_charge[index_vector].charge()
@@ -391,11 +402,15 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
             }
         }
 
-        if (vwtrkpara_charge.size() != n_trkD) continue;
+        if (vwtrkpara_charge.size() != n_trkD) {
+            continue;
+        }
 
         // do vertex fit
         chi2_vf = fitVertex(vwtrkpara_charge, birth);
-        if (chi2_vf > 100) continue;
+        if (chi2_vf > 100) {
+            continue;
+        }
 
         if (m_debug) std::cout << " vertex fitting chisq: " << chi2_vf << std::endl;
         if (m_debug) std::cout << " vertex fitting vertex: " << birth.vx() << std::endl;
@@ -414,10 +429,10 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         // to check the vector in each dtag item
         if (m_debug) {
             double index_vector=0;
-            std::cout << "total: " << vwtrkpara_photon.size() << std::endl;
-            while(index_vector < vwtrkpara_charge.size()) {
+            std::cout << "total neutral: " << vwtrkpara_photon.size() << std::endl;
+            while(index_vector < vwtrkpara_photon.size()) {
                 std::cout << " Add neutral tracks: " << index_vector 
-                << " with momentum: " << vwtrkpara_charge[index_vector].p() << std::endl;
+                << " with momentum: " << vwtrkpara_photon[index_vector].p() << std::endl;
                 index_vector++;
             }
         }
@@ -432,7 +447,10 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         stat_saveOthershws = saveOthershws();
 
         // record variables
-        if (fabs(chi2_vf) < 100 && fabs(chi2_kf) < 999 && stat_saveOthertrks && stat_saveOthershws) recordVariables();
+        if (fabs(chi2_vf) < 100 && fabs(chi2_kf) < 999 && stat_saveOthertrks && stat_saveOthershws) {
+            recordVariables();
+            n_count++;
+        }
     }
     if (fabs(chi2_vf) < 100 && fabs(chi2_kf) < 999 && stat_saveOthertrks && stat_saveOthershws) return true;
     else return false;
@@ -469,32 +487,32 @@ double DDecayAlg::fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon
     if (m_debug) std::cout << " to start add tracks to KF fit " << std::endl;
 
     int count = 0;
-    Vint Dlist;
-    Vint Gamlist;
-    Dlist.clear();
-    Gamlist.clear();
+    Vint D1list;
+    Vint Pi0list;
+    D1list.clear();
+    Pi0list.clear();
     while (count < vwtrkpara_charge.size()) {
         kmfit->AddTrack(count, vwtrkpara_charge[count]);
-        Dlist.push_back(count);
+        D1list.push_back(count);
         count++;
     }
     while (count < vwtrkpara_charge.size() + vwtrkpara_photon.size()) {
         kmfit->AddTrack(count, vwtrkpara_photon[count - vwtrkpara_charge.size()]);
-        Gamlist.push_back(count);
-        Dlist.push_back(count);
+        Pi0list.push_back(count);
+        D1list.push_back(count);
         count++;
     }
 
     if (m_debug) std::cout << " finished KF add Tracks ... " << std::endl;
 
     double kf_chi2 = 999;
-    kmfit->AddResonance(0, mDcand, Dlist);
-    for (int i = 0; i < (Gamlist.size()/2); i++) kmfit->AddResonance(i + 1, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
+    kmfit->AddResonance(0, mDcand, D1list);
+    for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(i + 1, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
 
     if (!kmfit->Fit(0)) return 999;
     if (!kmfit->Fit()) return 999;
     else {
-        kf_chi2 = kmfit->chisq()/(1 + Gamlist.size()/2); // chi2/ndf, 1: constration of mD, Gamlist.size()/2: constration of Pi0
+        kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
         if (m_debug) std::cout << "  " << mode << "  fit chisq:   " << kf_chi2 << std::endl;
         for (int i = 0; i < n_trkD; i++) {
             for (int j = 0; j < 4; j++) p4_Dtrk[i][j] = kmfit->pfit(i)[j];
@@ -503,7 +521,7 @@ double DDecayAlg::fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon
         for (int i = 0; i < n_shwD; i++) {
             for (int j = 0; j < 4; j++) p4_Dshw[i][j] = kmfit->pfit(i + n_trkD)[j];
         }
-        if (m_debug) std::cout << "  recording the four momentum of other showers  and tracks " << std::endl;
+        if (m_debug) std::cout << " recorded the four momentum of showers and tracks in tagged D " << std::endl;
     }
     return kf_chi2;
 }
@@ -549,7 +567,7 @@ bool DDecayAlg::saveOthershws() {
     SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
     SmartDataPtr<EvtRecEvent> evtRecEvent(eventSvc(), "/Event/EvtRec/EvtRecEvent");
     if (m_debug) std::cout << " total showers : " << evtRecEvent->totalNeutral() <<endl;
-    if (m_debug) std::cout << " other shower numbers : " << othershowers.size() << "for mode" << mode << std::endl;
+    if (m_debug) std::cout << " other shower numbers : " << othershowers.size() << " for mode " << mode << std::endl;
     DTagTool dtagTool;
     // to find the good photons in the othershowers list
     for (int i = 0; i < othershowers.size(); i++) {
@@ -563,7 +581,7 @@ bool DDecayAlg::saveOthershws() {
         n_othershws++;
         if (n_othershws >= 50) return false;
     }
-    if (m_debug) std::cout << " recorded " << n_othershws << " good showers " << std::endl;
+    if (m_debug) std::cout << " recorded " << n_othershws << " other good showers " << std::endl;
     if (n_othershws >= 50) return false;
     else return true;
 }
@@ -608,6 +626,7 @@ void DDecayAlg::recordVariables() {
     for (int i = 0; i < m_n_othershws; i++) {
         for (int j = 0; j < 4; j++) m_rawp4_othershw[i][j] = m_rawp4_othershw[i][j];
     }
+    m_n_count = n_count;
 
     m_tuple->write();
 

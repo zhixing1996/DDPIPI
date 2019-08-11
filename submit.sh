@@ -12,6 +12,7 @@ usage() {
     printf "\nOPTIONS\n"
     printf "\n\t%-9s  %-40s\n" "0.1"   "[run on signal MC of psi(4415)->D1_(2420)D, D1_(2420)->DPIPI @4360MeV]"
     printf "\n\t%-9s  %-40s\n" "0.1.1" "Simulation & Reconstruction -- generate signal MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.1.2" "Single D tag -- run on signal MC sample"
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -46,8 +47,17 @@ case $option in
            ./jobOptions_sim_sig_D1_2420_D_4360.sh
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_rec_sig_D1_2420_D_4360.sh ./
            ./jobOptions_rec_sig_D1_2420_D_4360.sh
-           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_sub_sig_D1_2420_D_4360.sh ./
-           ./jobOptions_sub_sig_D1_2420_D_4360.sh
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectSimRec.sh ./
+           ./subjectSimRec.sh jobOptions_sim_sig_D1_2420_D_4360 jobOptions_rec_sig_D1_2420_D_4360 subjectSimRec 0 99
+           ;;
+
+    0.1.2) echo "Single D tag -- run on signal MC sample..."
+           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4360
+           cd scripts/sigMC/D1_2420/4360/jobs_sig
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
+           ./makeJob.csh Sig_D1_2420_D_4360 20 20 . sigMC D1_2420 4360
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           ./subjectAna.sh Sig_D1_2420_D_4360 0 99
            ;;
 
 esac
