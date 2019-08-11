@@ -17,7 +17,7 @@ do
     
     ANA_NAME=$ANA"_"$INPUT".txt"
 
-    # boss.conder $ANA_NAME -o ./job.out -e ./job.err
+    boss.conder $ANA_NAME -o ./job.out -e ./job.err
 
     echo $ANA_NAME" done!"
 

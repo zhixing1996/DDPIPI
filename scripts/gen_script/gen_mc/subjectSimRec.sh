@@ -36,7 +36,7 @@ do
     
     echo $SUB_NAME" done!"
 
-    # hep_sub -g physics $SUB_NAME -o ./job.out -e ./job.err
+    hep_sub -g physics $SUB_NAME -o ./job.out -e ./job.err
 
     INPUT=$(($INPUT+1))
   
