@@ -52,26 +52,26 @@ StatusCode DDecayAlg::initialize() {
     else {
         m_tuple = ntupleSvc()->book("FILE1/STD", CLID_ColumnWiseTuple, "Single tag D decay");
         if (m_tuple) {
-            status = m_tuple->addItem("run", m_runNo);
-            status = m_tuple->addItem("evt", m_evtNo);
+            status = m_tuple->addItem("runNo", m_runNo);
+            status = m_tuple->addItem("evtNo", m_evtNo);
             status = m_tuple->addItem("flag1", m_flag1);
             status = m_tuple->addItem("beamE", m_beamE);
-            status = m_tuple->addItem("ntrkD", m_n_trkD, 0, 5); // number of members should locates in 0~5
-            status = m_tuple->addIndexedItem("DtrkP4_raw", m_n_trkD, 4, m_rawp4_Dtrk); // four members array
-            status = m_tuple->addIndexedItem("DtrkP4", m_n_trkD, 4, m_p4_Dtrk);
-            status = m_tuple->addItem("nshwD", m_n_shwD, 0, 2); 
-            status = m_tuple->addIndexedItem("DshwP4_raw", m_n_shwD, 4, m_rawp4_Dshw);
-            status = m_tuple->addIndexedItem("DshwP4", m_n_shwD, 4, m_p4_Dshw);
-            status = m_tuple->addItem("decay mode", m_mode);
-            status = m_tuple->addItem("type of charm quark", m_charm);
-            status = m_tuple->addItem("chi2 of vertex fit", m_chi2_vf);
-            status = m_tuple->addItem("chi2 of kinematic fit", m_chi2_kf);
-            status = m_tuple->addItem("number of other tracks", m_n_othertrks, 0, 20);
-            status = m_tuple->addIndexedItem("otherMdcTrkP4_raw", m_n_othertrks, 6, m_rawp4_otherMdctrk);
-            status = m_tuple->addIndexedItem("otherMdcKalTrkP4_raw", m_n_othertrks, 6, m_rawp4_otherMdcKaltrk);
-            status = m_tuple->addItem("number of other showers", m_n_othershws, 0, 50);
-            status = m_tuple->addIndexedItem("otherShwP4_raw", m_n_othershws, 4, m_rawp4_othershw);
-            status = m_tuple->addItem("Multi-counting D in one event", m_n_count);
+            status = m_tuple->addItem("n_trkD", m_n_trkD, 0, 5); // number of members should locates in 0~5
+            status = m_tuple->addIndexedItem("rawp4_Dtrk", m_n_trkD, 4, m_rawp4_Dtrk); // four members array
+            status = m_tuple->addIndexedItem("p4_Dtrk", m_n_trkD, 4, m_p4_Dtrk);
+            status = m_tuple->addItem("n_shwD", m_n_shwD, 0, 2); 
+            status = m_tuple->addIndexedItem("rawp4_Dshw", m_n_shwD, 4, m_rawp4_Dshw);
+            status = m_tuple->addIndexedItem("p4_Dshw", m_n_shwD, 4, m_p4_Dshw);
+            status = m_tuple->addItem("mode", m_mode);
+            status = m_tuple->addItem("charm", m_charm);
+            status = m_tuple->addItem("chi2_vf", m_chi2_vf);
+            status = m_tuple->addItem("chi2_kf", m_chi2_kf);
+            status = m_tuple->addItem("n_othertrks", m_n_othertrks, 0, 20);
+            status = m_tuple->addIndexedItem("rawp4_otherMdctrk", m_n_othertrks, 6, m_rawp4_otherMdctrk);
+            status = m_tuple->addIndexedItem("rawp4_otherMdcKaltrk", m_n_othertrks, 6, m_rawp4_otherMdcKaltrk);
+            status = m_tuple->addItem("n_othershws", m_n_othershws, 0, 50);
+            status = m_tuple->addIndexedItem("rawp4_othershw", m_n_othershws, 4, m_rawp4_othershw);
+            status = m_tuple->addItem("n_count", m_n_count); // multi-counting D in one event
 
             if (m_isMonteCarlo) {
                 status = m_tuple->addItem("indexmc", m_idxmc, 0, 100);
@@ -116,7 +116,7 @@ StatusCode DDecayAlg::execute() {
     if (m_debug) std::cout << " flg " << decay_1 << "     " << decay_2 << "     " << decay_3 << std::endl;
 
     // get beam energy
-    getBeamEnergy();
+    // getBeamEnergy(); // have some problems for data running
 
     // record all McTruth info
     if (runNo < 0 && m_isMonteCarlo) stat_McTruth = saveMcTruthInfo();
@@ -226,28 +226,36 @@ void DDecayAlg::clearVariables() {
 }
 
 void DDecayAlg::getBeamEnergy() {
+    std::cout << "check1_1" << std::endl;
     if (runNo > 0) {
         char stmt[400];
         snprintf(stmt, 1024,
                 "select BER_PRB, BPR_PRB"
                 "from RunParams where run_number = %d", runNo);
+        std::cout << "check1_2" << std::endl;
         DatabaseRecordVector res;
         IDatabaseSvc* dbsvc;
+        std::cout << "check1_3" << std::endl;
         // read database use service
         Gaudi::svcLocator()->service("DatabaseSvc", dbsvc, true); // ?????????????????
+        std::cout << "check1_4" << std::endl;
         int row_no = dbsvc->query("run", stmt, res); // ????????????????
+        std::cout << "check1_5" << std::endl;
         if (row_no != 0) {
             DatabaseRecord* records = res[0];
             double E_E = 0, E_P = 0;
             E_E = records->GetDouble("BER_PRB");
             E_P = records->GetDouble("BPR_PRB");
             beam_energy = E_E + E_P;
+            std::cout << "check for beamE:" << beam_energy << std::endl;
         }
+        std::cout << "check1_6" << std::endl;
     }
     else {
         beam_energy = -1;
     }
     if (m_debug) std::cout << " beam energy " << beam_energy << std::endl;
+    std::cout << "check1_7" << std::endl;
 }
 
 bool DDecayAlg::saveMcTruthInfo() {
@@ -448,8 +456,8 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
 
         // record variables
         if (fabs(chi2_vf) < 100 && fabs(chi2_kf) < 999 && stat_saveOthertrks && stat_saveOthershws) {
-            recordVariables();
             n_count++;
+            recordVariables();
         }
     }
     if (fabs(chi2_vf) < 100 && fabs(chi2_kf) < 999 && stat_saveOthertrks && stat_saveOthershws) return true;
@@ -593,12 +601,14 @@ void DDecayAlg::recordVariables() {
     m_beamE = beam_energy;
 
     // save McTruth info
-    m_idxmc = idxmc;
-    for (int i = 0; i < m_idxmc; i++) {
-        m_pdgid[i] = pdgid[i];
-        m_motheridx[i] = motheridx[i];
-        for (int j = 0; j < 4; j++) {
-            m_p4_alltrk[i][j] = p4_alltrk[i][j];
+    if (m_runNo < 0 && m_isMonteCarlo) {
+        m_idxmc = idxmc;
+        for (int i = 0; i < m_idxmc; i++) {
+            m_pdgid[i] = pdgid[i];
+            m_motheridx[i] = motheridx[i];
+            for (int j = 0; j < 4; j++) {
+                m_p4_alltrk[i][j] = p4_alltrk[i][j];
+            }
         }
     }
 
@@ -610,8 +620,10 @@ void DDecayAlg::recordVariables() {
     }
     m_n_shwD = n_shwD;
     for (int i = 0; i < m_n_shwD; i++) {
-        for (int j = 0; j < 4; j++) m_rawp4_Dshw[i][j] = rawp4_Dshw[i][j];
-        for (int j = 0; j < 4; j++) m_p4_Dshw[i][j] = p4_Dshw[i][j];
+        for (int j = 0; j < 4; j++) {
+            m_rawp4_Dshw[i][j] = rawp4_Dshw[i][j];
+            m_p4_Dshw[i][j] = p4_Dshw[i][j];
+        }
     }
     m_mode = MODE;
     m_charm = charm;
@@ -619,12 +631,16 @@ void DDecayAlg::recordVariables() {
     m_chi2_kf = chi2_kf;
     m_n_othertrks = n_othertrks;
     for (int i = 0; i < m_n_othertrks; i++) {
-        for (int j = 0; j < 6; j++) m_rawp4_otherMdctrk[i][j] = m_rawp4_otherMdctrk[i][j];
-        for (int j = 0; j < 6; j++) m_rawp4_otherMdcKaltrk[i][j] = m_rawp4_otherMdcKaltrk[i][j];
+        for (int j = 0; j < 6; j++) {
+            m_rawp4_otherMdcKaltrk[i][j] = rawp4_otherMdcKaltrk[i][j];
+            m_rawp4_otherMdctrk[i][j] = rawp4_otherMdctrk[i][j];
+        }
     }
     m_n_othershws = n_othershws;
     for (int i = 0; i < m_n_othershws; i++) {
-        for (int j = 0; j < 4; j++) m_rawp4_othershw[i][j] = m_rawp4_othershw[i][j];
+        for (int j = 0; j < 4; j++) {
+            m_rawp4_othershw[i][j] = rawp4_othershw[i][j];
+        }
     }
     m_n_count = n_count;
 
