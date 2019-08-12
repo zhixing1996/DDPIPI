@@ -4,12 +4,12 @@ INPUT=$1
 UPLIMIT=$2
 
 SEED=3020023
-ENERGYPOINT="4360"
+ENERGYPOINT="4420"
 
-DIR_NAME="/scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rtraw/"
+DIR_NAME="/scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4420/rtraw/"
 EVENT_NO=$3
 
-echo "./jobOptions_sim_sig_D1_2420_D_PHSP_4360.sh [NUM1] [NUM2] [NUM3]"
+echo "./jobOptions_sim_sig_D1_2420_D_PHSP_4420.sh [NUM1] [NUM2] [NUM3]"
 echo "[NUM1]: the minimum number range of job generated"
 echo "[NUM2]: the maximum number range of job generated"
 echo "[NUM3]: the number of events in one job"
@@ -32,13 +32,12 @@ do
     echo "" >> $SIM_NAME
     echo "//**************job options for generator (KKMC)************************" >> $SIM_NAME
     echo "#include \"\$KKMCROOT/share/jobOptions_KKMC.txt\"" >> $SIM_NAME
-    echo "KKMC.CMSEnergy = 4.358;" >> $SIM_NAME
+    echo "KKMC.CMSEnergy = 4.415;" >> $SIM_NAME
     echo "KKMC.BeamEnergySpread=0.0011;" >> $SIM_NAME
     echo "KKMC.NumberOfEventPrinted=10;" >> $SIM_NAME
     echo "KKMC.GeneratePsi4415=true;" >> $SIM_NAME
-    echo "KKMC.ResParameterPs6 = {4.358, 74e-3, 0.47e-6};" >> $SIM_NAME
     echo "KKMC.ParticleDecayThroughEvtGen = true;" >> $SIM_NAME
-    echo "KKMC.ThresholdCut = 4.32;" >> $SIM_NAME
+    echo "KKMC.ThresholdCut = 4.360;" >> $SIM_NAME
     echo "KKMC.RadiationCorrection = 1;" >> $SIM_NAME
     echo "KKMC.TagISR = 1;" >> $SIM_NAME
     echo "KKMC.TagFSR = 1;" >> $SIM_NAME
@@ -59,7 +58,7 @@ do
     echo "#include \"\$CALIBSVCROOT/share/calibConfig_sim.txt\"" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "// run ID" >> $SIM_NAME
-    echo "RealizationSvc.RunIdList = {-29677, 0, -30190};" >> $SIM_NAME
+    echo "RealizationSvc.RunIdList = {-31327, 0, -31390};" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "#include \"\$ROOTIOROOT/share/jobOptions_Digi2Root.txt\"" >> $SIM_NAME
     echo "RootCnvSvc.digiRootOutputFile = \"$DIR_NAME$OUTPUT_NAME\";" >> $SIM_NAME

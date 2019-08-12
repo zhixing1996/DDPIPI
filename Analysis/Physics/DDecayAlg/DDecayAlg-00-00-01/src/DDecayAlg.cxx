@@ -38,7 +38,7 @@ DDecayAlg::DDecayAlg(const std::string& name, ISvcLocator* pSvcLocator) :
         declareProperty("DMode", m_DModes);
         declareProperty("IsMonteCarlo", m_isMonteCarlo = true);
         declareProperty("UsePID", m_pid = true);
-        declareProperty("Debug", m_debug = true);
+        declareProperty("Debug", m_debug = false);
 }
 
 StatusCode DDecayAlg::initialize() {
