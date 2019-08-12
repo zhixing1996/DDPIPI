@@ -1,5 +1,6 @@
 #!/bin/sh
 
+rm -rf fort*
 rm -rf job.out
 mkdir job.out
 rm -rf job.err

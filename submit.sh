@@ -43,6 +43,8 @@ case $option in
            cd jobs_sig
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rtraw
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/dst
+           rm -rf jobOptions*txt
+           rm -rf subjectSimRec_*.sh
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_sim_sig_D1_2420_D_PHSP_4360.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rtraw/*.rtraw
            ./jobOptions_sim_sig_D1_2420_D_PHSP_4360.sh 0 99 10000
@@ -56,6 +58,7 @@ case $option in
     0.1.2) echo "Single D tag -- run on signal MC sample..."
            mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4360
            cd scripts/sigMC/D1_2420/4360/jobs_sig
+           rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_D1_2420_D_PHSP_4360 20 20 . sigMC D1_2420 PHSP 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
