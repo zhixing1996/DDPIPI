@@ -33,7 +33,7 @@ do
     echo "//**************job options for generator (KKMC)************************" >> $SIM_NAME
     echo "#include \"\$KKMCROOT/share/jobOptions_KKMC.txt\"" >> $SIM_NAME
     echo "KKMC.CMSEnergy = 4.415;" >> $SIM_NAME
-    echo "KKMC.BeamEnergySpread=0.0011;" >> $SIM_NAME
+    echo "KKMC.BeamEnergySpread=0.00203;" >> $SIM_NAME
     echo "KKMC.NumberOfEventPrinted=10;" >> $SIM_NAME
     echo "KKMC.GeneratePsi4415=true;" >> $SIM_NAME
     echo "KKMC.ParticleDecayThroughEvtGen = true;" >> $SIM_NAME
@@ -58,7 +58,7 @@ do
     echo "#include \"\$CALIBSVCROOT/share/calibConfig_sim.txt\"" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "// run ID" >> $SIM_NAME
-    echo "RealizationSvc.RunIdList = {-31327, 0, -31390};" >> $SIM_NAME
+    echo "RealizationSvc.RunIdList = {-31327, 0, -31390, -36773, 0, -38140};" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "#include \"\$ROOTIOROOT/share/jobOptions_Digi2Root.txt\"" >> $SIM_NAME
     echo "RootCnvSvc.digiRootOutputFile = \"$DIR_NAME$OUTPUT_NAME\";" >> $SIM_NAME
