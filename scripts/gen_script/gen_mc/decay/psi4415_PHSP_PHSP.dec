@@ -1,0 +1,9 @@
+Decay  psi(4415)
+1.00  D+  D-  pi+  pi-  PHSP;
+Enddecay
+
+Decay D-
+1.00  K+  pi-  pi-     D_DALITZ;
+Enddecay
+
+End

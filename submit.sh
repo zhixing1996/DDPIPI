@@ -28,6 +28,15 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.6"   "[run on signal MC of psi(4415)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) @4600MeV]" # psi(4415) -> @4600MeV
     printf "\n\t%-9s  %-40s\n" "0.6.1" "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.6.2" "Single D tag -- run on signal MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.7"   "[run on background MC of psi(4415)->DDPIPI(PHSP) @4360MeV]" # psi(4415) -> @4360MeV
+    printf "\n\t%-9s  %-40s\n" "0.7.1" "Simulation & Reconstruction -- generate background MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.7.2" "Single D tag -- run on background MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.8"   "[run on background MC of psi(4415)->DDPIPI(PHSP) @4420MeV]" # psi(4415) -> @4420MeV
+    printf "\n\t%-9s  %-40s\n" "0.7.1" "Simulation & Reconstruction -- generate background MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.7.2" "Single D tag -- run on background MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.7"   "[run on background MC of psi(4415)->DDPIPI(PHSP) @4600MeV]" # psi(4415) -> @4600MeV
+    printf "\n\t%-9s  %-40s\n" "0.7.1" "Simulation & Reconstruction -- generate background MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.7.2" "Single D tag -- run on background MC sample"
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -296,7 +305,7 @@ case $option in
            ./subjectSimRec.sh jobOptions_sim_sig_psi_3770_PI_PI_PHSP_4600 jobOptions_rec_sig_psi_3770_PI_PI_PHSP_4600 subjectSimRec_PHSP 0 99
            ;;
 
-    0.5.2) echo "Single D tag -- run on signal MC sample..."
+    0.6.2) echo "Single D tag -- run on signal MC sample..."
            mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4600
            cd scripts/sigMC/psi_3770/4600/jobs_sig
            rm -rf dstlist.txt
@@ -304,6 +313,138 @@ case $option in
            ./makeJob.csh Sig_psi_3770_PI_PI_PHSP_4600 20 20 . sigMC psi_3770 PHSP 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            ./subjectAna.sh Sig_psi_3770_PI_PI_PHSP_4600
+           ;;
+
+    # ------------------------------------------
+    #  0.7 background MC of PHSP DDPIPI @4360MeV
+    # ------------------------------------------
+
+    0.7) echo "background MC of PHSP DDPIPI @4360MeV..."
+         echo "--> Process: psi(4415)->DDPIPI"
+         echo "--> E_{CMS}: 4360MeV"
+         echo "--> Generation mode: psi(4415)->DDPIPI PHSH; D decay D_DALITZ(assignated mode) or default pdt.table mode"
+         echo "--> Event Number: 1,000,000"
+         echo "--> RunNo: 30616~31279"
+         ;;
+
+    0.7.1) echo "Simulation & Reconstruction -- generate background MC sample..."
+           mkdir -p scripts/bkgMC/PHSP/4360
+           cd scripts/bkgMC/PHSP/4360
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_sig" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_sig
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_sig ./jobs_sig
+           fi
+           cd jobs_sig
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/rtraw
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/dst
+           rm -rf jobOptions*txt
+           rm -rf subjectSimRec_*.sh
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_sim_bkg_PHSP_PHSP_4360.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/rtraw/*.rtraw
+           ./jobOptions_sim_bkg_PHSP_PHSP_4360.sh 0 99 10000
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_rec_bkg_PHSP_PHSP_4360.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/dst/*.dst
+           ./jobOptions_rec_bkg_PHSP_PHSP_4360.sh 0 99
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectSimRec.sh ./
+           ./subjectSimRec.sh jobOptions_sim_bkg_PHSP_PHSP_4360 jobOptions_rec_bkg_PHSP_PHSP_4360 subjectSimRec_PHSP 0 99
+           ;;
+
+    0.7.2) echo "Single D tag -- run on background MC sample..."
+           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4360
+           cd scripts/bkgMC/PHSP/4360/jobs_sig
+           rm -rf dstlist.txt
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
+           ./makeJob.csh Bkg_PHSP_PHSP_4360 20 20 . bkgMC PHSP PHSP 4360
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           ./subjectAna.sh Bkg_PHSP_PHSP_4360
+           ;;
+
+    # ------------------------------------------
+    #  0.8 background MC of PHSP DDPIPI @4420MeV
+    # ------------------------------------------
+
+    0.8) echo "background MC of PHSP DDPIPI @4420MeV..."
+         echo "--> Process: psi(4415)->DDPIPI"
+         echo "--> E_{CMS}: 4420MeV"
+         echo "--> Generation mode: psi(4415)->DDPIPI PHSH; D decay D_DALITZ(assignated mode) or default pdt.table mode"
+         echo "--> Event Number: 1,000,000"
+         echo "--> RunNo: 31327~31390, 36773~38140"
+         ;;
+
+    0.8.1) echo "Simulation & Reconstruction -- generate background MC sample..."
+           mkdir -p scripts/bkgMC/PHSP/4420
+           cd scripts/bkgMC/PHSP/4420
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_sig" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_sig
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_sig ./jobs_sig
+           fi
+           cd jobs_sig
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/rtraw
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/dst
+           rm -rf jobOptions*txt
+           rm -rf subjectSimRec_*.sh
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_sim_bkg_PHSP_PHSP_4420.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/rtraw/*.rtraw
+           ./jobOptions_sim_bkg_PHSP_PHSP_4420.sh 0 99 10000
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_rec_bkg_PHSP_PHSP_4420.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/dst/*.dst
+           ./jobOptions_rec_bkg_PHSP_PHSP_4420.sh 0 99
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectSimRec.sh ./
+           ./subjectSimRec.sh jobOptions_sim_bkg_PHSP_PHSP_4420 jobOptions_rec_bkg_PHSP_PHSP_4420 subjectSimRec_PHSP 0 99
+           ;;
+
+    0.8.2) echo "Single D tag -- run on background MC sample..."
+           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4420
+           cd scripts/bkgMC/PHSP/4420/jobs_sig
+           rm -rf dstlist.txt
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
+           ./makeJob.csh Bkg_PHSP_PHSP_4420 20 20 . bkgMC PHSP PHSP 4420
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           ./subjectAna.sh Bkg_PHSP_PHSP_4420
+           ;;
+
+    # ------------------------------------------
+    #  0.9 background MC of PHSP DDPIPI @4600MeV
+    # ------------------------------------------
+
+    0.9) echo "background MC of PHSP DDPIPI @4600MeV..."
+         echo "--> Process: psi(4415)->DDPIPI"
+         echo "--> E_{CMS}: 4600MeV"
+         echo "--> Generation mode: psi(4415)->DDPIPI PHSH; D decay D_DALITZ(assignated mode) or default pdt.table mode"
+         echo "--> Event Number: 1,000,000"
+         echo "--> RunNo: 35227~36213"
+         ;;
+
+    0.9.1) echo "Simulation & Reconstruction -- generate background MC sample..."
+           mkdir -p scripts/bkgMC/PHSP/4600
+           cd scripts/bkgMC/PHSP/4600
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_sig" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_sig
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_sig ./jobs_sig
+           fi
+           cd jobs_sig
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/rtraw
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/dst
+           rm -rf jobOptions*txt
+           rm -rf subjectSimRec_*.sh
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_sim_bkg_PHSP_PHSP_4600.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/rtraw/*.rtraw
+           ./jobOptions_sim_bkg_PHSP_PHSP_4600.sh 0 99 10000
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_rec_bkg_PHSP_PHSP_4600.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/dst/*.dst
+           ./jobOptions_rec_bkg_PHSP_PHSP_4600.sh 0 99
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectSimRec.sh ./
+           ./subjectSimRec.sh jobOptions_sim_bkg_PHSP_PHSP_4600 jobOptions_rec_bkg_PHSP_PHSP_4600 subjectSimRec_PHSP 0 99
+           ;;
+
+    0.9.2) echo "Single D tag -- run on background MC sample..."
+           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4600
+           cd scripts/bkgMC/PHSP/4600/jobs_sig
+           rm -rf dstlist.txt
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
+           ./makeJob.csh Bkg_PHSP_PHSP_4600 20 20 . bkgMC PHSP PHSP 4600
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           ./subjectAna.sh Bkg_PHSP_PHSP_4600
            ;;
 
 esac

@@ -13,7 +13,7 @@ if ($#argv != 1 && $#argv != 2 && $#argv != 3 && $#argv != 4 && $#argv != 5 && $
   echo "             by default, it will be 2 "
   echo "jobDir     : is the directory where you want the jobOption is"
   echo "             by default, it will be PWD "
-  echo "sampleType : is the type of sample you want to deal with, e.g.: signal MC, inclusive MC, data"
+  echo "sampleType : is the type of sample you want to deal with, e.g.: sig, bkg, MC; inclusive MC, data"
   echo "             this argument SHOULD NOT be omitted. "
   echo "decayMode  : is the type of decay mode in your sample"
   echo "             this argument SHOULD NOT be omitted. "
