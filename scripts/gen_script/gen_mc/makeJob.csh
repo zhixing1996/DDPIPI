@@ -1,10 +1,10 @@
 #!/bin/tcsh -f
 
-if ($#argv != 1 && $#argv != 2 && $#argv != 3 && $#argv != 4 && $#argv != 5 && $#argv != 6 && $#argv != 7) then
+if ($#argv != 1 && $#argv != 2 && $#argv != 3 && $#argv != 4 && $#argv != 5 && $#argv != 6 && $#argv != 7 && $#argv != 8) then
   echo " "
   echo "purpose    : (for real data) you can get jobOptions with certain number rec file in each job automatically. "
   echo "             Also, you can summit the jobs automatically. "
-  echo "useage     : ./makeJob.csh jobName [jobN] [fileN] [jobDir] [sampleType] [decayMode] [energy]"
+  echo "useage     : ./makeJob.csh jobName [jobN] [fileN] [jobDir] [sampleType] [decayMode] [genMode] [energy]"
   echo "jobName    : is the name of jobOption you wish"
   echo "             this argument SHOULD NOT be omitted. "
   echo "jobN       : is the largest number of jobs"
@@ -16,6 +16,8 @@ if ($#argv != 1 && $#argv != 2 && $#argv != 3 && $#argv != 4 && $#argv != 5 && $
   echo "sampleType : is the type of sample you want to deal with, e.g.: signal MC, inclusive MC, data"
   echo "             this argument SHOULD NOT be omitted. "
   echo "decayMode  : is the type of decay mode in your sample"
+  echo "             this argument SHOULD NOT be omitted. "
+  echo "genMode    : is the type of generation mode in your sample, such as PHSP, HELAMP, VSS, etc for MC and SFO, BB(beam to beam collide), SB(seperate beam collide) etc for data"
   echo "             this argument SHOULD NOT be omitted. "
   echo "energy     : is the energy point of your sample"
   echo "             this argument SHOULD NOT be omitted. "
@@ -59,16 +61,20 @@ set sample = $argv[5]
 echo "sampleType : ${sample}"
 
 # set decay mode
-set mode = $argv[6]
-echo "decayMode : ${mode}"
+set decaymode = $argv[6]
+echo "decayMode : ${decaymode}"
+
+# set gen mode
+set genmode = $argv[7]
+echo "decayMode : ${genmode}"
 
 # set energypoints
-set energy = $argv[7]
+set energy = $argv[8]
 echo "energy : ${energy}"
 
 # get all rec file from all child path of the DataParentPath
 echo "set data path"
-set DataParentPath = /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/${sample}/${mode}/${energy}/dst
+set DataParentPath = /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/${sample}/${decaymode}/${energy}/dst
 
 # set DataParentPath: where is the real data
 echo "DataParentPath : ${DataParentPath}"
@@ -78,11 +84,10 @@ if ( -e ${jobDir}/dstlist.txt ) then
 endif 
 
 if (! -e dstlist.txt )   then 
-   find  ${DataParentPath} -name "*.dst" > dstlist.txt
+   find  ${DataParentPath} -name "*${genmode}*.dst" > dstlist.txt
 
 else
-   find  ${DataParentPath} -name "*.dst" >> dstlist.txt
-
+   find  ${DataParentPath} -name "*${genmode}*.dst" >> dstlist.txt
 endif 
 
 # input the number of total lines of dstlist.txt 
@@ -104,7 +109,6 @@ endif
 @ i=0
 set ijob=${i}
 foreach file ( `cat dstlist.txt` )
-# foreach file ( `cat dstlist.txt | sed '1d'` )
 
         if ( ${iline} % ${fileN} == 1 ) then 
             if ( -e ${jobDir}/${jobName}_${ijob}.txt ) then 
@@ -119,7 +123,7 @@ foreach file ( `cat dstlist.txt` )
 
         if ( ${iline} % ${fileN} == 0 || ${iline} == ${nline} ) then 
             echo \"${file}\" >>  ${jobDir}/${jobName}_${ijob}.txt
-            sed -e s/SAMPLE/${sample}/ -e s/MODE/${mode}/ -e s/ENERGY/${energy}/ -e s/JOB/${jobName}_${ijob}/ ${jobDir}/makeJob.tail >> ${jobDir}/${jobName}_${ijob}.txt
+            sed -e s/SAMPLE/${sample}/ -e s/MODE/${decaymode}/ -e s/ENERGY/${energy}/ -e s/JOB/${jobName}_${ijob}/ ${jobDir}/makeJob.tail >> ${jobDir}/${jobName}_${ijob}.txt
 
             echo ${jobDir}/${jobName}_${ijob}.txt is finished 
 

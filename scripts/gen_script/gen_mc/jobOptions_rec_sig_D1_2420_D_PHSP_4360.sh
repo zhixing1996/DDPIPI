@@ -1,7 +1,11 @@
 #!/bin/sh
 
-INPUT=0
-UPLIMIT=99
+INPUT=$1
+UPLIMIT=$2
+
+echo "./jobOptions_rec_sig_D1_2420_D_PHSP_4360.sh [NUM1] [NUM2]"
+echo "[NUM1]: the minimum number range of job generated"
+echo "[NUM2]: the maximum number range of job generated"
 
 SEED=123
     
@@ -9,9 +13,9 @@ DIR_NAME_RTRAW="/scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rtraw/"
 DIR_NAME_DST="/scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/dst/"
 EVENT_NO=-1
 
-JOB_NAME="jobOptions_rec_sig_D1_2420_D_4360"
-INPUT_NAME="Sig_D1_2420_D_4360"
-OUTPUT_NAME="Sig_D1_2420_D_4360"
+JOB_NAME="jobOptions_rec_sig_D1_2420_D_PHSP_4360"
+INPUT_NAME="Sig_D1_2420_D_PHSP_4360"
+OUTPUT_NAME="Sig_D1_2420_D_PHSP_4360"
 
 # steer file for reconstruction
 echo "steer file for reconstruction"

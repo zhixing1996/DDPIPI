@@ -7,7 +7,7 @@ UPLIMIT=$3
 echo "./subjectAna [NAME] [NUM1] [NUM2]"
 echo "[NAME]: the name defined by makeJob.csh"
 echo "[NUM1]: the minimum number range of job subjected"
-echo "[NUM1]: the maximum number range of job subjected"
+echo "[NUM2]: the maximum number range of job subjected"
 
 # subject jobs
 echo "subject jobs"
