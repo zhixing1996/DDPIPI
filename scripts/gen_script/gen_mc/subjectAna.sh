@@ -11,12 +11,12 @@ echo "[NAME]: the name defined by makeJob.csh"
 # subject jobs
 echo "subject jobs"
 
-until [[ $INPUT -gt $UPLIMIT ]]
+until [[ $INPUT -gt $(($UPLIMIT-1)) ]]
 do
     
     ANA_NAME=$ANA"_"$INPUT".txt"
 
-    # boss.condor $ANA_NAME
+    boss.condor $ANA_NAME
 
     echo $ANA_NAME" done!"
 
