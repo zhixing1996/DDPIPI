@@ -1,5 +1,8 @@
 #!/bin/bash
 
+rm -rf badList
+rm -rf goodList
+
 #set +x
 ANA_DIR=$1
 echo "This is a script to check whether the job is successful or not"
@@ -11,7 +14,7 @@ cd $ANA_DIR
 ls *.0 > badList
 total_num=`wc -l badList | cut -d" " -f1`
 #ls *.txt > badList
-grep -in 'INFO Application Manager Terminated successfully' *.0 | cut -d "." -f1 > goodList
+grep -in 'survived event ' *.0 | cut -d "." -f1 > goodList
 good_num=`wc -l goodList | cut -d" " -f1`
 
 while read MY_LINE
