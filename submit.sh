@@ -105,14 +105,14 @@ case $option in
            ;;
 
     0.1.2) echo "Single D tag -- run on signal MC sample..."
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4360
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rootfile
            cd scripts/sigMC/D1_2420/4360/jobs_sig
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_D1_2420_D_PHSP_4360 20 20 . sigMC D1_2420 PHSP 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4360/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rootfile/*.root 
            ./subjectAna.sh Sig_D1_2420_D_PHSP_4360
            ;;
 
@@ -151,14 +151,14 @@ case $option in
            ;;
 
     0.2.2) echo "Single D tag -- run on signal MC sample..."
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4420
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4420/rootfile
            cd scripts/sigMC/D1_2420/4420/jobs_sig
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_D1_2420_D_PHSP_4420 20 20 . sigMC D1_2420 PHSP 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4420/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4420/rootfile/*.root 
            ./subjectAna.sh Sig_D1_2420_D_PHSP_4420
            ;;
 
@@ -197,14 +197,14 @@ case $option in
            ;;
 
     0.3.2) echo "Single D tag -- run on signal MC sample..."
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4600
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4600/rootfile
            cd scripts/sigMC/D1_2420/4600/jobs_sig
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_D1_2420_D_PHSP_4600 20 20 . sigMC D1_2420 PHSP 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4600/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4600/rootfile/*.root 
            ./subjectAna.sh Sig_D1_2420_D_PHSP_4600
            ;;
 
@@ -243,14 +243,14 @@ case $option in
            ;;
 
     0.4.2) echo "Single D tag -- run on signal MC sample..."
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4360
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4360/rootfile
            cd scripts/sigMC/psi_3770/4360/jobs_sig
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_psi_3770_PI_PI_PHSP_4360 20 20 . sigMC psi_3770 PHSP 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4360/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4360/rootfile/*root 
            ./subjectAna.sh Sig_psi_3770_PI_PI_PHSP_4360
            ;;
 
@@ -289,14 +289,14 @@ case $option in
            ;;
 
     0.5.2) echo "Single D tag -- run on signal MC sample..."
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4420
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4420/rootfile
            cd scripts/sigMC/psi_3770/4420/jobs_sig
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_psi_3770_PI_PI_PHSP_4420 20 20 . sigMC psi_3770 PHSP 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4420/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4420/rootfile/*root 
            ./subjectAna.sh Sig_psi_3770_PI_PI_PHSP_4420
            ;;
 
@@ -335,14 +335,14 @@ case $option in
            ;;
 
     0.6.2) echo "Single D tag -- run on signal MC sample..."
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4600
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4600/rootfile
            cd scripts/sigMC/psi_3770/4600/jobs_sig
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_psi_3770_PI_PI_PHSP_4600 20 20 . sigMC psi_3770 PHSP 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4600/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4600/rootfile/*root 
            ./subjectAna.sh Sig_psi_3770_PI_PI_PHSP_4600
            ;;
 
@@ -381,14 +381,14 @@ case $option in
            ;;
 
     0.7.2) echo "Single D tag -- run on background MC sample..."
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4360
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/rootfile
            cd scripts/bkgMC/PHSP/4360/jobs_sig
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Bkg_PHSP_PHSP_4360 20 20 . bkgMC PHSP PHSP 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4360/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/rootfile/*root 
            ./subjectAna.sh Bkg_PHSP_PHSP_4360
            ;;
 
@@ -427,13 +427,14 @@ case $option in
            ;;
 
     0.8.2) echo "Single D tag -- run on background MC sample..."
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4420
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/rootfile
            cd scripts/bkgMC/PHSP/4420/jobs_sig
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Bkg_PHSP_PHSP_4420 20 20 . bkgMC PHSP PHSP 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/rootfile/*root 
            rm -rf /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4420/*root 
            ./subjectAna.sh Bkg_PHSP_PHSP_4420
            ;;
@@ -473,14 +474,14 @@ case $option in
            ;;
 
     0.9.2) echo "Single D tag -- run on background MC sample..."
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4600
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/rootfile
            cd scripts/bkgMC/PHSP/4600/jobs_sig
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Bkg_PHSP_PHSP_4600 20 20 . bkgMC PHSP PHSP 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4600/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/rootfile/*root 
            ./subjectAna.sh Bkg_PHSP_PHSP_4600
            ;;
 
@@ -502,7 +503,7 @@ case $option in
                mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_sig
                ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_sig ./jobs_sig
            fi
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/data/4360
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4360
            cd jobs_sig
            rm -rf data*.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_data.py ./
@@ -510,7 +511,7 @@ case $option in
            ./make_data.py /bes3fs/offline/data/664p01/xyz/4360/dst 30616 31279 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/data/4360/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4360/*root 
            ./subjectAna.sh data
            ;;
 
@@ -532,7 +533,7 @@ case $option in
                mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_sig
                ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_sig ./jobs_sig
            fi
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/data/4420
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4420
            cd jobs_sig
            rm -rf data*.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_data.py ./
@@ -541,7 +542,7 @@ case $option in
            ./make_data.py /besfs3/offline/data/besfs2/offline/data/664p01/xyz/4420/dst 36773 38140 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/data/4420/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4420/*root 
            ./subjectAna.sh data
            ;;
 
@@ -563,7 +564,7 @@ case $option in
                mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_sig
                ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_sig ./jobs_sig
            fi
-           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/data/4600
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4600
            cd jobs_sig
            rm -rf data*.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_data.py ./
@@ -571,7 +572,7 @@ case $option in
            ./make_data.py /besfs3/offline/data/besfs2/offline/data/664p01/xyz/4600/dst 35227 36213 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
            rm -rf *boss* 
-           rm -rf /besfs/users/$USER/DDPIPI/v0.1/data/4600/*root 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4600/*root 
            ./subjectAna.sh data
            ;;
 

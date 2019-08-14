@@ -86,7 +86,7 @@ def main():
             f.write('ApplicationMgr.EvtMax = -1;\n')
             f.write('\n')
             f.write('ApplicationMgr.HistogramPersistency = "ROOT";\n')
-            f.write('NTupleSvc.Output = {\"FILE1 DATAFILE=\'/besfs/users/jingmq/DDPIPI/v0.1/data/' + energy + '/' + 'data' + str(runNo) + '.root\' OPT=\'NEW\' TYP=\'ROOT\'\"};\n')
+            f.write('NTupleSvc.Output = {\"FILE1 DATAFILE=\'/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/data/' + energy + '/' + 'data' + str(runNo) + '.root\' OPT=\'NEW\' TYP=\'ROOT\'\"};\n')
             f.close()
         else:
             print 'runNo: ' + str(runNo) + ' is empty, just ignore it!'

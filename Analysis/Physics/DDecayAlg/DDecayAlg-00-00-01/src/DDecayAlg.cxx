@@ -117,11 +117,9 @@ StatusCode DDecayAlg::execute() {
 
     // record all McTruth info
     if (runNo < 0 && m_isMonteCarlo) stat_McTruth = saveMcTruthInfo();
-    if (runNo < 0 && stat_McTruth == false) std::cout << "There are some errors when recording McTruth Info in event: " << evtNo << std::endl;
 
     // use DTagTool
     stat_DTagTool = useDTagTool();
-    if (stat_DTagTool == false) std::cout << "Please check chi2_vf/kf, other trks/shws or no wanted D in run, event: " << runNo << ", " << evtNo << std::endl;
 
     return StatusCode::SUCCESS;
 }
