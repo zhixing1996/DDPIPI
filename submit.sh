@@ -112,6 +112,7 @@ case $option in
            ./makeJob.csh Sig_D1_2420_D_PHSP_4360 20 20 . sigMC D1_2420 PHSP 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4360/*root 
            ./subjectAna.sh Sig_D1_2420_D_PHSP_4360
            ;;
 
@@ -157,6 +158,7 @@ case $option in
            ./makeJob.csh Sig_D1_2420_D_PHSP_4420 20 20 . sigMC D1_2420 PHSP 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4420/*root 
            ./subjectAna.sh Sig_D1_2420_D_PHSP_4420
            ;;
 
@@ -202,6 +204,7 @@ case $option in
            ./makeJob.csh Sig_D1_2420_D_PHSP_4600 20 20 . sigMC D1_2420 PHSP 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4600/*root 
            ./subjectAna.sh Sig_D1_2420_D_PHSP_4600
            ;;
 
@@ -247,6 +250,7 @@ case $option in
            ./makeJob.csh Sig_psi_3770_PI_PI_PHSP_4360 20 20 . sigMC psi_3770 PHSP 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4360/*root 
            ./subjectAna.sh Sig_psi_3770_PI_PI_PHSP_4360
            ;;
 
@@ -292,6 +296,7 @@ case $option in
            ./makeJob.csh Sig_psi_3770_PI_PI_PHSP_4420 20 20 . sigMC psi_3770 PHSP 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4420/*root 
            ./subjectAna.sh Sig_psi_3770_PI_PI_PHSP_4420
            ;;
 
@@ -337,6 +342,7 @@ case $option in
            ./makeJob.csh Sig_psi_3770_PI_PI_PHSP_4600 20 20 . sigMC psi_3770 PHSP 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4600/*root 
            ./subjectAna.sh Sig_psi_3770_PI_PI_PHSP_4600
            ;;
 
@@ -382,6 +388,7 @@ case $option in
            ./makeJob.csh Bkg_PHSP_PHSP_4360 20 20 . bkgMC PHSP PHSP 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4360/*root 
            ./subjectAna.sh Bkg_PHSP_PHSP_4360
            ;;
 
@@ -427,6 +434,7 @@ case $option in
            ./makeJob.csh Bkg_PHSP_PHSP_4420 20 20 . bkgMC PHSP PHSP 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4420/*root 
            ./subjectAna.sh Bkg_PHSP_PHSP_4420
            ;;
 
@@ -472,6 +480,7 @@ case $option in
            ./makeJob.csh Bkg_PHSP_PHSP_4600 20 20 . bkgMC PHSP PHSP 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4600/*root 
            ./subjectAna.sh Bkg_PHSP_PHSP_4600
            ;;
 
@@ -501,6 +510,7 @@ case $option in
            ./make_data.py /bes3fs/offline/data/664p01/xyz/4360/dst 30616 31279 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/data/4360/*root 
            ./subjectAna.sh data
            ;;
 
@@ -531,6 +541,7 @@ case $option in
            ./make_data.py /besfs3/offline/data/besfs2/offline/data/664p01/xyz/4420/dst 36773 38140 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/data/4420/*root 
            ./subjectAna.sh data
            ;;
 
@@ -560,6 +571,7 @@ case $option in
            ./make_data.py /besfs3/offline/data/besfs2/offline/data/664p01/xyz/4600/dst 35227 36213 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
            rm -rf *boss* 
+           rm -rf /besfs/users/$USER/DDPIPI/v0.1/data/4600/*root 
            ./subjectAna.sh data
            ;;
 
