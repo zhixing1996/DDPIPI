@@ -1,9 +1,7 @@
 #!/bin/sh
 
 ANA=$1
-INPUT=0
 ls $ANA* > temp
-UPLIMIT=`wc -l temp | cut -d" " -f1`
 
 echo "./subjectAna.sh [NAME]"
 echo "[NAME]: the name defined by makeJob.csh"
@@ -11,17 +9,13 @@ echo "[NAME]: the name defined by makeJob.csh"
 # subject jobs
 echo "subject jobs"
 
-until [[ $INPUT -gt $(($UPLIMIT-1)) ]]
+for line in $(cat temp)
 do
     
-    ANA_NAME=$ANA"_"$INPUT".txt"
+    boss.condor $line
 
-    boss.condor $ANA_NAME
+    echo $line" done!"
 
-    echo $ANA_NAME" done!"
-
-    INPUT=$(($INPUT+1))
-  
 done
 
 rm -rf temp

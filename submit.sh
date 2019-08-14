@@ -495,7 +495,7 @@ case $option in
            ./make_data.py /bes3fs/offline/data/664p01/xyz/4360/dst 30616 31279 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
            rm -rf *boss* 
-           ./subjectAna.sh data 30616 31279
+           ./subjectAna.sh data
            ;;
 
 esac
