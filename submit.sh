@@ -50,6 +50,12 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.10"   "[run on data @4360MeV]"
     printf "\n\t%-9s  %-40s\n" "0.10.1" "Single D tag -- data sample"
 
+    printf "\n\t%-9s  %-40s\n" "0.11"   "[run on data @4420MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.11.1" "Single D tag -- data sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.12"   "[run on data @4600MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.12.1" "Single D tag -- data sample"
+
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -493,6 +499,65 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_data.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
            ./make_data.py /bes3fs/offline/data/664p01/xyz/4360/dst 30616 31279 4360
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
+           rm -rf *boss* 
+           ./subjectAna.sh data
+           ;;
+
+    # --------------------------
+    #  0.11 run on data @4420MeV
+    # --------------------------
+
+    0.11) echo "data @4420MeV..."
+         echo "--> E_{CMS}: 4415.580MeV"
+         echo "--> Energy Spread: 2.03MeV"
+         echo "--> Luminosity: 44.67pb^{-1} + 1028.89pb^{-1}"
+         echo "--> RunNo: 31327~31390, 36773~38140"
+         ;;
+
+    0.11.1) echo "Single D tag -- run on data sample..."
+           mkdir -p scripts/data/4420
+           cd scripts/data/4420
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_sig" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_sig
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_sig ./jobs_sig
+           fi
+           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/data/4420
+           cd jobs_sig
+           rm -rf data*.txt
+           cp -rf $HOME/bes/DDPIPI/v0.1/python/make_data.py ./
+           cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
+           ./make_data.py /besfs3/offline/data/664p01/xyz/4360scan/4420/dst 31327 31390 4420
+           ./make_data.py /besfs3/offline/data/besfs2/offline/data/664p01/xyz/4420/dst 36773 38140 4420
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
+           rm -rf *boss* 
+           ./subjectAna.sh data
+           ;;
+
+    # --------------------------
+    #  0.12 run on data @4600MeV
+    # --------------------------
+
+    0.12) echo "data @4600MeV..."
+         echo "--> E_{CMS}: 4599.530MeV"
+         echo "--> Energy Spread: 2.20MeV"
+         echo "--> Luminosity: 566.93pb^{-1}"
+         echo "--> RunNo: 35227~36213"
+         ;;
+
+    0.12.1) echo "Single D tag -- run on data sample..."
+           mkdir -p scripts/data/4600
+           cd scripts/data/4600
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_sig" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_sig
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_sig ./jobs_sig
+           fi
+           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/data/4600
+           cd jobs_sig
+           rm -rf data*.txt
+           cp -rf $HOME/bes/DDPIPI/v0.1/python/make_data.py ./
+           cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
+           ./make_data.py /besfs3/offline/data/besfs2/offline/data/664p01/xyz/4600/dst 35227 36213 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
            rm -rf *boss* 
            ./subjectAna.sh data

@@ -89,7 +89,7 @@ def main():
             f.write('NTupleSvc.Output = {\"FILE1 DATAFILE=\'/besfs/users/jingmq/DDPIPI/v0.1/data/' + energy + '/' + 'data' + str(runNo) + '.root\' OPT=\'NEW\' TYP=\'ROOT\'\"};\n')
             f.close()
         else:
-            print 'runNo: ' + str(runNo) + 'is empty, just ignore it!'
+            print 'runNo: ' + str(runNo) + ' is empty, just ignore it!'
     print 'All done!'
 
 if __name__ == '__main__':
