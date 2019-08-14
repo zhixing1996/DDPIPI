@@ -9,6 +9,9 @@
 #include "GaudiKernel/ISvcLocator.h"
 #include "GaudiKernel/PropertyMgr.h"
 #include "GaudiKernel/SmartDataPtr.h"
+#include "GaudiKernel/Service.h"
+#include "GaudiKernel/MsgStream.h"
+#include "GaudiKernel/PropertyMgr.h"
 #include "DatabaseSvc/IDatabaseSvc.h"
 
 // don't know their functions
@@ -76,7 +79,6 @@ class DDecayAlg : public Algorithm {
         int runNo;
         int evtNo;
         long flag1;
-        double beam_energy;
 
         // McTruth Info
         int pdgid[100];
@@ -104,8 +106,9 @@ class DDecayAlg : public Algorithm {
         VertexParameter birth;
         double chi2_kf;
         int n_othertrks;
-        double rawp4_otherMdctrk[20][4];
-        double rawp4_otherMdcKaltrk[20][4];
+        double rawp4_otherMdctrk[20][6];
+        double rawp4_otherMdcKaltrk[20][6];
+        int charge_otherMdctrk;
         int n_othershws;
         double rawp4_othershw[50][4];
         double mDcand;
@@ -116,7 +119,6 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_runNo;
         NTuple::Item<int> m_evtNo;
         NTuple::Item<int> m_flag1;
-        NTuple::Item<int> m_beamE;
         NTuple::Item<int> m_idxmc;
         NTuple::Array<int> m_pdgid;
         NTuple::Array<int> m_motheridx;
@@ -134,6 +136,7 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_n_othertrks;
         NTuple::Matrix<double> m_rawp4_otherMdctrk;
         NTuple::Matrix<double> m_rawp4_otherMdcKaltrk;
+        NTuple::Item<int> m_charge_otherMdctrk;
         NTuple::Item<int> m_n_othershws;
         NTuple::Matrix<double> m_rawp4_othershw;
         NTuple::Item<int> m_n_count;
@@ -141,7 +144,6 @@ class DDecayAlg : public Algorithm {
         // functions
         void clearVariables();
         void recordVariables();
-        void getBeamEnergy();
         bool saveMcTruthInfo();
         bool useDTagTool();
         bool tagSingleD();

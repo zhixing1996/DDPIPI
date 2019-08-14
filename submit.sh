@@ -10,33 +10,46 @@ usage() {
     printf "\nSYNOPSIS\n"
     printf "\n\t%5-5s\n" "./submit.sh [OPTION]"
     printf "\nOPTIONS\n"
+
     printf "\n\t%-9s  %-40s\n" "0.1"   "[run on signal MC of psi(4415)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(PHSP) @4360MeV]" # psi(4415) -> @4360MeV
     printf "\n\t%-9s  %-40s\n" "0.1.1" "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.1.2" "Single D tag -- run on signal MC sample"
+
     printf "\n\t%-9s  %-40s\n" "0.2"   "[run on signal MC of psi(4415)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(PHSP) @4420MeV]" # psi(4415) -> @4420MeV
     printf "\n\t%-9s  %-40s\n" "0.2.1" "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.2.2" "Single D tag -- run on signal MC sample"
+
     printf "\n\t%-9s  %-40s\n" "0.3"   "[run on signal MC of psi(4415)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(PHSP) @4600MeV]" # psi(4415) -> @4600MeV
     printf "\n\t%-9s  %-40s\n" "0.3.1" "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.3.2" "Single D tag -- run on signal MC sample"
+
     printf "\n\t%-9s  %-40s\n" "0.4"   "[run on signal MC of psi(4415)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) @4360MeV]" # psi(4415) -> @4360MeV
     printf "\n\t%-9s  %-40s\n" "0.4.1" "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.4.2" "Single D tag -- run on signal MC sample"
+
     printf "\n\t%-9s  %-40s\n" "0.5"   "[run on signal MC of psi(4415)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) @4420MeV]" # psi(4415) -> @4420MeV
     printf "\n\t%-9s  %-40s\n" "0.5.1" "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.5.2" "Single D tag -- run on signal MC sample"
+
     printf "\n\t%-9s  %-40s\n" "0.6"   "[run on signal MC of psi(4415)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) @4600MeV]" # psi(4415) -> @4600MeV
     printf "\n\t%-9s  %-40s\n" "0.6.1" "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.6.2" "Single D tag -- run on signal MC sample"
+
     printf "\n\t%-9s  %-40s\n" "0.7"   "[run on background MC of psi(4415)->DDPIPI(PHSP) @4360MeV]" # psi(4415) -> @4360MeV
     printf "\n\t%-9s  %-40s\n" "0.7.1" "Simulation & Reconstruction -- generate background MC sample"
     printf "\n\t%-9s  %-40s\n" "0.7.2" "Single D tag -- run on background MC sample"
+
     printf "\n\t%-9s  %-40s\n" "0.8"   "[run on background MC of psi(4415)->DDPIPI(PHSP) @4420MeV]" # psi(4415) -> @4420MeV
-    printf "\n\t%-9s  %-40s\n" "0.7.1" "Simulation & Reconstruction -- generate background MC sample"
-    printf "\n\t%-9s  %-40s\n" "0.7.2" "Single D tag -- run on background MC sample"
-    printf "\n\t%-9s  %-40s\n" "0.7"   "[run on background MC of psi(4415)->DDPIPI(PHSP) @4600MeV]" # psi(4415) -> @4600MeV
-    printf "\n\t%-9s  %-40s\n" "0.7.1" "Simulation & Reconstruction -- generate background MC sample"
-    printf "\n\t%-9s  %-40s\n" "0.7.2" "Single D tag -- run on background MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.8.1" "Simulation & Reconstruction -- generate background MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.8.2" "Single D tag -- run on background MC sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.9"   "[run on background MC of psi(4415)->DDPIPI(PHSP) @4600MeV]" # psi(4415) -> @4600MeV
+    printf "\n\t%-9s  %-40s\n" "0.9.1" "Simulation & Reconstruction -- generate background MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.9.2" "Single D tag -- run on background MC sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.10"   "[run on data @4360MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.10.1" "Single D tag -- data sample"
+
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -92,6 +105,7 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_D1_2420_D_PHSP_4360 20 20 . sigMC D1_2420 PHSP 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
            ./subjectAna.sh Sig_D1_2420_D_PHSP_4360
            ;;
 
@@ -136,6 +150,7 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_D1_2420_D_PHSP_4420 20 20 . sigMC D1_2420 PHSP 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
            ./subjectAna.sh Sig_D1_2420_D_PHSP_4420
            ;;
 
@@ -180,6 +195,7 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_D1_2420_D_PHSP_4600 20 20 . sigMC D1_2420 PHSP 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
            ./subjectAna.sh Sig_D1_2420_D_PHSP_4600
            ;;
 
@@ -224,6 +240,7 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_psi_3770_PI_PI_PHSP_4360 20 20 . sigMC psi_3770 PHSP 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
            ./subjectAna.sh Sig_psi_3770_PI_PI_PHSP_4360
            ;;
 
@@ -268,6 +285,7 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_psi_3770_PI_PI_PHSP_4420 20 20 . sigMC psi_3770 PHSP 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
            ./subjectAna.sh Sig_psi_3770_PI_PI_PHSP_4420
            ;;
 
@@ -312,6 +330,7 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Sig_psi_3770_PI_PI_PHSP_4600 20 20 . sigMC psi_3770 PHSP 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
            ./subjectAna.sh Sig_psi_3770_PI_PI_PHSP_4600
            ;;
 
@@ -356,6 +375,7 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Bkg_PHSP_PHSP_4360 20 20 . bkgMC PHSP PHSP 4360
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
            ./subjectAna.sh Bkg_PHSP_PHSP_4360
            ;;
 
@@ -400,6 +420,7 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Bkg_PHSP_PHSP_4420 20 20 . bkgMC PHSP PHSP 4420
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
            ./subjectAna.sh Bkg_PHSP_PHSP_4420
            ;;
 
@@ -444,7 +465,37 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Bkg_PHSP_PHSP_4600 20 20 . bkgMC PHSP PHSP 4600
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
            ./subjectAna.sh Bkg_PHSP_PHSP_4600
+           ;;
+
+    # --------------------------
+    #  0.10 run on data @4360MeV
+    # --------------------------
+
+    0.10) echo "data @4600MeV..."
+         echo "--> E_{CMS}: 4358.260MeV"
+         echo "--> Energy Spread: 1.97MeV"
+         echo "--> Luminosity: 55.18pb^{-1}"
+         echo "--> RunNo: 30616~31279"
+         ;;
+
+    0.10.1) echo "Single D tag -- run on data sample..."
+           mkdir -p scripts/data/4360
+           cd scripts/data/4360
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_sig" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_sig
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_sig ./jobs_sig
+           fi
+           mkdir -p /besfs/users/$USER/DDPIPI/v0.1/data/4360
+           cd jobs_sig
+           rm -rf data*.txt
+           cp -rf $HOME/bes/DDPIPI/v0.1/python/make_data.py ./
+           cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
+           ./make_data.py /bes3fs/offline/data/664p01/xyz/4360/dst 30616 31279 4360
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_data/subjectAna.sh ./
+           rm -rf *boss* 
+           ./subjectAna.sh data 30616 31279
            ;;
 
 esac

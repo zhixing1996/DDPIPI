@@ -38,7 +38,7 @@ DDecayAlg::DDecayAlg(const std::string& name, ISvcLocator* pSvcLocator) :
         declareProperty("DMode", m_DModes);
         declareProperty("IsMonteCarlo", m_isMonteCarlo = true);
         declareProperty("UsePID", m_pid = true);
-        declareProperty("Debug", m_debug = false);
+        declareProperty("Debug", m_debug = true);
 }
 
 StatusCode DDecayAlg::initialize() {
@@ -55,7 +55,6 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple->addItem("runNo", m_runNo);
             status = m_tuple->addItem("evtNo", m_evtNo);
             status = m_tuple->addItem("flag1", m_flag1);
-            status = m_tuple->addItem("beamE", m_beamE);
             status = m_tuple->addItem("n_trkD", m_n_trkD, 0, 5); // number of members should locates in 0~5
             status = m_tuple->addIndexedItem("rawp4_Dtrk", m_n_trkD, 4, m_rawp4_Dtrk); // four members array
             status = m_tuple->addIndexedItem("p4_Dtrk", m_n_trkD, 4, m_p4_Dtrk);
@@ -69,6 +68,7 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple->addItem("n_othertrks", m_n_othertrks, 0, 20);
             status = m_tuple->addIndexedItem("rawp4_otherMdctrk", m_n_othertrks, 6, m_rawp4_otherMdctrk);
             status = m_tuple->addIndexedItem("rawp4_otherMdcKaltrk", m_n_othertrks, 6, m_rawp4_otherMdcKaltrk);
+            status = m_tuple->addItem("charge_otherMdctrk", m_charge_otherMdctrk, 0, 10);
             status = m_tuple->addItem("n_othershws", m_n_othershws, 0, 50);
             status = m_tuple->addIndexedItem("rawp4_othershw", m_n_othershws, 4, m_rawp4_othershw);
             status = m_tuple->addItem("n_count", m_n_count); // multi-counting D in one event
@@ -115,9 +115,6 @@ StatusCode DDecayAlg::execute() {
     int decay_3 = eventHeader->flag1()%1000;
     if (m_debug) std::cout << " flg " << decay_1 << "     " << decay_2 << "     " << decay_3 << std::endl;
 
-    // get beam energy
-    // getBeamEnergy(); // have some problems for data running
-
     // record all McTruth info
     if (runNo < 0 && m_isMonteCarlo) stat_McTruth = saveMcTruthInfo();
     if (runNo < 0 && stat_McTruth == false) std::cout << "There are some errors when recording McTruth Info in event: " << evtNo << std::endl;
@@ -141,7 +138,6 @@ void DDecayAlg::clearVariables() {
     runNo = 0;
     evtNo = 0;
     flag1 = 0;
-    beam_energy = -999;
 
     // McTruth info
     for (int i = 0; i < 100; i++) {
@@ -205,6 +201,7 @@ void DDecayAlg::clearVariables() {
             m_rawp4_otherMdcKaltrk[i][j] = -999;
         }
     }
+    charge_otherMdctrk = 0;
     n_othershws = 0;
     m_n_othershws = 0;
     for (int i = 0; i < 50; i++) {
@@ -223,39 +220,6 @@ void DDecayAlg::clearVariables() {
     stat_saveCandD = false;
     stat_saveOthertrks = false;
     stat_saveOthershws = false;
-}
-
-void DDecayAlg::getBeamEnergy() {
-    std::cout << "check1_1" << std::endl;
-    if (runNo > 0) {
-        char stmt[400];
-        snprintf(stmt, 1024,
-                "select BER_PRB, BPR_PRB"
-                "from RunParams where run_number = %d", runNo);
-        std::cout << "check1_2" << std::endl;
-        DatabaseRecordVector res;
-        IDatabaseSvc* dbsvc;
-        std::cout << "check1_3" << std::endl;
-        // read database use service
-        Gaudi::svcLocator()->service("DatabaseSvc", dbsvc, true); // ?????????????????
-        std::cout << "check1_4" << std::endl;
-        int row_no = dbsvc->query("run", stmt, res); // ????????????????
-        std::cout << "check1_5" << std::endl;
-        if (row_no != 0) {
-            DatabaseRecord* records = res[0];
-            double E_E = 0, E_P = 0;
-            E_E = records->GetDouble("BER_PRB");
-            E_P = records->GetDouble("BPR_PRB");
-            beam_energy = E_E + E_P;
-            std::cout << "check for beamE:" << beam_energy << std::endl;
-        }
-        std::cout << "check1_6" << std::endl;
-    }
-    else {
-        beam_energy = -1;
-    }
-    if (m_debug) std::cout << " beam energy " << beam_energy << std::endl;
-    std::cout << "check1_7" << std::endl;
 }
 
 bool DDecayAlg::saveMcTruthInfo() {
@@ -553,6 +517,7 @@ bool DDecayAlg::saveOthertrks() {
             }
             rawp4_otherMdctrk[i][4] = mdcTrk->chi2();
             rawp4_otherMdctrk[i][5] = mdcTrk->stat(); // stat: status
+            charge_otherMdctrk = mdcTrk->charge();
             rawp4_otherMdcKaltrk[i][4] = mdcKalTrk->charge();
             rawp4_otherMdcKaltrk[i][5] = 2;
         }
@@ -598,7 +563,6 @@ void DDecayAlg::recordVariables() {
     m_runNo = runNo;
     m_evtNo = evtNo;
     m_flag1 = flag1;
-    m_beamE = beam_energy;
 
     // save McTruth info
     if (m_runNo < 0 && m_isMonteCarlo) {
@@ -636,6 +600,7 @@ void DDecayAlg::recordVariables() {
             m_rawp4_otherMdctrk[i][j] = rawp4_otherMdctrk[i][j];
         }
     }
+    m_charge_otherMdctrk = charge_otherMdctrk;
     m_n_othershws = n_othershws;
     for (int i = 0; i < m_n_othershws; i++) {
         for (int j = 0; j < 4; j++) {
