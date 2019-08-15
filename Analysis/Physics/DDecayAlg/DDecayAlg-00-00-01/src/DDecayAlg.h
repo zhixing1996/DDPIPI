@@ -68,7 +68,6 @@ class DDecayAlg : public Algorithm {
         bool m_debug;
 
         // judgement variables
-        bool stat_McTruth;
         bool stat_DTagTool;
         bool stat_tagSD;
         bool stat_saveCandD;
@@ -80,7 +79,7 @@ class DDecayAlg : public Algorithm {
         int evtNo;
         long flag1;
 
-        // McTruth Info
+        // All McTruth info
         int pdgid[100];
         int motheridx[100];
         int idxmc;
@@ -88,6 +87,24 @@ class DDecayAlg : public Algorithm {
         Vp4 pAll;
         Vint pdg;
         Vint mother;
+
+        // Dstst McTruth info
+        double p4_pip[4];
+        double p4_pim[4];
+        double p4_D1[4];
+        double p4_D2[4];
+        double p4_Dstst[4];
+
+        // psi(3770) McTruth info
+        double p4_pip_psi[4];
+        double p4_pim_psi[4];
+        double p4_psi[4];
+        double p4_Dp_psi[4];
+        double p4_Dm_psi[4];
+
+        // DpDm McTruth info
+        int DpId;
+        int DmId;
 
         // DTagTool
         EvtRecDTagCol::iterator dtag_iter_end;
@@ -114,15 +131,11 @@ class DDecayAlg : public Algorithm {
         double mDcand;
         int n_count;
 
-        // Ntuple info
-        NTuple::Tuple* m_tuple;
+        // Ntuple1 info
+        NTuple::Tuple* m_tuple1;
         NTuple::Item<int> m_runNo;
         NTuple::Item<int> m_evtNo;
         NTuple::Item<int> m_flag1;
-        NTuple::Item<int> m_idxmc;
-        NTuple::Array<int> m_pdgid;
-        NTuple::Array<int> m_motheridx;
-        NTuple::Matrix<double> m_p4_alltrk;
         NTuple::Item<int> m_n_trkD;
         NTuple::Matrix<double> m_rawp4_Dtrk;
         NTuple::Matrix<double> m_p4_Dtrk;
@@ -133,18 +146,73 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_charm;
         NTuple::Item<double> m_chi2_vf;
         NTuple::Item<double> m_chi2_kf;
+        NTuple::Item<int> m_n_count;
+
+        // Ntuple2 info
+        NTuple::Tuple* m_tuple2;
+        NTuple::Item<int> m_runNo_otherTrk;
+        NTuple::Item<int> m_evtNo_otherTrk;
+        NTuple::Item<int> m_flag1_otherTrk;
         NTuple::Item<int> m_n_othertrks;
         NTuple::Matrix<double> m_rawp4_otherMdctrk;
         NTuple::Matrix<double> m_rawp4_otherMdcKaltrk;
         NTuple::Item<int> m_charge_otherMdctrk;
+
+        // Ntuple3 info
+        NTuple::Tuple* m_tuple3;
+        NTuple::Item<int> m_runNo_otherShw;
+        NTuple::Item<int> m_evtNo_otherShw;
+        NTuple::Item<int> m_flag1_otherShw;
         NTuple::Item<int> m_n_othershws;
         NTuple::Matrix<double> m_rawp4_othershw;
-        NTuple::Item<int> m_n_count;
+
+        // Ntuple4 info
+        NTuple::Tuple* m_tuple4;
+        NTuple::Item<int> m_runNo_allTruth;
+        NTuple::Item<int> m_evtNo_allTruth;
+        NTuple::Item<int> m_flag1_allTruth;
+        NTuple::Item<int> m_idxmc;
+        NTuple::Array<int> m_pdgid;
+        NTuple::Array<int> m_motheridx;
+        NTuple::Matrix<double> m_p4_alltrk;
+
+        // Ntuple5 info
+        NTuple::Tuple* m_tuple5;
+        NTuple::Item<int> m_runNo_DststTruth;
+        NTuple::Item<int> m_evtNo_DststTruth;
+        NTuple::Item<int> m_flag1_DststTruth;
+        NTuple::Array<double> m_p4_pip;
+        NTuple::Array<double> m_p4_pim;
+        NTuple::Array<double> m_p4_Dstst;
+        NTuple::Array<double> m_p4_D1; // D comes from D1_2420
+        NTuple::Array<double> m_p4_D2; // D comes out of D1_2420
+
+        // Ntuple6 info
+        NTuple::Tuple* m_tuple6;
+        NTuple::Item<int> m_runNo_PsiTruth;
+        NTuple::Item<int> m_evtNo_PsiTruth;
+        NTuple::Item<int> m_flag1_PsiTruth;
+        NTuple::Array<double> m_p4_pip_psi;
+        NTuple::Array<double> m_p4_pim_psi;
+        NTuple::Array<double> m_p4_psi;
+        NTuple::Array<double> m_p4_Dp_psi;
+        NTuple::Array<double> m_p4_Dm_psi;
+
+        // Ntuple7 info
+        NTuple::Tuple* m_tuple7;
+        NTuple::Item<int> m_runNo_DpDmTruth;
+        NTuple::Item<int> m_evtNo_DpDmTruth;
+        NTuple::Item<int> m_flag1_DpDmTruth;
+        NTuple::Item<int> m_Id_Dp;
+        NTuple::Item<int> m_Id_Dm;
 
         // functions
         void clearVariables();
         void recordVariables();
-        bool saveMcTruthInfo();
+        void saveAllMcTruthInfo();
+        void saveDststMcTruthInfo();
+        void savePsi_3770McTruthInfo();
+        void saveDpDmMcTruthInfo();
         bool useDTagTool();
         bool tagSingleD();
         bool saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon);
