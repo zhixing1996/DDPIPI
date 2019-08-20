@@ -775,13 +775,13 @@ case $option in
     #  0.19 run on inclusive MC (LLbar) @4600MeV
     # ------------------------------------------
 
-    0.18) echo "inclusive MC @4600MeV..."
+    0.19) echo "inclusive MC @4600MeV..."
          echo "--> E_{CMS}: 4599.530MeV"
          echo "--> Mode: Lambda_{c}Lambda_{c}bar"
          echo "--> Energy Spread: 2.20MeV"
          ;;
 
-    0.18.1) echo "Single D tag -- run on inclusive MC sample..."
+    0.19.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/LL/4600
            cd scripts/incMC/LL/4600
            if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_sig" ]; then
