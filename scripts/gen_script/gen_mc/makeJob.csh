@@ -66,7 +66,7 @@ echo "decayMode : ${decaymode}"
 
 # set gen mode
 set genmode = $argv[7]
-echo "decayMode : ${genmode}"
+echo "genMode : ${genmode}"
 
 # set energypoints
 set energy = $argv[8]

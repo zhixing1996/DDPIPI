@@ -27,6 +27,26 @@ def search(allfile, root, target):
                 allfile.append(path)
     return allfile
 
+def group_files_by_num(name_list, num_total):
+    groups = []
+    group = []
+    num_sum = 0
+
+    for name in name_list:
+        if int(num_sum) < int(num_total):
+            group.append(name)
+            num_sum = num_sum + 1
+        else:
+            groups.append(group)
+            group = []
+            num_sum = 0
+            group.append(name)
+            num_sum = num_sum + 1
+
+        if name == name_list[-1]:
+            groups.append(group)    
+    return groups
+
 def duration(seconds):
     seconds = long(round(seconds))
     minutes, seconds = divmod(seconds, 60)
