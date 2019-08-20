@@ -623,7 +623,8 @@ case $option in
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
            rm -rf *boss* 
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4360/rootfile/*root 
-           ./subjectAna.sh Inc_D_D_PI_PI_DD_4360
+           echo "/besfs/groups/psip/psipgroup/664p01-MC/4360/res/DD/raw/2.dst is a bad file, please remove it from jobOption!"
+           # ./subjectAna.sh Inc_D_D_PI_PI_DD_4360
            ;;
 
     # ------------------------------------------

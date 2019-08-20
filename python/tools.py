@@ -73,8 +73,8 @@ def duration(seconds):
             duration.append('%d second' % seconds + 's'*(seconds != 1))
     return ' '.join(duration)
 
-def set_root_style(stat=0, grid=0, PadTopMargin=0.08,
-                   PadLeftMargin=0.15):
+def set_root_style(stat=0, grid=0, PadTopMargin=0.08, PadBottomMargin=0.08,
+                   PadLeftMargin=0.15, PadRightMargin=0.15):
     # must be used in the beginning
     ROOT.gROOT.SetBatch(1)
     ROOT.gROOT.Reset()
@@ -96,7 +96,9 @@ def set_root_style(stat=0, grid=0, PadTopMargin=0.08,
     ROOT.gStyle.SetFrameLineWidth(1)
 
     ROOT.gStyle.SetPadTopMargin(PadTopMargin) 
+    ROOT.gStyle.SetPadBottomMargin(PadBottomMargin) 
     ROOT.gStyle.SetPadLeftMargin(PadLeftMargin) 
+    ROOT.gStyle.SetPadRightMargin(PadRightMargin) 
     ROOT.gStyle.SetPadRightMargin(0.05) 
 
     ROOT.gStyle.SetLabelSize(0.02, "XYZ") 

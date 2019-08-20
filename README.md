@@ -34,7 +34,7 @@ This is only need to be done for the first time after clone the code:
 
 > ./build.sh
 
-## Submit jobs
+## Submit Simulation and Reconstruction jobs(MC) and Generate root files(MC and data)
 
 > ./submit.sh
 
