@@ -41,7 +41,7 @@ case $option in
          echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89^{-1}(4420MeV), 566.93^{-1}(4600MeV)"
          ;;
 
-    0.1.1) echo "Getting samples -- synthesize root files..."
+    0.1.1) echo "Get samples -- synthesizing root files..."
            cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rootfile
            rm -rf sigMC_D1_2420_4360.root
            hadd sigMC_D1_2420_4360.root *.root

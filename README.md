@@ -38,6 +38,10 @@ This is only need to be done for the first time after clone the code:
 
 > ./submit.sh
 
+## Execute and submit analysis jobs
+
+> ./analysis.sh
+
 ## For developers 
  
 - Fork the code with your personal github ID. See [details](https://help.github.com/articles/fork-a-repo/)
