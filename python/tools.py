@@ -80,6 +80,7 @@ def set_root_style(stat=0, grid=0, PadTopMargin=0.08, PadBottomMargin=0.08,
     ROOT.gROOT.Reset()
 
     ROOT.gStyle.SetOptTitle(0) 
+    ROOT.gStyle.SetOptStat(0)
     ROOT.gStyle.SetTitleFillColor(0) 
     ROOT.gStyle.SetTitleBorderSize(0)
     

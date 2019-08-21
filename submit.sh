@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-# Main driver to submit jobs
+# Main driver to submit simulation and reconstruction jobs as well as generating root files 
 # Author Maoqiang Jing <jingmq@ihep.ac.cn>
 # Created [2019-08-10 Sat 08:33]
 
 
 usage() {
-    printf "NAME\n\tsubmit.sh - Main driver to submit jobs\n"
+    printf "NAME\n\tsubmit.sh - Main driver to submit simulation and reconstruction jobs as well as generating root files\n"
     printf "\nSYNOPSIS\n"
     printf "\n\t%5-5s\n" "./submit.sh [OPTION]"
     printf "\nOPTIONS\n"
