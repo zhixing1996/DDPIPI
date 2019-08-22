@@ -16,6 +16,9 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.1.2" "Study cuts -- plot chi2 of kinematic fit of single tagged D"
     printf "\n\t%-9s  %-40s\n" "0.1.3" "Get samples -- apply cuts"
 
+    printf "\n\t%-9s  %-40s\n" "0.2"   "[Signal and background study]"
+    printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figures -- draw recoiling mass of Dpipi"
+
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -31,10 +34,10 @@ fi
 case $option in
 
     # ----------------------------------------
-    #  0.1 pretreatment of data and MC samples
+    #  0.1 Pretreatment of data and MC samples
     # ----------------------------------------
 
-    0.1) echo "pretreating of data and MC samples..."
+    0.1) echo "Pretreating of data and MC samples..."
          echo "--> Samples: data, signal MC, PHSP MC, inclusive MC"
          echo "--> E_{CMS}: 4360MeV, 4420MeV, 460MeV"
          echo "--> Event Number: 1,000,000(signal MC,PHSP MC, inclusive MC)"
@@ -125,6 +128,23 @@ case $option in
            mkdir jobs.err
            cp $HOME/bes/DDPIPI/v0.1/jobs/apply_cuts . 
            hep_sub -g physics apply_cuts -o jobs.out -e jobs.err
+           ;;
+
+    # --------------------------------
+    #  0.2 Signal and background study
+    # --------------------------------
+
+    0.2) echo "Signal and background study..."
+         echo "--> Samples: data, signal MC, PHSP MC, inclusive MC"
+         echo "--> E_{CMS}: 4360MeV, 4420MeV, 460MeV"
+         echo "--> Event Number: 1,000,000(signal MC,PHSP MC, inclusive MC)"
+         echo "--> RunNo: 30616~31279(4360MeV), 31327~31390+36773~38140(4420MeV), 35227~36213(4600MeV)"
+         echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89^{-1}(4420MeV), 566.93^{-1}(4600MeV)"
+         ;;
+
+    0.2.1) echo "Draw figures -- drawing recoiling mass of Dpipi..."
+           cd python
+           python plot_rm_Dpipi.py
            ;;
 
 esac
