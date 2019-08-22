@@ -18,6 +18,7 @@ usage() {
 
     printf "\n\t%-9s  %-40s\n" "0.2"   "[Signal and background study]"
     printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figures -- draw recoiling mass of Dpipi"
+    printf "\n\t%-9s  %-40s\n" "0.2.2" "Process samples -- divide samples into rm_Dpipi signal region and sideband region"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -145,6 +146,10 @@ case $option in
     0.2.1) echo "Draw figures -- drawing recoiling mass of Dpipi..."
            cd python
            python plot_rm_Dpipi.py
+           ;;
+    0.2.2) echo "Process samples -- dividing samples into rm_Dpipi signal and sideband region..."
+           cd python
+           python divide_samples.py
            ;;
 
 esac

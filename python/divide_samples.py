@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-Plot recoiling mass of tagged D
+Divide samples into rm_Dpipi signal and sideband region
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
 __copyright__ = "Copyright (c) Maoqiang JING"
-__created__ = "[2019-08-22 Thu 15:32]"
+__created__ = "[2019-08-22 Thu 23:38]"
 
 import ROOT
 from ROOT import TCanvas, gStyle, TTree, TChain
@@ -34,9 +34,6 @@ def sel(path, ecms, sample, mode, region):
     t = chain.CopyTree(cut)
 
     path_out = '/besfs/users/jingmq/DDPIPI/v0.1/'+sample+'/'+mode+'/'+str(ecms)+'/'
-    if not os.path.exists(path_out):
-        os.makedirs(path_out)
-    
     t.SaveAs(path_out+sample+'_'+mode+'_'+str(ecms)+'_selected'+'_'+region+'.root')
     print '--> End of processing file: ' + path
 
