@@ -382,11 +382,11 @@ case $option in
     0.7.1) echo "Simulation & Reconstruction -- generate background MC sample..."
            mkdir -p scripts/bkgMC/PHSP/4360
            cd scripts/bkgMC/PHSP/4360
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_bkg" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_bkg
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_bkg ./jobs_bkg
            fi
-           cd jobs_sig
+           cd jobs_bkg
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/rtraw
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/dst
            rm -rf jobOptions*txt
@@ -403,7 +403,7 @@ case $option in
 
     0.7.2) echo "Single D tag -- run on background MC sample..."
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/rootfile
-           cd scripts/bkgMC/PHSP/4360/jobs_sig
+           cd scripts/bkgMC/PHSP/4360/jobs_bkg
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Bkg_PHSP_PHSP_4360 20 20 . bkgMC PHSP PHSP 4360
@@ -428,11 +428,11 @@ case $option in
     0.8.1) echo "Simulation & Reconstruction -- generate background MC sample..."
            mkdir -p scripts/bkgMC/PHSP/4420
            cd scripts/bkgMC/PHSP/4420
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_bkg" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_bkg
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_bkg ./jobs_bkg
            fi
-           cd jobs_sig
+           cd jobs_bkg
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/rtraw
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/dst
            rm -rf jobOptions*txt
@@ -449,7 +449,7 @@ case $option in
 
     0.8.2) echo "Single D tag -- run on background MC sample..."
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/rootfile
-           cd scripts/bkgMC/PHSP/4420/jobs_sig
+           cd scripts/bkgMC/PHSP/4420/jobs_bkg
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Bkg_PHSP_PHSP_4420 20 20 . bkgMC PHSP PHSP 4420
@@ -475,11 +475,11 @@ case $option in
     0.9.1) echo "Simulation & Reconstruction -- generate background MC sample..."
            mkdir -p scripts/bkgMC/PHSP/4600
            cd scripts/bkgMC/PHSP/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_bkg" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_bkg
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_bkg ./jobs_bkg
            fi
-           cd jobs_sig
+           cd jobs_bkg
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/rtraw
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/dst
            rm -rf jobOptions*txt
@@ -496,7 +496,7 @@ case $option in
 
     0.9.2) echo "Single D tag -- run on background MC sample..."
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/rootfile
-           cd scripts/bkgMC/PHSP/4600/jobs_sig
+           cd scripts/bkgMC/PHSP/4600/jobs_bkg
            rm -rf dstlist.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
            ./makeJob.csh Bkg_PHSP_PHSP_4600 20 20 . bkgMC PHSP PHSP 4600
@@ -520,12 +520,12 @@ case $option in
     0.10.1) echo "Single D tag -- run on data sample..."
            mkdir -p scripts/data/4360
            cd scripts/data/4360
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_data" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_data
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_data ./jobs_data
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4360
-           cd jobs_sig
+           cd jobs_data
            rm -rf data*.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_data.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
@@ -550,12 +550,12 @@ case $option in
     0.11.1) echo "Single D tag -- run on data sample..."
            mkdir -p scripts/data/4420
            cd scripts/data/4420
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_data" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_data
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_data ./jobs_data
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4420
-           cd jobs_sig
+           cd jobs_data
            rm -rf data*.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_data.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
@@ -581,12 +581,12 @@ case $option in
     0.12.1) echo "Single D tag -- run on data sample..."
            mkdir -p scripts/data/4600
            cd scripts/data/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_data" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_data
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_data ./jobs_data
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4600
-           cd jobs_sig
+           cd jobs_data
            rm -rf data*.txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_data.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
@@ -610,12 +610,12 @@ case $option in
     0.13.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/DD/4360
            cd scripts/incMC/DD/4360
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_inc" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_inc
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4360/rootfile
-           cd jobs_sig 
+           cd jobs_inc
            rm -rf Inc_D_D_PI_PI_DD_4360_*txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_inc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
@@ -640,12 +640,12 @@ case $option in
     0.14.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/qq/4360
            cd scripts/incMC/qq/4360
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_inc" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_inc
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4360/rootfile
-           cd jobs_sig 
+           cd jobs_inc
            rm -rf Inc_D_D_PI_PI_qq_4360_*txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_inc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
@@ -669,12 +669,12 @@ case $option in
     0.15.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/DD/4420
            cd scripts/incMC/DD/4420
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_inc" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_inc
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4420/rootfile
-           cd jobs_sig 
+           cd jobs_inc
            rm -rf Inc_D_D_PI_PI_DD_4420_*txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_inc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
@@ -698,12 +698,12 @@ case $option in
     0.16.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/qq/4420
            cd scripts/incMC/qq/4420
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_inc" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_inc
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4420/rootfile
-           cd jobs_sig 
+           cd jobs_inc 
            rm -rf Inc_D_D_PI_PI_qq_4420_*txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_inc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
@@ -727,12 +727,12 @@ case $option in
     0.17.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/DD/4600
            cd scripts/incMC/DD/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_inc" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_inc
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4600/rootfile
-           cd jobs_sig 
+           cd jobs_inc
            rm -rf Inc_D_D_PI_PI_DD_4600_*txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_inc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
@@ -756,12 +756,12 @@ case $option in
     0.18.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/qq/4600
            cd scripts/incMC/qq/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_inc" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_inc
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4600/rootfile
-           cd jobs_sig 
+           cd jobs_inc 
            rm -rf Inc_D_D_PI_PI_qq_4600_*txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_inc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./
@@ -785,12 +785,12 @@ case $option in
     0.19.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/LL/4600
            cd scripts/incMC/LL/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_sig ./jobs_sig
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_inc" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_inc
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/LL/4600/rootfile
-           cd jobs_sig 
+           cd jobs_inc
            rm -rf Inc_D_D_PI_PI_LL_4600_*txt
            cp -rf $HOME/bes/DDPIPI/v0.1/python/make_inc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.1/python/tools.py ./

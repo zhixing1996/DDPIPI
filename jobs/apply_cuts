@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ../python
+cd $HOME/bes/DDPIPI/v0.1/python
 # signal MC: D1_2420
 mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4360
 rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4360/*.root

@@ -112,11 +112,18 @@ case $option in
            python plot_chi2_DKF.py
            ;;
     0.1.3) echo "Get samples -- applying cuts..."
-           cd jobs
+           mkdir -p scripts/ana/sel
+           cd scripts/ana/sel
+           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana" ]; then
+               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana
+               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
            rm -rf jobs.out
            rm -rf jobs.err
            mkdir jobs.out
            mkdir jobs.err
+           cp $HOME/bes/DDPIPI/v0.1/jobs/apply_cuts . 
            hep_sub -g physics apply_cuts -o jobs.out -e jobs.err
            ;;
 
