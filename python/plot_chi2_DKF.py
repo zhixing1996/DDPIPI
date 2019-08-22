@@ -85,7 +85,7 @@ def plot(data_path, sigMC_path, leg_title, ecms, arrow_bottom, arrow_top):
     xmax = 100
     xbins = 100
     ytitle = "Events"
-    xtitle = "#chi^{2}(K#pi#pi)"
+    xtitle = "#chi^{2}(K^{-}#pi^{+}#pi^{+})"
     h_data = TH1F('data', 'data', xbins, xmin, xmax)
     h_sigMC = TH1F('sigMC', 'sigMC', xbins, xmin, xmax)
 
