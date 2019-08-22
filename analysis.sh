@@ -114,9 +114,9 @@ case $option in
     0.1.3) echo "Get samples -- applying cuts..."
            mkdir -p scripts/ana/sel
            cd scripts/ana/sel
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana ./jobs_ana
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana ./jobs_ana
            fi
            cd jobs_ana
            rm -rf jobs.out

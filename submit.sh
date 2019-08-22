@@ -106,9 +106,9 @@ case $option in
     0.1.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
            mkdir -p scripts/sigMC/D1_2420/4360
            cd scripts/sigMC/D1_2420/4360
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4360/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4360/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4360/jobs_sig ./jobs_sig
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4360/jobs_sig" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4360/jobs_sig
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4360/jobs_sig ./jobs_sig
            fi
            cd jobs_sig
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rtraw
@@ -152,9 +152,9 @@ case $option in
     0.2.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
            mkdir -p scripts/sigMC/D1_2420/4420
            cd scripts/sigMC/D1_2420/4420
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4420/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4420/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4420/jobs_sig ./jobs_sig
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4420/jobs_sig" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4420/jobs_sig
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4420/jobs_sig ./jobs_sig
            fi
            cd jobs_sig
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4420/rtraw
@@ -198,9 +198,9 @@ case $option in
     0.3.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
            mkdir -p scripts/sigMC/D1_2420/4600
            cd scripts/sigMC/D1_2420/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4600/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4600/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4600/jobs_sig ./jobs_sig
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4600/jobs_sig" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4600/jobs_sig
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/D1_2420/4600/jobs_sig ./jobs_sig
            fi
            cd jobs_sig
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4600/rtraw
@@ -244,9 +244,9 @@ case $option in
     0.4.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
            mkdir -p scripts/sigMC/psi_3770/4360
            cd scripts/sigMC/psi_3770/4360
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4360/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4360/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4360/jobs_sig ./jobs_sig
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4360/jobs_sig" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4360/jobs_sig
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4360/jobs_sig ./jobs_sig
            fi
            cd jobs_sig
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4360/rtraw
@@ -290,9 +290,9 @@ case $option in
     0.5.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
            mkdir -p scripts/sigMC/psi_3770/4420
            cd scripts/sigMC/psi_3770/4420
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4420/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4420/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4420/jobs_sig ./jobs_sig
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4420/jobs_sig" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4420/jobs_sig
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4420/jobs_sig ./jobs_sig
            fi
            cd jobs_sig
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4420/rtraw
@@ -336,9 +336,9 @@ case $option in
     0.6.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
            mkdir -p scripts/sigMC/psi_3770/4600
            cd scripts/sigMC/psi_3770/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4600/jobs_sig" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4600/jobs_sig
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4600/jobs_sig ./jobs_sig
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4600/jobs_sig" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4600/jobs_sig
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/sigMC/psi_3770/4600/jobs_sig ./jobs_sig
            fi
            cd jobs_sig
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4600/rtraw
@@ -382,9 +382,9 @@ case $option in
     0.7.1) echo "Simulation & Reconstruction -- generate background MC sample..."
            mkdir -p scripts/bkgMC/PHSP/4360
            cd scripts/bkgMC/PHSP/4360
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_bkg" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_bkg
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_bkg ./jobs_bkg
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_bkg" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_bkg
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4360/jobs_bkg ./jobs_bkg
            fi
            cd jobs_bkg
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/rtraw
@@ -428,9 +428,9 @@ case $option in
     0.8.1) echo "Simulation & Reconstruction -- generate background MC sample..."
            mkdir -p scripts/bkgMC/PHSP/4420
            cd scripts/bkgMC/PHSP/4420
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_bkg" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_bkg
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_bkg ./jobs_bkg
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_bkg" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_bkg
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4420/jobs_bkg ./jobs_bkg
            fi
            cd jobs_bkg
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/rtraw
@@ -475,9 +475,9 @@ case $option in
     0.9.1) echo "Simulation & Reconstruction -- generate background MC sample..."
            mkdir -p scripts/bkgMC/PHSP/4600
            cd scripts/bkgMC/PHSP/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_bkg" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_bkg
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_bkg ./jobs_bkg
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_bkg" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_bkg
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/bkgMC/PHSP/4600/jobs_bkg ./jobs_bkg
            fi
            cd jobs_bkg
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/rtraw
@@ -520,9 +520,9 @@ case $option in
     0.10.1) echo "Single D tag -- run on data sample..."
            mkdir -p scripts/data/4360
            cd scripts/data/4360
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_data" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_data
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_data ./jobs_data
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_data" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_data
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4360/jobs_data ./jobs_data
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4360
            cd jobs_data
@@ -550,9 +550,9 @@ case $option in
     0.11.1) echo "Single D tag -- run on data sample..."
            mkdir -p scripts/data/4420
            cd scripts/data/4420
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_data" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_data
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_data ./jobs_data
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_data" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_data
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4420/jobs_data ./jobs_data
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4420
            cd jobs_data
@@ -581,9 +581,9 @@ case $option in
     0.12.1) echo "Single D tag -- run on data sample..."
            mkdir -p scripts/data/4600
            cd scripts/data/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_data" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_data
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_data ./jobs_data
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_data" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_data
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_data/data/4600/jobs_data ./jobs_data
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4600
            cd jobs_data
@@ -610,9 +610,9 @@ case $option in
     0.13.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/DD/4360
            cd scripts/incMC/DD/4360
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_inc" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_inc
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_inc ./jobs_inc
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_inc" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_inc
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4360/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4360/rootfile
            cd jobs_inc
@@ -640,9 +640,9 @@ case $option in
     0.14.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/qq/4360
            cd scripts/incMC/qq/4360
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_inc" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_inc
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_inc ./jobs_inc
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_inc" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_inc
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4360/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4360/rootfile
            cd jobs_inc
@@ -669,9 +669,9 @@ case $option in
     0.15.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/DD/4420
            cd scripts/incMC/DD/4420
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_inc" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_inc
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_inc ./jobs_inc
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_inc" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_inc
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4420/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4420/rootfile
            cd jobs_inc
@@ -698,9 +698,9 @@ case $option in
     0.16.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/qq/4420
            cd scripts/incMC/qq/4420
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_inc" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_inc
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_inc ./jobs_inc
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_inc" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_inc
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4420/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4420/rootfile
            cd jobs_inc 
@@ -727,9 +727,9 @@ case $option in
     0.17.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/DD/4600
            cd scripts/incMC/DD/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_inc" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_inc
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_inc ./jobs_inc
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_inc" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_inc
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/DD/4600/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4600/rootfile
            cd jobs_inc
@@ -756,9 +756,9 @@ case $option in
     0.18.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/qq/4600
            cd scripts/incMC/qq/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_inc" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_inc
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_inc ./jobs_inc
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_inc" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_inc
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/qq/4600/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4600/rootfile
            cd jobs_inc 
@@ -785,9 +785,9 @@ case $option in
     0.19.1) echo "Single D tag -- run on inclusive MC sample..."
            mkdir -p scripts/incMC/LL/4600
            cd scripts/incMC/LL/4600
-           if [ ! -d "/besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_inc" ]; then
-               mkdir -p /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_inc
-               ln -s /besfs/groups/tauqcd/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_inc ./jobs_inc
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_inc" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_inc
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/incMC/LL/4600/jobs_inc ./jobs_inc
            fi
            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/LL/4600/rootfile
            cd jobs_inc

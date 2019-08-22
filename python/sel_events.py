@@ -82,9 +82,7 @@ def apply_cuts(t_std, t_otherTrk, cms, t):
         pPim = TLorentzVector(0,0,0,0)
 
         t_otherTrk.GetEntry(ientry)
-        n_count = 0
         for iTrk1 in range(t_otherTrk.n_othertrks):
-            n_count += 1
             if t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+4] != 1:
                 continue
             if t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+5] != 2:
@@ -107,8 +105,6 @@ def apply_cuts(t_std, t_otherTrk, cms, t):
                     m_m_Dpi[0] = (pD+pPim).M()
                 elif t_std.charm < 0 and t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+4] == 1:
                     m_m_Dpi[0] = (pD+pPip).M()
-                else:
-                    continue
                 m_m_Dpipi[0] = (pD+pPip+pPim).M()
                 m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
                 m_chi2_vf[0] = t_std.chi2_vf
