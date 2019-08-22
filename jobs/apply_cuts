@@ -1,0 +1,67 @@
+#!/bin/bash
+
+cd ../python
+# signal MC: D1_2420
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4360
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4360/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rootfile/sigMC_D1_2420_4360.root /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4360/sigMC_D1_2420_4360_selected.root 4.358
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4420
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4420/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4420/rootfile/sigMC_D1_2420_4420.root /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4420/sigMC_D1_2420_4420_selected.root 4.415
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4600
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4600/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4600/rootfile/sigMC_D1_2420_4600.root /besfs/users/$USER/DDPIPI/v0.1/sigMC/D1_2420/4600/sigMC_D1_2420_4600_selected.root 4.599
+# signal MC: psi_3770
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4360
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4360/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4360/rootfile/sigMC_psi_3770_4360.root /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4360/sigMC_psi_3770_4360_selected.root 4.358
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4420
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4420/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4420/rootfile/sigMC_psi_3770_4420.root /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4420/sigMC_psi_3770_4420_selected.root 4.415
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4600
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4600/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4600/rootfile/sigMC_psi_3770_4600.root /besfs/users/$USER/DDPIPI/v0.1/sigMC/psi_3770/4600/sigMC_psi_3770_4600_selected.root 4.599
+# background MC: PHSP
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4360
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4360/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/rootfile/bkgMC_PHSP_4360.root /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4360/bkgMC_PHSP_4360_selected.root 4.358
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4420
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4420/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/rootfile/bkgMC_PHSP_4420.root /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4420/bkgMC_PHSP_4420_selected.root 4.415
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4600
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4600/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/rootfile/bkgMC_PHSP_4600.root /besfs/users/$USER/DDPIPI/v0.1/bkgMC/PHSP/4600/bkgMC_PHSP_4600_selected.root 4.599
+# data
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/data/4360
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/data/4360/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4360/data_4360.root /besfs/users/$USER/DDPIPI/v0.1/data/4360/data_4360_selected.root 4.358
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/data/4420
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/data/4420/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4420/data_4420.root /besfs/users/$USER/DDPIPI/v0.1/data/4420/data_4420_selected.root 4.415
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/data/4600
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/data/4600/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4600/data_4600.root /besfs/users/$USER/DDPIPI/v0.1/data/4600/data_4600_selected.root 4.599
+# inclusive MC: DD
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/incMC/DD/4360
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/incMC/DD/4360/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4360/rootfile/incMC_DD_4360.root /besfs/users/$USER/DDPIPI/v0.1/incMC/DD/4360/incMC_DD_4360_selected.root 4.358
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/incMC/DD/4420
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/incMC/DD/4420/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4420/rootfile/incMC_DD_4420.root /besfs/users/$USER/DDPIPI/v0.1/incMC/DD/4420/incMC_DD_4420_selected.root 4.415
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/incMC/DD/4600
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/incMC/DD/4600/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4600/rootfile/incMC_DD_4600.root /besfs/users/$USER/DDPIPI/v0.1/incMC/DD/4600/incMC_DD_4600_selected.root 4.599
+# inclusive MC: qq
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/incMC/qq/4360
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/incMC/qq/4360/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4360/rootfile/incMC_qq_4360.root /besfs/users/$USER/DDPIPI/v0.1/incMC/qq/4360/incMC_qq_4360_selected.root 4.358
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/incMC/qq/4420
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/incMC/qq/4420/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4420/rootfile/incMC_qq_4420.root /besfs/users/$USER/DDPIPI/v0.1/incMC/qq/4420/incMC_qq_4420_selected.root 4.415
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/incMC/qq/4600
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/incMC/qq/4600/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4600/rootfile/incMC_qq_4600.root /besfs/users/$USER/DDPIPI/v0.1/incMC/qq/4600/incMC_qq_4600_selected.root 4.599
+# inclusive MC: LL
+mkdir -p /besfs/users/$USER/DDPIPI/v0.1/incMC/LL/4600
+rm -rf /besfs/users/$USER/DDPIPI/v0.1/incMC/LL/4600/*.root
+python sel_events.py /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/LL/4600/rootfile/incMC_LL_4600.root /besfs/users/$USER/DDPIPI/v0.1/incMC/LL/4600/incMC_LL_4600_selected.root 4.599

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Main driver to execute and submit analysis jobs
-# Author Maoqiang Jing <jingmq@ihep.ac.cn>
+# Author Maoqiang Jing <$USER@ihep.ac.cn>
 # Created [2019-08-21 Wed 10:00]
 
 
@@ -13,7 +13,8 @@ usage() {
 
     printf "\n\t%-9s  %-40s\n" "0.1"   "[Pretreatment of data and MC samples]"
     printf "\n\t%-9s  %-40s\n" "0.1.1" "Get samples -- synthesize root files"
-    printf "\n\t%-9s  %-40s\n" "0.1.2" ""
+    printf "\n\t%-9s  %-40s\n" "0.1.2" "Study cuts -- plot chi2 of kinematic fit of single tagged D"
+    printf "\n\t%-9s  %-40s\n" "0.1.3" "Get samples -- apply cuts"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -42,58 +43,58 @@ case $option in
          ;;
 
     0.1.1) echo "Get samples -- synthesizing root files..."
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rootfile
            rm -rf sigMC_D1_2420_4360.root
            hadd sigMC_D1_2420_4360.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4420/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4420/rootfile
            rm -rf sigMC_D1_2420_4420.root
            hadd sigMC_D1_2420_4420.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4600/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/D1_2420/4600/rootfile
            rm -rf sigMC_D1_2420_4600.root
            hadd sigMC_D1_2420_4600.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/psi_3770/4360/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4360/rootfile
            rm -rf sigMC_psi_3770_4360.root
            hadd sigMC_psi_3770_4360.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/psi_3770/4420/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4420/rootfile
            rm -rf sigMC_psi_3770_4420.root
            hadd sigMC_psi_3770_4420.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/psi_3770/4600/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/sigMC/psi_3770/4600/rootfile
            rm -rf sigMC_psi_3770_4600.root
            hadd sigMC_psi_3770_4600.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4360/rootfile
            rm -rf bkgMC_PHSP_4360.root
            hadd bkgMC_PHSP_4360.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4420/rootfile
            rm -rf bkgMC_PHSP_4420.root
            hadd bkgMC_PHSP_4420.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/bkgMC/PHSP/4600/rootfile
            rm -rf bkgMC_PHSP_4600.root
            hadd bkgMC_PHSP_4600.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/incMC/DD/4360/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4360/rootfile
            rm -rf incMC_DD_4360.root
            hadd incMC_DD_4360.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/incMC/DD/4420/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4420/rootfile
            rm -rf incMC_DD_4420.root
            hadd incMC_DD_4420.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/incMC/DD/4600/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/DD/4600/rootfile
            rm -rf incMC_DD_4600.root
            hadd incMC_DD_4600.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/incMC/qq/4360/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4360/rootfile
            rm -rf incMC_qq_4360.root
            hadd incMC_qq_4360.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/incMC/qq/4420/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4420/rootfile
            rm -rf incMC_qq_4420.root
            hadd incMC_qq_4420.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/incMC/qq/4600/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/qq/4600/rootfile
            rm -rf incMC_qq_4600.root
            hadd incMC_qq_4600.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/incMC/LL/4600/rootfile
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/LL/4600/rootfile
            rm -rf incMC_LL_4600.root
            hadd incMC_LL_4600.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/data/4360
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4360
            rm -rf data_4360.root
            hadd data_4360.root *.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/data/4420
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4420
            rm -rf data_4420.root
            hadd data_4420_temp1.root data31*.root
            hadd data_4420_temp2.root data36*.root
@@ -101,12 +102,22 @@ case $option in
            hadd data_4420_temp4.root data38*.root
            hadd data_4420.root data_4420_temp*.root
            rm -rf data_4420_temp*.root
-           cd /scratchfs/bes/jingmq/bes/DDPIPI/v0.1/data/4600
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4600
            rm -rf data_4600.root
            hadd data_4600.root *.root
            ;;
 
-    0.1.2) echo "..."
+    0.1.2) echo "Study cuts -- plotting chi2 of kinematic fit of single tagged D..."
+           cd python
+           python plot_chi2_DKF.py
+           ;;
+    0.1.3) echo "Get samples -- applying cuts..."
+           cd jobs
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           hep_sub -g physics apply_cuts -o jobs.out -e jobs.err
            ;;
 
 esac
