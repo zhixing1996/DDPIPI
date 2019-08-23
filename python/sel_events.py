@@ -82,13 +82,13 @@ def apply_cuts(t_std, t_otherTrk, cms, t):
         pPim = TLorentzVector(0,0,0,0)
 
         t_otherTrk.GetEntry(ientry)
-        for iTrk1 in range(t_otherTrk.n_othertrks):
+        for iTrk1 in range(20):
             if t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+4] != 1:
                 continue
             if t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+5] != 2:
                 continue
             pPip.SetPxPyPzE(t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+0], t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+1], t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+2], t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+3])
-            for iTrk2 in range(t_otherTrk.n_othertrks):
+            for iTrk2 in range(20):
                 if t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+4] != -1:
                     continue
                 if t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+5] != 2:
