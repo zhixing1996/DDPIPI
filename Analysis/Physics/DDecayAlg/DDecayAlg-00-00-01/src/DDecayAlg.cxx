@@ -861,7 +861,7 @@ void DDecayAlg::recordVariables() {
     // save all McTruth info
     if (m_runNo < 0 && m_isMonteCarlo) {
         m_idxmc = idxmc;
-        for (int i = 0; i < m_idxmc; i++) {
+        for (int i = 0; i < 100; i++) {
             m_pdgid[i] = pdgid[i];
             m_motheridx[i] = motheridx[i];
             for (int j = 0; j < 4; j++) {
@@ -898,12 +898,12 @@ void DDecayAlg::recordVariables() {
 
     // save DTag inDststfo
     m_n_trkD = n_trkD;
-    for (int i = 0; i < m_n_trkD; i++) {
+    for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 4; j++) m_rawp4_Dtrk[i][j] = rawp4_Dtrk[i][j];
         for (int j = 0; j < 4; j++) m_p4_Dtrk[i][j] = p4_Dtrk[i][j];
     }
     m_n_shwD = n_shwD;
-    for (int i = 0; i < m_n_shwD; i++) {
+    for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 4; j++) {
             m_rawp4_Dshw[i][j] = rawp4_Dshw[i][j];
             m_p4_Dshw[i][j] = p4_Dshw[i][j];
@@ -914,7 +914,7 @@ void DDecayAlg::recordVariables() {
     m_chi2_vf = chi2_vf;
     m_chi2_kf = chi2_kf;
     m_n_othertrks = n_othertrks;
-    for (int i = 0; i < m_n_othertrks; i++) {
+    for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 6; j++) {
             m_rawp4_otherMdcKaltrk[i][j] = rawp4_otherMdcKaltrk[i][j];
             m_rawp4_otherMdctrk[i][j] = rawp4_otherMdctrk[i][j];
@@ -922,7 +922,7 @@ void DDecayAlg::recordVariables() {
     }
     m_charge_otherMdctrk = charge_otherMdctrk;
     m_n_othershws = n_othershws;
-    for (int i = 0; i < m_n_othershws; i++) {
+    for (int i = 0; i < 50; i++) {
         for (int j = 0; j < 4; j++) {
             m_rawp4_othershw[i][j] = rawp4_othershw[i][j];
         }
