@@ -34,7 +34,11 @@ def sel(path, ecms, sample, mode, region):
     t = chain.CopyTree(cut)
 
     path_out = '/besfs/users/jingmq/DDPIPI/v0.1/'+sample+'/'+mode+'/'+str(ecms)+'/'
-    t.SaveAs(path_out+sample+'_'+mode+'_'+str(ecms)+'_selected'+'_'+region+'.root')
+    if sample == 'data':
+        file_out = sample+'_'+str(ecms)+'_selected'+'_'+region+'.root'
+    else:
+        file_out = sample+'_'+mode+'_'+str(ecms)+'_selected'+'_'+region+'.root'
+    t.SaveAs(path_out + file_out)
     print '--> End of processing file: ' + path
 
 if __name__ == '__main__':

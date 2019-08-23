@@ -13,8 +13,9 @@ from ROOT import TFile, TH1F, TLegend, TArrow
 import sys, os
 import logging
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
-gStyle.SetOptTitle(0)
-gStyle.SetOptTitle(0)
+gStyle.SetOptTitle(0) # quench title
+gStyle.SetPadTickX(1) # dicide on boxing on or not of x and y axis  
+gStyle.SetPadTickY(1) # dicide on boxing on or not of x and y axis
 
 def set_legend(legend, h1, h2, title):
     legend.AddEntry(h1, 'data')
@@ -32,7 +33,7 @@ def rm_Dpipi_fill(t1, t2, entries1, entries2, h1, h2):
         t2.GetEntry(ientry2)
         h2.Fill(t2.m_rm_Dpipi)
 
-def set_histo_style(h1, h2, xtitle, ytitle):
+def set_histo_style(h1, h2, xtitle, ytitle, ymax):
     h1.GetXaxis().SetNdivisions(509)
     h1.GetYaxis().SetNdivisions(504)
     h1.SetLineWidth(2)
@@ -49,6 +50,7 @@ def set_histo_style(h1, h2, xtitle, ytitle):
     h1.GetXaxis().CenterTitle()
     h1.GetYaxis().SetTitle(ytitle)
     h1.GetYaxis().CenterTitle()
+    h1.GetYaxis().SetRangeUser(0, int(ymax))
     h1.SetLineColor(1)
     h2.SetLineColor(2)
 
@@ -59,7 +61,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, sigMC_path, leg_title, ecms, scale):
+def plot(data_path, sigMC_path, leg_title, ecms, scale, ymax):
     try:
         f_data = TFile(data_path)
         f_sigMC = TFile(sigMC_path)
@@ -83,14 +85,13 @@ def plot(data_path, sigMC_path, leg_title, ecms, scale):
     h_data = TH1F('data', 'data', xbins, xmin, xmax)
     h_sigMC = TH1F('sigMC', 'sigMC', xbins, xmin, xmax)
 
-    set_histo_style(h_data, h_sigMC, xtitle, ytitle)
+    set_histo_style(h_data, h_sigMC, xtitle, ytitle, ymax)
     rm_Dpipi_fill(t_data, t_sigMC, entries_data, entries_sigMC, h_data, h_sigMC)
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
     
-    h_sigMC.Scale(h_data.GetEntries()/h_sigMC.GetEntries())
-    # h_sigMC.Scale(float(scale))
+    h_sigMC.Scale(float(scale))
     h_data.Draw('ep')
     h_sigMC.Draw('samee')
 
@@ -106,18 +107,21 @@ if __name__ == '__main__':
     leg_title_4360 = '(a)'
     ecms_4360 = 4360
     scale_4360 = 0.003
-    plot(data_path_4360, sigMC_path_4360, leg_title_4360, ecms_4360, scale_4360)
+    ymax_4360 = 1100
+    plot(data_path_4360, sigMC_path_4360, leg_title_4360, ecms_4360, scale_4360, ymax_4360)
 
     data_path_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4420/data_4420_selected.root'
     sigMC_path_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/sigMC_D1_2420_4420_selected.root'
     leg_title_4420 = '(b)'
     ecms_4420 = 4420
     scale_4420 = 0.005
-    plot(data_path_4420, sigMC_path_4420, leg_title_4420, ecms_4420, scale_4420)
+    ymax_4420 = 2600
+    plot(data_path_4420, sigMC_path_4420, leg_title_4420, ecms_4420, scale_4420, ymax_4420)
 
     data_path_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4600/data_4600_selected.root'
     sigMC_path_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600/sigMC_D1_2420_4600_selected.root'
     leg_title_4600 = '(c)'
     ecms_4600 = 4600
-    scale_4600 = 0.003
-    plot(data_path_4600, sigMC_path_4600, leg_title_4600, ecms_4600, scale_4600)
+    scale_4600 = 0.0035
+    ymax_4600 = 1500
+    plot(data_path_4600, sigMC_path_4600, leg_title_4600, ecms_4600, scale_4600, ymax_4600)
