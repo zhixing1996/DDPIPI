@@ -262,21 +262,6 @@ void DDecayAlg::clearVariables() {
     m_flag1_DpDmTruth = 0;
 
     // all McTruth info
-    for (int i = 0; i < 100; i++) {
-        pdgid[i] = 0;
-        motheridx[i] = 0;
-        for (int j = 0; j < 4; j++) {
-            p4_alltrk[i][j] = -999;
-        }
-    }
-    idxmc = 0;
-    for (int i = 0; i < 100; i++) {
-        m_pdgid[i] = 0;
-        m_motheridx[i] = 0;
-        for (int j = 0; j < 4; j++) {
-            m_p4_alltrk[i][j] = -999;
-        }
-    }
     m_idxmc = 0;
     pAll.clear();
     pdg.clear();
@@ -319,22 +304,6 @@ void DDecayAlg::clearVariables() {
     n_trkD = 0;
     m_n_shwD = 0;
     n_shwD = 0;
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 4; j++) {
-            m_rawp4_Dtrk[i][j] = -999;
-            m_p4_Dtrk[i][j] = -999;
-            rawp4_Dtrk[i][j] = -999;
-            p4_Dtrk[i][j] = -999;
-        }
-    }
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 4; j++) {
-            m_rawp4_Dshw[i][j] = -999;
-            rawp4_Dshw[i][j] = -999;
-            m_p4_Dshw[i][j] = -999;
-            p4_Dshw[i][j] = -999;
-        }
-    }
     MODE = -999;
     mode = -999;
     m_mode = -999;
@@ -344,26 +313,8 @@ void DDecayAlg::clearVariables() {
     m_chi2_vf = -999;
     chi2_kf = -999;
     m_chi2_kf = -999;
-    n_othertrks = 0;
-    m_n_othertrks = 0;
     mDcand = 0;
-    for (int i = 0; i < 20; i++) {
-        for (int j = 0; j < 6; j++) {
-            rawp4_otherMdctrk[i][j] = -999;
-            rawp4_otherMdcKaltrk[i][j] = -999;
-            m_rawp4_otherMdctrk[i][j] = -999;
-            m_rawp4_otherMdcKaltrk[i][j] = -999;
-        }
-    }
     charge_otherMdctrk = 0;
-    n_othershws = 0;
-    m_n_othershws = 0;
-    for (int i = 0; i < 50; i++) {
-        for (int j = 0; j < 4; j++) {
-            rawp4_othershw[i][j] = -999;
-            m_rawp4_othershw[i][j] = -999;
-        }
-    }
     n_count = 0;
     m_n_count = 0;
 
@@ -390,12 +341,12 @@ void DDecayAlg::saveAllMcTruthInfo() {
         for (int i = 0; i < pdg.size(); i++) {
             pdgid[i] = pdg[i];
             motheridx[i] = mother[i];
-            p4_alltrk[i][0] = pAll[i].px();
-            p4_alltrk[i][1] = pAll[i].py();
-            p4_alltrk[i][2] = pAll[i].pz();
-            p4_alltrk[i][3] = pAll[i].e();
+            m_p4_alltrk[i][0] = pAll[i].px();
+            m_p4_alltrk[i][1] = pAll[i].py();
+            m_p4_alltrk[i][2] = pAll[i].pz();
+            m_p4_alltrk[i][3] = pAll[i].e();
             if (m_debug) {
-                if (fabs(pdg[i]) == 411 && fabs(mother[i]) == 10413) std::cout << " m_alltrkP4:  " << p4_alltrk[i][3] << std::endl;
+                if (fabs(pdg[i]) == 411 && fabs(mother[i]) == 10413) std::cout << " m_alltrkP4:  " << m_p4_alltrk[i][3] << std::endl;
             }
         }
         idxmc = pdg.size();
@@ -626,14 +577,14 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
                 KalTrk->setPidType(RecMdcKalTrack::kaon);
                 if (m_debug) std::cout << " filling kaon track " << std::endl;
                 vwtrkpara_charge.push_back(WTrackParameter(mass[3], KalTrk->getZHelixK(), KalTrk->getZErrorK()));
-                for (int k = 0; k < 4; k++) rawp4_Dtrk[j][k] = KalTrk->p4(mass[3])[k]; // MDC gives three momentum, combined with mass, we can get energy which means four momentum
+                for (int k = 0; k < 4; k++) m_rawp4_Dtrk[j][k] = KalTrk->p4(mass[3])[k]; // MDC gives three momentum, combined with mass, we can get energy which means four momentum
             }
             // to fill Pion candidates
             else {
                 KalTrk->setPidType(RecMdcKalTrack::pion);
                 if (m_debug) std::cout << " filling pion track " << std::endl;
                 vwtrkpara_charge.push_back(WTrackParameter(mass[2], KalTrk->getZHelix(), KalTrk->getZError()));
-                for (int k = 0; k < 4; k++) rawp4_Dtrk[j][k] = KalTrk->p4(mass[2])[k];
+                for (int k = 0; k < 4; k++) m_rawp4_Dtrk[j][k] = KalTrk->p4(mass[2])[k];
             }
         }
 
@@ -671,7 +622,7 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
             Gm_Mom.setMag(gTrk->energy());
             HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
             vwtrkpara_photon.push_back( WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE())); // dE, error of the gamma energy
-            for (int k = 0; k < 4; k++) rawp4_Dshw[j][k] = Gm_p4[k];
+            for (int k = 0; k < 4; k++) m_rawp4_Dshw[j][k] = Gm_p4[k];
         }
 
         // to check the vector in each dtag item
@@ -763,11 +714,11 @@ double DDecayAlg::fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon
         kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
         if (m_debug) std::cout << "  " << mode << "  fit chisq:   " << kf_chi2 << std::endl;
         for (int i = 0; i < n_trkD; i++) {
-            for (int j = 0; j < 4; j++) p4_Dtrk[i][j] = kmfit->pfit(i)[j];
+            for (int j = 0; j < 4; j++) m_p4_Dtrk[i][j] = kmfit->pfit(i)[j];
         }
         if (m_debug) std::cout << " fill D1trkP4 successfully for mode !!! " << mode << std::endl;
         for (int i = 0; i < n_shwD; i++) {
-            for (int j = 0; j < 4; j++) p4_Dshw[i][j] = kmfit->pfit(i + n_trkD)[j];
+            for (int j = 0; j < 4; j++) m_p4_Dshw[i][j] = kmfit->pfit(i + n_trkD)[j];
         }
         if (m_debug) std::cout << " recorded the four momentum of showers and tracks in tagged D " << std::endl;
     }
@@ -780,6 +731,7 @@ bool DDecayAlg::saveOthertrks() {
     if (m_debug) std::cout << " total charged tracks : " << evtRecEvent->totalCharged() << std::endl;
     if (m_debug) std::cout << " other track number : " << othertracks.size() << " for mode " << mode << std::endl;
     DTagTool dtagTool;
+    m_n_othertrks = 0;
     // to find the good pions
     for (int i = 0; i < othertracks.size(); i++) {
         if (!(dtagTool.isGoodTrack(othertracks[i]))) continue;
@@ -788,27 +740,27 @@ bool DDecayAlg::saveOthertrks() {
             RecMdcKalTrack *mdcKalTrk = othertracks[i]->mdcKalTrack();
             mdcKalTrk->setPidType(RecMdcKalTrack::pion);
             for (int j = 0; j < 4; j++) {
-                rawp4_otherMdctrk[i][j] = mdcTrk->p4(mass[2])[j];
-                rawp4_otherMdcKaltrk[i][j] = mdcKalTrk->p4(mass[2])[j];
+                m_rawp4_otherMdctrk[m_n_othertrks][j] = mdcTrk->p4(mass[2])[j];
+                m_rawp4_otherMdcKaltrk[m_n_othertrks][j] = mdcKalTrk->p4(mass[2])[j];
             }
-            rawp4_otherMdctrk[i][4] = mdcTrk->chi2();
-            rawp4_otherMdctrk[i][5] = mdcTrk->stat(); // stat: status
+            m_rawp4_otherMdctrk[m_n_othertrks][4] = mdcTrk->chi2();
+            m_rawp4_otherMdctrk[m_n_othertrks][5] = mdcTrk->stat(); // stat: status
             charge_otherMdctrk = mdcTrk->charge();
-            rawp4_otherMdcKaltrk[i][4] = mdcKalTrk->charge();
-            rawp4_otherMdcKaltrk[i][5] = 2;
+            m_rawp4_otherMdcKaltrk[m_n_othertrks][4] = mdcKalTrk->charge();
+            m_rawp4_otherMdcKaltrk[m_n_othertrks][5] = 2;
         }
         if (dtagTool.isKaon(othertracks[i])) {
             RecMdcKalTrack *mdcKalTrk = othertracks[i]->mdcKalTrack();
             mdcKalTrk->setPidType(RecMdcKalTrack::kaon);
-            for (int j = 0; j < 4; j++) rawp4_otherMdcKaltrk[i][j] = mdcKalTrk->p4(mass[3])[j];
-            rawp4_otherMdcKaltrk[i][4] = mdcKalTrk->charge();
-            rawp4_otherMdcKaltrk[i][5] = 3;
+            for (int j = 0; j < 4; j++) m_rawp4_otherMdcKaltrk[m_n_othertrks][j] = mdcKalTrk->p4(mass[3])[j];
+            m_rawp4_otherMdcKaltrk[m_n_othertrks][4] = mdcKalTrk->charge();
+            m_rawp4_otherMdcKaltrk[m_n_othertrks][5] = 3;
         }
-        n_othertrks++;
-        if (n_othertrks >= 20) return false;
+        m_n_othertrks++;
+        if (m_n_othertrks >= 20) return false;
     }
-    if (m_debug) std::cout << " recorded " << n_othertrks << " other charged good tracks " << std::endl;
-    if (n_othertrks >= 20) return false;
+    if (m_debug) std::cout << " recorded " << m_n_othertrks << " other charged good tracks " << std::endl;
+    if (m_n_othertrks >= 20) return false;
     else return true;
 }
 
@@ -818,6 +770,7 @@ bool DDecayAlg::saveOthershws() {
     if (m_debug) std::cout << " total showers : " << evtRecEvent->totalNeutral() <<endl;
     if (m_debug) std::cout << " other shower numbers : " << othershowers.size() << " for mode " << mode << std::endl;
     DTagTool dtagTool;
+    m_n_othershws = 0;
     // to find the good photons in the othershowers list
     for (int i = 0; i < othershowers.size(); i++) {
         if (!(dtagTool.isGoodShower(othershowers[i]))) continue;
@@ -826,12 +779,12 @@ bool DDecayAlg::saveOthershws() {
         Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
         Gm_Mom.setMag(gTrk->energy());
         HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
-        for (int j = 0; j < 4; j++) rawp4_othershw[i][j] = Gm_p4[j];
-        n_othershws++;
-        if (n_othershws >= 50) return false;
+        for (int j = 0; j < 4; j++) m_rawp4_othershw[m_n_othershws][j] = Gm_p4[j];
+        m_n_othershws++;
+        if (m_n_othershws >= 50) return false;
     }
-    if (m_debug) std::cout << " recorded " << n_othershws << " other good showers " << std::endl;
-    if (n_othershws >= 50) return false;
+    if (m_debug) std::cout << " recorded " << m_n_othershws << " other good showers " << std::endl;
+    if (m_n_othershws >= 50) return false;
     else return true;
 }
 
@@ -861,13 +814,6 @@ void DDecayAlg::recordVariables() {
     // save all McTruth info
     if (m_runNo < 0 && m_isMonteCarlo) {
         m_idxmc = idxmc;
-        for (int i = 0; i < 100; i++) {
-            m_pdgid[i] = pdgid[i];
-            m_motheridx[i] = motheridx[i];
-            for (int j = 0; j < 4; j++) {
-                m_p4_alltrk[i][j] = p4_alltrk[i][j];
-            }
-        }
     }
 
     // save Dstst McTruth info
@@ -898,35 +844,12 @@ void DDecayAlg::recordVariables() {
 
     // save DTag inDststfo
     m_n_trkD = n_trkD;
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 4; j++) m_rawp4_Dtrk[i][j] = rawp4_Dtrk[i][j];
-        for (int j = 0; j < 4; j++) m_p4_Dtrk[i][j] = p4_Dtrk[i][j];
-    }
     m_n_shwD = n_shwD;
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 4; j++) {
-            m_rawp4_Dshw[i][j] = rawp4_Dshw[i][j];
-            m_p4_Dshw[i][j] = p4_Dshw[i][j];
-        }
-    }
     m_mode = MODE;
     m_charm = charm;
     m_chi2_vf = chi2_vf;
     m_chi2_kf = chi2_kf;
-    m_n_othertrks = n_othertrks;
-    for (int i = 0; i < 20; i++) {
-        for (int j = 0; j < 6; j++) {
-            m_rawp4_otherMdcKaltrk[i][j] = rawp4_otherMdcKaltrk[i][j];
-            m_rawp4_otherMdctrk[i][j] = rawp4_otherMdctrk[i][j];
-        }
-    }
     m_charge_otherMdctrk = charge_otherMdctrk;
-    m_n_othershws = n_othershws;
-    for (int i = 0; i < 50; i++) {
-        for (int j = 0; j < 4; j++) {
-            m_rawp4_othershw[i][j] = rawp4_othershw[i][j];
-        }
-    }
     m_n_count = n_count;
 
     m_tuple1->write();
