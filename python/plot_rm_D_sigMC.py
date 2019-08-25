@@ -68,7 +68,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(signal, sideband, leg_title, ecms, scale, ymax, xmax):
+def plot(signal, sideband, leg_title, ecms, scale, ymax, xmax, mode):
     try:
         f_signal = TFile(signal)
         f_sideband = TFile(sideband)
@@ -107,7 +107,7 @@ def plot(signal, sideband, leg_title, ecms, scale, ymax, xmax):
     set_legend(legend, h_signal, h_sideband, h_subtract, leg_title, ecms)
     legend.Draw()
 
-    mbc.SaveAs('./figs/rm_D_'+str(ecms)+'_sigMC.pdf')
+    mbc.SaveAs('./figs/rm_D_'+str(ecms)+'_sigMC_'+mode+'.pdf')
 
 if __name__ == '__main__':
     signal = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/sigMC_D1_2420_4360_selected_signal.root'
@@ -117,7 +117,8 @@ if __name__ == '__main__':
     scale = 0.25
     xmax = 2.5
     ymax = 60000
-    plot(signal, sideband, leg_title, ecms, scale, ymax, xmax)
+    mode = 'D1_2420'
+    plot(signal, sideband, leg_title, ecms, scale, ymax, xmax, mode)
 
     signal = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/sigMC_D1_2420_4420_selected_signal.root'
     sideband = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/sigMC_D1_2420_4420_selected_sideband.root'
@@ -126,7 +127,8 @@ if __name__ == '__main__':
     scale = 0.25
     xmax = 2.6
     ymax = 60000
-    plot(signal, sideband, leg_title, ecms, scale, ymax, xmax)
+    mode = 'D1_2420'
+    plot(signal, sideband, leg_title, ecms, scale, ymax, xmax, mode)
 
     signal = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600/sigMC_D1_2420_4600_selected_signal.root'
     sideband = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600/sigMC_D1_2420_4600_selected_sideband.root'
@@ -135,4 +137,35 @@ if __name__ == '__main__':
     scale = 0.25
     xmax = 2.75
     ymax = 57000
-    plot(signal, sideband, leg_title, ecms, scale, ymax, xmax)
+    mode = 'D1_2420'
+    plot(signal, sideband, leg_title, ecms, scale, ymax, xmax, mode)
+
+    signal = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/4360/sigMC_psi_3770_4360_selected_signal.root'
+    sideband = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/4360/sigMC_psi_3770_4360_selected_sideband.root'
+    leg_title = '(a)'
+    ecms = 4360
+    scale = 0.25
+    xmax = 2.6
+    ymax = 60000
+    mode = 'psi_3770'
+    plot(signal, sideband, leg_title, ecms, scale, ymax, xmax, mode)
+
+    signal = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/4420/sigMC_psi_3770_4420_selected_signal.root'
+    sideband = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/4420/sigMC_psi_3770_4420_selected_sideband.root'
+    leg_title = '(a)'
+    ecms = 4420
+    scale = 0.25
+    xmax = 2.6
+    ymax = 60000
+    mode = 'psi_3770'
+    plot(signal, sideband, leg_title, ecms, scale, ymax, xmax, mode)
+
+    signal = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/4600/sigMC_psi_3770_4600_selected_signal.root'
+    sideband = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/4600/sigMC_psi_3770_4600_selected_sideband.root'
+    leg_title = '(a)'
+    ecms = 4600
+    scale = 0.25
+    xmax = 2.8
+    ymax = 60000
+    mode = 'psi_3770'
+    plot(signal, sideband, leg_title, ecms, scale, ymax, xmax, mode)
