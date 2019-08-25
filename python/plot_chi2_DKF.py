@@ -109,26 +109,26 @@ def plot(data_path, sigMC_path, leg_title, ecms, arrow_bottom, arrow_top):
     mbc.SaveAs('./figs/chi2_KF_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    data_path_4360 = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/data/4360/data_4360.root'
-    sigMC_path_4360 = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rootfile/sigMC_D1_2420_4360.root'
-    leg_title_4360 = '(a)'
-    ecms_4360 = 4360
-    arrow_bottom_4360 = 2500
-    arrow_top_4360 = 20000
-    plot(data_path_4360, sigMC_path_4360, leg_title_4360, ecms_4360, arrow_bottom_4360, arrow_top_4360)
+    data_path = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/data/4360/data_4360.root'
+    sigMC_path = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rootfile/sigMC_D1_2420_4360.root'
+    leg_title = '(a)'
+    ecms = 4360
+    arrow_bottom = 2500
+    arrow_top = 20000
+    plot(data_path, sigMC_path, leg_title, ecms, arrow_bottom, arrow_top)
 
-    data_path_4420 = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/data/4420/data_4420.root'
-    sigMC_path_4420 = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4420/rootfile/sigMC_D1_2420_4420.root'
-    leg_title_4420 = '(b)'
-    ecms_4420 = 4420
-    arrow_bottom_4420 = 5000
-    arrow_top_4420 = 50000
-    plot(data_path_4420, sigMC_path_4420, leg_title_4420, ecms_4420, arrow_bottom_4420, arrow_top_4420)
+    data_path = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/data/4420/data_4420.root'
+    sigMC_path = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4420/rootfile/sigMC_D1_2420_4420.root'
+    leg_title = '(b)'
+    ecms = 4420
+    arrow_bottom = 5000
+    arrow_top = 50000
+    plot(data_path, sigMC_path, leg_title, ecms, arrow_bottom, arrow_top)
 
-    data_path_4600 = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/data/4600/data_4600.root'
-    sigMC_path_4600 = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4600/rootfile/sigMC_D1_2420_4600.root'
-    leg_title_4600 = '(c)'
-    ecms_4600 = 4600
-    arrow_bottom_4600 = 2500
-    arrow_top_4600 = 20000
-    plot(data_path_4600, sigMC_path_4600, leg_title_4600, ecms_4600, arrow_bottom_4600, arrow_top_4600)
+    data_path = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/data/4600/data_4600.root'
+    sigMC_path = '/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4600/rootfile/sigMC_D1_2420_4600.root'
+    leg_title = '(c)'
+    ecms = 4600
+    arrow_bottom = 2500
+    arrow_top = 20000
+    plot(data_path, sigMC_path, leg_title, ecms, arrow_bottom, arrow_top)

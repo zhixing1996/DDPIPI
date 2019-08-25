@@ -101,72 +101,72 @@ def plot(signal_path, sideband_path, title, ecms, scale, xmax, ymax, mode):
     mbc.SaveAs('./figs/rm_D_'+str(ecms)+'_incMC'+mode+'.pdf')
 
 if __name__ == '__main__':
-    incqq_signal_4360 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4360/incMC_qq_4360_selected_signal.root'
-    incqq_sideband_4360 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4360/incMC_qq_4360_selected_sideband.root'
-    title_incqq_4360 = '(a)'
-    ecms_4360 = 4360
-    scale_4360 = 0.25
-    xmax_4360 = 2.5
-    ymax_incqq_4360 = 90
+    signal = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4360/incMC_qq_4360_selected_signal.root'
+    sideband = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4360/incMC_qq_4360_selected_sideband.root'
+    title = '(a)'
+    ecms = 4360
+    scale = 0.25
+    xmax = 2.5
+    ymax = 90
     mode = 'qq'
-    plot(incqq_signal_4360, incqq_sideband_4360, title_incqq_4360, ecms_4360, scale_4360, xmax_4360, ymax_incqq_4360, mode)
+    plot(signal, sideband, title, ecms, scale, xmax, ymax, mode)
 
-    incqq_signal_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4420/incMC_qq_4420_selected_signal.root'
-    incqq_sideband_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4420/incMC_qq_4420_selected_sideband.root'
-    title_incqq_4420 = '(b)'
-    ecms_4420 = 4420
-    scale_4420 = 0.25
-    xmax_4420 = 2.6
-    ymax_incqq_4420 = 500
+    signal = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4420/incMC_qq_4420_selected_signal.root'
+    sideband = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4420/incMC_qq_4420_selected_sideband.root'
+    title = '(b)'
+    ecms = 4420
+    scale = 0.25
+    xmax = 2.6
+    ymax = 500
     mode = 'qq'
-    plot(incqq_signal_4420, incqq_sideband_4420, title_incqq_4420, ecms_4420, scale_4420, xmax_4420, ymax_incqq_4420, mode)
+    plot(signal, sideband, title, ecms, scale, xmax, ymax, mode)
 
-    incqq_signal_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4600/incMC_qq_4600_selected_signal.root'
-    incqq_sideband_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4600/incMC_qq_4600_selected_sideband.root'
-    title_incqq_4600 = '(c)'
-    ecms_4600 = 4600
-    scale_4600 = 0.25
-    xmax_4600 = 2.75
-    ymax_incqq_4600 = 70
+    signal = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4600/incMC_qq_4600_selected_signal.root'
+    sideband = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/qq/4600/incMC_qq_4600_selected_sideband.root'
+    title = '(c)'
+    ecms = 4600
+    scale = 0.25
+    xmax = 2.75
+    ymax = 70
     mode = 'qq'
-    plot(incqq_signal_4600, incqq_sideband_4600, title_incqq_4600, ecms_4600, scale_4600, xmax_4600, ymax_incqq_4600, mode)
+    plot(signal, sideband, title, ecms, scale, xmax, ymax, mode)
 
-    incDD_signal_4360 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4360/incMC_DD_4360_selected_signal.root'
-    incDD_sideband_4360 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4360/incMC_DD_4360_selected_sideband.root'
-    title_incDD_4360 = '(d)'
-    ecms_4360 = 4360
-    scale_4360 = 0.25
-    xmax_4360 = 2.5
-    ymax_incDD_4360 = 50
+    signal = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4360/incMC_DD_4360_selected_signal.root'
+    sideband = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4360/incMC_DD_4360_selected_sideband.root'
+    title = '(d)'
+    ecms = 4360
+    scale = 0.25
+    xmax = 2.5
+    ymax = 50
     mode = 'DD'
-    plot(incDD_signal_4360, incDD_sideband_4360, title_incDD_4360, ecms_4360, scale_4360, xmax_4360, ymax_incDD_4360, mode)
+    plot(signal, sideband, title, ecms, scale, xmax, ymax, mode)
 
-    incDD_signal_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4420/incMC_DD_4420_selected_signal.root'
-    incDD_sideband_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4420/incMC_DD_4420_selected_sideband.root'
-    title_incDD_4420 = '(e)'
-    ecms_4420 = 4420
-    scale_4420 = 0.25
-    xmax_4420 = 2.6
-    ymax_incDD_4420 = 2600
+    signal = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4420/incMC_DD_4420_selected_signal.root'
+    sideband = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4420/incMC_DD_4420_selected_sideband.root'
+    title = '(e)'
+    ecms = 4420
+    scale = 0.25
+    xmax = 2.6
+    ymax = 2600
     mode = 'DD'
-    plot(incDD_signal_4420, incDD_sideband_4420, title_incDD_4420, ecms_4420, scale_4420, xmax_4420, ymax_incDD_4420, mode)
+    plot(signal, sideband, title, ecms, scale, xmax, ymax, mode)
 
-    incDD_signal_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4600/incMC_DD_4600_selected_signal.root'
-    incDD_sideband_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4600/incMC_DD_4600_selected_sideband.root'
-    title_incDD_4600 = '(f)'
-    ecms_4600 = 4600
-    scale_4600 = 0.25
-    xmax_4600 = 2.75
-    ymax_incDD_4600 = 900
+    signal = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4600/incMC_DD_4600_selected_signal.root'
+    sideband = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/DD/4600/incMC_DD_4600_selected_sideband.root'
+    title = '(f)'
+    ecms = 4600
+    scale = 0.25
+    xmax = 2.75
+    ymax = 900
     mode = 'DD'
-    plot(incDD_signal_4600, incDD_sideband_4600, title_incDD_4600, ecms_4600, scale_4600, xmax_4600, ymax_incDD_4600, mode)
+    plot(signal, sideband, title, ecms, scale, xmax, ymax, mode)
 
-    incLL_signal_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/LL/4600/incMC_LL_4600_selected_signal.root'
-    incLL_sideband_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/LL/4600/incMC_LL_4600_selected_sideband.root'
-    title_incLL_4600 = '(g)'
-    ecms_4600 = 4600
-    scale_4600 = 0.25
-    xmax_4600 = 2.75
-    ymax_incLL_4600 = 30
+    signal = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/LL/4600/incMC_LL_4600_selected_signal.root'
+    sideband = '/besfs/users/jingmq/DDPIPI/v0.1/incMC/LL/4600/incMC_LL_4600_selected_sideband.root'
+    title = '(g)'
+    ecms = 4600
+    scale = 0.25
+    xmax = 2.75
+    ymax = 30
     mode = 'LL'
-    plot(incLL_signal_4600, incLL_sideband_4600, title_incLL_4600, ecms_4600, scale_4600, xmax_4600, ymax_incLL_4600, mode)
+    plot(signal, sideband, title, ecms, scale, xmax, ymax, mode)

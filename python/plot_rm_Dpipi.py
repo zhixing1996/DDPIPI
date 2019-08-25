@@ -102,26 +102,26 @@ def plot(data_path, sigMC_path, leg_title, ecms, scale, ymax):
     mbc.SaveAs('./figs/rm_Dpipi_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    data_path_4360 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4360/data_4360_selected.root'
-    sigMC_path_4360 = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/sigMC_D1_2420_4360_selected.root'
-    leg_title_4360 = '(a)'
-    ecms_4360 = 4360
-    scale_4360 = 0.003
-    ymax_4360 = 1100
-    plot(data_path_4360, sigMC_path_4360, leg_title_4360, ecms_4360, scale_4360, ymax_4360)
+    data_path = '/besfs/users/jingmq/DDPIPI/v0.1/data/4360/data_4360_selected.root'
+    sigMC_path = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/sigMC_D1_2420_4360_selected.root'
+    leg_title = '(a)'
+    ecms = 4360
+    scale = 0.003
+    ymax = 1100
+    plot(data_path, sigMC_path, leg_title, ecms, scale, ymax)
 
-    data_path_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4420/data_4420_selected.root'
-    sigMC_path_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/sigMC_D1_2420_4420_selected.root'
-    leg_title_4420 = '(b)'
-    ecms_4420 = 4420
-    scale_4420 = 0.005
-    ymax_4420 = 2600
-    plot(data_path_4420, sigMC_path_4420, leg_title_4420, ecms_4420, scale_4420, ymax_4420)
+    data_path = '/besfs/users/jingmq/DDPIPI/v0.1/data/4420/data_4420_selected.root'
+    sigMC_path = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/sigMC_D1_2420_4420_selected.root'
+    leg_title = '(b)'
+    ecms = 4420
+    scale = 0.005
+    ymax = 2600
+    plot(data_path, sigMC_path, leg_title, ecms, scale, ymax)
 
-    data_path_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4600/data_4600_selected.root'
-    sigMC_path_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600/sigMC_D1_2420_4600_selected.root'
-    leg_title_4600 = '(c)'
-    ecms_4600 = 4600
-    scale_4600 = 0.0035
-    ymax_4600 = 1500
-    plot(data_path_4600, sigMC_path_4600, leg_title_4600, ecms_4600, scale_4600, ymax_4600)
+    data_path = '/besfs/users/jingmq/DDPIPI/v0.1/data/4600/data_4600_selected.root'
+    sigMC_path = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600/sigMC_D1_2420_4600_selected.root'
+    leg_title = '(c)'
+    ecms = 4600
+    scale = 0.0035
+    ymax = 1500
+    plot(data_path, sigMC_path, leg_title, ecms, scale, ymax)

@@ -125,41 +125,41 @@ def plot(data_path, data_sideband_path, bkgMC_path, sigMC_path, leg_title, ecms,
     mbc.SaveAs('./figs/rm_D_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    data_path_4360 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4360/data_4360_selected_signal.root'
-    data_sideband_path_4360 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4360/data_4360_selected_sideband.root'
-    bkgMC_path_4360 = '/besfs/users/jingmq/DDPIPI/v0.1/bkgMC/PHSP/4360/bkgMC_PHSP_4360_selected.root'
-    sigMC_path_4360 = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/sigMC_D1_2420_4360_selected.root'
-    leg_title_4360 = '(a)'
-    ecms_4360 = 4360
-    scale1_4360 = 0.25
-    scale2_4360 = 0.0014
-    scale3_4360 = 0.00035
-    xmax_4360 = 2.5
-    ymax_4360 = 500
-    plot(data_path_4360, data_sideband_path_4360, bkgMC_path_4360, sigMC_path_4360, leg_title_4360, ecms_4360, scale1_4360, scale2_4360, scale3_4360, ymax_4360, xmax_4360)
+    data_path = '/besfs/users/jingmq/DDPIPI/v0.1/data/4360/data_4360_selected_signal.root'
+    data_sideband_path = '/besfs/users/jingmq/DDPIPI/v0.1/data/4360/data_4360_selected_sideband.root'
+    bkgMC_path = '/besfs/users/jingmq/DDPIPI/v0.1/bkgMC/PHSP/4360/bkgMC_PHSP_4360_selected.root'
+    sigMC_path = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/sigMC_D1_2420_4360_selected.root'
+    leg_title = '(a)'
+    ecms = 4360
+    scale1 = 0.25
+    scale2 = 0.0014
+    scale3 = 0.00035
+    xmax = 2.5
+    ymax = 500
+    plot(data_path, data_sideband_path, bkgMC_path, sigMC_path, leg_title, ecms, scale1, scale2, scale3, ymax, xmax)
 
-    data_path_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4420/data_4420_selected_signal.root'
-    data_sideband_path_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4420/data_4420_selected_sideband.root'
-    bkgMC_path_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/bkgMC/PHSP/4420/bkgMC_PHSP_4420_selected.root'
-    sigMC_path_4420 = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/sigMC_D1_2420_4420_selected.root'
-    leg_title_4420 = '(b)'
-    ecms_4420 = 4420
-    scale1_4420 = 0.25
-    scale2_4420 = 0.0014
-    scale3_4420 = 0.00035
-    xmax_4420 = 2.6
-    ymax_4420 = 1700
-    plot(data_path_4420, data_sideband_path_4420, bkgMC_path_4420, sigMC_path_4420, leg_title_4420, ecms_4420, scale1_4420, scale2_4420, scale3_4420, ymax_4420, xmax_4420)
+    data_path = '/besfs/users/jingmq/DDPIPI/v0.1/data/4420/data_4420_selected_signal.root'
+    data_sideband_path = '/besfs/users/jingmq/DDPIPI/v0.1/data/4420/data_4420_selected_sideband.root'
+    bkgMC_path = '/besfs/users/jingmq/DDPIPI/v0.1/bkgMC/PHSP/4420/bkgMC_PHSP_4420_selected.root'
+    sigMC_path = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/sigMC_D1_2420_4420_selected.root'
+    leg_title = '(b)'
+    ecms = 4420
+    scale1 = 0.25
+    scale2 = 0.0014
+    scale3 = 0.00035
+    xmax = 2.6
+    ymax = 1700
+    plot(data_path, data_sideband_path, bkgMC_path, sigMC_path, leg_title, ecms, scale1, scale2, scale3, ymax, xmax)
 
-    data_path_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4600/data_4600_selected_signal.root'
-    data_sideband_path_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/data/4600/data_4600_selected_sideband.root'
-    bkgMC_path_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/bkgMC/PHSP/4600/bkgMC_PHSP_4600_selected.root'
-    sigMC_path_4600 = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600/sigMC_D1_2420_4600_selected.root'
-    leg_title_4600 = '(c)'
-    ecms_4600 = 4600
-    scale1_4600 = 0.25
-    scale2_4600 = 0.0014
-    scale3_4600 = 0.00035
-    xmax_4600 = 2.75
-    ymax_4600 = 600
-    plot(data_path_4600, data_sideband_path_4600, bkgMC_path_4600, sigMC_path_4600, leg_title_4600, ecms_4600, scale1_4600, scale2_4600, scale3_4600, ymax_4600, xmax_4600)
+    data_path = '/besfs/users/jingmq/DDPIPI/v0.1/data/4600/data_4600_selected_signal.root'
+    data_sideband_path = '/besfs/users/jingmq/DDPIPI/v0.1/data/4600/data_4600_selected_sideband.root'
+    bkgMC_path = '/besfs/users/jingmq/DDPIPI/v0.1/bkgMC/PHSP/4600/bkgMC_PHSP_4600_selected.root'
+    sigMC_path = '/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600/sigMC_D1_2420_4600_selected.root'
+    leg_title = '(c)'
+    ecms = 4600
+    scale1 = 0.25
+    scale2 = 0.0014
+    scale3 = 0.00035
+    xmax = 2.75
+    ymax = 600
+    plot(data_path, data_sideband_path, bkgMC_path, sigMC_path, leg_title, ecms, scale1, scale2, scale3, ymax, xmax)
