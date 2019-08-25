@@ -19,6 +19,8 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.2"   "[Signal and background study]"
     printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figures -- draw recoiling mass of Dpipi"
     printf "\n\t%-9s  %-40s\n" "0.2.2" "Process samples -- divide samples into rm_Dpipi signal region and sideband region"
+    printf "\n\t%-9s  %-40s\n" "0.2.3" "Draw figures -- draw recoiling mass of D"
+    printf "\n\t%-9s  %-40s\n" "0.2.4" "Draw figures -- background study: draw recoiling mass of D in inclusive MC samples"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -115,6 +117,7 @@ case $option in
            cd python
            python plot_chi2_DKF.py
            ;;
+
     0.1.3) echo "Get samples -- applying cuts..."
            mkdir -p scripts/ana/sel
            cd scripts/ana/sel
@@ -147,9 +150,20 @@ case $option in
            cd python
            python plot_rm_Dpipi.py
            ;;
+
     0.2.2) echo "Process samples -- dividing samples into rm_Dpipi signal and sideband region..."
            cd python
            python divide_samples.py
+           ;;
+
+    0.2.3) echo "Draw figures -- drawing recoiling mass of D..."
+           cd python
+           python plot_rm_D.py
+           ;;
+
+    0.2.4) echo "Draw figures -- background study: drawing recoiling mass of D in inclusive MC samples..."
+           cd python
+           python plot_rm_D_incMC.py
            ;;
 
 esac
