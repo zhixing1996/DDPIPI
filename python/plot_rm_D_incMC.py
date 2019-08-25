@@ -25,7 +25,7 @@ def set_legend(legend, h1, h2, ecms, title):
     legend.SetFillColor(0)
     legend.SetLineColor(0)
 
-def rm_Dpipi_fill(t1, t2, h1, h2):
+def rm_D_fill(t1, t2, h1, h2):
     for ientry1 in xrange(t1.GetEntries()):
         t1.GetEntry(ientry1)
         h1.Fill(t1.m_rm_D)
@@ -85,7 +85,7 @@ def plot(signal_path, sideband_path, title, ecms, scale, xmax, ymax, mode):
     h_sideband = TH1F('sideband', 'sideband', xbins, xmin, float(xmax))
 
     set_histo_style(h_signal, h_sideband, xtitle, ytitle, ymax)
-    rm_Dpipi_fill(t_signal, t_sideband, h_signal, h_sideband)
+    rm_D_fill(t_signal, t_sideband, h_signal, h_sideband)
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
