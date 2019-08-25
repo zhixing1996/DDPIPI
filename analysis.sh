@@ -22,6 +22,8 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.2.3" "Draw figures -- draw recoiling mass of D"
     printf "\n\t%-9s  %-40s\n" "0.2.4" "Draw figures -- background study: draw recoiling mass of D in inclusive MC samples"
     printf "\n\t%-9s  %-40s\n" "0.2.5" "Draw figures -- signal study: draw recoiling mass of D in signal MC samples"
+    printf "\n\t%-9s  %-40s\n" "0.2.6" "Draw figures -- signal study: draw recoiling mass of D or mass of Dpipi in signal MC samples"
+    printf "\n\t%-9s  %-40s\n" "0.2.7" "Draw figures -- signal study: draw recoiling mass of D vs mass of Dpipi in signal MC samples"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -169,7 +171,16 @@ case $option in
 
     0.2.5) echo "Draw figures -- signal study: drawing recoiling mass of D in signal MC samples..."
            cd python
-           python get_sig_shape.py
+           python plot_rm_D_sigMC.py
+           ;;
+    0.2.6) echo "Draw figures -- signal study: drawing recoiling mass of D or mass of Dpipi in signal MC samples..."
+           cd python
+           python plot_rm_D_or_m_Dpipi_sigMC.py
+           ;;
+
+    0.2.7) echo "Draw figures -- signal study: drawing recoiling mass of D vs mass of Dpipi in signal MC samples..."
+           cd python
+           python plot_rm_D_vs_m_Dpipi_sigMC.py
            ;;
 
 esac
