@@ -12,7 +12,7 @@ using namespace std;
 void get_signal_shape_4360() {
 
     TFile *fsignal = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/signal_hist_4360.root");
-    TFile *fsideband = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/sicdband_hist_4360.root");
+    TFile *fsideband = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/sideband_hist_4360.root");
     TFile file_out("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/signal_shape_4360.root","RECREATE");
 
     TH1F  *hsignal[500][500];

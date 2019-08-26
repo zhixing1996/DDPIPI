@@ -2,24 +2,8 @@
 
 cp -rf $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4420/*.cxx .
 
-root -b<<EOF
-.L get_signal_hist_4420.cxx
-.x get_signal_hist_4420.cxx++
-.q
-EOF
-
+root -l -q get_signal_hist_4420.cxx
 sleep 300
-
-root -b<<EOF
-.L get_sideband_hist_4420.cxx
-.x get_sideband_hist_4420.cxx++
-.q
-EOF
-
+root -l -q get_sideband_hist_4420.cxx
 sleep 300
-
-root -b<<EOF
-.L get_signal_shape_4420.cxx
-.x get_signal_shape_4420.cxx++
-.q
-EOF
+root -l -q get_signal_shape_4420.cxx

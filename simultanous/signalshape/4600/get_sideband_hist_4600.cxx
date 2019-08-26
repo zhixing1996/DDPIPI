@@ -43,7 +43,7 @@ void get_sideband_hist_4600() {
     Double_t p4_Dstst[4];
     t3->SetBranchAddress("p4_Dstst", p4_Dstst);
 
-    TFile file_out("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600/sicdband_hist_4600.root","RECREATE");
+    TFile file_out("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600/sideband_hist_4600.root","RECREATE");
     TH1F *h_mDstst = new TH1F("h_mDstst", "h_mDstst", 200, 2.1, 2.75);
     TH1F *h_[500][500];
 
