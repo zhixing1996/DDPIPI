@@ -25,6 +25,9 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.2.6" "Draw figures -- signal study: draw recoiling mass of D or mass of Dpipi in signal MC samples"
     printf "\n\t%-9s  %-40s\n" "0.2.7" "Draw figures -- signal study: draw recoiling mass of D vs mass of Dpipi in signal MC samples"
 
+    printf "\n\t%-9s  %-40s\n" "0.3"   "[Simultanous fit]"
+    printf "\n\t%-9s  %-40s\n" "0.3.1" "Get samples -- get signal shapes"
+
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -181,6 +184,39 @@ case $option in
     0.2.7) echo "Draw figures -- signal study: drawing recoiling mass of D vs mass of Dpipi in signal MC samples..."
            cd python
            python plot_rm_D_vs_m_Dpipi_sigMC.py
+           ;;
+
+    # --------------------
+    #  0.3 Simultanous fit
+    # --------------------
+
+    0.3) echo "Simultanous fit..."
+         echo "--> Samples: data, signal MC, PHSP MC, inclusive MC, control sample MC"
+         echo "--> E_{CMS}: 4360MeV, 4420MeV, 460MeV"
+         echo "--> Event Number: 1,000,000(signal MC,PHSP MC, inclusive MC)"
+         echo "--> RunNo: 30616~31279(4360MeV), 31327~31390+36773~38140(4420MeV), 35227~36213(4600MeV)"
+         echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89^{-1}(4420MeV), 566.93^{-1}(4600MeV)"
+         ;;
+
+    0.3.1) echo "Get samples -- getting signal shapes..."
+           mkdir -p scripts/ana/simu
+           cd scripts/ana/simu
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360
+           mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420
+           mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600
+           cp $HOME/bes/DDPIPI/v0.1/jobs/get_signal_shape_* . 
+           hep_sub -g physics get_signal_shape_4360 -o jobs.out -e jobs.err
+           hep_sub -g physics get_signal_shape_4420 -o jobs.out -e jobs.err
+           hep_sub -g physics get_signal_shape_4600 -o jobs.out -e jobs.err
            ;;
 
 esac

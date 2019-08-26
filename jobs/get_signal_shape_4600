@@ -1,0 +1,27 @@
+#!/bin/bash
+
+cd $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4600
+
+rm -rf *.so *.d
+root -b<<EOF
+.L get_signal_hist.cxx
+.x get_signal_hist.cxx++
+.q
+EOF
+
+sleep 300
+
+root -b<<EOF
+.L get_sideband_hist.cxx
+.x get_sideband_hist.cxx++
+.q
+EOF
+
+sleep 300
+
+root -b<<EOF
+.L get_signal_shape.cxx
+.x get_signal_shape.cxx++
+.q
+EOF
+rm -rf *.so *.d
