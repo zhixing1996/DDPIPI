@@ -9,7 +9,7 @@
 #include "TString.h"
 using namespace std;
 
-void get_signal_shape() {
+void get_signal_shape_4420() {
 
     TFile *fsignal = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/signal_hist_4420.root");
     TFile *fsideband = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/sicdband_hist_4420.root");

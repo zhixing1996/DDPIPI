@@ -21,7 +21,7 @@ Double_t num_sim(Double_t m, TH1F *h_in) {
     return h_in->GetBinContent(bin);
 }
 
-void get_sideband_hist() {
+void get_sideband_hist_4420() {
 
     TFile *file_in = new TFile("/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4420/rootfile/ana_Sig_D1_2420_D_PHSP_4420_0.root", "READ");
     TTree *t1 = (TTree*)file_in->Get("STD");
