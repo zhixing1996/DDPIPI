@@ -1,8 +1,7 @@
 #!/bin/bash
 
-cd $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4360
+cp -rf $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4360/*.cxx .
 
-rm -rf *.so *.d
 root -b<<EOF
 .L get_signal_hist.cxx
 .x get_signal_hist.cxx++
@@ -24,4 +23,3 @@ root -b<<EOF
 .x get_signal_shape.cxx++
 .q
 EOF
-rm -rf *.so *.d

@@ -206,6 +206,7 @@ case $option in
                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana ./jobs_ana
            fi
            cd jobs_ana
+           rm -rf *.so *.d
            rm -rf jobs.out
            rm -rf jobs.err
            mkdir jobs.out
