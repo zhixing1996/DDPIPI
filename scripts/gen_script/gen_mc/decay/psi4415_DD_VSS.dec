@@ -1,0 +1,17 @@
+Alias A_D+  D+
+Alias A_D-  D-
+
+Decay  psi(4415)
+0.0219    D-   A_D+   VSS;
+0.0219    D+   A_D-   VSS;
+Enddecay
+
+Decay A_D+
+1.00  K-  pi+  pi+     D_DALITZ;
+Enddecay
+
+Decay A_D-
+1.00  K+  pi-  pi-     D_DALITZ;
+Enddecay
+
+End

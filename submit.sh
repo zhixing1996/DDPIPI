@@ -77,6 +77,18 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.19"   "[run on inclusive MC (LLbar) @4600MeV]"
     printf "\n\t%-9s  %-40s\n" "0.19.1" "Single D tag -- inclusive MC sample"
 
+    printf "\n\t%-9s  %-40s\n" "0.20"   "[run on control sample MC of psi(4415)->DD(VSS), D1->DPIPI(D_DALITZ) @4360MeV]" # psi(4415) -> @4360MeV
+    printf "\n\t%-9s  %-40s\n" "0.20.1" "Simulation & Reconstruction -- generate control sample MC"
+    printf "\n\t%-9s  %-40s\n" "0.20.2" "Single D tag -- run on control sample MC"
+
+    printf "\n\t%-9s  %-40s\n" "0.21"   "[run on control sample MC of psi(4415)->DD(VSS), D1->DPIPI(D_DALITZ) @4420MeV]" # psi(4415) -> @4420MeV
+    printf "\n\t%-9s  %-40s\n" "0.21.1" "Simulation & Reconstruction -- generate control sample MC"
+    printf "\n\t%-9s  %-40s\n" "0.21.2" "Single D tag -- run on control sample MC"
+
+    printf "\n\t%-9s  %-40s\n" "0.22"   "[run on control sample MC of psi(4415)->DD(VSS), D1->DPIPI(D_DALITZ) @4600MeV]" # psi(4415) -> @4600MeV
+    printf "\n\t%-9s  %-40s\n" "0.22.1" "Simulation & Reconstruction -- generate control sample MC"
+    printf "\n\t%-9s  %-40s\n" "0.22.2" "Single D tag -- run on control sample MC"
+
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -799,6 +811,144 @@ case $option in
            rm -rf *boss* 
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/incMC/LL/4600/rootfile/*root 
            ./subjectAna.sh Inc_D_D_PI_PI_LL_4600
+           ;;
+
+    # --------------------------------------------------------------------------
+    #  0.20 control sample MC of psi(4415)->DD(VSS), D->KPIPI(D_DALITZ) @4360MeV
+    # --------------------------------------------------------------------------
+
+    0.20) echo "control sample MC of psi(4415)->DD(VSS), D->KPIPI(D_DALITZ) @4360MeV..."
+         echo "--> Process: psi(4415)->DD, D->KPIPI"
+         echo "--> E_{CMS}: 4360MeV"
+         echo "--> Generation mode: psi(4415)->DD VSS; D->KPiPi D_DALITZ; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+         echo "--> Event Number: 500,000"
+         echo "--> RunNo: 30616~31279"
+         ;;
+
+    0.20.1) echo "Simulation & Reconstruction -- generate control sample MC..."
+           mkdir -p scripts/controlMC/DD/4360
+           cd scripts/controlMC/DD/4360
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/controlMC/DD/4360/jobs_sig" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/controlMC/DD/4360/jobs_sig
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/controlMC/DD/4360/jobs_sig ./jobs_sig
+           fi
+           cd jobs_sig
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4360/rtraw
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4360/dst
+           rm -rf jobOptions*txt
+           rm -rf subjectSimRec_*.sh
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_sim_control_DD_VSS_4360.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4360/rtraw/*.rtraw
+           ./jobOptions_sim_control_DD_VSS_4360.sh 0 99 5000
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_rec_control_DD_VSS_4360.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4360/dst/*.dst
+           ./jobOptions_rec_control_DD_VSS_4360.sh 0 99
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectSimRec.sh ./
+           ./subjectSimRec.sh jobOptions_sim_control_DD_VSS_4360 jobOptions_rec_control_DD_VSS_4360 subjectSimRec_VSS 0 99
+           ;;
+
+    0.20.2) echo "Single D tag -- run on control MC..."
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4360/rootfile
+           cd scripts/controlMC/DD/4360/jobs_sig
+           rm -rf dstlist.txt
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
+           ./makeJob.csh Control_DD_VSS_4360 20 20 . controlMC DD VSS 4360
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4360/rootfile/*.root 
+           ./subjectAna.sh Control_DD_VSS_4360
+           ;;
+
+    # --------------------------------------------------------------------------
+    #  0.21 control sample MC of psi(4415)->DD(VSS), D->KPIPI(D_DALITZ) @4420MeV
+    # --------------------------------------------------------------------------
+
+    0.21) echo "control sample MC of psi(4415)->DD(VSS), D->KPIPI(D_DALITZ) @4420MeV..."
+         echo "--> Process: psi(4415)->DD, D->KPIPI"
+         echo "--> E_{CMS}: 4420MeV"
+         echo "--> Generation mode: psi(4415)->DD VSS; D->KPiPi D_DALITZ; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+         echo "--> Event Number: 500,000"
+         echo "--> RunNo: 31327~31390, 36773~38140"
+         ;;
+
+    0.21.1) echo "Simulation & Reconstruction -- generate control sample MC..."
+           mkdir -p scripts/controlMC/DD/4420
+           cd scripts/controlMC/DD/4420
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/controlMC/DD/4420/jobs_sig" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/controlMC/DD/4420/jobs_sig
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/controlMC/DD/4420/jobs_sig ./jobs_sig
+           fi
+           cd jobs_sig
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4420/rtraw
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4420/dst
+           rm -rf jobOptions*txt
+           rm -rf subjectSimRec_*.sh
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_sim_control_DD_VSS_4420.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4420/rtraw/*.rtraw
+           ./jobOptions_sim_control_DD_VSS_4420.sh 0 99 5000
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_rec_control_DD_VSS_4420.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4420/dst/*.dst
+           ./jobOptions_rec_control_DD_VSS_4420.sh 0 99
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectSimRec.sh ./
+           ./subjectSimRec.sh jobOptions_sim_control_DD_VSS_4420 jobOptions_rec_control_DD_VSS_4420 subjectSimRec_VSS 0 99
+           ;;
+
+    0.21.2) echo "Single D tag -- run on control MC..."
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4420/rootfile
+           cd scripts/controlMC/DD/4420/jobs_sig
+           rm -rf dstlist.txt
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
+           ./makeJob.csh Control_DD_VSS_4420 20 20 . controlMC DD VSS 4420
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4420/rootfile/*.root 
+           ./subjectAna.sh Control_DD_VSS_4420
+           ;;
+
+    # --------------------------------------------------------------------------
+    #  0.22 control sample MC of psi(4415)->DD(VSS), D->KPIPI(D_DALITZ) @4600MeV
+    # --------------------------------------------------------------------------
+
+    0.22) echo "control sample MC of psi(4415)->DD(VSS), D->KPIPI(D_DALITZ) @4600MeV..."
+         echo "--> Process: psi(4415)->DD, D->KPIPI"
+         echo "--> E_{CMS}: 4600MeV"
+         echo "--> Generation mode: psi(4415)->DD VSS; D->KPiPi D_DALITZ; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+         echo "--> Event Number: 500,000"
+         echo "--> RunNo: 35227~36213"
+         ;;
+
+    0.22.1) echo "Simulation & Reconstruction -- generate control sample MC..."
+           mkdir -p scripts/controlMC/DD/4600
+           cd scripts/controlMC/DD/4600
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/controlMC/DD/4600/jobs_sig" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/controlMC/DD/4600/jobs_sig
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/gen_mc/controlMC/DD/4600/jobs_sig ./jobs_sig
+           fi
+           cd jobs_sig
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4600/rtraw
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4600/dst
+           rm -rf jobOptions*txt
+           rm -rf subjectSimRec_*.sh
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_sim_control_DD_VSS_4600.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4600/rtraw/*.rtraw
+           ./jobOptions_sim_control_DD_VSS_4600.sh 0 99 5000
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/jobOptions_rec_control_DD_VSS_4600.sh ./
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4600/dst/*.dst
+           ./jobOptions_rec_control_DD_VSS_4600.sh 0 99
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectSimRec.sh ./
+           ./subjectSimRec.sh jobOptions_sim_control_DD_VSS_4600 jobOptions_rec_control_DD_VSS_4600 subjectSimRec_VSS 0 99
+           ;;
+
+    0.22.2) echo "Single D tag -- run on control MC..."
+           mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4600/rootfile
+           cd scripts/controlMC/DD/4600/jobs_sig
+           rm -rf dstlist.txt
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/makeJob* ./
+           ./makeJob.csh Control_DD_VSS_4600 20 20 . controlMC DD VSS 4600
+           cp -rf $HOME/bes/DDPIPI/v0.1/scripts/gen_script/gen_mc/subjectAna.sh ./
+           rm -rf *boss* 
+           rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4600/rootfile/*.root 
+           ./subjectAna.sh Control_DD_VSS_4600
            ;;
 
 esac
