@@ -58,19 +58,19 @@ void fit_rmD_4600() {
     double xmax = 1.97;
     int xbin = 100;
     
-    RooRealVar rmD("m_rm_D", "m_rm_D", xmin, xmax) ;
+    RooRealVar rmD("rm_D", "rm_D", xmin, xmax) ;
     RooRealVar nSig("nSig", "nSig", 2050, 0, 100000);
     RooRealVar nBkg("nBkg", "nBkg", 3900, 0, 100000);
     
-    TFile *file_data = new TFile("/besfs/users/$USER/DDPIPI/v0.1/data/4600/data_4600_control.root", "READ");
-    TFile *file_sig = new TFile("/besfs/users/$USER/DDPIPI/v0.1/controlMC/DD/4600/controlMC_DD_4600.root", "READ");
+    TFile *file_data = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/data/4600/data_4600_control.root", "READ");
+    TFile *file_sig = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/controlMC/DD/4600/controlMC_DD_4600.root", "READ");
     
     TTree *t_data = (TTree*)file_data->Get("save");
     TTree *t_sig = (TTree*)file_sig->Get("save");
     
     TH1F *h_sig = new TH1F("h_sig", "", xbin, xmin, xmax);
     TCut cut;
-    t_sig->Project("h_sig", "m_rm_D", cut);
+    t_sig->Project("h_sig", "rm_D", cut);
     
     RooDataSet* set_data = new RooDataSet("set_data", "set_data", t_data, rmD);	
     RooDataHist* hist_sig = new RooDataHist("hist_sig", "hist_sig", rmD, h_sig);

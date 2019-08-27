@@ -32,6 +32,7 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.4" "Extract shapes -- convolve signal shapes with gaussian"
     printf "\n\t%-9s  %-40s\n" "0.3.5" "Extract shapes -- get background shapes"
     printf "\n\t%-9s  %-40s\n" "0.3.6" "Extract shapes -- get psi(3770) shapes"
+    printf "\n\t%-9s  %-40s\n" "0.3.7" "Fit distributions -- fit to rmDpipi to get background events"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -304,6 +305,13 @@ case $option in
            mkdir jobs.err
            cp $HOME/bes/DDPIPI/v0.1/jobs/get_psi3770_shape . 
            hep_sub -g physics get_psi3770_shape -o jobs.out -e jobs.err
+           ;;
+
+    0.3.7) echo "Fit distributions -- fitting to rmDpipi to get background events..."
+           cd $HOME/bes/DDPIPI/v0.1/simultanous/backgroundshape
+           root -l -q fit_rmDpipi_4360.cxx
+           root -l -q fit_rmDpipi_4420.cxx
+           root -l -q fit_rmDpipi_4600.cxx
            ;;
 
 esac
