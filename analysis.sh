@@ -31,6 +31,7 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.3" "Fit distributions -- fit to control samples to get resolutions"
     printf "\n\t%-9s  %-40s\n" "0.3.4" "Extract shapes -- convolve signal shapes with gaussian"
     printf "\n\t%-9s  %-40s\n" "0.3.5" "Extract shapes -- get background shapes"
+    printf "\n\t%-9s  %-40s\n" "0.3.6" "Extract shapes -- get psi(3770) shapes"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -287,6 +288,22 @@ case $option in
            mkdir jobs.err
            cp $HOME/bes/DDPIPI/v0.1/jobs/get_background_shape . 
            hep_sub -g physics get_background_shape -o jobs.out -e jobs.err
+           ;;
+
+    0.3.6) echo "Extract shapes -- getting psi(3770) shapes..."
+           mkdir -p scripts/ana/simu
+           cd scripts/ana/simu
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           cp $HOME/bes/DDPIPI/v0.1/jobs/get_psi3770_shape . 
+           hep_sub -g physics get_psi3770_shape -o jobs.out -e jobs.err
            ;;
 
 esac

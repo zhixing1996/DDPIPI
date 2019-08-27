@@ -1,0 +1,4 @@
+#!/bin/bash
+mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/psi3770shape
+cp -rf $HOME/bes/DDPIPI/v0.1/simultanous/psi3770shape/get_psi3770_shape.cxx .
+root -l -q get_psi3770_shape.cxx
