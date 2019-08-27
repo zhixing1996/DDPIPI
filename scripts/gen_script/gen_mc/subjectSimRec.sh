@@ -1,10 +1,10 @@
 #!/bin/sh
 
 rm -rf fort*
-rm -rf job.out
-mkdir job.out
-rm -rf job.err
-mkdir job.err
+rm -rf jobs.out
+mkdir jobs.out
+rm -rf jobs.err
+mkdir jobs.err
 
 SIM=$1
 REC=$2
@@ -37,7 +37,7 @@ do
     
     echo $SUB_NAME" done!"
 
-    hep_sub -g physics $SUB_NAME -o ./job.out -e ./job.err
+    hep_sub -g physics $SUB_NAME -o ./jobs.out -e ./jobs.err
 
     INPUT=$(($INPUT+1))
   

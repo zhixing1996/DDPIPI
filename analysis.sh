@@ -247,7 +247,7 @@ case $option in
            mkdir jobs.out
            mkdir jobs.err
            cp -rf $HOME/bes/DDPIPI/v0.1/jobs/apply_cuts_control .
-           hep_sub -g physics apply_cuts_control -o job.out -e job.err
+           hep_sub -g physics apply_cuts_control -o jobs.out -e jobs.err
            ;;
 
     0.3.3) echo "Fit distributions -- fitting to control samples to get resolutions..."
