@@ -60,7 +60,7 @@ void fit_rmD_4600() {
     
     RooRealVar rmD("rm_D", "rm_D", xmin, xmax) ;
     RooRealVar nSig("nSig", "nSig", 2050, 0, 100000);
-    RooRealVar nBkg("nBkg", "nBkg", 3900, 0, 100000);
+    RooRealVar nBkg("nBkg", "nBkg", 3900, 0, 1000000);
     
     TFile *file_data = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/data/4600/data_4600_control.root", "READ");
     TFile *file_sig = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/controlMC/DD/4600/controlMC_DD_4600.root", "READ");
@@ -107,8 +107,11 @@ void fit_rmD_4600() {
     xframe->GetYaxis()->SetTitleSize(0.05);
     xframe->GetYaxis()->SetTitleOffset(0.95);
     xframe->GetYaxis()->SetLabelOffset(0.01);
-    xframe->GetXaxis()->SetTitle("RM(D)(GeV/c^{2})");
+    xframe->GetXaxis()->SetTitle("RM(D^{+})(GeV/c^{2})");
     xframe->GetYaxis()->SetTitle("Events/(9MeV/c^{2})");
     xframe->Draw();
+
+    cout << "Resolution: " << 2.36*sigma.getVal() << " +/- "<< 2.36*sigma.getError()<< endl;
+    canvas->Print("fit_rmD_4600.pdf");
 
 }

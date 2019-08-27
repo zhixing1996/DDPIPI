@@ -107,8 +107,11 @@ void fit_rmD_4420() {
     xframe->GetYaxis()->SetTitleSize(0.05);
     xframe->GetYaxis()->SetTitleOffset(0.95);
     xframe->GetYaxis()->SetLabelOffset(0.01);
-    xframe->GetXaxis()->SetTitle("RM(D)(GeV/c^{2})");
+    xframe->GetXaxis()->SetTitle("RM(D^{+})(GeV/c^{2})");
     xframe->GetYaxis()->SetTitle("Events/(9MeV/c^{2})");
     xframe->Draw();
+
+    cout << "Resolution: " << 2.36*sigma.getVal() << " +/- "<< 2.36*sigma.getError()<< endl;
+    canvas->Print("fit_rmD_4420.pdf");
 
 }

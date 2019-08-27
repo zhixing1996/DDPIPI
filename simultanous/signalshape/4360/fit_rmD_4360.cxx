@@ -53,12 +53,12 @@ void fit_rmD_4360() {
     gStyle->SetPadTickX(1);
     gStyle->SetPadTickY(1);
     gStyle->SetCanvasColor(0);
-    
+
     double xmin = 1.7;
     double xmax = 1.97;
     int xbin = 100;
     
-    RooRealVar rmD("rm_D", "rm_D", xmin, xmax) ;
+    RooRealVar rmD("rm_D", "rm_D", xmin, xmax);
     RooRealVar nSig("nSig", "nSig", 2050, 0, 100000);
     RooRealVar nBkg("nBkg", "nBkg", 3900, 0, 100000);
     
@@ -107,8 +107,11 @@ void fit_rmD_4360() {
     xframe->GetYaxis()->SetTitleSize(0.05);
     xframe->GetYaxis()->SetTitleOffset(0.95);
     xframe->GetYaxis()->SetLabelOffset(0.01);
-    xframe->GetXaxis()->SetTitle("RM(D)(GeV/c^{2})");
+    xframe->GetXaxis()->SetTitle("RM(D^{+})(GeV/c^{2})");
     xframe->GetYaxis()->SetTitle("Events/(9MeV/c^{2})");
     xframe->Draw();
+
+    cout << "Resolution: " << 2.36*sigma.getVal() << " +/- "<< 2.36*sigma.getError()<< endl;
+    canvas->Print("fit_rmD_4360.pdf");
 
 }
