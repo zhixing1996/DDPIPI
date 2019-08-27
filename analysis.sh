@@ -13,12 +13,12 @@ usage() {
 
     printf "\n\t%-9s  %-40s\n" "0.1"   "[Pretreatment of data and MC samples]"
     printf "\n\t%-9s  %-40s\n" "0.1.1" "Get samples -- synthesize root files"
-    printf "\n\t%-9s  %-40s\n" "0.1.2" "Study cuts -- plot chi2 of kinematic fit of single tagged D"
+    printf "\n\t%-9s  %-40s\n" "0.1.2" "Draw figures -- plot chi2 of kinematic fit of single tagged D"
     printf "\n\t%-9s  %-40s\n" "0.1.3" "Get samples -- apply cuts"
 
     printf "\n\t%-9s  %-40s\n" "0.2"   "[Signal and background study]"
     printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figures -- draw recoiling mass of Dpipi"
-    printf "\n\t%-9s  %-40s\n" "0.2.2" "Process samples -- divide samples into rm_Dpipi signal region and sideband region"
+    printf "\n\t%-9s  %-40s\n" "0.2.2" "Get samples -- divide samples into rm_Dpipi signal region and sideband region"
     printf "\n\t%-9s  %-40s\n" "0.2.3" "Draw figures -- draw recoiling mass of D"
     printf "\n\t%-9s  %-40s\n" "0.2.4" "Draw figures -- background study: draw recoiling mass of D in inclusive MC samples"
     printf "\n\t%-9s  %-40s\n" "0.2.5" "Draw figures -- signal study: draw recoiling mass of D in signal MC samples"
@@ -28,6 +28,8 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3"   "[Simultanous fit]"
     printf "\n\t%-9s  %-40s\n" "0.3.1" "Extract shapes -- get signal shapes"
     printf "\n\t%-9s  %-40s\n" "0.3.2" "Get samples -- apply cuts on control samples"
+    printf "\n\t%-9s  %-40s\n" "0.3.3" "Fit distributions -- fit to control samples to get resolutions"
+    printf "\n\t%-9s  %-40s\n" "0.3.4" "Extract shapes -- convolve signal shapes with gaussian"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -129,7 +131,7 @@ case $option in
            hadd controlMC_DD_4600.root *.root
            ;;
 
-    0.1.2) echo "Study cuts -- plotting chi2 of kinematic fit of single tagged D..."
+    0.1.2) echo "Draw figures -- plotting chi2 of kinematic fit of single tagged D..."
            cd python
            python plot_chi2_DKF.py
            ;;
@@ -167,7 +169,7 @@ case $option in
            python plot_rm_Dpipi.py
            ;;
 
-    0.2.2) echo "Process samples -- dividing samples into rm_Dpipi signal and sideband region..."
+    0.2.2) echo "Get samples -- dividing samples into rm_Dpipi signal and sideband region..."
            cd python
            python divide_samples.py
            ;;
@@ -243,6 +245,31 @@ case $option in
            mkdir jobs.err
            cp -rf $HOME/bes/DDPIPI/v0.1/jobs/apply_cuts_control .
            hep_sub -g physics apply_cuts_control -o job.out -e job.err
+           ;;
+
+    0.3.3) echo "Fit distributions -- fitting to control samples to get resolutions..."
+           cd $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4360
+           root -l -q fit_rmD_4360.cxx > result.txt
+           cd $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4420
+           root -l -q fit_rmD_4420.cxx > result.txt
+           cd $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4600
+           root -l -q fit_rmD_4600.cxx > result.txt
+           ;;
+
+    0.3.4) echo "Extract shapes -- convolving signal shapes with gaussian..."
+           mkdir -p scripts/ana/simu
+           cd scripts/ana/simu
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           cp $HOME/bes/DDPIPI/v0.1/jobs/signal_shape_cov_gauss . 
+           hep_sub -g physics signal_shape_cov_gauss -o jobs.out -e jobs.err
            ;;
 
 esac

@@ -1,0 +1,4 @@
+#!/bin/bash
+mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/conv
+cp -rf $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/conv/signal_conv_gauss.cxx .
+root -l -q signal_conv_gauss.cxx
