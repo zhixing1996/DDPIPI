@@ -26,7 +26,8 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.2.7" "Draw figures -- signal study: draw recoiling mass of D vs mass of Dpipi in signal MC samples"
 
     printf "\n\t%-9s  %-40s\n" "0.3"   "[Simultanous fit]"
-    printf "\n\t%-9s  %-40s\n" "0.3.1" "Get samples -- get signal shapes"
+    printf "\n\t%-9s  %-40s\n" "0.3.1" "Extract shapes -- get signal shapes"
+    printf "\n\t%-9s  %-40s\n" "0.3.2" "Get samples -- apply cuts on control samples"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -117,6 +118,15 @@ case $option in
            cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/data/4600
            rm -rf data_4600.root
            hadd data_4600.root *.root
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4360/rootfile
+           rm -rf controlMC_DD_4360.root
+           hadd controlMC_DD_4360.root *.root
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4420/rootfile
+           rm -rf controlMC_DD_4420.root
+           hadd controlMC_DD_4420.root *.root
+           cd /scratchfs/bes/$USER/bes/DDPIPI/v0.1/controlMC/DD/4600/rootfile
+           rm -rf controlMC_DD_4600.root
+           hadd controlMC_DD_4600.root *.root
            ;;
 
     0.1.2) echo "Study cuts -- plotting chi2 of kinematic fit of single tagged D..."
@@ -198,7 +208,7 @@ case $option in
          echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89^{-1}(4420MeV), 566.93^{-1}(4600MeV)"
          ;;
 
-    0.3.1) echo "Get samples -- getting signal shapes..."
+    0.3.1) echo "Extract shapes -- getting signal shapes..."
            mkdir -p scripts/ana/simu
            cd scripts/ana/simu
            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana" ]; then
@@ -206,7 +216,6 @@ case $option in
                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana ./jobs_ana
            fi
            cd jobs_ana
-           rm -rf *.so *.d
            rm -rf jobs.out
            rm -rf jobs.err
            mkdir jobs.out
@@ -218,6 +227,22 @@ case $option in
            hep_sub -g physics get_signal_shape_4360 -o jobs.out -e jobs.err
            hep_sub -g physics get_signal_shape_4420 -o jobs.out -e jobs.err
            hep_sub -g physics get_signal_shape_4600 -o jobs.out -e jobs.err
+           ;;
+
+    0.3.2) echo "Get samples -- applying cuts on control samples..."
+           mkdir -p scripts/ana/simu
+           cd scripts/ana/simu
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           cp -rf $HOME/bes/DDPIPI/v0.1/jobs/apply_cuts_control .
+           hep_sub -g physics apply_cuts_control -o job.out -e job.err
            ;;
 
 esac
