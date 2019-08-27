@@ -48,7 +48,7 @@ void get_sideband_hist_4600() {
     TH1F *h_[500][500];
 
     Double_t rmD,rmDpipi;
-    TLorentzVector cms(0.011*4.599, 0, 0, 4.599);
+    TLorentzVector cms(0.011*4.600, 0, 0, 4.600);
 
     // get mass of Dstst MC Truth
     for (Int_t i = 0; i < t3->GetEntries(); i++) {

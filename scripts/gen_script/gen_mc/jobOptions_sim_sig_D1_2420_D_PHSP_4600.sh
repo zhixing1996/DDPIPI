@@ -32,11 +32,11 @@ do
     echo "" >> $SIM_NAME
     echo "//**************job options for generator (KKMC)************************" >> $SIM_NAME
     echo "#include \"\$KKMCROOT/share/jobOptions_KKMC.txt\"" >> $SIM_NAME
-    echo "KKMC.CMSEnergy = 4.59953;" >> $SIM_NAME
+    echo "KKMC.CMSEnergy = 4.6;" >> $SIM_NAME
     echo "KKMC.BeamEnergySpread=0.0022;" >> $SIM_NAME
     echo "KKMC.NumberOfEventPrinted=10;" >> $SIM_NAME
     echo "KKMC.GeneratePsi4415=true;" >> $SIM_NAME
-    echo "KKMC.ResParameterPs6 = {4.59953, 95e-3, 0.47e-6};" >> $SIM_NAME
+    echo "KKMC.ResParameterPs6 = {4.6, 95e-3, 0.47e-6};" >> $SIM_NAME
     echo "KKMC.ParticleDecayThroughEvtGen = true;" >> $SIM_NAME
     echo "KKMC.ThresholdCut = 4.540;" >> $SIM_NAME # 4.59953 - 3*95e-3
     echo "KKMC.RadiationCorrection = 1;" >> $SIM_NAME
