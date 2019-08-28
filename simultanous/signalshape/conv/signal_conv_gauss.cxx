@@ -59,7 +59,7 @@ void signal_conv_gauss() {
             RooHistPdf pdf_2420_4600("pdf_2420_4600", "pdf_2420_4600", rmD, *hist_2420_4600, 0);
 
             RooRealVar mean("mean", "mean", 0.0);
-            RooRealVar sigma("sigma", "sigma", 0.00307);
+            RooRealVar sigma("sigma", "sigma", 0.00123);
             RooGaussian gauss("gauss", "gauss", rmD, mean, sigma);
             
             rmD.setBins(1000, "cache");
