@@ -45,7 +45,7 @@ void get_background_shape() {
 
 	RooKeysPdf pdf_sideband_4360("pdf_sideband_4360", "", rmD, *set_sideband_compact_4360, RooKeysPdf::NoMirror, 2);
 	RooKeysPdf pdf_sideband_4420("pdf_sideband_4420", "", rmD, *set_sideband_compact_4420, RooKeysPdf::NoMirror, 2);
-	RooKeysPdf pdf_sideband_4600("pdf_sideband_4460", "", rmD, *set_sideband_compact_4600, RooKeysPdf::NoMirror, 2);
+	RooKeysPdf pdf_sideband_4600("pdf_sideband_4600", "", rmD, *set_sideband_compact_4600, RooKeysPdf::NoMirror, 2);
 
 	pdf_sideband_4360.Write();
 	pdf_sideband_4420.Write();
