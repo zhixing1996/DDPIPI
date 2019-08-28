@@ -252,11 +252,11 @@ case $option in
 
     0.3.3) echo "Fit distributions -- fitting to control samples to get resolutions..."
            cd $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4360
-           root -l -q fit_rmD_4360.cxx > result.txt
+           root -l -q fit_rmD_4360.cxx
            cd $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4420
-           root -l -q fit_rmD_4420.cxx > result.txt
+           root -l -q fit_rmD_4420.cxx
            cd $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4600
-           root -l -q fit_rmD_4600.cxx > result.txt
+           root -l -q fit_rmD_4600.cxx
            ;;
 
     0.3.4) echo "Extract shapes -- convolving signal shapes with gaussian..."
