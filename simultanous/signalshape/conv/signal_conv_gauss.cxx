@@ -24,8 +24,8 @@ void signal_conv_gauss() {
 
     gSystem->Load("libRooFit"); 
 
-    double xmin=2.0;
-    double xmax=2.8;
+    double xmin=2.1;
+    double xmax=2.75;
     RooRealVar rmD("rmD", "rmD", xmin, xmax) ;
     TFile *signal_shape_4360 = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/signal_shape_4360.root","READ");
     TFile *signal_shape_4420 = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/signal_shape_4420.root","READ");
@@ -39,8 +39,8 @@ void signal_conv_gauss() {
     TH1F *h_2420_4600[500][500];
     TFile *f = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/conv/signal_conv_gauss.root","recreate");
     
-    for(int i = 0; i < 8; i++) {
-        for (int j = 0; j < 2; j++) {
+    for(int i = 0; i < 80; i++) {
+        for (int j = 0; j < 20; j++) {
             sprintf(hname, "h_%d_%d", i, j);
             sprintf(pdf_4360, "Covpdf_2420_4360_%d_%d", i, j);
             sprintf(pdf_4420, "Covpdf_2420_4420_%d_%d", i, j);
