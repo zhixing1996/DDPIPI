@@ -46,11 +46,9 @@ void fit_rmDpipi_4600() {
     gStyle->SetPadTickY(1);	
 
     TFile *f = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/data/4600/data_4600_selected.root", "READ");
-    // TFile *f = new TFile("/besfs/users/zhengy/workarea/ana/DDecay/4600/data/Caculate_bkg_evt_4600.root","READ");
     TTree *t = (TTree*)f->Get("save");
 
     RooRealVar rmDpipi("rm_Dpipi","rm_Dpipi", 1.786, 1.96) ;
-    // RooRealVar rmDpipi("rmDpipi","rmDpipi", 1.786, 1.96) ;
     RooDataSet* data = new RooDataSet("data", "dataset", t, rmDpipi);
 
     // signal
@@ -107,7 +105,7 @@ void fit_rmDpipi_4600() {
     cout << "nsrange: " << nsrange->getVal() << " nsbrangl: " << nsbrangel->getVal() << " nsbrangeh: " << nsbrangeh->getVal() << endl;
     
     ofstream fout;
-    fout.open("rmDpipi_Fitresult.txt", ios::app);
+    fout.open("/besfs/users/jingmq/DDPIPI/v0.1/bkgMC/PHSP/4600/rmDpipi_fitresult_4600.txt");
     if (!fout) {
         cout << "ERROR: Unable to open output file" << endl;
     }

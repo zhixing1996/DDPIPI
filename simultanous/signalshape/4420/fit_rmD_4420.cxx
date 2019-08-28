@@ -111,7 +111,12 @@ void fit_rmD_4420() {
     xframe->GetYaxis()->SetTitle("Events/(9MeV/c^{2})");
     xframe->Draw();
 
-    cout << "Resolution: " << 2.36*sigma.getVal() << " +/- "<< 2.36*sigma.getError()<< endl;
-    canvas->Print("fit_rmD_4420.pdf");
+    ofstream fout;
+    fout.open("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/rmD_fitresult_4420.txt");
+    if (!fout) {
+        cout << "ERROR: Unable to open output file" << endl;
+    }
+    fout << "Resolution: " << sigma.getVal() << " +/- " << sigma.getError() << endl;
+    canvas->Print("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/fit_rmD_4420.pdf");
 
 }

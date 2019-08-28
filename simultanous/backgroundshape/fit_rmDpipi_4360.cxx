@@ -101,7 +101,7 @@ void fit_rmDpipi_4360() {
     cout << "nsrange: " << nsrange->getVal() << " nsbrangl: " << nsbrangel->getVal() << " nsbrangeh: " << nsbrangeh->getVal() << endl;
 
     ofstream fout;
-    fout.open("rmDpipi_fitresult_4360.txt", ios::app);
+    fout.open("/besfs/users/jingmq/DDPIPI/v0.1/bkgMC/PHSP/4360/rmDpipi_fitresult_4360.txt");
     if (!fout) {
         cout << "ERROR: Unable to open output file" << endl;
     }
