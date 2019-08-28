@@ -52,17 +52,17 @@ void fit_rmDpipi_4600() {
     RooDataSet* data = new RooDataSet("data", "dataset", t, rmDpipi);
 
     // signal
-    RooRealVar mean("mean", "mean of crystal ball", 1.87, 1.85, 1.89);
-    RooRealVar sigma("sigma", "width of crystal ball", 4.6e-03, 0, 0.1);
+    RooRealVar mean("mean", "mean of crystal ball", 1.87, 1.81, 1.91);
+    RooRealVar sigma("sigma", "width of crystal ball", 4.6e-03, 0, 0.2);
     RooRealVar asym("asym", "asym", -1.1, -10, 10);
     RooRealVar amp("amp", "amp", 1.76, 0, 200);
     RooAbsPdf* CB = new RooCBShape("CB", "CB", rmDpipi, mean, sigma, asym, amp);
 
     // background
-    RooRealVar a("a", "a", 4.7, -5, 7);
+    RooRealVar a("a", "a", 4.7, -10, 10);
     RooRealVar b("b", "b", -3.4, -10, 10);
-    RooRealVar c("c", "c", 0.4, -5, 5);
-    RooRealVar d("d", "d", 0.3, -5, 5);
+    RooRealVar c("c", "c", 0.4, -10, 10);
+    RooRealVar d("d", "d", 0.3, -10, 10);
     RooPolynomial bkgpdf("bkgpdf", "bkgpdf", rmDpipi, RooArgSet(a, b, c, d));
 
     RooRealVar nsig("nsig","nsig",6000,0,100000) ;

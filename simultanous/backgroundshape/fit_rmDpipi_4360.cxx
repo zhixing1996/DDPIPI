@@ -63,7 +63,7 @@ void fit_rmDpipi_4360() {
     RooRealVar b("b", "b", -3.4, -10, 10);
     RooRealVar c("c", "c", 0.4, -5, 5);
     RooRealVar d("d", "d", 3, -5, 5);
-    RooPolynomial bkgpdf("bkgpdf", "bkgpdf", rmDpipi, RooArgSet(a,b,c,d));
+    RooPolynomial bkgpdf("bkgpdf", "bkgpdf", rmDpipi, RooArgSet(a, b, c, d));
 
     RooRealVar nsig("nsig", "nsig", 2000, 0, 100000) ;
     RooRealVar nbkg("nbkg", "nbkg", 28000, 0, 100000) ;
