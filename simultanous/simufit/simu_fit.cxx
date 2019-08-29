@@ -97,8 +97,8 @@ void simu_fit() {
     char canvas_4360[500], canvas_4420[500], canvas_4600[500];
 
     cout << "Test1" << endl;
-    for (int i = 0; i < 1; i++) {
-        for (int j = 0; j < 1; j++) {
+    for (int i = 0; i < 80; i++) {
+        for (int j = 0; j < 20; j++) {
             sprintf(pdfname_4360, "Covpdf_2420_4360_%d_%d", i, j);
             sprintf(pdfname_4420, "Covpdf_2420_4420_%d_%d", i, j);
             sprintf(pdfname_4600, "Covpdf_2420_4600_%d_%d", i, j);
@@ -143,8 +143,8 @@ void simu_fit() {
             double npsipp4420 = npsi3770_4420.getVal();
             double npsipp4600 = npsi3770_4600.getVal();
 
-            fout << setiosflags(ios::fixed) << setprecision(3) << r->minNll() << setprecision(5) << " mass2420= " << mass2420 + 0.0001*i << " width2420= " << width2420 + 0.001*j;
-            fout << " n4360 = " << n4360 << " n4420 = " << n4420 << " n4600 = " << n4600 << " npsip4360= " << npsipp4360 << " npsip4420= " << npsipp4420 << " npsip4600= " << npsipp4600 << endl;
+            fout << setiosflags(ios::fixed) << setprecision(3) << r->minNll() << setprecision(5) << " " << mass2420 + 0.0001*i << " " << width2420 + 0.001*j;
+            fout << " " << n4360 << " " << n4420 << " " << n4600 << " " << npsipp4360 << " " << npsipp4420 << " " << npsipp4600 << endl;
 
             TString xfname[5];
             xfname[0] = "Data";
