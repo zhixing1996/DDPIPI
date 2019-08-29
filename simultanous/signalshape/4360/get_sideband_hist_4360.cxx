@@ -23,7 +23,7 @@ Double_t num_sim(Double_t m, TH1F *h_in) {
 
 void get_sideband_hist_4360() {
 
-    TFile *file_in = new TFile("/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rootfile/ana_Sig_D1_2420_D_PHSP_4360_0.root", "READ");
+    TFile *file_in = new TFile("/scratchfs/bes/jingmq/bes/DDPIPI/v0.1/sigMC/D1_2420/4360/rootfile/sigMC_D1_2420_4360.root", "READ");
     TTree *t1 = (TTree*)file_in->Get("STD");
     TTree *t2 = (TTree*)file_in->Get("otherTrk");
     TTree *t3 = (TTree*)file_in->Get("DststTruth");
@@ -44,7 +44,7 @@ void get_sideband_hist_4360() {
     t3->SetBranchAddress("p4_Dstst", p4_Dstst);
 
     TFile file_out("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/sideband_hist_4360.root","RECREATE");
-    TH1F *h_mDstst = new TH1F("h_mDstst", "h_mDstst", 200, 2.1, 2.75);
+    TH1F *h_mDstst = new TH1F("h_mDstst", "h_mDstst", 200, 2.0, 2.8);
     TH1F *h_[500][500];
 
     Double_t rmD,rmDpipi;
@@ -68,7 +68,7 @@ void get_sideband_hist_4360() {
             char  hname[50];
             sprintf(hname, "h_%d_%d", i, j);
 	        // get mass Scan and width Scan point
-            h_[i][j] = new TH1F(hname, "", 200, 2.1, 2.75);
+            h_[i][j] = new TH1F(hname, "", 200, 2.0, 2.8);
             Double_t mass, width;
             mass = 2.4240 + 0.0001*i;
             width = 0.018 + 0.001*j;

@@ -24,8 +24,8 @@ void get_background_shape() {
 
     gSystem->Load("libRooFit");
 
-	double xmin = 2.1;
-	double xmax = 2.5;
+	double xmin = 2.0;
+	double xmax = 2.8;
 	RooRealVar rmD("m_rm_D","m_rm_D", xmin, xmax) ;
 	TChain *sideband_4360 = new TChain("save");
 	TChain *sideband_4420 = new TChain("save");

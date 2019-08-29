@@ -25,7 +25,7 @@ void get_signal_shape_4420() {
             sprintf(hname, "h_%d_%d", i, j);
             hsignal[i][j] = (TH1F*)fsignal->Get(hname);
             hsideband[i][j] = (TH1F*)fsideband->Get(hname);
-            h_shape_[i][j] = new TH1F(hname, "", 200, 2.1, 2.75);
+            h_shape_[i][j] = new TH1F(hname, "", 200, 2.0, 2.8);
             h_shape_[i][j]->Add(hsignal[i][j], hsideband[i][j], 1, -0.25);
             h_shape_[i][j]->Write();
         }
