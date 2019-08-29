@@ -33,6 +33,7 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.5" "Extract shapes -- get background shapes"
     printf "\n\t%-9s  %-40s\n" "0.3.6" "Extract shapes -- get psi(3770) shapes"
     printf "\n\t%-9s  %-40s\n" "0.3.7" "Fit distributions -- fit to rmDpipi to get background events"
+    printf "\n\t%-9s  %-40s\n" "0.3.8" "Fit distributions -- apply simultanous fit"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -312,6 +313,22 @@ case $option in
            root -l -q fit_rmDpipi_4360.cxx
            root -l -q fit_rmDpipi_4420.cxx
            root -l -q fit_rmDpipi_4600.cxx
+           ;;
+
+    0.3.8) echo "Fit distributions -- applying simultanous fit..."
+           mkdir -p scripts/ana/simu
+           cd scripts/ana/simu
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           cp $HOME/bes/DDPIPI/v0.1/jobs/apply_simu_fit .
+           hep_sub -g physics apply_simu_fit -o jobs.out -e jobs.err
            ;;
 
 esac
