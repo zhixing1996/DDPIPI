@@ -24,7 +24,7 @@ void get_psi3770_shape() {
 
 	double xmax = 2.0;
 	double xmin = 2.8;
-	RooRealVar rmD("m_rm_D", "m_rm_D", xmax, xmin);
+	RooRealVar rmD("rm_D", "rm_D", xmax, xmin);
 	TChain *psi3770_4360 = new TChain("save");
 	TChain *psi3770_4420 = new TChain("save");
 	TChain *psi3770_4600 = new TChain("save");
@@ -37,9 +37,9 @@ void get_psi3770_shape() {
 	RooDataSet* set_psi3770_4420 = new RooDataSet("set_psi3770_4420", "set_psi3770_4420", psi3770_4420, rmD);
 	RooDataSet* set_psi3770_4600 = new RooDataSet("set_psi3770_4600", "set_psi3770_4600", psi3770_4600, rmD);
 
-	RooDataSet  *set_psi3770_compact_4360 = (RooDataSet*)set_psi3770_4360->reduce(RooArgSet(rmD), "m_rm_D>2.1 && m_rm_D<2.5");
-	RooDataSet  *set_psi3770_compact_4420 = (RooDataSet*)set_psi3770_4420->reduce(RooArgSet(rmD), "m_rm_D>2.1 && m_rm_D<2.55");
-	RooDataSet  *set_psi3770_compact_4600 = (RooDataSet*)set_psi3770_4600->reduce(RooArgSet(rmD), "m_rm_D>2.1 && m_rm_D<2.75");
+	RooDataSet  *set_psi3770_compact_4360 = (RooDataSet*)set_psi3770_4360->reduce(RooArgSet(rmD), "rm_D>2.1 && rm_D<2.5");
+	RooDataSet  *set_psi3770_compact_4420 = (RooDataSet*)set_psi3770_4420->reduce(RooArgSet(rmD), "rm_D>2.1 && rm_D<2.55");
+	RooDataSet  *set_psi3770_compact_4600 = (RooDataSet*)set_psi3770_4600->reduce(RooArgSet(rmD), "rm_D>2.1 && rm_D<2.75");
 
 	RooKeysPdf pdf_psi3770_4360("pdf_psi3770_4360", "", rmD, *set_psi3770_compact_4360, RooKeysPdf::NoMirror, 2);
 	RooKeysPdf pdf_psi3770_4420("pdf_psi3770_4420", "", rmD, *set_psi3770_compact_4420, RooKeysPdf::NoMirror, 2);
