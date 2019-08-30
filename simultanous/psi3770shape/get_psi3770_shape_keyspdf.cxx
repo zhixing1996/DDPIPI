@@ -20,18 +20,18 @@
 #include "TStyle.h"
 using namespace std;
 
-void get_psi3770_shape() {
+void get_psi3770_shape_keyspdf() {
 
-	double xmax = 2.0;
-	double xmin = 2.8;
-	RooRealVar rmD("rm_D", "rm_D", xmax, xmin);
+	double xmin = 2.0;
+	double xmax = 2.8;
+	RooRealVar rmD("rm_D", "rm_D", xmin, xmax);
 	TChain *psi3770_4360 = new TChain("save");
 	TChain *psi3770_4420 = new TChain("save");
 	TChain *psi3770_4600 = new TChain("save");
 	psi3770_4360->Add("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/4360/sigMC_psi_3770_4360_selected_signal.root");
 	psi3770_4420->Add("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/4420/sigMC_psi_3770_4420_selected_signal.root");
 	psi3770_4600->Add("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/4600/sigMC_psi_3770_4600_selected_signal.root");
-	TFile *f = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/psi3770shape/psi3770_shape.root","recreate");
+	TFile *f = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/psi_3770/psi3770shape/psi3770_shape_keyspdf.root","recreate");
 	
 	RooDataSet* set_psi3770_4360 = new RooDataSet("set_psi3770_4360", "set_psi3770_4360", psi3770_4360, rmD);
 	RooDataSet* set_psi3770_4420 = new RooDataSet("set_psi3770_4420", "set_psi3770_4420", psi3770_4420, rmD);

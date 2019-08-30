@@ -26,7 +26,7 @@ void signal_conv_gauss() {
 
     double xmin=2.0;
     double xmax=2.8;
-    RooRealVar rmD("rmD", "rmD", xmin, xmax) ;
+    RooRealVar rmD("rm_D", "rm_D", xmin, xmax) ;
     TFile *signal_shape_4360 = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4360/signal_shape_4360.root","READ");
     TFile *signal_shape_4420 = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4420/signal_shape_4420.root","READ");
     TFile *signal_shape_4600 = new TFile("/besfs/users/jingmq/DDPIPI/v0.1/sigMC/D1_2420/4600/signal_shape_4600.root","READ");
