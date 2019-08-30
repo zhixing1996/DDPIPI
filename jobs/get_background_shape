@@ -1,4 +1,5 @@
 #!/bin/bash
 mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/bkgMC/sideband
-cp -rf $HOME/bes/DDPIPI/v0.1/simultanous/backgroundshape/get_background_shape.cxx .
-root -l -q get_background_shape.cxx
+cp -rf $HOME/bes/DDPIPI/v0.1/simultanous/backgroundshape/get_background_shape*.cxx .
+root -l -q get_background_shape_histpdf.cxx
+root -l -q get_background_shape_keyspdf.cxx
