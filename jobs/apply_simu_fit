@@ -3,5 +3,7 @@ mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/ana/simu
 mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/canvas_4360
 mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/canvas_4420
 mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/canvas_4600
+rm -rf /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/*.txt
+rm -rf /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/*/*.eps
 cp -rf $HOME/bes/DDPIPI/v0.1/simultanous/simufit/simu_fit.cxx .
 root -l -q simu_fit.cxx
