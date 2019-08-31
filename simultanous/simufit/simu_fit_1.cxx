@@ -141,7 +141,7 @@ void simu_fit_1()
 	char pdfname3[50];
 	char canvas1[500], canvas2[500], canvas3[500];
 
-	for(int ii=0;ii<29;ii++) {
+	for(int ii=0;ii<30;ii++) {
 		for(int iii=0;iii<20;iii++) {
 			sprintf(pdfname1,"Covpdf_2420_4360_%d_%d",ii,iii);
 			sprintf(pdfname2,"Covpdf_2420_4420_%d_%d",ii,iii);
