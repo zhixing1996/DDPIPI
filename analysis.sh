@@ -327,8 +327,18 @@ case $option in
            rm -rf jobs.err
            mkdir jobs.out
            mkdir jobs.err
-           cp $HOME/bes/DDPIPI/v0.1/jobs/apply_simu_fit .
-           hep_sub -g physics apply_simu_fit -o jobs.out -e jobs.err
+           mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/ana/simu
+           mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/canvas_4360
+           mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/canvas_4420
+           mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/canvas_4600
+           rm -rf /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/*.txt
+           rm -rf /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/*/*.eps
+           cp $HOME/bes/DDPIPI/v0.1/jobs/apply_simu_fit_1 .
+           cp $HOME/bes/DDPIPI/v0.1/jobs/apply_simu_fit_2 .
+           cp $HOME/bes/DDPIPI/v0.1/jobs/apply_simu_fit_3 .
+           hep_sub -g physics apply_simu_fit_1 -o jobs.out -e jobs.err
+           hep_sub -g physics apply_simu_fit_2 -o jobs.out -e jobs.err
+           hep_sub -g physics apply_simu_fit_3 -o jobs.out -e jobs.err
            ;;
 
 esac

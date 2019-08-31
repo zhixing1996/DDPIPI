@@ -47,7 +47,7 @@
 using namespace std;
 using namespace RooFit ;
 
-void simu_fit()
+void simu_fit_3()
 {
 	// do not display any of the standard histogram decorations
     gStyle->SetOptTitle(0);
@@ -131,7 +131,7 @@ void simu_fit()
 	RooHistPdf pdf_psipp_3("pdf_psipp_3","pdf_psipp_3", rmD, *set_psipp_3, 0);
 
     ofstream fout;
-    fout.open("/besfs/users/jingmq/DDPIPI/v0.1/ana/simu/simufit_results.txt");
+    fout.open("/besfs/users/jingmq/DDPIPI/v0.1/ana/simu/simufit_results_3.txt");
     if (!fout) {
         cout << "ERROR: Unable to open output file" << endl;
     }
@@ -141,7 +141,7 @@ void simu_fit()
 	char pdfname3[50];
 	char canvas1[500], canvas2[500], canvas3[500];
 
-	for(int ii=0;ii<80;ii++) {
+	for(int ii=60;ii<80;ii++) {
 		for(int iii=0;iii<20;iii++) {
 			sprintf(pdfname1,"Covpdf_2420_4360_%d_%d",ii,iii);
 			sprintf(pdfname2,"Covpdf_2420_4420_%d_%d",ii,iii);
