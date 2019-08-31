@@ -33,7 +33,9 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.5" "Extract shapes -- get background shapes"
     printf "\n\t%-9s  %-40s\n" "0.3.6" "Extract shapes -- get psi(3770) shapes"
     printf "\n\t%-9s  %-40s\n" "0.3.7" "Fit distributions -- fit to rmDpipi to get background events"
-    printf "\n\t%-9s  %-40s\n" "0.3.8" "Fit distributions -- apply simultanous fit"
+    printf "\n\t%-9s  %-40s\n" "0.3.8" "Fit distributions -- apply simultanous fits"
+    printf "\n\t%-9s  %-40s\n" "0.3.9" "Fit distributions -- select mass and width"
+    printf "\n\t%-9s  %-40s\n" "0.3.10" "Fit distributions -- apply simu fit with selected mass and width"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -315,7 +317,7 @@ case $option in
            root -l -q fit_rmDpipi_4600.cxx
            ;;
 
-    0.3.8) echo "Fit distributions -- applying simultanous fit..."
+    0.3.8) echo "Fit distributions -- applying simultanous fits..."
            mkdir -p scripts/ana/simu
            cd scripts/ana/simu
            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/simu/jobs_ana" ]; then
@@ -332,6 +334,8 @@ case $option in
            mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/canvas_4420
            mkdir -p /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/canvas_4600
            rm -rf /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/*.txt
+           rm -rf /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/*.eps
+           rm -rf /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/*.root
            rm -rf /besfs/users/jingmq/DDPIPI/v0.1/ana/simu/*/*.eps
            cp $HOME/bes/DDPIPI/v0.1/jobs/apply_simu_fit_1 .
            cp $HOME/bes/DDPIPI/v0.1/jobs/apply_simu_fit_2 .
@@ -339,6 +343,18 @@ case $option in
            hep_sub -g physics apply_simu_fit_1 -o jobs.out -e jobs.err
            hep_sub -g physics apply_simu_fit_2 -o jobs.out -e jobs.err
            hep_sub -g physics apply_simu_fit_3 -o jobs.out -e jobs.err
+           ;;
+
+    0.3.9) echo "Fit distributions -- selecting mass and width..."
+           cd $HOME/bes/DDPIPI/v0.1/simultanous/simufit
+           root -l -q get_root.cxx
+           root -l -q get_mass.cxx
+           root -l -q get_width.cxx
+           ;;
+
+    0.3.10) echo "Fit distributions -- applying simu fit with selected mass and width..."
+           cd $HOME/bes/DDPIPI/v0.1/simultanous/simufit
+           root -l -q simu_fit_final.cxx
            ;;
 
 esac
