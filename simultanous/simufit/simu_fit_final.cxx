@@ -186,7 +186,12 @@ void simu_fit_final()
 			double npsipp_4600 = npsipp_3.getVal();
 
             fout << setiosflags(ios::fixed) << setprecision(3) << r->minNll() << setprecision(5) << " " << mass2420 + 0.0001*ii << " " << width2420 + 0.001*iii;
-            fout << " " << n4360 << " " << n4420 << " " << n4600 << " " << npsipp_4360 << " " << npsipp_4420 << " " << npsipp_4600 << endl;
+            fout << " " << n4360 << " " << n2420_1.getError();
+            fout << " " << n4420 << " " << n2420_2.getError();
+            fout << " " << n4600 << " " << n2420_3.getError();
+            fout << " " << npsipp_4360 << " " << npsipp_1.getError();
+            fout << " " << npsipp_4420 << " " << npsipp_2.getError();
+            fout << " " << npsipp_4600 << " " << npsipp_3.getError() << endl;
 
 			TCanvas *c1=new TCanvas("c1","",800,600);
 			c1->cd();
