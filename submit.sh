@@ -522,7 +522,7 @@ case $option in
     #  0.10 run on data @4360MeV
     # --------------------------
 
-    0.10) echo "data @4600MeV..."
+    0.10) echo "data @4360MeV..."
          echo "--> E_{CMS}: 4358.260MeV"
          echo "--> Energy Spread: 1.97MeV"
          echo "--> Luminosity: 55.18pb^{-1}"
