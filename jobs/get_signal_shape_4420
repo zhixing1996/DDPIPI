@@ -1,9 +1,0 @@
-#!/bin/bash
-
-cp -rf $HOME/bes/DDPIPI/v0.1/simultanous/signalshape/4420/*.cxx .
-
-root -l -q get_signal_hist_4420.cxx
-sleep 300
-root -l -q get_sideband_hist_4420.cxx
-sleep 300
-root -l -q get_signal_shape_4420.cxx

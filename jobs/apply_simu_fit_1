@@ -1,3 +1,0 @@
-#!/bin/bash
-cp -rf $HOME/bes/DDPIPI/v0.1/simultanous/simufit/simu_fit_1.cxx .
-root -l -q simu_fit_1.cxx

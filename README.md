@@ -1,14 +1,14 @@
 # DDPIPI
 
-This is a work following Yi Zheng's work(https://hnbes3.ihep.ac.cn/HyperNews/get/paper224.html)
+This is a work following searching for X(3842)
 
-## Install v0.1
+## Install v0.2
 
 > mkdir -p $HOME/bes/DDPIPI
 
 > cd $HOME/bes/DDPIPI
 
-> git clone https://github.com/zhixing1996/DDPIPI.git v0.1
+> git clone https://github.com/zhixing1996/DDPIPI.git v0.2
 
 ## Login container
 

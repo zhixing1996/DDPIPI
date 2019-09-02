@@ -15,10 +15,10 @@ from tools import search, group_files_by_num
 def usage():
     sys.stdout.write('''
 NAME
-    make_inc.py 
+    make_mc.py 
 
 SYNOPSIS
-    ./make_inc.py [dst_file_path] [mode] [energy] [dst_file_num]
+    ./make_mc.py [dst_file_path] [mode] [energy] [dst_file_num]
     [dst_file_path]: dst file path
     [mode]: generation mode
     [energy]: energy point
