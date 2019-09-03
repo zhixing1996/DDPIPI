@@ -13,6 +13,7 @@ usage() {
 
     printf "\n\t%-9s  %-40s\n" "0.1"   "[Pretreatment of data and MC samples]"
     printf "\n\t%-9s  %-40s\n" "0.1.1" "Get samples -- synthesize root files"
+    printf "\n\t%-9s  %-40s\n" "0.1.2" "Get samples -- extract useful info"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -41,6 +42,24 @@ case $option in
          ;;
 
     0.1.1) echo "Get samples -- synthesizing root files..."
+           cd jobs
+           bash synthesize_root
+           ;;
+
+    0.1.2) echo "Get samples -- extracting useful info..."
+           mkdir -p scripts/ana/sel
+           cd scripts/ana/sel
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info .
+           hep_sub -g physics get_info -o jobs.out -e jobs.err
            ;;
 
 esac

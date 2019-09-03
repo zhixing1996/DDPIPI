@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# data
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4360
+rm -rf data_4360.root
+hadd data_4360.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4420
+rm -rf data_4420.root
+hadd data_4420_temp1.root data31*.root
+hadd data_4420_temp2.root data36*.root
+hadd data_4420_temp3.root data37*.root
+hadd data_4420_temp4.root data38*.root
+hadd data_4420.root data_4420_temp*.root
+rm -rf data_4420_temp*.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4600
+rm -rf data_4600.root
+hadd data_4600.root *.root
+# signal MC: X_3842
+# cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/rootfile
+# rm -rf sigMC_X_3842_4360.root
+# hadd sigMC_X_3842_4360.root *.root
+# cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/rootfile
+# rm -rf sigMC_X_3842_4420.root
+# hadd sigMC_X_3842_4420.root *.root
+# cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/rootfile
+# rm -rf sigMC_X_3842_4600.root
+# hadd sigMC_X_3842_4600.root *.root
+# inclusive MC: DD
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile
+rm -rf incMC_DD_4360.root
+hadd incMC_DD_4360.root *.root
+# cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/rootfile
+# rm -rf incMC_DD_4420.root
+# hadd incMC_DD_4420.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/rootfile
+rm -rf incMC_DD_4600.root
+hadd incMC_DD_4600.root *.root
+# inclusive MC: qq
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/rootfile
+rm -rf incMC_qq_4360.root
+hadd incMC_qq_4360.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/rootfile
+rm -rf incMC_qq_4420.root
+hadd incMC_qq_4420.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/rootfile
+rm -rf incMC_qq_4600.root
+hadd incMC_qq_4600.root *.root
+# inclusive MC: LL
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/LL/4600/rootfile
+rm -rf incMC_LL_4600.root
+hadd incMC_LL_4600.root *.root
