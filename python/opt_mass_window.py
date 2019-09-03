@@ -54,38 +54,42 @@ def set_histo_style(h, xtitle, ytitle):
     h.SetMarkerSize(0.65)
     h.SetLineColor(1)
 
-def cal_significance(t1, t2, entries1, entries2, h, M_D, N, step):
+def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
     ymax = 0
+    NEntry = 0
     S_list = []
-    for i in xrange(entries1):
-        t1.GetEntry(i)
+    print 'Start of sigMC...'
+    for i in xrange(N):
         S = 0
-        for j in xrange(N):
-            if abs(t1.m_rm_Dpipi - M_D) < (step + j*step):
+        for j in xrange(int(entries1/10)):
+            t1.GetEntry(j)
+            if abs(t1.m_rm_Dpipi - M_D) < (step + i*step):
                 S = S + 1
         S_list.append(S)
     SB_list = []
-    for i in xrange(entries2):
-        t2.GetEntry(i)
+    print 'Start of data...'
+    for i in xrange(N):
         SB = 0
-        for j in xrange(N):
-            if abs(t2.m_rm_Dpipi - M_D) < (step + j*step):
+        for j in xrange(entries2):
+            t2.GetEntry(j)
+            if abs(t2.m_rm_Dpipi - M_D) < (step + i*step):
                 SB = SB + 1
         SB_list.append(SB)
+    Ratio_list = []
     for i in xrange(N):
         if SB_list[i] == 0:
             significance = 0
         else:
             significance = S_list[i]/math.sqrt(SB_list[i])
-            Ratio_list.append(significance)
+        Ratio_list.append(significance)
         if significance > ymax:
             ymax = significance
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = "Mass Window of RM(D^{-}#pi^{+}#pi^{-})"
-    ytitle = "frac{S}{#sqrt{S+B}}"
-    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 100)
+    xtitle = "Abs(RM(D^{+}#pi^{+}#pi^{-}-M(D^{+}))"
+    ytitle = "#frac{S}{#sqrt{S+B}}"
+    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 10)
     set_histo_style(h_FOM, xtitle, ytitle)
     for i in xrange(N):
         h_FOM.Fill(step + i*step, Ratio_list[i])
@@ -98,7 +102,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, sigMC_path, leg_title, ecms, arrow_bottom, arrow_top):
+def plot(data_path, sigMC_path, pt_title, ecms):
     try:
         f_data = TFile(data_path)
         f_sigMC = TFile(sigMC_path)
@@ -118,14 +122,14 @@ def plot(data_path, sigMC_path, leg_title, ecms, arrow_bottom, arrow_top):
     M_Dplus = 1.8696
     step = (1.9 - M_Dplus)/xbins
 
-    h_FOM, NEntry, arrow_top = cal_significance(t_data, t_sigMC, entries_data, entries_sigMC, M_Dplus, xbins, step)
+    h_FOM, ientry, arrow_top = cal_significance(t_sigMC, t_data, entries_sigMC, entries_data, M_Dplus, xbins, step)
     h_FOM.Draw()
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
 
-    arrow_left = NEntry*step + step
-    arrow_right = NEntry*step + step
+    arrow_left = ientry*step + step
+    arrow_right = ientry*step + step
     arrow_bottom = 0.0
     arrow = TArrow(arrow_left, arrow_bottom, arrow_right, arrow_top, 0.01,'>')
     set_arrow(arrow)
@@ -134,11 +138,12 @@ def plot(data_path, sigMC_path, leg_title, ecms, arrow_bottom, arrow_top):
     pt = TPaveText(0.6, 0.8, 0.85, 0.85, "BRNDC")
     set_pavetext(pt)
     pt.Draw()
+    pt.AddText(pt_title)
 
-    mass_low = str(M_Dplus - (step + step*NEntry))
-    mass_up = str(M_Dplus + (step + step*NEntry))
+    mass_low = str(M_Dplus - (step + step*ientry))
+    mass_up = str(M_Dplus + (step + step*ientry))
     range = 'Mass window of RM(D^{+}#pi^{+}#pi^{-}): [' + mass_low + ', ' + mass_up + ']'
-    pt.AddText(range)
+    print range
 
     mbc.Update()
     mbc.SaveAs('./figs/opt_mass_window_'+str(ecms)+'.pdf')
@@ -146,18 +151,18 @@ def plot(data_path, sigMC_path, leg_title, ecms, arrow_bottom, arrow_top):
 if __name__ == '__main__':
     data_path = ''
     sigMC_path = ''
-    leg_title = '(a)'
+    pt_title = '(a)'
     ecms = 4360
-    plot(data_path, sigMC_path, leg_title, ecms)
+    plot(data_path, sigMC_path, pt_title, ecms)
 
-    data_path = ''
-    sigMC_path = ''
-    leg_title = '(b)'
-    ecms = 4420
-    plot(data_path, sigMC_path, leg_title, ecms)
+    # data_path = ''
+    # sigMC_path = ''
+    # pt_title = '(b)'
+    # ecms = 4420
+    # plot(data_path, sigMC_path, pt_title, ecms)
 
-    data_path = ''
-    sigMC_path = ''
-    leg_title = '(c)'
-    ecms = 4600
-    plot(data_path, sigMC_path, leg_title, ecms)
+    # data_path = ''
+    # sigMC_path = ''
+    # pt_title = '(c)'
+    # ecms = 4600
+    # plot(data_path, sigMC_path, pt_title, ecms)
