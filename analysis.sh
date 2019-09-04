@@ -56,7 +56,7 @@ case $option in
            cd scripts/ana/sel
            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana" ]; then
                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana
-               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.1/run/ana/sel/jobs_ana ./jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana ./jobs_ana
            fi
            cd jobs_ana
            rm -rf jobs.out
@@ -80,13 +80,18 @@ case $option in
          ;;
 
     0.2.1) echo "Draw figures -- studying chi2 of kinematic fit cuts..."
-           cd python
-           python opt_chi2_kf.py
+           cd $HOME/bes/DDPIPI/v0.2/python
+           python opt_chi2_kf.py 4360
+           python opt_chi2_kf.py 4420
+           python opt_chi2_kf.py 4600
+           python plot_chi2_kf.py
            ;;
 
     0.2.2) echo "Draw figures -- studying mass window..."
-           cd python
-           python opt_mass_window.py
+           cd $HOME/bes/DDPIPI/v0.2/python
+           python opt_mass_window.py 4360
+           python opt_mass_window.py 4420
+           python opt_mass_window.py 4600
            ;;
 
 esac

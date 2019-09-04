@@ -44,7 +44,7 @@ def set_histo_style(h, xtitle, ytitle):
     h.GetXaxis().SetTitleOffset(1.0)
     h.GetXaxis().SetLabelOffset(0.01)
     h.GetYaxis().SetTitleSize(0.04)
-    h.GetYaxis().SetTitleOffset(1.0)
+    h.GetYaxis().SetTitleOffset(1.6)
     h.GetYaxis().SetLabelOffset(0.01)
     h.GetXaxis().SetTitle(xtitle)
     h.GetXaxis().CenterTitle()
@@ -63,28 +63,28 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
         S = 0
         for j in xrange(int(entries1/10)):
             t1.GetEntry(j)
-            if t1.m_chi2_kf > 7:
+            if t1.m_chi2_kf > 10:
                 continue
             if abs(t1.m_rm_Dpipi - M_D) < (step + i*step):
                 S = S + 1
         S_list.append(S)
-    SB_list = []
-    print 'Start of data...'
+    B_list = []
+    print 'Start of incMC...'
     for i in xrange(N):
-        SB = 0
+        B = 0
         for j in xrange(entries2):
             t2.GetEntry(j)
-            if t2.m_chi2_kf > 7:
+            if t2.m_chi2_kf > 10:
                 continue
             if abs(t2.m_rm_Dpipi - M_D) < (step + i*step):
-                SB = SB + 1
-        SB_list.append(SB)
+                B = B + 1
+        B_list.append(B)
     Ratio_list = []
     for i in xrange(N):
-        if SB_list[i] == 0:
+        if B_list[i] == 0:
             significance = 0
         else:
-            significance = S_list[i]/math.sqrt(SB_list[i])
+            significance = S_list[i]/math.sqrt(B_list[i]/5)
         Ratio_list.append(significance)
         if significance > ymax:
             ymax = significance
@@ -92,8 +92,8 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
     xmin = step
     xmax = N*step
     xtitle = "Abs(RM(D^{+}#pi^{+}#pi^{-}-M(D^{+}))"
-    ytitle = "#frac{S}{#sqrt{S+B}}"
-    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 10)
+    ytitle = "#frac{S}{#sqrt{B}}"
+    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 70)
     set_histo_style(h_FOM, xtitle, ytitle)
     for i in xrange(N):
         h_FOM.Fill(step + i*step, Ratio_list[i])
@@ -106,18 +106,18 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, sigMC_path, pt_title, ecms):
+def plot(incMC_path, sigMC_path, pt_title, ecms):
     try:
-        f_data = TFile(data_path)
+        f_incMC = TFile(incMC_path)
         f_sigMC = TFile(sigMC_path)
-        t_data = f_data.Get('save')
+        t_incMC = f_incMC.Get('save')
         t_sigMC = f_sigMC.Get('save')
-        entries_data = t_data.GetEntries()
+        entries_incMC = t_incMC.GetEntries()
         entries_sigMC = t_sigMC.GetEntries()
-        logging.info('data entries :'+str(entries_data))
+        logging.info('inclusive MC entries :'+str(entries_incMC))
         logging.info('signal MC entries :'+str(entries_sigMC))
     except:
-        logging.error(data_path+' or '+sigMC_path+' is invalid!')
+        logging.error(incMC_path+' or '+sigMC_path+' is invalid!')
         sys.exit()
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
@@ -126,7 +126,7 @@ def plot(data_path, sigMC_path, pt_title, ecms):
     M_Dplus = 1.8696
     step = (1.9 - M_Dplus)/xbins
 
-    h_FOM, ientry, arrow_top = cal_significance(t_sigMC, t_data, entries_sigMC, entries_data, M_Dplus, xbins, step)
+    h_FOM, ientry, arrow_top = cal_significance(t_sigMC, t_incMC, entries_sigMC, entries_incMC, M_Dplus, xbins, step)
     h_FOM.Draw()
     
     if not os.path.exists('./figs/'):
@@ -152,21 +152,30 @@ def plot(data_path, sigMC_path, pt_title, ecms):
     mbc.Update()
     mbc.SaveAs('./figs/opt_mass_window_'+str(ecms)+'.pdf')
 
+def main():
+    args = sys.argv[1:]
+    energy = args[0]
+
+    if int(energy) == 4360:
+        incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_selected.root'
+        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_selected.root'
+        pt_title = '(a)'
+        ecms = 4360
+        plot(incMC_path, sigMC_path, pt_title, ecms)
+
+    if int(energy) == 4420:
+        incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_selected.root'
+        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_selected.root'
+        pt_title = '(b)'
+        ecms = 4420
+        plot(incMC_path, sigMC_path, pt_title, ecms)
+
+    if int(energy) == 4600:
+        incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_selected.root'
+        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_selected.root'
+        pt_title = '(c)'
+        ecms = 4600
+        plot(incMC_path, sigMC_path, pt_title, ecms)
+
 if __name__ == '__main__':
-    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4360/data_4360_selected.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_selected.root'
-    pt_title = '(a)'
-    ecms = 4360
-    plot(data_path, sigMC_path, pt_title, ecms)
-
-    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_selected.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_selected.root'
-    pt_title = '(b)'
-    ecms = 4420
-    plot(data_path, sigMC_path, pt_title, ecms)
-
-    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4600/data_4600_selected.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_selected.root'
-    pt_title = '(c)'
-    ecms = 4600
-    plot(data_path, sigMC_path, pt_title, ecms)
+    main()
