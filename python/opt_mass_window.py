@@ -155,14 +155,14 @@ if __name__ == '__main__':
     ecms = 4360
     plot(data_path, sigMC_path, pt_title, ecms)
 
-    # data_path = ''
-    # sigMC_path = ''
-    # pt_title = '(b)'
-    # ecms = 4420
-    # plot(data_path, sigMC_path, pt_title, ecms)
+    data_path = ''
+    sigMC_path = ''
+    pt_title = '(b)'
+    ecms = 4420
+    plot(data_path, sigMC_path, pt_title, ecms)
 
-    # data_path = ''
-    # sigMC_path = ''
-    # pt_title = '(c)'
-    # ecms = 4600
-    # plot(data_path, sigMC_path, pt_title, ecms)
+    data_path = ''
+    sigMC_path = ''
+    pt_title = '(c)'
+    ecms = 4600
+    plot(data_path, sigMC_path, pt_title, ecms)
