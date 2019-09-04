@@ -15,6 +15,11 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.1.1" "Get samples -- synthesize root files"
     printf "\n\t%-9s  %-40s\n" "0.1.2" "Get samples -- extract useful info"
 
+    printf "\n\t%-9s  %-40s\n" "0.2"   "[Study cuts]"
+    printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figues -- study chi2 of kinematic fit cuts"
+    printf "\n\t%-9s  %-40s\n" "0.2.2" "Draw figues -- study mass window"
+
+
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -60,6 +65,28 @@ case $option in
            mkdir jobs.err
            cp $HOME/bes/DDPIPI/v0.2/jobs/get_info .
            hep_sub -g physics get_info -o jobs.out -e jobs.err
+           ;;
+
+    # ---------------
+    #  0.2 Study cuts
+    # ---------------
+
+    0.2) echo "Studying cuts..."
+         echo "--> Samples: data, signal MC, PHSP MC, inclusive MC"
+         echo "--> E_{CMS}: 4360MeV, 4420MeV, 460MeV"
+         echo "--> Event Number: 1,000,000(signal MC,PHSP MC, inclusive MC)"
+         echo "--> RunNo: 30616~31279(4360MeV), 31327~31390+36773~38140(4420MeV), 35227~36213(4600MeV)"
+         echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89^{-1}(4420MeV), 566.93^{-1}(4600MeV)"
+         ;;
+
+    0.2.1) echo "Draw figures -- studying chi2 of kinematic fit cuts..."
+           cd python
+           python opt_chi2_kf.py
+           ;;
+
+    0.2.2) echo "Draw figures -- studying mass window..."
+           cd python
+           python opt_mass_window.py
            ;;
 
 esac

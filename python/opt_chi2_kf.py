@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-Optiomize mass window of recoiling mass of DPIPI
+Optiomize chi2 of Kiniematic fit
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
 __copyright__ = "Copyright (c) Maoqiang JING"
-__created__ = "[2019-09-03 Tue 05:30]"
+__created__ = "[2019-09-04 Tue 06:13]"
 
 import ROOT
 from ROOT import TCanvas, gStyle
@@ -44,7 +44,7 @@ def set_histo_style(h, xtitle, ytitle):
     h.GetXaxis().SetTitleOffset(1.0)
     h.GetXaxis().SetLabelOffset(0.01)
     h.GetYaxis().SetTitleSize(0.04)
-    h.GetYaxis().SetTitleOffset(1.0)
+    h.GetYaxis().SetTitleOffset(1.6)
     h.GetYaxis().SetLabelOffset(0.01)
     h.GetXaxis().SetTitle(xtitle)
     h.GetXaxis().CenterTitle()
@@ -54,7 +54,7 @@ def set_histo_style(h, xtitle, ytitle):
     h.SetMarkerSize(0.65)
     h.SetLineColor(1)
 
-def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
+def cal_significance(t1, t2, entries1, entries2, N, step):
     ymax = 0
     NEntry = 0
     S_list = []
@@ -63,9 +63,7 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
         S = 0
         for j in xrange(int(entries1/10)):
             t1.GetEntry(j)
-            if t1.m_chi2_kf > 7:
-                continue
-            if abs(t1.m_rm_Dpipi - M_D) < (step + i*step):
+            if t1.m_chi2_kf < (step + i*step):
                 S = S + 1
         S_list.append(S)
     SB_list = []
@@ -74,9 +72,7 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
         SB = 0
         for j in xrange(entries2):
             t2.GetEntry(j)
-            if t2.m_chi2_kf > 7:
-                continue
-            if abs(t2.m_rm_Dpipi - M_D) < (step + i*step):
+            if t2.m_chi2_kf < (step + i*step):
                 SB = SB + 1
         SB_list.append(SB)
     Ratio_list = []
@@ -91,9 +87,9 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = "Abs(RM(D^{+}#pi^{+}#pi^{-}-M(D^{+}))"
+    xtitle = "#chi^{2}(K^{-}#pi^{+}#pi^{+})"
     ytitle = "#frac{S}{#sqrt{S+B}}"
-    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 10)
+    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 70)
     set_histo_style(h_FOM, xtitle, ytitle)
     for i in xrange(N):
         h_FOM.Fill(step + i*step, Ratio_list[i])
@@ -123,10 +119,9 @@ def plot(data_path, sigMC_path, pt_title, ecms):
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
     xbins = 100
-    M_Dplus = 1.8696
-    step = (1.9 - M_Dplus)/xbins
+    step = 100/xbins
 
-    h_FOM, ientry, arrow_top = cal_significance(t_sigMC, t_data, entries_sigMC, entries_data, M_Dplus, xbins, step)
+    h_FOM, ientry, arrow_top = cal_significance(t_sigMC, t_data, entries_sigMC, entries_data, xbins, step)
     h_FOM.Draw()
     
     if not os.path.exists('./figs/'):
@@ -144,13 +139,11 @@ def plot(data_path, sigMC_path, pt_title, ecms):
     pt.Draw()
     pt.AddText(pt_title)
 
-    mass_low = str(M_Dplus - (step + step*ientry))
-    mass_up = str(M_Dplus + (step + step*ientry))
-    range = 'Mass window of RM(D^{+}#pi^{+}#pi^{-}): [' + mass_low + ', ' + mass_up + ']'
+    range = 'chi2 of kinematic fit of K^{-}#pi^{+}#pi^{+}: ' + str(arrow_right)
     print range
 
     mbc.Update()
-    mbc.SaveAs('./figs/opt_mass_window_'+str(ecms)+'.pdf')
+    mbc.SaveAs('./figs/opt_chi2_kf_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
     data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4360/data_4360_selected.root'
