@@ -9,7 +9,8 @@ usage() {
     printf "NAME\n\tbuild.sh - Main driver to build programs\n"
     printf "\nSYNOPSIS\n"
     printf "\n\t%5-5s\n" "./build.sh [OPTION]"
-    printf "\n\t%-5s  %-40s\n" "1" "build DDecay analyzer"
+    printf "\n\t%-5s  %-40s\n" "1" "Build DDecay analyzer: DDecayAlg-00-00-01"
+    printf "\n\t%-5s  %-40s\n" "2" "Build DDecay analyzer: DDecayAlg-00-00-02"
     printf "\n\n"
 }
 
@@ -23,8 +24,12 @@ fi
 
 
 case $option in
-    1) echo "Building DDPIPI module..."
+    1) echo "Building DDecay analyzer: DDecayAlg-00-00-01..."
        cd Analysis/Physics/DDecayAlg/DDecayAlg-00-00-01/cmt
+       gmake
+       ;;
+    2) echo "Building DDecay analyzer: DDecayAlg-00-00-02..."
+       cd Analysis/Physics/DDecayAlg/DDecayAlg-00-00-02/cmt
        gmake
        ;;
 esac

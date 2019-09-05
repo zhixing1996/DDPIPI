@@ -1,4 +1,4 @@
-# echo "Setting DDecayAlg DDecayAlg-00-00-01 in /afs/ihep.ac.cn/users/j/jingmq/bes/DDPIPI/v0.2"
+echo "Setting DDecayAlg DDecayAlg-00-00-01 in /afs/ihep.ac.cn/users/j/jingmq/bes/DDPIPI/v0.2"
 
 if ( $?CMTROOT == 0 ) then
   setenv CMTROOT /afs/ihep.ac.cn/bes3/offline/ExternalLib/contrib/CMT/v1r20p20081118
