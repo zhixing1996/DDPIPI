@@ -63,8 +63,11 @@ case $option in
            rm -rf jobs.err
            mkdir jobs.out
            mkdir jobs.err
-           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info .
-           hep_sub -g physics get_info -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info* .
+           hep_sub -g physics get_info_raw -o jobs.out -e jobs.err
+           hep_sub -g physics get_info_signal -o jobs.out -e jobs.err
+           hep_sub -g physics get_info_sidebandlow -o jobs.out -e jobs.err
+           hep_sub -g physics get_info_sidebandup -o jobs.out -e jobs.err
            ;;
 
     # ---------------
