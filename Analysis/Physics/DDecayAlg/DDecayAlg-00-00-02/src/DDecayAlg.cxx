@@ -200,6 +200,8 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple8->addItem("n_shwD", m_n_shwD_signal, 0, 2); 
             status = m_tuple8->addIndexedItem("rawp4_Dshw", m_n_shwD_signal, 4, m_rawp4_Dshw_signal);
             status = m_tuple8->addIndexedItem("p4_Dshw", m_n_shwD_signal, 4, m_p4_Dshw_signal);
+            status = m_tuple8->addItem("p4_piplus", 4, m_p4_piplus_signal);
+            status = m_tuple8->addItem("p4_piminus", 4, m_p4_piminus_signal);
             status = m_tuple8->addItem("mode", m_mode_signal);
             status = m_tuple8->addItem("charm", m_charm_signal);
             status = m_tuple8->addItem("chi2_vf", m_chi2_vf_signal);
@@ -226,6 +228,8 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple9->addItem("n_shwD", m_n_shwD_sidebandlow, 0, 2); 
             status = m_tuple9->addIndexedItem("rawp4_Dshw", m_n_shwD_sidebandlow, 4, m_rawp4_Dshw_sidebandlow);
             status = m_tuple9->addIndexedItem("p4_Dshw", m_n_shwD_sidebandlow, 4, m_p4_Dshw_sidebandlow);
+            status = m_tuple9->addItem("p4_piplus", 4, m_p4_piplus_sidebandlow);
+            status = m_tuple9->addItem("p4_piminus", 4, m_p4_piminus_sidebandlow);
             status = m_tuple9->addItem("mode", m_mode_sidebandlow);
             status = m_tuple9->addItem("charm", m_charm_sidebandlow);
             status = m_tuple9->addItem("chi2_vf", m_chi2_vf_sidebandlow);
@@ -252,6 +256,8 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple10->addItem("n_shwD", m_n_shwD_sidebandup, 0, 2); 
             status = m_tuple10->addIndexedItem("rawp4_Dshw", m_n_shwD_sidebandup, 4, m_rawp4_Dshw_sidebandup);
             status = m_tuple10->addIndexedItem("p4_Dshw", m_n_shwD_sidebandup, 4, m_p4_Dshw_sidebandup);
+            status = m_tuple10->addItem("p4_piplus", 4, m_p4_piplus_sidebandup);
+            status = m_tuple10->addItem("p4_piminus", 4, m_p4_piminus_sidebandup);
             status = m_tuple10->addItem("mode", m_mode_sidebandup);
             status = m_tuple10->addItem("charm", m_charm_sidebandup);
             status = m_tuple10->addItem("chi2_vf", m_chi2_vf_sidebandup);
@@ -839,7 +845,7 @@ double DDecayAlg::fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon
     return kf_chi2;
 }
 
-double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, VertexParameter &birth) {
+double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth) {
     kmfit->init();
     // kmfit->setEspread(0.0011);
     kmfit->setBeamPosition(birth.vx());
@@ -863,8 +869,8 @@ double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara
         D1list.push_back(count);
         count++;
     }
-    kmfit->AddTrack(count++, vwtrkpara_piplus[0]);
-    kmfit->AddTrack(count++, vwtrkpara_piminus[0]);
+    kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
+    kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
     kmfit->AddMissTrack(count++, 1.8696);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
@@ -897,12 +903,14 @@ double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara
         for (int i = 0; i < n_shwD; i++) {
             for (int j = 0; j < 4; j++) m_p4_Dshw_signal[i][j] = kmfit->pfit(i + n_trkD)[j];
         }
+        for (int i = 0; i < 4; i++) m_p4_piplus_signal[i] = kmfit->pfit(n_trkD + n_shwD)[i];
+        for (int i = 0; i < 4; i++) m_p4_piminus_signal[i] = kmfit->pfit(n_trkD + n_shwD + 1)[i];
         if (m_debug) std::cout << " recorded the four momentum of showers and tracks in tagged D " << std::endl;
     }
     return kf_chi2;
 }
 
-double DDecayAlg::fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, VertexParameter &birth) {
+double DDecayAlg::fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth) {
     kmfit->init();
     // kmfit->setEspread(0.0011);
     kmfit->setBeamPosition(birth.vx());
@@ -926,8 +934,8 @@ double DDecayAlg::fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
         D1list.push_back(count);
         count++;
     }
-    kmfit->AddTrack(count++, vwtrkpara_piplus[0]);
-    kmfit->AddTrack(count++, vwtrkpara_piminus[0]);
+    kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
+    kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
     kmfit->AddMissTrack(count++, 1.832);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
@@ -960,12 +968,14 @@ double DDecayAlg::fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
         for (int i = 0; i < n_shwD; i++) {
             for (int j = 0; j < 4; j++) m_p4_Dshw_sidebandlow[i][j] = kmfit->pfit(i + n_trkD)[j];
         }
+        for (int i = 0; i < 4; i++) m_p4_piplus_sidebandlow[i] = kmfit->pfit(n_trkD + n_shwD)[i];
+        for (int i = 0; i < 4; i++) m_p4_piminus_sidebandlow[i] = kmfit->pfit(n_trkD + n_shwD + 1)[i];
         if (m_debug) std::cout << " recorded the four momentum of showers and tracks in tagged D " << std::endl;
     }
     return kf_chi2;
 }
 
-double DDecayAlg::fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, VertexParameter &birth) {
+double DDecayAlg::fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth) {
     kmfit->init();
     // kmfit->setEspread(0.0011);
     kmfit->setBeamPosition(birth.vx());
@@ -989,8 +999,8 @@ double DDecayAlg::fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrk
         D1list.push_back(count);
         count++;
     }
-    kmfit->AddTrack(count++, vwtrkpara_piplus[0]);
-    kmfit->AddTrack(count++, vwtrkpara_piminus[0]);
+    kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
+    kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
     kmfit->AddMissTrack(count++, 1.9075);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
@@ -1022,7 +1032,10 @@ double DDecayAlg::fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrk
         if (m_debug) std::cout << " fill D1trkP4 successfully for mode !!! " << mode << std::endl;
         for (int i = 0; i < n_shwD; i++) {
             for (int j = 0; j < 4; j++) m_p4_Dshw_sidebandup[i][j] = kmfit->pfit(i + n_trkD)[j];
+
         }
+        for (int i = 0; i < 4; i++) m_p4_piplus_sidebandup[i] = kmfit->pfit(n_trkD + n_shwD)[i];
+        for (int i = 0; i < 4; i++) m_p4_piminus_sidebandup[i] = kmfit->pfit(n_trkD + n_shwD + 1)[i];
         if (m_debug) std::cout << " recorded the four momentum of showers and tracks in tagged D " << std::endl;
     }
     return kf_chi2;
@@ -1066,18 +1079,22 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
     VWTrkPara vwtrkpara_piplus, vwtrkpara_piminus;
     vwtrkpara_piplus.clear();
     vwtrkpara_piminus.clear();
+    int n_piplus = 0;
+    int n_piminus = 0;
     for (int i = 0; i < othertracks.size(); i++) {
         if (!(dtagTool.isGoodTrack(othertracks[i]))) continue;
         if ((m_rawp4_otherMdcKaltrk[i][4] != 1) && (m_rawp4_otherMdcKaltrk[i][5] != 2)) continue;
         RecMdcKalTrack *mdcKalTrk_plus = othertracks[i]->mdcKalTrack();
         vwtrkpara_piplus.push_back(WTrackParameter(mass[2], mdcKalTrk_plus->getZHelix(), mdcKalTrk_plus->getZError()));
+        n_piplus++;
         for (int j = 0; j < othertracks.size(); j++) {
             if ((m_rawp4_otherMdcKaltrk[j][4] != -1) && (m_rawp4_otherMdcKaltrk[j][5] != 2)) continue;
             RecMdcKalTrack *mdcKalTrk_minus = othertracks[j]->mdcKalTrack();
             vwtrkpara_piminus.push_back(WTrackParameter(mass[2], mdcKalTrk_minus->getZHelix(), mdcKalTrk_minus->getZError()));
-            chi2_kf_signal = fitKM_signal(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, birth);
-            chi2_kf_sidebandlow = fitKM_sidebandlow(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, birth);
-            chi2_kf_sidebandup = fitKM_sidebandup(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, birth);
+            n_piminus++;
+            chi2_kf_signal = fitKM_signal(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
+            chi2_kf_sidebandlow = fitKM_sidebandlow(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
+            chi2_kf_sidebandup = fitKM_sidebandup(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
             if (m_debug) std::cout << "Start recording region info if passed the requirement" << std::endl;
             if (fabs(chi2_kf_signal) < 999) {
                 recordVariables_signal();
