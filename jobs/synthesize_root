@@ -25,6 +25,26 @@ hadd sigMC_X_3842_4420.root *.root
 cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/rootfile
 rm -rf sigMC_X_3842_4600.root
 hadd sigMC_X_3842_4600.root *.root
+# signal MC: D1(2420)
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/rootfile
+rm -rf sigMC_D1_2420_4360.root
+hadd sigMC_D1_2420_4360.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/rootfile
+rm -rf sigMC_D1_2420_4420.root
+hadd sigMC_D1_2420_4420.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/rootfile
+rm -rf sigMC_D1_2420_4600.root
+hadd sigMC_D1_2420_4600.root *.root
+# signal MC: psi(3770)
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/rootfile
+rm -rf sigMC_psipp_4360.root
+hadd sigMC_psipp_4360.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/rootfile
+rm -rf sigMC_psipp_4420.root
+hadd sigMC_psipp_4420.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/rootfile
+rm -rf sigMC_psipp_4600.root
+hadd sigMC_psipp_4600.root *.root
 # inclusive MC: hadrons
 cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/rootfile
 rm -rf incMC_hadrons_4360.root
@@ -35,3 +55,19 @@ hadd incMC_hadrons_4420.root *.root
 cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/rootfile
 rm -rf incMC_hadrons_4600.root
 hadd incMC_hadrons_4600.root *.root
+# signal MC
+mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4360/rootfile
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4360/rootfile
+cp -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/rootfile/sigMC_D1_2420_4360.root .
+cp -rf /scratchfs/bes/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4360/rootfile/sigMC_psipp_4360.root .
+hadd sigMC_4360.root *.root
+mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4420/rootfile
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4420/rootfile
+cp -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/rootfile/sigMC_D1_2420_4420.root .
+cp -rf /scratchfs/bes/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4420/rootfile/sigMC_psipp_4420.root .
+hadd sigMC_4420.root *.root
+mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4600/rootfile
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4600/rootfile
+cp -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/rootfile/sigMC_D1_2420_4600.root .
+cp -rf /scratchfs/bes/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4600/rootfile/sigMC_psipp_4600.root .
+hadd sigMC_4600.root *.root

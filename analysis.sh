@@ -13,11 +13,10 @@ usage() {
 
     printf "\n\t%-9s  %-40s\n" "0.1"   "[Pretreatment of data and MC samples]"
     printf "\n\t%-9s  %-40s\n" "0.1.1" "Get samples -- synthesize root files"
-    printf "\n\t%-9s  %-40s\n" "0.1.2" "Get samples -- extract useful info"
+    printf "\n\t%-9s  %-40s\n" "0.1.2" "Get samples -- extract useful info: raw"
 
     printf "\n\t%-9s  %-40s\n" "0.2"   "[Study cuts]"
-    printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figues -- study chi2 of kinematic fit cuts"
-    printf "\n\t%-9s  %-40s\n" "0.2.2" "Draw figues -- study mass window"
+    printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figues -- study mass window"
 
 
     printf "\n\t%-9s  %-40s\n" ""      ""
@@ -51,7 +50,7 @@ case $option in
            bash synthesize_root
            ;;
 
-    0.1.2) echo "Get samples -- extracting useful info..."
+    0.1.2) echo "Get samples -- extracting useful info: raw..."
            mkdir -p scripts/ana/sel
            cd scripts/ana/sel
            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana" ]; then
@@ -63,11 +62,8 @@ case $option in
            rm -rf jobs.err
            mkdir jobs.out
            mkdir jobs.err
-           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info* .
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info_raw .
            hep_sub -g physics get_info_raw -o jobs.out -e jobs.err
-           hep_sub -g physics get_info_signal -o jobs.out -e jobs.err
-           hep_sub -g physics get_info_sidebandlow -o jobs.out -e jobs.err
-           hep_sub -g physics get_info_sidebandup -o jobs.out -e jobs.err
            ;;
 
     # ---------------
@@ -82,15 +78,7 @@ case $option in
          echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89^{-1}(4420MeV), 566.93^{-1}(4600MeV)"
          ;;
 
-    0.2.1) echo "Draw figures -- studying chi2 of kinematic fit cuts..."
-           cd $HOME/bes/DDPIPI/v0.2/python
-           python opt_chi2_kf.py 4360
-           python opt_chi2_kf.py 4420
-           python opt_chi2_kf.py 4600
-           python plot_chi2_kf.py
-           ;;
-
-    0.2.2) echo "Draw figures -- studying mass window..."
+    0.2.1) echo "Draw figures -- studying mass window..."
            cd $HOME/bes/DDPIPI/v0.2/python
            python opt_mass_window.py 4360
            python opt_mass_window.py 4420

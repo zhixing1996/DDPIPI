@@ -1,26 +1,56 @@
 #!/bin/bash
 
 cd $HOME/bes/DDPIPI/v0.2/python
-# data
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4360/data_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw.root 4.358 raw
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4420/data_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw.root 4.415 raw
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4600/data_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw.root 4.600 raw
-# signal MC: X_3842
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/rootfile/sigMC_X_3842_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_raw.root 4.358 raw
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/rootfile/sigMC_X_3842_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_raw.root 4.415 raw
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/rootfile/sigMC_X_3842_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_raw.root 4.600 raw
+# # data
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4360/data_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw.root 4.358 raw
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4420/data_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw.root 4.415 raw
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4600/data_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw.root 4.600 raw
+# # signal MC: X_3842
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/rootfile/sigMC_X_3842_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_raw.root 4.358 raw
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/rootfile/sigMC_X_3842_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_raw.root 4.415 raw
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/rootfile/sigMC_X_3842_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_raw.root 4.600 raw
+# # signal MC: D1_2420
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/rootfile/sigMC_D1_2420_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw.root 4.358 raw
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/rootfile/sigMC_D1_2420_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw.root 4.415 raw
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/rootfile/sigMC_D1_2420_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw.root 4.600 raw
+# # signal MC: psipp
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/rootfile/sigMC_psipp_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw.root 4.358 raw
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/rootfile/sigMC_psipp_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw.root 4.415 raw
+# mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600
+# rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/*.root
+# python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/rootfile/sigMC_psipp_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw.root 4.600 raw
+# signal MC: D1_2420 + psipp
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4360/*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4360/rootfile/sigMC_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4360/sigMC_4360_raw.root 4.358 raw
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4420/*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4420/rootfile/sigMC_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4420/sigMC_4420_raw.root 4.415 raw
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4600/*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4600/rootfile/sigMC_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4600/sigMC_4600_raw.root 4.600 raw
 # inclusive MC: hadrons
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/*.root
