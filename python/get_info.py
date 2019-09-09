@@ -111,47 +111,123 @@ def apply_cuts(f_in, cms, t, MODE):
                     t.Fill()
 
     if MODE == 'signal':
-        t_signal = f_in.Get('STD_signal')
-    if MODE == 'sidebandlow':
-        t_signal = f_in.Get('STD_sidebandlow')
-    if MODE == 'sidebandup':
-        t_signal = f_in.Get('STD_sidebandup')
-        nentries = t_signal.GetEntries()
+        t_in = f_in.Get('STD_signal')
+        nentries = t_in.GetEntries()
         for ientry in range(nentries):
-            t_signal.GetEntry(ientry)
-            if t_signal.mode != 200:
+            t_in.GetEntry(ientry)
+            if t_in.mode != 200:
                 continue
             pD_raw = TLorentzVector(0, 0, 0, 0)
             pD = TLorentzVector(0, 0, 0, 0)
 
-            for iTrk in range(t_signal.n_trkD):
+            for iTrk in range(t_in.n_trkD):
                 ptrack_raw = TLorentzVector(0, 0, 0, 0)
                 ptrack = TLorentzVector(0, 0, 0, 0)
-                ptrack_raw.SetPxPyPzE(t_signal.rawp4_Dtrk[iTrk*4+0], t_signal.rawp4_Dtrk[iTrk*4+1], t_signal.rawp4_Dtrk[iTrk*4+2], t_signal.rawp4_Dtrk[iTrk*4+3])
-                ptrack.SetPxPyPzE(t_signal.p4_Dtrk[iTrk*4+0], t_signal.p4_Dtrk[iTrk*4+1], t_signal.p4_Dtrk[iTrk*4+2], t_signal.p4_Dtrk[iTrk*4+3])
+                ptrack_raw.SetPxPyPzE(t_in.rawp4_Dtrk[iTrk*4+0], t_in.rawp4_Dtrk[iTrk*4+1], t_in.rawp4_Dtrk[iTrk*4+2], t_in.rawp4_Dtrk[iTrk*4+3])
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk[iTrk*4+0], t_in.p4_Dtrk[iTrk*4+1], t_in.p4_Dtrk[iTrk*4+2], t_in.p4_Dtrk[iTrk*4+3])
                 pD_raw += ptrack_raw
                 pD += ptrack
 
             pPip = TLorentzVector(0,0,0,0)
             pPim = TLorentzVector(0,0,0,0)
             t_otherTrk.GetEntry(ientry)
-            pPip.SetPxPyPzE(t_signal.p4_piplus[iTrk*4+0], t_signal.p4_piplus[iTrk*4+1], t_signal.p4_piplus[iTrk*4+2], t_signal.p4_piplus[iTrk*4+3])
-            pPim.SetPxPyPzE(t_signal.p4_piminus[iTrk*4+0], t_signal.p4_piminus[iTrk*4+1], t_signal.p4_piminus[iTrk*4+2], t_signal.p4_piminus[iTrk*4+3])
-            m_runNo[0] = t_signal.runNo
-            m_evtNo[0] = t_signal.evtNo
-            m_mode[0] = t_signal.mode
-            m_charm[0] = t_signal.charm
+            pPip.SetPxPyPzE(t_in.p4_piplus[iTrk*4+0], t_in.p4_piplus[iTrk*4+1], t_in.p4_piplus[iTrk*4+2], t_in.p4_piplus[iTrk*4+3])
+            pPim.SetPxPyPzE(t_in.p4_piminus[iTrk*4+0], t_in.p4_piminus[iTrk*4+1], t_in.p4_piminus[iTrk*4+2], t_in.p4_piminus[iTrk*4+3])
+            m_runNo[0] = t_in.runNo
+            m_evtNo[0] = t_in.evtNo
+            m_mode[0] = t_in.mode
+            m_charm[0] = t_in.charm
             m_rawm_D[0] = pD_raw.M()
             m_rm_D[0] = (cms-pD).M()
             m_rm_pipi[0] = (cms-pPip-pPim).M()
-            if t_signal.charm > 0:
+            if t_in.charm > 0:
                 m_m_Dpi[0] = (pD+pPim).M()
-            elif t_signal.charm < 0:
+            elif t_in.charm < 0:
                 m_m_Dpi[0] = (pD+pPip).M()
             m_m_Dpipi[0] = (pD+pPip+pPim).M()
             m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
-            m_chi2_vf[0] = t_signal.chi2_vf
-            m_chi2_kf[0] = t_signal.chi2_kf
+            m_chi2_vf[0] = t_in.chi2_vf
+            m_chi2_kf[0] = t_in.chi2_kf
+            t.Fill()
+
+    if MODE == 'sidebandlow':
+        t_in = f_in.Get('STD_sidebandlow')
+        nentries = t_in.GetEntries()
+        for ientry in range(nentries):
+            t_in.GetEntry(ientry)
+            if t_in.mode != 200:
+                continue
+            pD_raw = TLorentzVector(0, 0, 0, 0)
+            pD = TLorentzVector(0, 0, 0, 0)
+
+            for iTrk in range(t_in.n_trkD):
+                ptrack_raw = TLorentzVector(0, 0, 0, 0)
+                ptrack = TLorentzVector(0, 0, 0, 0)
+                ptrack_raw.SetPxPyPzE(t_in.rawp4_Dtrk[iTrk*4+0], t_in.rawp4_Dtrk[iTrk*4+1], t_in.rawp4_Dtrk[iTrk*4+2], t_in.rawp4_Dtrk[iTrk*4+3])
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk[iTrk*4+0], t_in.p4_Dtrk[iTrk*4+1], t_in.p4_Dtrk[iTrk*4+2], t_in.p4_Dtrk[iTrk*4+3])
+                pD_raw += ptrack_raw
+                pD += ptrack
+
+            pPip = TLorentzVector(0,0,0,0)
+            pPim = TLorentzVector(0,0,0,0)
+            t_otherTrk.GetEntry(ientry)
+            pPip.SetPxPyPzE(t_in.p4_piplus[iTrk*4+0], t_in.p4_piplus[iTrk*4+1], t_in.p4_piplus[iTrk*4+2], t_in.p4_piplus[iTrk*4+3])
+            pPim.SetPxPyPzE(t_in.p4_piminus[iTrk*4+0], t_in.p4_piminus[iTrk*4+1], t_in.p4_piminus[iTrk*4+2], t_in.p4_piminus[iTrk*4+3])
+            m_runNo[0] = t_in.runNo
+            m_evtNo[0] = t_in.evtNo
+            m_mode[0] = t_in.mode
+            m_charm[0] = t_in.charm
+            m_rawm_D[0] = pD_raw.M()
+            m_rm_D[0] = (cms-pD).M()
+            m_rm_pipi[0] = (cms-pPip-pPim).M()
+            if t_in.charm > 0:
+                m_m_Dpi[0] = (pD+pPim).M()
+            elif t_in.charm < 0:
+                m_m_Dpi[0] = (pD+pPip).M()
+            m_m_Dpipi[0] = (pD+pPip+pPim).M()
+            m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
+            m_chi2_vf[0] = t_in.chi2_vf
+            m_chi2_kf[0] = t_in.chi2_kf
+            t.Fill()
+
+    if MODE == 'sidebandup':
+        t_in = f_in.Get('STD_sidebandup')
+        nentries = t_in.GetEntries()
+        for ientry in range(nentries):
+            t_in.GetEntry(ientry)
+            if t_in.mode != 200:
+                continue
+            pD_raw = TLorentzVector(0, 0, 0, 0)
+            pD = TLorentzVector(0, 0, 0, 0)
+
+            for iTrk in range(t_in.n_trkD):
+                ptrack_raw = TLorentzVector(0, 0, 0, 0)
+                ptrack = TLorentzVector(0, 0, 0, 0)
+                ptrack_raw.SetPxPyPzE(t_in.rawp4_Dtrk[iTrk*4+0], t_in.rawp4_Dtrk[iTrk*4+1], t_in.rawp4_Dtrk[iTrk*4+2], t_in.rawp4_Dtrk[iTrk*4+3])
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk[iTrk*4+0], t_in.p4_Dtrk[iTrk*4+1], t_in.p4_Dtrk[iTrk*4+2], t_in.p4_Dtrk[iTrk*4+3])
+                pD_raw += ptrack_raw
+                pD += ptrack
+
+            pPip = TLorentzVector(0,0,0,0)
+            pPim = TLorentzVector(0,0,0,0)
+            t_otherTrk.GetEntry(ientry)
+            pPip.SetPxPyPzE(t_in.p4_piplus[iTrk*4+0], t_in.p4_piplus[iTrk*4+1], t_in.p4_piplus[iTrk*4+2], t_in.p4_piplus[iTrk*4+3])
+            pPim.SetPxPyPzE(t_in.p4_piminus[iTrk*4+0], t_in.p4_piminus[iTrk*4+1], t_in.p4_piminus[iTrk*4+2], t_in.p4_piminus[iTrk*4+3])
+            m_runNo[0] = t_in.runNo
+            m_evtNo[0] = t_in.evtNo
+            m_mode[0] = t_in.mode
+            m_charm[0] = t_in.charm
+            m_rawm_D[0] = pD_raw.M()
+            m_rm_D[0] = (cms-pD).M()
+            m_rm_pipi[0] = (cms-pPip-pPim).M()
+            if t_in.charm > 0:
+                m_m_Dpi[0] = (pD+pPim).M()
+            elif t_in.charm < 0:
+                m_m_Dpi[0] = (pD+pPip).M()
+            m_m_Dpipi[0] = (pD+pPip+pPim).M()
+            m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
+            m_chi2_vf[0] = t_in.chi2_vf
+            m_chi2_kf[0] = t_in.chi2_kf
             t.Fill()
 
 def main():
@@ -162,13 +238,13 @@ def main():
     file_in = args[0]
     file_out = args[1]
     ecms = float(args[2])
-    MODE = args[3]
+    mode = args[3]
 
     f_in = TFile(file_in)
     f_out = TFile(file_out, 'recreate')
     t_out = TTree('save', 'save')
 
-    cms = TLorentzVector(0.011*ecms, 0, 0, ecms)
+    cms = tLorentzVector(0.011*ecms, 0, 0, ecms)
     apply_cuts(f_in, cms, t_out, MODE)
 
     f_out.cd()
