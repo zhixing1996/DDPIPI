@@ -61,7 +61,7 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
     print 'Start of sigMC...'
     for i in xrange(N):
         S = 0
-        for j in xrange(int(entries1/10)):
+        for j in xrange(int(entries1/100)):
             t1.GetEntry(j)
             if t1.m_chi2_kf > 10:
                 continue
@@ -72,7 +72,7 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
     print 'Start of incMC...'
     for i in xrange(N):
         B = 0
-        for j in xrange(entries2):
+        for j in xrange(entries2/150):
             t2.GetEntry(j)
             if t2.m_chi2_kf > 10:
                 continue
@@ -84,14 +84,14 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
         if B_list[i] == 0:
             significance = 0
         else:
-            significance = S_list[i]/math.sqrt(B_list[i]/5)
+            significance = S_list[i]/math.sqrt(B_list[i])
         Ratio_list.append(significance)
         if significance > ymax:
             ymax = significance
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = "Abs(RM(D^{+}#pi^{+}#pi^{-}-M(D^{+}))"
+    xtitle = "|RM(D^{+}#pi^{+}#pi^{-}-M(D^{+}))|"
     ytitle = "#frac{S}{#sqrt{B}}"
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 70)
     set_histo_style(h_FOM, xtitle, ytitle)
@@ -157,22 +157,22 @@ def main():
     energy = args[0]
 
     if int(energy) == 4360:
-        incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_selected.root'
-        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_selected.root'
+        incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_raw.root'
+        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4360/sigMC_4360_raw.root'
         pt_title = '(a)'
         ecms = 4360
         plot(incMC_path, sigMC_path, pt_title, ecms)
 
     if int(energy) == 4420:
-        incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_selected.root'
-        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_selected.root'
+        incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_raw.root'
+        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4420/sigMC_4420_raw.root'
         pt_title = '(b)'
         ecms = 4420
         plot(incMC_path, sigMC_path, pt_title, ecms)
 
     if int(energy) == 4600:
-        incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_selected.root'
-        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_selected.root'
+        incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_raw.root'
+        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4600/sigMC_4600_raw.root'
         pt_title = '(c)'
         ecms = 4600
         plot(incMC_path, sigMC_path, pt_title, ecms)

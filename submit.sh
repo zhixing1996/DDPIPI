@@ -87,7 +87,7 @@ case $option in
          echo "--> Process: psi(4415)->X(3842)PIPI, X(3842)->DD"
          echo "--> E_{CMS}: 4360MeV"
          echo "--> Generation mode: psi(4415)->X(3842)PIPI PHSH; X(3842)->DD VSS; D decay D_DALITZ(assignated mode) or inlusive decay"
-         echo "--> Event Number: 1,000,000"
+         echo "--> Event Number: 500,000"
          echo "--> RunNo: 30616~31279"
          ;;
 
@@ -105,12 +105,12 @@ case $option in
            rm -rf subSimRec_*.sh
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_X_3842_PI_PI_PHSP_4360.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/rtraw/*.rtraw
-           ./jobOptions_sim_sig_X_3842_PI_PI_PHSP_4360.sh 0 199 5000
+           ./jobOptions_sim_sig_X_3842_PI_PI_PHSP_4360.sh 0 99 5000
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_X_3842_PI_PI_PHSP_4360.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/dst/*.dst
-           ./jobOptions_rec_sig_X_3842_PI_PI_PHSP_4360.sh 0 199
+           ./jobOptions_rec_sig_X_3842_PI_PI_PHSP_4360.sh 0 99
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-           ./subSimRec.sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_4360 jobOptions_rec_sig_X_3842_PI_PI_PHSP_4360 subSimRec 0 199
+           ./subSimRec.sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_4360 jobOptions_rec_sig_X_3842_PI_PI_PHSP_4360 subSimRec 0 99
            ;;
 
     0.1.2) echo "Single D tag -- run on signal MC sample..."
@@ -134,7 +134,7 @@ case $option in
          echo "--> Process: psi(4415)->X(3842)PIPI, X(3842)->DD"
          echo "--> E_{CMS}: 4420MeV"
          echo "--> Generation mode: psi(4415)->X(3842)PIPI PHSH; X(3842)->DD VSS; D decay D_DALITZ(assignated mode) or inlusive decay"
-         echo "--> Event Number: 1,000,000"
+         echo "--> Event Number: 500,000"
          echo "--> RunNo: 31327~31390, 36773~38140"
          ;;
 
@@ -152,12 +152,12 @@ case $option in
            rm -rf subSimRec_*.sh
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_X_3842_PI_PI_PHSP_4420.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/rtraw/*.rtraw
-           ./jobOptions_sim_sig_X_3842_PI_PI_PHSP_4420.sh 0 199 5000
+           ./jobOptions_sim_sig_X_3842_PI_PI_PHSP_4420.sh 0 99 5000
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_X_3842_PI_PI_PHSP_4420.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/dst/*.dst
-           ./jobOptions_rec_sig_X_3842_PI_PI_PHSP_4420.sh 0 199
+           ./jobOptions_rec_sig_X_3842_PI_PI_PHSP_4420.sh 0 99
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-           ./subSimRec.sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_4420 jobOptions_rec_sig_X_3842_PI_PI_PHSP_4420 subSimRec 0 199
+           ./subSimRec.sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_4420 jobOptions_rec_sig_X_3842_PI_PI_PHSP_4420 subSimRec 0 99
            ;;
 
     0.2.2) echo "Single D tag -- run on signal MC sample..."
@@ -181,7 +181,7 @@ case $option in
          echo "--> Process: psi(4415)->X(3842)PIPI, X(3842)->DD"
          echo "--> E_{CMS}: 4600MeV"
          echo "--> Generation mode: psi(4415)->X(3842)PIPI PHSH; X(3842)->DD VSS; D decay D_DALITZ(assignated mode) or inlusive decay"
-         echo "--> Event Number: 1,000,000"
+         echo "--> Event Number: 500,000"
          echo "--> RunNo: 35227~36213"
          ;;
 
@@ -199,12 +199,12 @@ case $option in
            rm -rf subSimRec_*.sh
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_X_3842_PI_PI_PHSP_4600.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/rtraw/*.rtraw
-           ./jobOptions_sim_sig_X_3842_PI_PI_PHSP_4600.sh 0 199 5000
+           ./jobOptions_sim_sig_X_3842_PI_PI_PHSP_4600.sh 0 99 5000
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_X_3842_PI_PI_PHSP_4600.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/dst/*.dst
-           ./jobOptions_rec_sig_X_3842_PI_PI_PHSP_4600.sh 0 199
+           ./jobOptions_rec_sig_X_3842_PI_PI_PHSP_4600.sh 0 99
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-           ./subSimRec.sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_4600 jobOptions_rec_sig_X_3842_PI_PI_PHSP_4600 subSimRec 0 199
+           ./subSimRec.sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_4600 jobOptions_rec_sig_X_3842_PI_PI_PHSP_4600 subSimRec 0 99
            ;;
 
     0.3.2) echo "Single D tag -- run on signal MC sample..."
@@ -228,7 +228,7 @@ case $option in
          echo "--> Process: psi(4415)->D1_(2420)D, D1_(2420)->DPIPI"
          echo "--> E_{CMS}: 4360MeV"
          echo "--> Generation mode: psi(4415)->D1_(2420)D PHSH; D1_(2420)->DPiPi PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
-         echo "--> Event Number: 1,000,000"
+         echo "--> Event Number: 500,000"
          echo "--> RunNo: 30616~31279"
          ;;
 
@@ -246,12 +246,12 @@ case $option in
            rm -rf subSimRec_*.sh
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_D1_2420_D_PHSP_4360.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/rtraw/*.rtraw
-           ./jobOptions_sim_sig_D1_2420_D_PHSP_4360.sh 0 199 5000
+           ./jobOptions_sim_sig_D1_2420_D_PHSP_4360.sh 0 99 5000
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_D1_2420_D_PHSP_4360.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/dst/*.dst
-           ./jobOptions_rec_sig_D1_2420_D_PHSP_4360.sh 0 199
+           ./jobOptions_rec_sig_D1_2420_D_PHSP_4360.sh 0 99
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-           ./subSimRec.sh jobOptions_sim_sig_D1_2420_D_PHSP_4360 jobOptions_rec_sig_D1_2420_D_PHSP_4360 subSimRec 0 199
+           ./subSimRec.sh jobOptions_sim_sig_D1_2420_D_PHSP_4360 jobOptions_rec_sig_D1_2420_D_PHSP_4360 subSimRec 0 99
            ;;
 
     0.4.2) echo "Single D tag -- run on signal MC sample..."
@@ -275,7 +275,7 @@ case $option in
          echo "--> Process: psi(4415)->D1_(2420)D, D1_(2420)->DPIPI"
          echo "--> E_{CMS}: 4420MeV"
          echo "--> Generation mode: psi(4415)->D1_(2420)D PHSH; D1_(2420)->DPiPi PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
-         echo "--> Event Number: 1,000,000"
+         echo "--> Event Number: 500,000"
          echo "--> RunNo: 31327~31390, 36773~38140"
          ;;
 
@@ -293,12 +293,12 @@ case $option in
            rm -rf subSimRec_*.sh
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_D1_2420_D_PHSP_4420.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/rtraw/*.rtraw
-           ./jobOptions_sim_sig_D1_2420_D_PHSP_4420.sh 0 199 5000
+           ./jobOptions_sim_sig_D1_2420_D_PHSP_4420.sh 0 99 5000
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_D1_2420_D_PHSP_4420.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/dst/*.dst
-           ./jobOptions_rec_sig_D1_2420_D_PHSP_4420.sh 0 199
+           ./jobOptions_rec_sig_D1_2420_D_PHSP_4420.sh 0 99
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-           ./subSimRec.sh jobOptions_sim_sig_D1_2420_D_PHSP_4420 jobOptions_rec_sig_D1_2420_D_PHSP_4420 subSimRec 0 199
+           ./subSimRec.sh jobOptions_sim_sig_D1_2420_D_PHSP_4420 jobOptions_rec_sig_D1_2420_D_PHSP_4420 subSimRec 0 99
            ;;
 
     0.5.2) echo "Single D tag -- run on signal MC sample..."
@@ -322,7 +322,7 @@ case $option in
          echo "--> Process: psi(4415)->D1_(2420)D, D1_(2420)->DPIPI"
          echo "--> E_{CMS}: 4600MeV"
          echo "--> Generation mode: psi(4415)->D1_(2420)D PHSH; D1_(2420)->DPiPi PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
-         echo "--> Event Number: 1,000,000"
+         echo "--> Event Number: 500,000"
          echo "--> RunNo: 35227~36213"
          ;;
 
@@ -340,12 +340,12 @@ case $option in
            rm -rf subSimRec_*.sh
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_D1_2420_D_PHSP_4600.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/rtraw/*.rtraw
-           ./jobOptions_sim_sig_D1_2420_D_PHSP_4600.sh 0 199 5000
+           ./jobOptions_sim_sig_D1_2420_D_PHSP_4600.sh 0 99 5000
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_D1_2420_D_PHSP_4600.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/dst/*.dst
-           ./jobOptions_rec_sig_D1_2420_D_PHSP_4600.sh 0 199
+           ./jobOptions_rec_sig_D1_2420_D_PHSP_4600.sh 0 99
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-           ./subSimRec.sh jobOptions_sim_sig_D1_2420_D_PHSP_4600 jobOptions_rec_sig_D1_2420_D_PHSP_4600 subSimRec 0 199
+           ./subSimRec.sh jobOptions_sim_sig_D1_2420_D_PHSP_4600 jobOptions_rec_sig_D1_2420_D_PHSP_4600 subSimRec 0 99
            ;;
 
     0.6.2) echo "Single D tag -- run on signal MC sample..."
@@ -369,7 +369,7 @@ case $option in
          echo "--> Process: psi(4415)->psi(3770)PIPI, psi(3770)->DD"
          echo "--> E_{CMS}: 4360MeV"
          echo "--> Generation mode: psi(4415)->psi(3770)PIPI PHSH; psi(3770)->DD VSS; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
-         echo "--> Event Number: 1,000,000"
+         echo "--> Event Number: 500,000"
          echo "--> RunNo: 30616~31279"
          ;;
 
@@ -387,12 +387,12 @@ case $option in
            rm -rf subSimRec_*.sh
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_psipp_PI_PI_PHSP_4360.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/rtraw/*.rtraw
-           ./jobOptions_sim_sig_psipp_PI_PI_PHSP_4360.sh 0 199 5000
+           ./jobOptions_sim_sig_psipp_PI_PI_PHSP_4360.sh 0 99 5000
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_psipp_PI_PI_PHSP_4360.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/dst/*.dst
-           ./jobOptions_rec_sig_psipp_PI_PI_PHSP_4360.sh 0 199
+           ./jobOptions_rec_sig_psipp_PI_PI_PHSP_4360.sh 0 99
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-           ./subSimRec.sh jobOptions_sim_sig_psipp_PI_PI_PHSP_4360 jobOptions_rec_sig_psipp_PI_PI_PHSP_4360 subSimRec 0 199
+           ./subSimRec.sh jobOptions_sim_sig_psipp_PI_PI_PHSP_4360 jobOptions_rec_sig_psipp_PI_PI_PHSP_4360 subSimRec 0 99
            ;;
 
     0.7.2) echo "Single D tag -- run on signal MC sample..."
@@ -416,7 +416,7 @@ case $option in
          echo "--> Process: psi(4415)->psi(3770)PIPI, psi(3770)->DD"
          echo "--> E_{CMS}: 4420MeV"
          echo "--> Generation mode: psi(4415)->psi(3770)PIPI PHSH; psi(3770)->DD VSS; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
-         echo "--> Event Number: 1,000,000"
+         echo "--> Event Number: 500,000"
          echo "--> RunNo: 31327~31390, 36773~38140"
          ;;
 
@@ -434,12 +434,12 @@ case $option in
            rm -rf subSimRec_*.sh
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_psipp_PI_PI_PHSP_4420.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/rtraw/*.rtraw
-           ./jobOptions_sim_sig_psipp_PI_PI_PHSP_4420.sh 0 199 5000
+           ./jobOptions_sim_sig_psipp_PI_PI_PHSP_4420.sh 0 99 5000
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_psipp_PI_PI_PHSP_4420.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/dst/*.dst
-           ./jobOptions_rec_sig_psipp_PI_PI_PHSP_4420.sh 0 199
+           ./jobOptions_rec_sig_psipp_PI_PI_PHSP_4420.sh 0 99
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-           ./subSimRec.sh jobOptions_sim_sig_psipp_PI_PI_PHSP_4420 jobOptions_rec_sig_psipp_PI_PI_PHSP_4420 subSimRec 0 199
+           ./subSimRec.sh jobOptions_sim_sig_psipp_PI_PI_PHSP_4420 jobOptions_rec_sig_psipp_PI_PI_PHSP_4420 subSimRec 0 99
            ;;
 
     0.8.2) echo "Single D tag -- run on signal MC sample..."
@@ -463,7 +463,7 @@ case $option in
          echo "--> Process: psi(4415)->psi(3770)PIPI, psi(3770)->DD"
          echo "--> E_{CMS}: 4600MeV"
          echo "--> Generation mode: psi(4415)->psi(3770)PIPI PHSH; psi(3770)->DD VSS; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
-         echo "--> Event Number: 1,000,000"
+         echo "--> Event Number: 500,000"
          echo "--> RunNo: 35227~36213"
          ;;
 
@@ -481,12 +481,12 @@ case $option in
            rm -rf subSimRec_*.sh
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_psipp_PI_PI_PHSP_4600.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/rtraw/*.rtraw
-           ./jobOptions_sim_sig_psipp_PI_PI_PHSP_4600.sh 0 199 5000
+           ./jobOptions_sim_sig_psipp_PI_PI_PHSP_4600.sh 0 99 5000
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_psipp_PI_PI_PHSP_4600.sh ./
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/dst/*.dst
-           ./jobOptions_rec_sig_psipp_PI_PI_PHSP_4600.sh 0 199
+           ./jobOptions_rec_sig_psipp_PI_PI_PHSP_4600.sh 0 99
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-           ./subSimRec.sh jobOptions_sim_sig_psipp_PI_PI_PHSP_4600 jobOptions_rec_sig_psipp_PI_PI_PHSP_4600 subSimRec 0 199
+           ./subSimRec.sh jobOptions_sim_sig_psipp_PI_PI_PHSP_4600 jobOptions_rec_sig_psipp_PI_PI_PHSP_4600 subSimRec 0 99
            ;;
 
     0.9.2) echo "Single D tag -- run on signal MC sample..."
@@ -525,7 +525,7 @@ case $option in
             rm -rf incMC_inclusive_hadrons_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4360/hadrons/rec incMC inclusive hadrons hadrons 4360 10
+            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4360/hadrons/rec incMC inclusive hadrons hadrons 4360 50
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/rootfile/*root
@@ -555,7 +555,7 @@ case $option in
             rm -rf incMC_inclusive_hadrons_4420_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4420/hadrons/rec incMC inclusive hadrons hadrons 4420 10
+            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4420/hadrons/rec incMC inclusive hadrons hadrons 4420 50
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/rootfile/*root
@@ -585,7 +585,7 @@ case $option in
             rm -rf incMC_inclusive_hadrons_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4600/hadrons/rec incMC inclusive hadrons hadrons 4600 10
+            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4600/hadrons/rec incMC inclusive hadrons hadrons 4600 50
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/rootfile/*root

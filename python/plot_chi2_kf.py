@@ -100,20 +100,20 @@ def plot(incMC_path, sigMC_path, leg_title, ecms):
     mbc.SaveAs('./figs/chi2_KF_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_selected.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_selected.root'
+    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_raw.root'
+    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4360/sigMC_4360_raw.root'
     leg_title = '(a)'
     ecms = 4360
     plot(incMC_path, sigMC_path, leg_title, ecms)
 
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_selected.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_selected.root'
+    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_raw.root'
+    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4420/sigMC_4420_raw.root'
     leg_title = '(b)'
     ecms = 4420
     plot(incMC_path, sigMC_path, leg_title, ecms)
 
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_selected.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_selected.root'
+    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_raw.root'
+    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4600/sigMC_4600_raw.root'
     leg_title = '(c)'
     ecms = 4600
     plot(incMC_path, sigMC_path, leg_title, ecms)

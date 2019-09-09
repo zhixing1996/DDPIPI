@@ -13,7 +13,7 @@
 const double PI = 3.1415927;
 const double M_Pi0 = 0.1349766;
 const double M_D0 = 1.86483;
-const double M_Dplus = 1.86960;
+const double M_Dplus = 1.86965;
 const double mass[5] = {
     0.000511, 0.105658, 0.139570, 0.493677, 0.938272 // e, mu, pi, K, p
 };
@@ -871,7 +871,7 @@ double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, 1.8696);
+    kmfit->AddMissTrack(count++, 1.86965);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
@@ -936,7 +936,7 @@ double DDecayAlg::fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, 1.832);
+    kmfit->AddMissTrack(count++, 1.8225);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
@@ -1001,7 +1001,7 @@ double DDecayAlg::fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrk
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, 1.9075);
+    kmfit->AddMissTrack(count++, 1.9155);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
