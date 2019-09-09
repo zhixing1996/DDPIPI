@@ -238,13 +238,13 @@ def main():
     file_in = args[0]
     file_out = args[1]
     ecms = float(args[2])
-    mode = args[3]
+    MODE = args[3]
 
     f_in = TFile(file_in)
     f_out = TFile(file_out, 'recreate')
     t_out = TTree('save', 'save')
 
-    cms = tLorentzVector(0.011*ecms, 0, 0, ecms)
+    cms = TLorentzVector(0.011*ecms, 0, 0, ecms)
     apply_cuts(f_in, cms, t_out, MODE)
 
     f_out.cd()
