@@ -41,7 +41,7 @@ def set_histo_style(h, xtitle, ytitle):
     h.SetStats(0)
     h.SetStats(0)
     h.GetXaxis().SetTitleSize(0.04)
-    h.GetXaxis().SetTitleOffset(1.0)
+    h.GetXaxis().SetTitleOffset(1.3)
     h.GetXaxis().SetLabelOffset(0.01)
     h.GetYaxis().SetTitleSize(0.04)
     h.GetYaxis().SetTitleOffset(1.6)
@@ -91,7 +91,7 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = "|RM(D^{+}#pi^{+}#pi^{-}-M(D^{+}))|(GeV/c^{2})"
+    xtitle = "|RM(D^{+}#pi^{+}#pi^{-})-m_{D}|(GeV/c^{2})"
     ytitle = "#frac{S}{#sqrt{B}}"
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 70)
     set_histo_style(h_FOM, xtitle, ytitle)
