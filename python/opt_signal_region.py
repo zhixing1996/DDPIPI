@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-Optiomize mass window of recoiling mass of DPIPI
+Optiomize signal region of recoiling mass of DPIPI
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
 __copyright__ = "Copyright (c) Maoqiang JING"
-__created__ = "[2019-09-10 Tue 08:38]"
+__created__ = "[2019-09-03 Tue 05:30]"
 
 import ROOT
 from ROOT import TCanvas, gStyle
@@ -63,7 +63,9 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
         S = 0
         for j in xrange(int(entries1/100)):
             t1.GetEntry(j)
-            if abs(t1.m_rawm_D - M_D) < (step + i*step):
+            if t1.m_chi2_kf > 10:
+                continue
+            if abs(t1.m_rm_Dpipi - M_D) < (step + i*step):
                 S = S + 1
         S_list.append(S)
     B_list = []
@@ -72,7 +74,9 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
         B = 0
         for j in xrange(entries2/150):
             t2.GetEntry(j)
-            if abs(t2.m_rawm_D - M_D) < (step + i*step):
+            if t2.m_chi2_kf > 10:
+                continue
+            if abs(t2.m_rm_Dpipi - M_D) < (step + i*step):
                 B = B + 1
         B_list.append(B)
     Ratio_list = []
@@ -87,7 +91,7 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = "|M(K^{-}#pi^{+}#pi^{+}-M(D^{+}))|(GeV/c^{2})"
+    xtitle = "|RM(D^{+}#pi^{+}#pi^{-}-M(D^{+}))|(GeV/c^{2})"
     ytitle = "#frac{S}{#sqrt{B}}"
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 70)
     set_histo_style(h_FOM, xtitle, ytitle)
@@ -118,9 +122,9 @@ def plot(incMC_path, sigMC_path, pt_title, ecms):
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
-    xbins = 150
+    xbins = 100
     M_Dplus = 1.86965
-    step = (1.94 - M_Dplus)/xbins
+    step = (1.9 - M_Dplus)/xbins
 
     h_FOM, ientry, arrow_top = cal_significance(t_sigMC, t_incMC, entries_sigMC, entries_incMC, M_Dplus, xbins, step)
     h_FOM.Draw()
@@ -142,12 +146,11 @@ def plot(incMC_path, sigMC_path, pt_title, ecms):
 
     mass_low = str(M_Dplus - (step + step*ientry))
     mass_up = str(M_Dplus + (step + step*ientry))
-    window_width = str(step + step*ientry)
-    range = 'Mass window of M(K^{-}#pi^{+}#pi^{+}): [' + mass_low + ', ' + mass_up + '] GeV/c2' + ' with mass window width: ' + window_width + ' GeV/c2'
+    range = 'Signal region of RM(D^{+}#pi^{+}#pi^{-}): [' + mass_low + ', ' + mass_up + '] GeV/c2'
     print range
 
     mbc.Update()
-    mbc.SaveAs('./figs/opt_mass_window_'+str(ecms)+'.pdf')
+    mbc.SaveAs('./figs/opt_signal_region_'+str(ecms)+'.pdf')
 
 def main():
     args = sys.argv[1:]
