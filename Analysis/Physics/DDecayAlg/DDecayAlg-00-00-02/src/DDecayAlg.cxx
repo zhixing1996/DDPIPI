@@ -245,7 +245,7 @@ StatusCode DDecayAlg::initialize() {
     NTuplePtr nt10(ntupleSvc(), "FILE1/STD_sidebandup");
     if (nt10) m_tuple10 = nt10;
     else {
-        m_tuple10 = ntupleSvc()->book("FILE1/STD_sidebandlup", CLID_ColumnWiseTuple, "Single tag D decay with kinematic fit missing a D in higher sideband region");
+        m_tuple10 = ntupleSvc()->book("FILE1/STD_sidebandup", CLID_ColumnWiseTuple, "Single tag D decay with kinematic fit missing a D in higher sideband region");
         if (m_tuple10) {
             status = m_tuple10->addItem("runNo", m_runNo_sidebandup);
             status = m_tuple10->addItem("evtNo", m_evtNo_sidebandup);

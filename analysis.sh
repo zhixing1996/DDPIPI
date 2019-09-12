@@ -93,4 +93,24 @@ case $option in
            python opt_mass_window.py 4600
            ;;
 
+    0.2.3) echo "Get samples -- extracting useful info: signal region and sideband region..."
+           mkdir -p scripts/ana/sel
+           cd scripts/ana/sel
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info_signal .
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info_sidebandlow .
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info_sidebandup .
+           hep_sub -g physics get_info_signal -o jobs.out -e jobs.err
+           hep_sub -g physics get_info_sidebandlow -o jobs.out -e jobs.err
+           hep_sub -g physics get_info_sidebandup -o jobs.out -e jobs.err
+           ;;
+
 esac

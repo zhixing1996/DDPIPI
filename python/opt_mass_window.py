@@ -88,7 +88,7 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
     xmin = step
     xmax = N*step
     xtitle = "|M(K^{-}#pi^{+}#pi^{+})-m_{D}|(GeV/c^{2})"
-    ytitle = "#frac{S}{#sqrt{B}}"
+    ytitle = "#frac{S}{#sqrt{S+B}}"
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 70)
     set_histo_style(h_FOM, xtitle, ytitle)
     for i in xrange(N):
