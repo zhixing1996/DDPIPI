@@ -670,7 +670,7 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         if (m_debug) std::cout<< " D charm number: " << (*dtag_iter)->charm() << std::endl; // (*dtag_iter)->charm() = 1: c, -1: cbar
 
         // very broad mass window requirement
-        if (fabs((*dtag_iter)->mass() - mDcand) > 0.010318) {
+        if (fabs((*dtag_iter)->mass() - mDcand) > 0.07) {
             continue;
         }
 
