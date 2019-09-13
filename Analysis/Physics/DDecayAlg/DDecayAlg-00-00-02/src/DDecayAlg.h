@@ -42,6 +42,7 @@
 #include "McTruth/McParticle.h"
 
 #include "TMath.h"
+#include "TLorentzVector.h"
 #include <vector>
 #include <TTree.h>
 

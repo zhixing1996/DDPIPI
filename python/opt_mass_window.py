@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Optiomize mass window of recoiling mass of DPIPI
+Optiomize mass window of signal region of RM(DPIPI)
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
@@ -54,25 +54,37 @@ def set_histo_style(h, xtitle, ytitle):
     h.SetMarkerSize(0.65)
     h.SetLineColor(1)
 
-def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
+def cal_significance(t1, t2, t3, entries1, entries2, entries3, M_D, N, step, ratio1, ratio2):
     ymax = 0
     NEntry = 0
+    S1_list = []
+    S2_list = []
     S_list = []
-    print 'Start of sigMC...'
+    print 'Start of sigMC1...'
     for i in xrange(N):
-        S = 0
-        for j in xrange(int(entries1/100)):
+        S1 = 0
+        for j in xrange(int(entries1*ratio1)):
             t1.GetEntry(j)
             if abs(t1.m_rawm_D - M_D) < (step + i*step):
-                S = S + 1
-        S_list.append(S)
+                S1 = S1 + 1
+        S1_list.append(S1)
+    print 'Start of sigMC2...'
+    for i in xrange(N):
+        S2 = 0
+        for j in xrange(int(entries2*ratio2)):
+            t2.GetEntry(j)
+            if abs(t2.m_rawm_D - M_D) < (step + i*step):
+                S2 = S2 + 1
+        S2_list.append(S2)
+    for i in xrange(N):
+        S_list.append(S1_list[i]+S2_list[i])
     B_list = []
     print 'Start of incMC...'
     for i in xrange(N):
         B = 0
-        for j in xrange(entries2/150):
-            t2.GetEntry(j)
-            if abs(t2.m_rawm_D - M_D) < (step + i*step):
+        for j in xrange(entries3/5):
+            t3.GetEntry(j)
+            if abs(t3.m_rawm_D - M_D) < (step + i*step):
                 B = B + 1
         B_list.append(B)
     Ratio_list = []
@@ -87,9 +99,9 @@ def cal_significance(t1, t2, entries1, entries2, M_D, N, step):
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = "|M(K^{-}#pi^{+}#pi^{+})-m_{D}|(GeV/c^{2})"
-    ytitle = "#frac{S}{#sqrt{S+B}}"
-    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 70)
+    xtitle = '|M(K^{-}#pi^{+}#pi^{+})-m_{D}|(GeV/c^{2})'
+    ytitle = '#frac{S}{#sqrt{S+B}}'
+    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 30)
     set_histo_style(h_FOM, xtitle, ytitle)
     for i in xrange(N):
         h_FOM.Fill(step + i*step, Ratio_list[i])
@@ -102,18 +114,22 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(incMC_path, sigMC_path, pt_title, ecms):
+def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum):
     try:
         f_incMC = TFile(incMC_path)
-        f_sigMC = TFile(sigMC_path)
+        f_sigMC1 = TFile(sigMC1_path)
+        f_sigMC2 = TFile(sigMC2_path)
         t_incMC = f_incMC.Get('save')
-        t_sigMC = f_sigMC.Get('save')
+        t_sigMC1 = f_sigMC1.Get('save')
+        t_sigMC2 = f_sigMC2.Get('save')
         entries_incMC = t_incMC.GetEntries()
-        entries_sigMC = t_sigMC.GetEntries()
+        entries_sigMC1 = t_sigMC1.GetEntries()
+        entries_sigMC2 = t_sigMC2.GetEntries()
         logging.info('inclusive MC entries :'+str(entries_incMC))
-        logging.info('signal MC entries :'+str(entries_sigMC))
+        logging.info('D1(2420) signal MC entries :'+str(entries_sigMC1))
+        logging.info('psi(3770) signal MC entries :'+str(entries_sigMC2))
     except:
-        logging.error(incMC_path+' or '+sigMC_path+' is invalid!')
+        logging.error('Files are invalid!')
         sys.exit()
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
@@ -121,8 +137,10 @@ def plot(incMC_path, sigMC_path, pt_title, ecms):
     xbins = 150
     M_Dplus = 1.86965
     step = (1.94 - M_Dplus)/xbins
+    ratio1 = lum*XS1/GenNum
+    ratio2 = lum*XS2/GenNum
 
-    h_FOM, ientry, arrow_top = cal_significance(t_sigMC, t_incMC, entries_sigMC, entries_incMC, M_Dplus, xbins, step)
+    h_FOM, ientry, arrow_top = cal_significance(t_sigMC1, t_sigMC2, t_incMC, entries_sigMC1, entries_sigMC2, entries_incMC, M_Dplus, xbins, step, ratio1, ratio2)
     h_FOM.Draw()
     
     if not os.path.exists('./figs/'):
@@ -143,7 +161,7 @@ def plot(incMC_path, sigMC_path, pt_title, ecms):
     mass_low = str(M_Dplus - (step + step*ientry))
     mass_up = str(M_Dplus + (step + step*ientry))
     window_width = str(step + step*ientry)
-    range = 'Mass window of M(K^{-}#pi^{+}#pi^{+}): [' + mass_low + ', ' + mass_up + '] GeV/c2' + ' with mass window width: ' + window_width + ' GeV/c2'
+    range = 'Mass window of M(K^{-}#pi^{+}#pi^{+}): [' + mass_low + ', ' + mass_up + '] GeV/c2' + ' with mass window width: ' + window_    width + ' GeV/c2'
     print range
 
     mbc.Update()
@@ -155,24 +173,39 @@ def main():
 
     if int(energy) == 4360:
         incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_raw.root'
-        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4360/sigMC_4360_raw.root'
+        sigMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw.root'
+        sigMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw.root'
         pt_title = '(a)'
         ecms = 4360
-        plot(incMC_path, sigMC_path, pt_title, ecms)
+        lum = 539.84
+        XS1 = 41.8
+        XS2 = 17.3
+        GenNum = 500000
+        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum)
 
     if int(energy) == 4420:
         incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_raw.root'
-        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4420/sigMC_4420_raw.root'
+        sigMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw.root'
+        sigMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw.root'
         pt_title = '(b)'
         ecms = 4420
-        plot(incMC_path, sigMC_path, pt_title, ecms)
+        lum = 1073.56
+        XS1 = 65.4
+        XS2 = 23.8
+        GenNum = 500000
+        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum)
 
     if int(energy) == 4600:
         incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_raw.root'
-        sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4600/sigMC_4600_raw.root'
+        sigMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw.root'
+        sigMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw.root'
         pt_title = '(c)'
         ecms = 4600
-        plot(incMC_path, sigMC_path, pt_title, ecms)
+        lum = 566.93
+        XS1 = 27.7
+        XS2 = 7.2
+        GenNum = 500000
+        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum)
 
 if __name__ == '__main__':
     main()

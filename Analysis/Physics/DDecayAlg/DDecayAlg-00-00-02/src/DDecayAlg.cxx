@@ -692,9 +692,6 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
                 if (m_debug) std::cout << " filling kaon track " << std::endl;
                 vwtrkpara_charge.push_back(WTrackParameter(mass[3], KalTrk->getZHelixK(), KalTrk->getZErrorK()));
                 for (int k = 0; k < 4; k++) m_rawp4_Dtrk[j][k] = KalTrk->p4(mass[3])[k]; // MDC gives three momentum, combined with mass, we can get energy which means four momentum
-                for (int k = 0; k < 4; k++) m_rawp4_Dtrk_signal[j][k] = KalTrk->p4(mass[3])[k]; // MDC gives three momentum, combined with mass, we can get energy which means four momentum
-                for (int k = 0; k < 4; k++) m_rawp4_Dtrk_sidebandlow[j][k] = KalTrk->p4(mass[3])[k]; // MDC gives three momentum, combined with mass, we can get energy which means four momentum
-                for (int k = 0; k < 4; k++) m_rawp4_Dtrk_sidebandup[j][k] = KalTrk->p4(mass[3])[k]; // MDC gives three momentum, combined with mass, we can get energy which means four momentum
             }
             // to fill Pion candidates
             else {
@@ -702,9 +699,6 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
                 if (m_debug) std::cout << " filling pion track " << std::endl;
                 vwtrkpara_charge.push_back(WTrackParameter(mass[2], KalTrk->getZHelix(), KalTrk->getZError()));
                 for (int k = 0; k < 4; k++) m_rawp4_Dtrk[j][k] = KalTrk->p4(mass[2])[k];
-                for (int k = 0; k < 4; k++) m_rawp4_Dtrk_signal[j][k] = KalTrk->p4(mass[2])[k];
-                for (int k = 0; k < 4; k++) m_rawp4_Dtrk_sidebandlow[j][k] = KalTrk->p4(mass[2])[k];
-                for (int k = 0; k < 4; k++) m_rawp4_Dtrk_sidebandup[j][k] = KalTrk->p4(mass[2])[k];
             }
         }
 
@@ -743,11 +737,7 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
             HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
             vwtrkpara_photon.push_back( WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE())); // dE, error of the gamma energy
             for (int k = 0; k < 4; k++) m_rawp4_Dshw[j][k] = Gm_p4[k];
-            for (int k = 0; k < 4; k++) m_rawp4_Dshw_signal[j][k] = Gm_p4[k];
-            for (int k = 0; k < 4; k++) m_rawp4_Dshw_sidebandlow[j][k] = Gm_p4[k];
-            for (int k = 0; k < 4; k++) m_rawp4_Dshw_sidebandup[j][k] = Gm_p4[k];
         }
-
         
         if (m_debug) {
             double index_vector=0;
@@ -1097,12 +1087,75 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
             chi2_kf_sidebandup = fitKM_sidebandup(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
             if (m_debug) std::cout << "Start recording region info if passed the requirement" << std::endl;
             if (fabs(chi2_kf_signal) < 999) {
+                SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
+                for (int j = 0; j < n_trkD; j++) {
+                    RecMdcKalTrack* KalTrk = Dtrks[j]->mdcKalTrack();
+                    if (j == 0) {
+                        KalTrk->setPidType(RecMdcKalTrack::kaon);
+                        for (int k = 0; k < 4; k++) m_rawp4_Dtrk_signal[j][k] = KalTrk->p4(mass[3])[k];
+                    }
+                    else {
+                        KalTrk->setPidType(RecMdcKalTrack::pion);
+                        for (int k = 0; k < 4; k++) m_rawp4_Dtrk_signal[j][k] = KalTrk->p4(mass[2])[k];
+                    }
+                }
+                SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
+                for(int j = 0; j < Dshws.size(); j++) {
+                    RecEmcShower *gTrk = Dshws[j]->emcShower();
+                    Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
+                    Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
+                    Gm_Mom.setMag(gTrk->energy());
+                    HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
+                    for (int k = 0; k < 4; k++) m_rawp4_Dshw_signal[j][k] = Gm_p4[k];
+                }
                 recordVariables_signal();
             }
             if (fabs(chi2_kf_sidebandlow) < 999) {
+                SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
+                for (int j = 0; j < n_trkD; j++) {
+                    RecMdcKalTrack* KalTrk = Dtrks[j]->mdcKalTrack();
+                    if (j == 0) {
+                        KalTrk->setPidType(RecMdcKalTrack::kaon);
+                        for (int k = 0; k < 4; k++) m_rawp4_Dtrk_sidebandlow[j][k] = KalTrk->p4(mass[3])[k];
+                    }
+                    else {
+                        KalTrk->setPidType(RecMdcKalTrack::pion);
+                        for (int k = 0; k < 4; k++) m_rawp4_Dtrk_sidebandlow[j][k] = KalTrk->p4(mass[2])[k];
+                    }
+                }
+                SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
+                for(int j = 0; j < Dshws.size(); j++) {
+                    RecEmcShower *gTrk = Dshws[j]->emcShower();
+                    Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
+                    Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
+                    Gm_Mom.setMag(gTrk->energy());
+                    HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
+                    for (int k = 0; k < 4; k++) m_rawp4_Dshw_sidebandlow[j][k] = Gm_p4[k];
+                }
                 recordVariables_sidebandlow();
             }
             if (fabs(chi2_kf_sidebandup) < 999) {
+                SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
+                for (int j = 0; j < n_trkD; j++) {
+                    RecMdcKalTrack* KalTrk = Dtrks[j]->mdcKalTrack();
+                    if (j == 0) {
+                        KalTrk->setPidType(RecMdcKalTrack::kaon);
+                        for (int k = 0; k < 4; k++) m_rawp4_Dtrk_sidebandup[j][k] = KalTrk->p4(mass[3])[k];
+                    }
+                    else {
+                        KalTrk->setPidType(RecMdcKalTrack::pion);
+                        for (int k = 0; k < 4; k++) m_rawp4_Dtrk_sidebandup[j][k] = KalTrk->p4(mass[2])[k];
+                    }
+                }
+                SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
+                for(int j = 0; j < Dshws.size(); j++) {
+                    RecEmcShower *gTrk = Dshws[j]->emcShower();
+                    Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
+                    Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
+                    Gm_Mom.setMag(gTrk->energy());
+                    HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
+                    for (int k = 0; k < 4; k++) m_rawp4_Dshw_sidebandup[j][k] = Gm_p4[k];
+                }
                 recordVariables_sidebandup();
             }
         }
