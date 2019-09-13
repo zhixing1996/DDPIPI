@@ -37,6 +37,7 @@ def apply_cuts(f_in, cms, t, MODE):
     m_mode = array('i', [0])
     m_charm = array('i', [0])
     m_rawm_D = array('d', [999.])
+    m_m_D = array('d', [999.])
     m_rm_D = array('d', [999.])
     m_rm_pipi = array('d', [999.])
     m_m_pipi = array('d', [999.])
@@ -51,6 +52,7 @@ def apply_cuts(f_in, cms, t, MODE):
     t.Branch('mode', m_mode, 'm_mode/I')
     t.Branch('charm', m_charm, 'm_charm/I')
     t.Branch('rawm_D', m_rawm_D, 'm_rawm_D/D')
+    t.Branch('m_D', m_m_D, 'm_m_D/D')
     t.Branch('rm_D', m_rm_D, 'm_rm_D/D')
     t.Branch('rm_pipi', m_rm_pipi, 'm_rm_pipi/D')
     t.Branch('m_pipi', m_m_pipi, 'm_m_pipi/D')
@@ -101,8 +103,10 @@ def apply_cuts(f_in, cms, t, MODE):
                     m_charm[0] = t_std.charm
                     print 'test for rawm_D: ' + str(pD_raw.M())
                     m_rawm_D[0] = pD_raw.M()
+                    m_m_D[0] = pD.M()
                     m_rm_D[0] = (cms-pD).M()
                     m_rm_pipi[0] = (cms-pPip-pPim).M()
+                    m_m_pipi[0] = (pPip+pPim).M()
                     if t_std.charm > 0 and t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+4] == -1:
                         m_m_Dpi[0] = (pD+pPim).M()
                     elif t_std.charm < 0 and t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+4] == 1:
@@ -141,6 +145,7 @@ def apply_cuts(f_in, cms, t, MODE):
             if pD_raw.M() == 0:
                 continue
             m_rawm_D[0] = pD_raw.M()
+            m_m_D[0] = pD.M()
             m_rm_D[0] = (cms-pD).M()
             m_rm_pipi[0] = (cms-pPip-pPim).M()
             m_m_pipi[0] = (pPip+pPim).M()
@@ -152,7 +157,8 @@ def apply_cuts(f_in, cms, t, MODE):
             m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
             m_chi2_vf[0] = t_in.chi2_vf
             m_chi2_kf[0] = t_in.chi2_kf
-            t.Fill()
+            if t_in.chi2_kf < 20:
+                t.Fill()
 
     if MODE == 'sidebandlow':
         t_in = f_in.Get('STD_sidebandlow')
@@ -180,8 +186,10 @@ def apply_cuts(f_in, cms, t, MODE):
             m_mode[0] = t_in.mode
             m_charm[0] = t_in.charm
             m_rawm_D[0] = pD_raw.M()
+            m_m_D[0] = pD.M()
             m_rm_D[0] = (cms-pD).M()
             m_rm_pipi[0] = (cms-pPip-pPim).M()
+            m_m_pipi[0] = (pPip+pPim).M()
             if t_in.charm > 0:
                 m_m_Dpi[0] = (pD+pPim).M()
             elif t_in.charm < 0:
@@ -218,8 +226,10 @@ def apply_cuts(f_in, cms, t, MODE):
             m_mode[0] = t_in.mode
             m_charm[0] = t_in.charm
             m_rawm_D[0] = pD_raw.M()
+            m_m_D[0] = pD.M()
             m_rm_D[0] = (cms-pD).M()
             m_rm_pipi[0] = (cms-pPip-pPim).M()
+            m_m_pipi[0] = (pPip+pPim).M()
             if t_in.charm > 0:
                 m_m_Dpi[0] = (pD+pPim).M()
             elif t_in.charm < 0:
