@@ -101,7 +101,6 @@ def apply_cuts(f_in, cms, t, MODE):
                     m_evtNo[0] = t_std.evtNo
                     m_mode[0] = t_std.mode
                     m_charm[0] = t_std.charm
-                    print 'test for rawm_D: ' + str(pD_raw.M())
                     m_rawm_D[0] = pD_raw.M()
                     m_m_D[0] = pD.M()
                     m_rm_D[0] = (cms-pD).M()

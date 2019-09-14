@@ -41,16 +41,6 @@ python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/rootfil
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/*.root
 python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/rootfile/sigMC_psipp_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_sidebandlow.root 4.600 sidebandlow
-# signal MC: D1_2420 + psipp
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4360
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4360/*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4360/rootfile/sigMC_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4360/sigMC_4360_sidebandlow.root 4.358 sidebandlow
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4420
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4420/*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4420/rootfile/sigMC_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4420/sigMC_4420_sidebandlow.root 4.415 sidebandlow
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4600
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4600/*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/signal/4600/rootfile/sigMC_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/signal/4600/sigMC_4600_sidebandlow.root 4.600 sidebandlow
 # inclusive MC: hadrons
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/*.root
