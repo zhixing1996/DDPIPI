@@ -926,7 +926,7 @@ double DDecayAlg::fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, 1.8225);
+    kmfit->AddMissTrack(count++, 1.819);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
@@ -991,7 +991,7 @@ double DDecayAlg::fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrk
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, 1.9155);
+    kmfit->AddMissTrack(count++, 1.92);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
