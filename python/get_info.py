@@ -141,8 +141,6 @@ def apply_cuts(f_in, cms, t, MODE):
             m_evtNo[0] = t_in.evtNo
             m_mode[0] = t_in.mode
             m_charm[0] = t_in.charm
-            if pD_raw.M() == 0:
-                continue
             m_rawm_D[0] = pD_raw.M()
             m_m_D[0] = pD.M()
             m_rm_D[0] = (cms-pD).M()
@@ -156,8 +154,7 @@ def apply_cuts(f_in, cms, t, MODE):
             m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
             m_chi2_vf[0] = t_in.chi2_vf
             m_chi2_kf[0] = t_in.chi2_kf
-            if t_in.chi2_kf < 20:
-                t.Fill()
+            t.Fill()
 
     if MODE == 'sidebandlow':
         t_in = f_in.Get('STD_sidebandlow')
