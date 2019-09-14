@@ -16,9 +16,11 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.1.2" "Get samples -- extract useful info: raw"
 
     printf "\n\t%-9s  %-40s\n" "0.2"   "[Study cuts]"
-    printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figues -- study signal region of RM(Dpipi)"
-    printf "\n\t%-9s  %-40s\n" "0.2.2" "Draw figues -- study mass window of M(Kpipi)"
-
+    printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figures -- study signal region of RM(Dpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.2.2" "Draw figures -- study mass window of M(Kpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.2.3" "Get samples -- extract useful info: signal region and sideband region"
+    printf "\n\t%-9s  %-40s\n" "0.2.4" "Get samples -- get data sideband samples"
+    printf "\n\t%-9s  %-40s\n" "0.2.5" "Draw figures -- compare data, data sideband and signal samples"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -117,4 +119,21 @@ case $option in
            hep_sub -g physics get_info_sidebandup -o jobs.out -e jobs.err
            ;;
 
+    0.2.4) echo "Get samples -- getting data sideband samples..."
+           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
+           rm -rf data_4360_sideband.root
+           hadd data_4360_sideband.root data_4360_sideband*.root
+           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
+           rm -rf data_4420_sideband.root
+           hadd data_4420_sideband.root data_4420_sideband*.root
+           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
+           rm -rf data_4600_sideband.root
+           hadd data_4600_sideband.root data_4600_sideband*.root
+           ;;
+
+    0.2.5) echo "Draw figures -- comparing data, data sideband and signal samples..."
+           cd $HOME/bes/DDPIPI/v0.2/python
+           python plot_rm_pipi.py
+           ;;
+    
 esac

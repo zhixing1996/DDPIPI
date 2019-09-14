@@ -197,7 +197,7 @@ def apply_cuts(f_in, cms, t, MODE):
             t.Fill()
 
     if MODE == 'sidebandup':
-        t_in = f_in.Get('STD_sidebandlup')
+        t_in = f_in.Get('STD_sidebandup')
         nentries = t_in.GetEntries()
         for ientry in range(nentries):
             t_in.GetEntry(ientry)
