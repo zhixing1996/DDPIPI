@@ -28,27 +28,47 @@ def set_legend(legend, h1, h2, h3, h4, h5, title):
     legend.SetFillColor(0)
     legend.SetLineColor(0)
 
-def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5):
+def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, MODE, chi2_cut):
     for ientry1 in xrange(t1.GetEntries()):
         t1.GetEntry(ientry1)
-        if t1.m_m_pipi > 0.28:
-            h1.Fill(t1.m_rm_pipi)
+        if MODE == 'raw':
+            if t1.m_m_pipi > 0.28:
+                h1.Fill(t1.m_rm_pipi)
+        if MODE == 'cut':
+            if t1.m_m_pipi > 0.28 and t1.m_chi2_kf < chi2_cut:
+                h1.Fill(t1.m_rm_pipi)
     for ientry2 in xrange(t2.GetEntries()):
         t2.GetEntry(ientry2)
-        if t2.m_m_pipi > 0.28 and t2.m_rm_pipi > 3.75:
-            h2.Fill(t2.m_rm_pipi)
+        if MODE == 'raw':
+            if t2.m_m_pipi > 0.28 and t2.m_rm_pipi > 3.75:
+                h2.Fill(t2.m_rm_pipi)
+        if MODE == 'cut':
+            if t2.m_m_pipi > 0.28 and t2.m_rm_pipi > 3.75 and t2.m_chi2_kf < chi2_cut:
+                h2.Fill(t2.m_rm_pipi)
     for ientry3 in xrange(t3.GetEntries()):
         t3.GetEntry(ientry3)
-        if t3.m_m_pipi > 0.28:
-            h3.Fill(t3.m_rm_pipi)
+        if MODE == 'raw':
+            if t3.m_m_pipi > 0.28:
+                h3.Fill(t3.m_rm_pipi)
+        if MODE == 'cut':
+            if t3.m_m_pipi > 0.28 and t3.m_chi2_kf < chi2_cut:
+                h3.Fill(t3.m_rm_pipi)
     for ientry4 in xrange(t4.GetEntries()):
         t4.GetEntry(ientry4)
-        if t4.m_m_pipi > 0.28:
-            h4.Fill(t4.m_rm_pipi)
+        if MODE == 'raw':
+            if t4.m_m_pipi > 0.28:
+                h4.Fill(t4.m_rm_pipi)
+        if MODE == 'cut':
+            if t4.m_m_pipi > 0.28 and t4.m_chi2_kf < chi2_cut:
+                h4.Fill(t4.m_rm_pipi)
     for ientry5 in xrange(t5.GetEntries()):
         t5.GetEntry(ientry5)
-        if t5.m_m_pipi > 0.28:
-            h5.Fill(t5.m_rm_pipi)
+        if MODE == 'raw':
+            if t5.m_m_pipi > 0.28:
+                h5.Fill(t5.m_rm_pipi)
+        if MODE == 'cut':
+            if t5.m_m_pipi > 0.28 and t5.m_chi2_kf < chi2_cut:
+                h5.Fill(t5.m_rm_pipi)
 
 def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle):
     h1.GetXaxis().SetNdivisions(509)
@@ -58,10 +78,10 @@ def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle):
     h1.SetStats(0)
     h2.SetStats(0)
     h1.GetXaxis().SetTitleSize(0.04)
-    h1.GetXaxis().SetTitleOffset(1.0)
+    h1.GetXaxis().SetTitleOffset(1.3)
     h1.GetXaxis().SetLabelOffset(0.01)
     h1.GetYaxis().SetTitleSize(0.04)
-    h1.GetYaxis().SetTitleOffset(1.2)
+    h1.GetYaxis().SetTitleOffset(1.5)
     h1.GetYaxis().SetLabelOffset(0.01)
     h1.GetXaxis().SetTitle(xtitle)
     h1.GetXaxis().CenterTitle()
@@ -80,7 +100,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax):
+def plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut):
     try:
         f_data = TFile(data_path)
         f_data_sideband = TFile(data_sideband_path)
@@ -119,7 +139,7 @@ def plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, l
     h_sigMC3 = TH1F('sigMC3', 'signal MC: X(3842)', xbins, xmin, float(xmax))
 
     set_histo_style(h_data, h_data_sideband, h_sigMC1, h_sigMC2, h_sigMC3, xtitle, ytitle)
-    rm_pipi_fill(t_data, t_data_sideband, t_sigMC1, t_sigMC2, t_sigMC3, h_data, h_data_sideband, h_sigMC1, h_sigMC2, h_sigMC3)
+    rm_pipi_fill(t_data, t_data_sideband, t_sigMC1, t_sigMC2, t_sigMC3, h_data, h_data_sideband, h_sigMC1, h_sigMC2, h_sigMC3, MODE, chi2_cut)
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
@@ -138,9 +158,16 @@ def plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, l
     set_legend(legend, h_data, h_data_sideband, h_sigMC1, h_sigMC2, h_sigMC3, leg_title)
     legend.Draw()
 
-    mbc.SaveAs('./figs/rm_pipi_'+str(ecms)+'.pdf')
+    mbc.SaveAs('./figs/rm_pipi_'+str(ecms)+'_'+MODE+'.pdf')
 
 if __name__ == '__main__':
+    try:
+        args = sys.argv[1:]
+        MODE = args[0]
+    except:
+        logging.error('python plot_rm_pipi.py [MODE]: MODE = raw or cut')
+        sys.exit()
+
     data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
     data_sideband_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root'
     sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root'
@@ -151,9 +178,10 @@ if __name__ == '__main__':
     scale = 0.5
     scale1 = 0.00625
     scale2 = 0.00625
-    scale3 = 0.002
+    scale3 = 0.0013
     xmax = 4.1
-    plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax)
+    chi2_cut = 46
+    plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)
 
     data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
     data_sideband_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_sideband.root'
@@ -165,9 +193,10 @@ if __name__ == '__main__':
     scale = 0.5
     scale1 = 0.00625
     scale2 = 0.00625
-    scale3 = 0.002
+    scale3 = 0.003
     xmax = 4.1
-    plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax)
+    chi2_cut = 46
+    plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)
 
     data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
     data_sideband_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root'
@@ -179,6 +208,7 @@ if __name__ == '__main__':
     scale = 0.5
     scale1 = 0.00625
     scale2 = 0.00325
-    scale3 = 0.002
+    scale3 = 0.0018
     xmax = 4.35
-    plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax)
+    chi2_cut = 25
+    plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)

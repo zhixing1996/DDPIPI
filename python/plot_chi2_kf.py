@@ -17,8 +17,8 @@ gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
 
 def set_legend(legend, h1, h2, title):
-    legend.AddEntry(h1, 'inclusive MC')
-    legend.AddEntry(h2, 'signal MC')
+    legend.AddEntry(h1, 'data')
+    legend.AddEntry(h2, 'X(3842)#pi^{+}#pi^{-}')
     legend.SetHeader(title)
     legend.SetBorderSize(0)
     legend.SetFillColor(0)
@@ -32,7 +32,7 @@ def chi2_KF_fill(t1, t2, entries1, entries2, h1, h2):
         t2.GetEntry(ientry2)
         h2.Fill(t2.m_chi2_kf)
 
-def set_histo_style(h1, h2, xtitle, ytitle):
+def set_histo_style(h1, h2, xtitle, ytitle, ymax):
     h1.GetXaxis().SetNdivisions(509)
     h1.GetYaxis().SetNdivisions(504)
     h1.SetLineWidth(2)
@@ -40,15 +40,16 @@ def set_histo_style(h1, h2, xtitle, ytitle):
     h1.SetStats(0)
     h2.SetStats(0)
     h1.GetXaxis().SetTitleSize(0.04)
-    h1.GetXaxis().SetTitleOffset(1.0)
+    h1.GetXaxis().SetTitleOffset(1.4)
     h1.GetXaxis().SetLabelOffset(0.01)
     h1.GetYaxis().SetTitleSize(0.04)
-    h1.GetYaxis().SetTitleOffset(1.0)
+    h1.GetYaxis().SetTitleOffset(1.5)
     h1.GetYaxis().SetLabelOffset(0.01)
     h1.GetXaxis().SetTitle(xtitle)
     h1.GetXaxis().CenterTitle()
     h1.GetYaxis().SetTitle(ytitle)
     h1.GetYaxis().CenterTitle()
+    h1.GetYaxis().SetRangeUser(0, int(ymax))
     h1.SetLineColor(1)
     h2.SetLineColor(2)
 
@@ -59,18 +60,18 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(incMC_path, sigMC_path, leg_title, ecms):
+def plot(data_path, sigMC_path, leg_title, ecms, ymax):
     try:
-        f_incMC = TFile(incMC_path)
+        f_data = TFile(data_path)
         f_sigMC = TFile(sigMC_path)
-        t_incMC = f_incMC.Get('save')
+        t_data = f_data.Get('save')
         t_sigMC = f_sigMC.Get('save')
-        entries_incMC = t_incMC.GetEntries()
+        entries_data = t_data.GetEntries()
         entries_sigMC = t_sigMC.GetEntries()
-        logging.info('inclusive MC entries :'+str(entries_incMC))
-        logging.info('signal MC entries :'+str(entries_sigMC))
+        logging.info('data entries :'+str(entries_data))
+        logging.info('signal MC(X(3842)) entries :'+str(entries_sigMC))
     except:
-        logging.error(incMC_path+' or '+sigMC_path+' is invalid!')
+        logging.error(data_path+' or '+sigMC_path+' is invalid!')
         sys.exit()
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
@@ -79,41 +80,44 @@ def plot(incMC_path, sigMC_path, leg_title, ecms):
     xmax = 100
     xbins = 100
     ytitle = "Events"
-    xtitle = "#chi^{2}(K^{-}#pi^{+}#pi^{+})"
-    h_incMC = TH1F('incMC', 'incMC', xbins, xmin, xmax)
+    xtitle = "#chi^{2}(D_{tag}D_{missing}#pi^{+}#pi^{-})"
+    h_data = TH1F('data', 'data', xbins, xmin, xmax)
     h_sigMC = TH1F('sigMC', 'sigMC', xbins, xmin, xmax)
 
-    set_histo_style(h_incMC, h_sigMC, xtitle, ytitle)
-    chi2_KF_fill(t_incMC, t_sigMC, entries_incMC, entries_sigMC, h_incMC, h_sigMC)
+    set_histo_style(h_data, h_sigMC, xtitle, ytitle, ymax)
+    chi2_KF_fill(t_data, t_sigMC, entries_data, entries_sigMC, h_data, h_sigMC)
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
     
-    h_sigMC.Scale(h_incMC.GetEntries()/h_sigMC.GetEntries())
-    h_incMC.Draw('ep')
+    h_sigMC.Scale(h_data.GetEntries()/h_sigMC.GetEntries()/2)
+    h_data.Draw('ep')
     h_sigMC.Draw('samee')
 
     legend = TLegend(0.65, 0.6, 0.82, 0.8)
-    set_legend(legend, h_incMC, h_sigMC, leg_title)
+    set_legend(legend, h_data, h_sigMC, leg_title)
     legend.Draw()
 
-    mbc.SaveAs('./figs/chi2_KF_'+str(ecms)+'.pdf')
+    mbc.SaveAs('./figs/chi2_kf_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_raw.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4360/sigMC_4360_raw.root'
+    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
+    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
     leg_title = '(a)'
     ecms = 4360
-    plot(incMC_path, sigMC_path, leg_title, ecms)
+    ymax = 1200
+    plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_raw.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4420/sigMC_4420_raw.root'
+    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
+    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_signal.root'
     leg_title = '(b)'
     ecms = 4420
-    plot(incMC_path, sigMC_path, leg_title, ecms)
+    ymax = 4000
+    plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_raw.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/signal/4600/sigMC_4600_raw.root'
+    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
+    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
     leg_title = '(c)'
     ecms = 4600
-    plot(incMC_path, sigMC_path, leg_title, ecms)
+    ymax = 3000
+    plot(data_path, sigMC_path, leg_title, ecms, ymax)

@@ -20,7 +20,9 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.2.2" "Draw figures -- study mass window of M(Kpipi)"
     printf "\n\t%-9s  %-40s\n" "0.2.3" "Get samples -- extract useful info: signal region and sideband region"
     printf "\n\t%-9s  %-40s\n" "0.2.4" "Get samples -- get data sideband samples"
-    printf "\n\t%-9s  %-40s\n" "0.2.5" "Draw figures -- compare data, data sideband and signal samples"
+    printf "\n\t%-9s  %-40s\n" "0.2.5" "Draw figures -- compare data, data sideband and signal samples(RM(pipi), raw)"
+    printf "\n\t%-9s  %-40s\n" "0.2.6" "Draw figures -- compare data and X(3842) MC(chi2_kf)"
+    printf "\n\t%-9s  %-40s\n" "0.2.7" "Draw figures -- compare data, data sideband and signal samples(RM(pipi), cut)"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -131,9 +133,19 @@ case $option in
            hadd data_4600_sideband.root data_4600_sideband*.root
            ;;
 
-    0.2.5) echo "Draw figures -- comparing data, data sideband and signal samples..."
+    0.2.5) echo "Draw figures -- comparing data, data sideband and signal samples(RM(pipi), raw)..."
            cd $HOME/bes/DDPIPI/v0.2/python
-           python plot_rm_pipi.py
+           python plot_rm_pipi.py raw
            ;;
-    
+
+    0.2.6) echo "Draw figures -- comparing data and X(3842) MC(chi2_kf)..."
+           cd $HOME/bes/DDPIPI/v0.2/python
+           python  plot_chi2_kf.py
+           ;;
+
+    0.2.7) echo "Draw figures -- comparing data, data sideband and signal samples(RM(pipi), cut)..."
+           cd $HOME/bes/DDPIPI/v0.2/python
+           python plot_rm_pipi.py cut
+           ;;
+
 esac
