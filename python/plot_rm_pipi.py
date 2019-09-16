@@ -32,42 +32,42 @@ def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, MODE, chi2_cut):
     for ientry1 in xrange(t1.GetEntries()):
         t1.GetEntry(ientry1)
         if MODE == 'raw':
-            if t1.m_m_pipi > 0.28:
+            if t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882:
                 h1.Fill(t1.m_rm_pipi)
         if MODE == 'cut':
-            if t1.m_m_pipi > 0.28 and t1.m_chi2_kf < chi2_cut:
+            if t1.m_m_pipi > 0.28 and t1.m_chi2_kf < chi2_cut and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882: 
                 h1.Fill(t1.m_rm_pipi)
     for ientry2 in xrange(t2.GetEntries()):
         t2.GetEntry(ientry2)
         if MODE == 'raw':
-            if t2.m_m_pipi > 0.28 and t2.m_rm_pipi > 3.75:
+            if t2.m_m_pipi > 0.28 and ((t2.m_rm_Dpipi > 1.806 and t2.m_rm_Dpipi < 1.832) or (t2.m_rm_Dpipi > 1.907 and t2.m_rm_Dpipi < 1.933)):
                 h2.Fill(t2.m_rm_pipi)
         if MODE == 'cut':
-            if t2.m_m_pipi > 0.28 and t2.m_rm_pipi > 3.75 and t2.m_chi2_kf < chi2_cut:
+            if t2.m_m_pipi > 0.28 and t2.m_chi2_kf < chi2_cut and ((t2.m_rm_Dpipi > 1.806 and t2.m_rm_Dpipi < 1.832) or (t2.m_rm_Dpipi > 1.907 and t2.m_rm_Dpipi < 1.933)):
                 h2.Fill(t2.m_rm_pipi)
     for ientry3 in xrange(t3.GetEntries()):
         t3.GetEntry(ientry3)
         if MODE == 'raw':
-            if t3.m_m_pipi > 0.28:
+            if t3.m_m_pipi > 0.28 and t3.m_rm_Dpipi > 1.857 and t3.m_rm_Dpipi < 1.882:
                 h3.Fill(t3.m_rm_pipi)
         if MODE == 'cut':
-            if t3.m_m_pipi > 0.28 and t3.m_chi2_kf < chi2_cut:
+            if t3.m_m_pipi > 0.28 and t3.m_chi2_kf < chi2_cut and t3.m_rm_Dpipi > 1.857 and t3.m_rm_Dpipi < 1.882:
                 h3.Fill(t3.m_rm_pipi)
     for ientry4 in xrange(t4.GetEntries()):
         t4.GetEntry(ientry4)
         if MODE == 'raw':
-            if t4.m_m_pipi > 0.28:
+            if t4.m_m_pipi > 0.28 and t4.m_rm_Dpipi > 1.857 and t4.m_rm_Dpipi < 1.882:
                 h4.Fill(t4.m_rm_pipi)
         if MODE == 'cut':
-            if t4.m_m_pipi > 0.28 and t4.m_chi2_kf < chi2_cut:
+            if t4.m_m_pipi > 0.28 and t4.m_chi2_kf < chi2_cut and t4.m_rm_Dpipi > 1.857 and t4.m_rm_Dpipi < 1.882:
                 h4.Fill(t4.m_rm_pipi)
     for ientry5 in xrange(t5.GetEntries()):
         t5.GetEntry(ientry5)
         if MODE == 'raw':
-            if t5.m_m_pipi > 0.28:
+            if t5.m_m_pipi > 0.28 and t5.m_rm_Dpipi > 1.857 and t5.m_rm_Dpipi < 1.882:
                 h5.Fill(t5.m_rm_pipi)
         if MODE == 'cut':
-            if t5.m_m_pipi > 0.28 and t5.m_chi2_kf < chi2_cut:
+            if t5.m_m_pipi > 0.28 and t5.m_chi2_kf < chi2_cut and t5.m_rm_Dpipi > 1.857 and t5.m_rm_Dpipi < 1.882:
                 h5.Fill(t5.m_rm_pipi)
 
 def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle):
@@ -195,7 +195,7 @@ if __name__ == '__main__':
     scale2 = 0.00625
     scale3 = 0.003
     xmax = 4.1
-    chi2_cut = 46
+    chi2_cut = 42
     plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)
 
     data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
