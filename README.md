@@ -1,6 +1,6 @@
 # DDPIPI
 
-This is a work following searching for X(3842)
+This is a work searching for X(3842)
 
 ## Install v0.2
 
