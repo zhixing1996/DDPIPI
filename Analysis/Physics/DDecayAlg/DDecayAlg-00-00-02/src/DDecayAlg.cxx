@@ -66,7 +66,6 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple1->addItem("chi2_vf", m_chi2_vf);
             status = m_tuple1->addItem("chi2_kf", m_chi2_kf);
             status = m_tuple1->addItem("n_count", m_n_count); // multi-counting D in one event
-
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple1) << endmsg;
@@ -450,7 +449,7 @@ void DDecayAlg::saveAllMcTruthInfo() {
         for (; iter_mc != mcParticleCol->end(); iter_mc++) {
             pAll.push_back((*iter_mc)->initialFourMomentum()); // initialFourMomentum: Four Momentum in the iteraction point
             pdg.push_back((*iter_mc)->particleProperty());
-            mother.push_back((*iter_mc)->mother().particleProperty());
+            mother.push_back((*iter_mc)->mother().trackIndex());
         }
         for (int i = 0; i < pdg.size(); i++) {
             pdgid[i] = pdg[i];
@@ -1217,6 +1216,10 @@ void DDecayAlg::recordVariables() {
     // save all McTruth info
     if (m_runNo < 0 && m_isMonteCarlo) {
         m_idxmc = idxmc;
+        for (int i = 0; i< m_idxmc; i++) {
+            m_motheridx[i] = motheridx[i];
+            m_pdgid[i] = pdgid[i];
+        }
     }
 
     // save Dstst McTruth info
