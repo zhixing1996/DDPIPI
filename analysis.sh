@@ -24,6 +24,9 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.2.6" "Draw figures -- compare data and X(3842) MC(chi2_kf)"
     printf "\n\t%-9s  %-40s\n" "0.2.7" "Draw figures -- compare data, data sideband and signal samples(RM(pipi), cut)"
 
+    printf "\n\t%-9s  %-40s\n" "0.3"   "[Background Study]"
+    printf "\n\t%-9s  %-40s\n" "0.3.1" "Get samples -- get topology info"
+
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -146,6 +149,36 @@ case $option in
     0.2.7) echo "Draw figures -- comparing data, data sideband and signal samples(RM(pipi), cut)..."
            cd $HOME/bes/DDPIPI/v0.2/python
            python plot_rm_pipi.py cut
+           ;;
+
+    # ---------------------
+    #  0.3 Background Study
+    # ---------------------
+
+    0.3) echo "Pretreating of data and MC samples..."
+         echo "--> Samples: data, signal MC, PHSP MC, inclusive MC"
+         echo "--> E_{CMS}: 4360MeV, 4420MeV, 460MeV"
+         echo "--> Event Number: 1,000,000(signal MC,PHSP MC, inclusive MC)"
+         echo "--> RunNo: 30616~31279(4360MeV), 31327~31390+36773~38140(4420MeV), 35227~36213(4600MeV)"
+         echo "--> Cross Section: D1_2420: 41.8+/-5.6+/-3.8pb(4360MeV), 65.4+/-3.0+/-5.7pb(4420MeV), 27.7+/-2.7+/-1.2pb(4600MeV)" 
+         echo "--> Cross Section: psi(3770): 17.3+/-5.4+/-1.5pb(4360MeV), 23.8+/-2.6+/-2.1pb(4420MeV), 7.2+/-2.7+/-1.2pb(4600MeV)" 
+         echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89pb^{-1}(4420MeV), 566.93pb^{-1}(4600MeV)"
+         ;;
+
+    0.3.1) echo "Get samples -- getting topology info..."
+           mkdir -p scripts/ana/sel
+           cd scripts/ana/sel
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info_topo
+           hep_sub -g physics get_info_topo -o jobs.out -e jobs.err
            ;;
 
 esac

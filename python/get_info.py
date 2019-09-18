@@ -232,7 +232,6 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
                     chi2_kf = t_std.chi2_kf
                     rm_Dpipi = (cms-pD-pPip-pPim).M()
                     if m_pipi > 0.28 and chi2_kf < chi2_kf_cut and ((rm_Dpipi > 1.806 and rm_Dpipi < 1.832) or (rm_Dpipi > 1.907 and rm_Dpipi < 1.933)):
-                    if m_pipi > 0.28 and chi2_kf < 200000:
                         m_runNo[0] = t_allTruth.runNo
                         m_evtNo[0] = t_allTruth.evtNo
                         m_indexmc[0] = t_allTruth.indexmc
