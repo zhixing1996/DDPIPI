@@ -84,9 +84,6 @@ class DDecayAlg : public Algorithm {
         int pdgid[100];
         int motheridx[100];
         int idxmc;
-        Vp4 pAll;
-        Vint pdg;
-        Vint mother;
 
         // Dstst McTruth info
         double p4_pip[4];
@@ -169,7 +166,6 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_idxmc;
         NTuple::Array<int> m_pdgid;
         NTuple::Array<int> m_motheridx;
-        NTuple::Matrix<double> m_p4_alltrk;
 
         // Ntuple5 info
         NTuple::Tuple* m_tuple5;
@@ -218,6 +214,9 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_charm_signal;
         NTuple::Item<double> m_chi2_vf_signal;
         NTuple::Item<double> m_chi2_kf_signal;
+        NTuple::Item<int> m_idxmc_signal;
+        NTuple::Array<int> m_pdgid_signal;
+        NTuple::Array<int> m_motheridx_signal;
 
         // Ntuple9 info
         NTuple::Tuple* m_tuple9;
@@ -236,6 +235,9 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_charm_sidebandlow;
         NTuple::Item<double> m_chi2_vf_sidebandlow;
         NTuple::Item<double> m_chi2_kf_sidebandlow;
+        NTuple::Item<int> m_idxmc_sidebandlow;
+        NTuple::Array<int> m_pdgid_sidebandlow;
+        NTuple::Array<int> m_motheridx_sidebandlow;
 
         // Ntuple10 info
         NTuple::Tuple* m_tuple10;
@@ -254,6 +256,9 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_charm_sidebandup;
         NTuple::Item<double> m_chi2_vf_sidebandup;
         NTuple::Item<double> m_chi2_kf_sidebandup;
+        NTuple::Item<int> m_idxmc_sidebandup;
+        NTuple::Array<int> m_pdgid_sidebandup;
+        NTuple::Array<int> m_motheridx_sidebandup;
 
         // functions
         void clearVariables();

@@ -120,7 +120,6 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple4->addItem("indexmc", m_idxmc, 0, 100);
             status = m_tuple4->addIndexedItem("pdgid", m_idxmc, m_pdgid);
             status = m_tuple4->addIndexedItem("motheridx", m_idxmc, m_motheridx);
-            status = m_tuple4->addIndexedItem("p4_alltrk", m_idxmc, 4, m_p4_alltrk);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple4) << endmsg;
@@ -205,7 +204,9 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple8->addItem("charm", m_charm_signal);
             status = m_tuple8->addItem("chi2_vf", m_chi2_vf_signal);
             status = m_tuple8->addItem("chi2_kf", m_chi2_kf_signal);
-
+            status = m_tuple8->addItem("indexmc", m_idxmc_signal, 0, 100);
+            status = m_tuple8->addIndexedItem("pdgid", m_idxmc_signal, m_pdgid_signal);
+            status = m_tuple8->addIndexedItem("motheridx", m_idxmc_signal, m_motheridx_signal);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple8) << endmsg;
@@ -233,7 +234,9 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple9->addItem("charm", m_charm_sidebandlow);
             status = m_tuple9->addItem("chi2_vf", m_chi2_vf_sidebandlow);
             status = m_tuple9->addItem("chi2_kf", m_chi2_kf_sidebandlow);
-
+            status = m_tuple9->addItem("indexmc", m_idxmc_sidebandlow, 0, 100);
+            status = m_tuple9->addIndexedItem("pdgid", m_idxmc_sidebandlow, m_pdgid_sidebandlow);
+            status = m_tuple9->addIndexedItem("motheridx", m_idxmc_sidebandlow, m_motheridx_sidebandlow);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple9) << endmsg;
@@ -261,7 +264,9 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple10->addItem("charm", m_charm_sidebandup);
             status = m_tuple10->addItem("chi2_vf", m_chi2_vf_sidebandup);
             status = m_tuple10->addItem("chi2_kf", m_chi2_kf_sidebandup);
-
+            status = m_tuple10->addItem("indexmc", m_idxmc_sidebandup, 0, 100);
+            status = m_tuple10->addIndexedItem("pdgid", m_idxmc_sidebandup, m_pdgid_sidebandup);
+            status = m_tuple10->addIndexedItem("motheridx", m_idxmc_sidebandup, m_motheridx_sidebandup);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple10) << endmsg;
@@ -355,9 +360,6 @@ void DDecayAlg::clearVariables() {
 
     // all McTruth info
     m_idxmc = 0;
-    pAll.clear();
-    pdg.clear();
-    mother.clear();
 
     // Dstst McTruth info
     for (int i = 0; i < 4; i++) {
@@ -446,23 +448,30 @@ void DDecayAlg::saveAllMcTruthInfo() {
     }
     else {
         Event::McParticleCol::iterator iter_mc = mcParticleCol->begin(); // loop all the particles in the decay chain(MCTruth)
-        for (; iter_mc != mcParticleCol->end(); iter_mc++) {
-            pAll.push_back((*iter_mc)->initialFourMomentum()); // initialFourMomentum: Four Momentum in the iteraction point
-            pdg.push_back((*iter_mc)->particleProperty());
-            mother.push_back((*iter_mc)->mother().trackIndex());
+        int pid = (*iter_mc)->particleProperty();
+        unsigned int idx;
+        unsigned int midx;
+        idxmc = 0;
+        if (pid == 90022 || pid == 80022) {
+             for (iter_mc++; iter_mc != mcParticleCol->end(); iter_mc++) {
+                 if (!(*iter_mc)->decayFromGenerator()) continue;
+                 pid = (*iter_mc)->particleProperty();
+                 idx = (*iter_mc)->trackIndex();
+                 midx = ((*iter_mc)->mother()).trackIndex();
+                 pdgid[idxmc] = pid;
+                 if (idx == midx || midx == 0) motheridx[idxmc] = idx - 1;
+                 else motheridx[idxmc] = midx - 1;
+                 idxmc++;
+             }
         }
-        for (int i = 0; i < pdg.size(); i++) {
-            pdgid[i] = pdg[i];
-            motheridx[i] = mother[i];
-            m_p4_alltrk[i][0] = pAll[i].px();
-            m_p4_alltrk[i][1] = pAll[i].py();
-            m_p4_alltrk[i][2] = pAll[i].pz();
-            m_p4_alltrk[i][3] = pAll[i].e();
-            if (m_debug) {
-                if (fabs(pdg[i]) == 411 && fabs(mother[i]) == 10413) std::cout << " m_alltrkP4:  " << m_p4_alltrk[i][3] << std::endl;
+        else {
+            for (; iter_mc != mcParticleCol->end(); iter_mc++) {
+                if (!(*iter_mc)->decayFromGenerator()) continue;
+                pdgid[idxmc] = (*iter_mc)->particleProperty();
+                motheridx[idxmc]= ((*iter_mc)->mother()).trackIndex();
+                idxmc++;
             }
         }
-        idxmc = pdg.size();
         if (m_debug) std::cout << " PDG.SIZE():  " << idxmc << std::endl;
     }
 }
@@ -1281,6 +1290,15 @@ void DDecayAlg::recordVariables_signal() {
     m_chi2_vf_signal = chi2_vf;
     m_chi2_kf_signal = chi2_kf_signal;
 
+    // save all McTruth info for fitKM_signal
+    if (m_runNo_signal < 0 && m_isMonteCarlo) {
+        m_idxmc_signal = idxmc;
+        for (int i = 0; i< m_idxmc_signal; i++) {
+            m_motheridx_signal[i] = motheridx[i];
+            m_pdgid_signal[i] = pdgid[i];
+        }
+    }
+
     m_tuple8->write();
 
     if (m_debug) std::cout << " Signal region: entry in ntuple is filled for " << mode << std::endl;
@@ -1299,6 +1317,15 @@ void DDecayAlg::recordVariables_sidebandlow() {
     m_chi2_vf_sidebandlow = chi2_vf;
     m_chi2_kf_sidebandlow = chi2_kf_sidebandlow;
 
+    // save all McTruth info for fitKM_sidebandlow
+    if (m_runNo_sidebandlow < 0 && m_isMonteCarlo) {
+        m_idxmc_sidebandlow = idxmc;
+        for (int i = 0; i< m_idxmc_sidebandlow; i++) {
+            m_motheridx_sidebandlow[i] = motheridx[i];
+            m_pdgid_sidebandlow[i] = pdgid[i];
+        }
+    }
+
     m_tuple9->write();
 
     if (m_debug) std::cout << " Lower sideband region: entry in ntuple is filled for " << mode << std::endl;
@@ -1316,6 +1343,15 @@ void DDecayAlg::recordVariables_sidebandup() {
     m_charm_sidebandup = charm;
     m_chi2_vf_sidebandup = chi2_vf;
     m_chi2_kf_sidebandup = chi2_kf_sidebandup;
+
+    // save all McTruth info for fitKM_sidebandup
+    if (m_runNo_sidebandup < 0 && m_isMonteCarlo) {
+        m_idxmc_sidebandup = idxmc;
+        for (int i = 0; i< m_idxmc_sidebandup; i++) {
+            m_motheridx_sidebandup[i] = motheridx[i];
+            m_pdgid_sidebandup[i] = pdgid[i];
+        }
+    }
 
     m_tuple10->write();
 

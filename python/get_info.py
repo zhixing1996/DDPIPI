@@ -184,7 +184,7 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
                     m_chi2_vf[0] = t_std.chi2_vf
                     m_chi2_kf[0] = t_std.chi2_kf
                     t.Fill()
-    if MODE == 'allTruth':
+    if MODE == 'sidebandlow_truth' or MODE == 'sidebandup_truth':
         m_runNo = array('i', [0])
         m_evtNo = array('i', [0])
         m_indexmc = array('i', [0])
@@ -195,50 +195,40 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
         t.Branch('indexmc', m_indexmc, 'indexmc/I')
         t.Branch('motheridx', m_motheridx, 'motheridx[100]/I')
         t.Branch('pdgid', m_pdgid, 'pdgid[100]/I')
-        t_std = f_in.Get('STD')
-        t_otherTrk = f_in.Get('otherTrk')
-        t_allTruth = f_in.Get('allTruth')
-        nentries = t_std.GetEntries()
-        for ientry in range(nentries):
-            t_std.GetEntry(ientry)
-            if t_std.mode != 200:
-                continue
-            pD_raw = TLorentzVector(0, 0, 0, 0)
-            pD = TLorentzVector(0, 0, 0, 0)
-            for iTrk in range(t_std.n_trkD):
-                ptrack_raw = TLorentzVector(0, 0, 0, 0)
-                ptrack = TLorentzVector(0, 0, 0, 0)
-                ptrack_raw.SetPxPyPzE(t_std.rawp4_Dtrk[iTrk*4+0], t_std.rawp4_Dtrk[iTrk*4+1], t_std.rawp4_Dtrk[iTrk*4+2], t_std.rawp4_Dtrk[iTrk*4+3])
-                ptrack.SetPxPyPzE(t_std.p4_Dtrk[iTrk*4+0], t_std.p4_Dtrk[iTrk*4+1], t_std.p4_Dtrk[iTrk*4+2], t_std.p4_Dtrk[iTrk*4+3])
-                pD_raw += ptrack_raw
-                pD += ptrack
-            pPip = TLorentzVector(0,0,0,0)
-            pPim = TLorentzVector(0,0,0,0)
-            t_otherTrk.GetEntry(ientry)
-            t_allTruth.GetEntry(ientry)
-            for iTrk1 in range(t_otherTrk.n_othertrks):
-                if t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+4] != 1:
+        if MODE == 'sidebandlow_truth':
+            t_in = f_in.Get('STD_sidebandlow')
+        if MODE == 'sidebandup_truth':
+            t_in = f_in.Get('STD_sidebandup')
+        if MODE == 'sidebandlow_truth' or MODE == 'sidebandup_truth':
+            nentries = t_in.GetEntries()
+            for ientry in range(nentries):
+                t_in.GetEntry(ientry)
+                if t_in.mode != 200:
                     continue
-                if t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+5] != 2:
-                    continue
-                pPip.SetPxPyPzE(t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+0], t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+1], t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+2], t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*6+3])
-                for iTrk2 in range(t_otherTrk.n_othertrks):
-                    if t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+4] != -1:
-                        continue
-                    if t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+5] != 2:
-                        continue
-                    pPim.SetPxPyPzE(t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+0], t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+1], t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+2], t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*6+3])
-                    m_pipi = (pPip+pPim).M()
-                    chi2_kf = t_std.chi2_kf
-                    rm_Dpipi = (cms-pD-pPip-pPim).M()
-                    if m_pipi > 0.28 and chi2_kf < chi2_kf_cut and ((rm_Dpipi > 1.806 and rm_Dpipi < 1.832) or (rm_Dpipi > 1.907 and rm_Dpipi < 1.933)):
-                        m_runNo[0] = t_allTruth.runNo
-                        m_evtNo[0] = t_allTruth.evtNo
-                        m_indexmc[0] = t_allTruth.indexmc
-                        for i in range(t_allTruth.indexmc):
-                            m_motheridx[i] = int(t_allTruth.motheridx[i])
-                            m_pdgid[i] = int(t_allTruth.pdgid[i])
-                        t.Fill()
+                pD_raw = TLorentzVector(0, 0, 0, 0)
+                pD = TLorentzVector(0, 0, 0, 0)
+                for iTrk in range(t_in.n_trkD):
+                    ptrack_raw = TLorentzVector(0, 0, 0, 0)
+                    ptrack = TLorentzVector(0, 0, 0, 0)
+                    ptrack_raw.SetPxPyPzE(t_in.rawp4_Dtrk[iTrk*4+0], t_in.rawp4_Dtrk[iTrk*4+1], t_in.rawp4_Dtrk[iTrk*4+2], t_in.rawp4_Dtrk[iTrk*4+3])
+                    ptrack.SetPxPyPzE(t_in.p4_Dtrk[iTrk*4+0], t_in.p4_Dtrk[iTrk*4+1], t_in.p4_Dtrk[iTrk*4+2], t_in.p4_Dtrk[iTrk*4+3])
+                    pD_raw += ptrack_raw
+                    pD += ptrack
+                pPip = TLorentzVector(0,0,0,0)
+                pPim = TLorentzVector(0,0,0,0)
+                pPip.SetPxPyPzE(t_in.p4_piplus[0], t_in.p4_piplus[1], t_in.p4_piplus[2], t_in.p4_piplus[3])
+                pPim.SetPxPyPzE(t_in.p4_piminus[0], t_in.p4_piminus[1], t_in.p4_piminus[2], t_in.p4_piminus[3])
+                m_pipi = (pPip+pPim).M()
+                chi2_kf = t_in.chi2_kf
+                rm_Dpipi = (cms-pD-pPip-pPim).M()
+                if m_pipi > 0.28 and chi2_kf < chi2_kf_cut and ((rm_Dpipi > 1.806 and rm_Dpipi < 1.832) or (rm_Dpipi > 1.907 and rm_Dpipi < 1.933)):
+                    m_runNo[0] = t_in.runNo
+                    m_evtNo[0] = t_in.evtNo
+                    m_indexmc[0] = t_in.indexmc
+                    for i in range(t_in.indexmc):
+                        m_motheridx[i] = t_in.motheridx[i]
+                        m_pdgid[i] = t_in.pdgid[i]
+                    t.Fill()
 
 def main():
     args = sys.argv[1:]
@@ -262,7 +252,7 @@ def main():
         chi2_kf_cut = 42
     if ecms == 4.600:
         chi2_kf_cut = 25
-    if MODE == 'raw' or MODE == 'allTruth':
+    if MODE == 'raw' or MODE == 'sidebandlow_truth' or MODE == 'sidebandup_truth':
         save_raw(f_in, cms, t_out, MODE, chi2_kf_cut)
     if MODE == 'signal' or MODE == 'sidebandlow' or MODE == 'sidebandup':
         save_missing(f_in, cms, t_out, MODE)
