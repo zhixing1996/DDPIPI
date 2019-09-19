@@ -1,0 +1,76 @@
+# In the card, "#", "%" and the pair of "{" and "}" are used for commenting, prompting and grouping, respectively.
+
+# The following six items are indispensable, and they can't be removed or left empty.
+
+# One file per line without tailing characters, such as comma, semicolon and period. In addition, wildcards "[]?*" are supported in the item just like in the method Add() of the class TChain. Besides, both the absolute and relative paths are supported in the item.
+% Names of input root files
+{
+  PATH
+}
+
+% Tree name
+{
+  save
+}
+
+% Branch name of the number of particles (Default: nMCGen)
+{
+  indexmc
+}
+
+% Branch name of the PDG codes of particles (Default: MCGenPDG)
+{
+  pdgid
+}
+
+% Branch name of the mother indeces of particles (Default: MCGenMothIndex)
+{
+  motheridx
+}
+
+% Ignore the decay of the following particles
+{
+  pi+
+  pi-
+  K+
+  K-
+  p+
+  anti-p-
+  mu+
+  mu-
+  e+
+  e-
+  D+
+}
+
+% Ignore the decay of the daughters of the following particles
+{
+  D- 
+}
+
+% Component analysis --- decay trees
+{
+  Y
+}
+
+% Component analysis --- production branches of particles
+{
+    
+}
+
+% Signal identification --- cascade decay branches
+{
+  0 	& 	e+e- --> gammaI pi+ pi- D+ D- 	        & -1 
+  1	&	D- --> K+ pi- pi-		&  0 
+}
+
+# Four files with the same name but in different (root/txt/tex/pdf) formats will be outputed. The filename extensions are appended automatically by the program as suffixes. Thus, to avoid repetition, any filename extension is not recommended to be used in the name as a suffix.
+% Main name of output files (Default: Main name of the card file) 
+{  
+  NAME
+}
+
+% Sort the topology structures for signal identifications (Two options: Y and N. Default: N)
+{
+    Y
+}
