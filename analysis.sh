@@ -26,6 +26,10 @@ usage() {
 
     printf "\n\t%-9s  %-40s\n" "0.3"   "[Background Study]"
     printf "\n\t%-9s  %-40s\n" "0.3.1" "Get samples -- get topology info"
+    printf "\n\t%-9s  %-40s\n" "0.3.2" "Get samples -- get topology root files"
+    printf "\n\t%-9s  %-40s\n" "0.3.3" "Download software -- download topology"
+    printf "\n\t%-9s  %-40s\n" "0.3.4" "Install software -- install topology"
+    printf "\n\t%-9s  %-40s\n" "0.3.5" "Topo analysis -- apply topology analysis"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -179,6 +183,80 @@ case $option in
            mkdir jobs.err
            cp $HOME/bes/DDPIPI/v0.2/jobs/get_info_topo
            hep_sub -g physics get_info_topo -o jobs.out -e jobs.err
+           ;;
+
+    0.3.2) echo "Get samples -- getting topology root files..."
+           cd /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360
+           rm -rf incMC_hadrons_4360_topo.root
+           hadd incMC_hadrons_4360_topo.root incMC_hadrons_4360_topo*.root
+           cd /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420
+           rm -rf incMC_hadrons_4420_topo.root
+           hadd incMC_hadrons_4420_topo.root incMC_hadrons_4420_topo*.root
+           cd /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600
+           rm -rf incMC_hadrons_4600_topo.root
+           hadd incMC_hadrons_4600_topo.root incMC_hadrons_4600_topo*.root
+           ;;
+
+    0.3.3) echo "Download software -- downloading topology..."
+           echo "Logout the SL5 environment to download topology v1.9.5!"
+           mkdir -p topology
+           cd topology
+           rm -rf v1.9.5
+           git clone https://github.com/zhixing1996/topology.git v1.9.5
+           echo "Please login SL5 and set up BOSS6.6.4.p01 environment!"
+           ;;
+
+    0.3.4) echo "Install software -- installinging topology..."
+           echo "Login SL5 and set up BOSS6.6.4.p01 environment!"
+           cd topology/v1.9.5
+           ./compile.sh
+           echo "Please check how to set up topoana variable environment in its README.md file!"
+           ;;
+
+    0.3.5) echo "Topo analysis -- applying topology analysis..."
+           echo "Must be executed in bash shell mode and set up topoana environment!"
+           mkdir -p scripts/ana/topo
+           cd scripts/ana/topo
+           if [ ! -d "/besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo" ]; then
+               mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo
+               ln -s /besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo ./ana_topo
+           fi
+           cd ana_topo
+           mkdir -p 4360
+           cd 4360
+           rm * -rf
+           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dplus.card . -rf
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4360\/incMC_hadrons_4360_topo.root/g" topoana_Dplus.card
+           sed -i "s/NAME/TopoResultDplus_4360/g" topoana_Dplus.card
+           topoana.exe topoana_Dplus.card
+           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dminus.card . -rf
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4360\/incMC_hadrons_4360_topo.root/g" topoana_Dminus.card
+           sed -i "s/NAME/TopoResultDminus_4360/g" topoana_Dminus.card
+           topoana.exe topoana_Dminus.card
+           cd ..
+           mkdir -p 4420
+           cd 4420
+           rm * -rf
+           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dplus.card . -rf
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4420\/incMC_hadrons_4420_topo.root/g" topoana_Dplus.card
+           sed -i "s/NAME/TopoResultDplus_4420/g" topoana_Dplus.card
+           topoana.exe topoana_Dplus.card
+           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dminus.card . -rf
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4420\/incMC_hadrons_4420_topo.root/g" topoana_Dminus.card
+           sed -i "s/NAME/TopoResultDminus_4420/g" topoana_Dminus.card
+           topoana.exe topoana_Dminus.card
+           cd ..
+           mkdir -p 4600
+           cd 4600
+           rm * -rf
+           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dplus.card . -rf
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4600\/incMC_hadrons_4600_topo.root/g" topoana_Dplus.card
+           sed -i "s/NAME/TopoResultDplus_4600/g" topoana_Dplus.card
+           topoana.exe topoana_Dplus.card
+           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dminus.card . -rf
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4600\/incMC_hadrons_4600_topo.root/g" topoana_Dminus.card
+           sed -i "s/NAME/TopoResultDminus_4600/g" topoana_Dminus.card
+           topoana.exe topoana_Dminus.card
            ;;
 
 esac
