@@ -26,10 +26,9 @@ usage() {
 
     printf "\n\t%-9s  %-40s\n" "0.3"   "[Background Study]"
     printf "\n\t%-9s  %-40s\n" "0.3.1" "Get samples -- get topology info"
-    printf "\n\t%-9s  %-40s\n" "0.3.2" "Get samples -- get topology root files"
-    printf "\n\t%-9s  %-40s\n" "0.3.3" "Download software -- download topology"
-    printf "\n\t%-9s  %-40s\n" "0.3.4" "Install software -- install topology"
-    printf "\n\t%-9s  %-40s\n" "0.3.5" "Topo analysis -- apply topology analysis"
+    printf "\n\t%-9s  %-40s\n" "0.3.2" "Download software -- download topology"
+    printf "\n\t%-9s  %-40s\n" "0.3.3" "Install software -- install topology"
+    printf "\n\t%-9s  %-40s\n" "0.3.4" "Topo analysis -- apply topology analysis"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -57,6 +56,7 @@ case $option in
          echo "--> Cross Section: D1_2420: 41.8+/-5.6+/-3.8pb(4360MeV), 65.4+/-3.0+/-5.7pb(4420MeV), 27.7+/-2.7+/-1.2pb(4600MeV)" 
          echo "--> Cross Section: psi(3770): 17.3+/-5.4+/-1.5pb(4360MeV), 23.8+/-2.6+/-2.1pb(4420MeV), 7.2+/-2.7+/-1.2pb(4600MeV)" 
          echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89pb^{-1}(4420MeV), 566.93pb^{-1}(4600MeV)"
+         echo "--> Selection Algorithm Version: DDecayAlg-00-00-01(haven't applied cuts)"
          ;;
 
     0.1.1) echo "Get samples -- synthesizing root files..."
@@ -92,6 +92,7 @@ case $option in
          echo "--> Cross Section: D1(2420): 41.8+/-5.6+/-3.8pb(4360MeV), 65.4+/-3.0+/-5.7pb(4420MeV), 27.7+/-2.7+/-1.2pb(4600MeV)" 
          echo "--> Cross Section: psi(3770): 17.3+/-5.4+/-1.5pb(4360MeV), 23.8+/-2.6+/-2.1pb(4420MeV), 7.2+/-2.7+/-1.2pb(4600MeV)" 
          echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89pb^{-1}(4420MeV), 566.93pb^{-1}(4600MeV)"
+         echo "--> Selection Algorithm Version: DDecayAlg-00-00-02(have applied cuts)"
          ;;
 
     0.2.1) echo "Draw figures -- studying signal region of RM(Dpipi)..."
@@ -167,6 +168,7 @@ case $option in
          echo "--> Cross Section: D1_2420: 41.8+/-5.6+/-3.8pb(4360MeV), 65.4+/-3.0+/-5.7pb(4420MeV), 27.7+/-2.7+/-1.2pb(4600MeV)" 
          echo "--> Cross Section: psi(3770): 17.3+/-5.4+/-1.5pb(4360MeV), 23.8+/-2.6+/-2.1pb(4420MeV), 7.2+/-2.7+/-1.2pb(4600MeV)" 
          echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89pb^{-1}(4420MeV), 566.93pb^{-1}(4600MeV)"
+         echo "--> Selection Algorithm Version: DDecayAlg-00-00-02(have applied cuts)"
          ;;
 
     0.3.1) echo "Get samples -- getting topology info..."
@@ -185,19 +187,7 @@ case $option in
            hep_sub -g physics get_info_topo -o jobs.out -e jobs.err
            ;;
 
-    0.3.2) echo "Get samples -- getting topology root files..."
-           cd /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360
-           rm -rf incMC_hadrons_4360_topo.root
-           hadd incMC_hadrons_4360_topo.root incMC_hadrons_4360_topo*.root
-           cd /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420
-           rm -rf incMC_hadrons_4420_topo.root
-           hadd incMC_hadrons_4420_topo.root incMC_hadrons_4420_topo*.root
-           cd /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600
-           rm -rf incMC_hadrons_4600_topo.root
-           hadd incMC_hadrons_4600_topo.root incMC_hadrons_4600_topo*.root
-           ;;
-
-    0.3.3) echo "Download software -- downloading topology..."
+    0.3.2) echo "Download software -- downloading topology..."
            echo "Logout the SL5 environment to download topology v1.9.5!"
            mkdir -p topology
            cd topology
@@ -206,14 +196,14 @@ case $option in
            echo "Please login SL5 and set up BOSS6.6.4.p01 environment!"
            ;;
 
-    0.3.4) echo "Install software -- installinging topology..."
+    0.3.3) echo "Install software -- installinging topology..."
            echo "Login SL5 and set up BOSS6.6.4.p01 environment!"
            cd topology/v1.9.5
            ./compile.sh
            echo "Please check how to set up topoana variable environment in its README.md file!"
            ;;
 
-    0.3.5) echo "Topo analysis -- applying topology analysis..."
+    0.3.4) echo "Topo analysis -- applying topology analysis..."
            echo "Must be executed in bash shell mode and set up topoana environment!"
            mkdir -p scripts/ana/topo
            cd scripts/ana/topo
