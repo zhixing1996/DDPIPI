@@ -35,7 +35,7 @@ def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, MODE, chi2_cut):
             if t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882:
                 h1.Fill(t1.m_rm_pipi)
         if MODE == 'cut':
-            if t1.m_m_pipi > 0.28 and t1.m_chi2_kf < chi2_cut and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882: 
+            if t1.m_m_pipi > 0.28 and t1.m_chi2_kf < chi2_cut and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882 and ((t1.charm == 1 and t1.charge_left == -1) or (t1.charm == -1 and t1.charge_left == 1)): 
                 h1.Fill(t1.m_rm_pipi)
     for ientry2 in xrange(t2.GetEntries()):
         t2.GetEntry(ientry2)
@@ -43,7 +43,7 @@ def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, MODE, chi2_cut):
             if t2.m_m_pipi > 0.28 and ((t2.m_rm_Dpipi > 1.806 and t2.m_rm_Dpipi < 1.832) or (t2.m_rm_Dpipi > 1.907 and t2.m_rm_Dpipi < 1.933)):
                 h2.Fill(t2.m_rm_pipi)
         if MODE == 'cut':
-            if t2.m_m_pipi > 0.28 and t2.m_chi2_kf < chi2_cut and ((t2.m_rm_Dpipi > 1.806 and t2.m_rm_Dpipi < 1.832) or (t2.m_rm_Dpipi > 1.907 and t2.m_rm_Dpipi < 1.933)):
+            if t2.m_m_pipi > 0.28 and t2.m_chi2_kf < chi2_cut and ((t2.m_rm_Dpipi > 1.806 and t2.m_rm_Dpipi < 1.832) or (t2.m_rm_Dpipi > 1.907 and t2.m_rm_Dpipi < 1.933)) and ((t2.charm == 1 and t2.charge_left == -1) or (t2.charm == -1 and t2.charge_left == 1)):
                 h2.Fill(t2.m_rm_pipi)
     for ientry3 in xrange(t3.GetEntries()):
         t3.GetEntry(ientry3)
@@ -51,7 +51,7 @@ def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, MODE, chi2_cut):
             if t3.m_m_pipi > 0.28 and t3.m_rm_Dpipi > 1.857 and t3.m_rm_Dpipi < 1.882:
                 h3.Fill(t3.m_rm_pipi)
         if MODE == 'cut':
-            if t3.m_m_pipi > 0.28 and t3.m_chi2_kf < chi2_cut and t3.m_rm_Dpipi > 1.857 and t3.m_rm_Dpipi < 1.882:
+            if t3.m_m_pipi > 0.28 and t3.m_chi2_kf < chi2_cut and t3.m_rm_Dpipi > 1.857 and t3.m_rm_Dpipi < 1.882 and ((t3.charm == 1 and t3.charge_left == -1) or (t3.charm == -1 and t3.charge_left == 1)):
                 h3.Fill(t3.m_rm_pipi)
     for ientry4 in xrange(t4.GetEntries()):
         t4.GetEntry(ientry4)
@@ -59,7 +59,7 @@ def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, MODE, chi2_cut):
             if t4.m_m_pipi > 0.28 and t4.m_rm_Dpipi > 1.857 and t4.m_rm_Dpipi < 1.882:
                 h4.Fill(t4.m_rm_pipi)
         if MODE == 'cut':
-            if t4.m_m_pipi > 0.28 and t4.m_chi2_kf < chi2_cut and t4.m_rm_Dpipi > 1.857 and t4.m_rm_Dpipi < 1.882:
+            if t4.m_m_pipi > 0.28 and t4.m_chi2_kf < chi2_cut and t4.m_rm_Dpipi > 1.857 and t4.m_rm_Dpipi < 1.882 and ((t4.charm == 1 and t4.charge_left == -1) or (t4.charm == -1 and t4.charge_left == 1)):
                 h4.Fill(t4.m_rm_pipi)
     for ientry5 in xrange(t5.GetEntries()):
         t5.GetEntry(ientry5)
@@ -67,7 +67,7 @@ def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, MODE, chi2_cut):
             if t5.m_m_pipi > 0.28 and t5.m_rm_Dpipi > 1.857 and t5.m_rm_Dpipi < 1.882:
                 h5.Fill(t5.m_rm_pipi)
         if MODE == 'cut':
-            if t5.m_m_pipi > 0.28 and t5.m_chi2_kf < chi2_cut and t5.m_rm_Dpipi > 1.857 and t5.m_rm_Dpipi < 1.882:
+            if t5.m_m_pipi > 0.28 and t5.m_chi2_kf < chi2_cut and t5.m_rm_Dpipi > 1.857 and t5.m_rm_Dpipi < 1.882 and ((t5.charm == 1 and t5.charge_left == -1) or (t5.charm == -1 and t5.charge_left == 1)):
                 h5.Fill(t5.m_rm_pipi)
 
 def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle):

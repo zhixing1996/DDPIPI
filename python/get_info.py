@@ -225,7 +225,7 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
             m_pipi = (pPip+pPim).M()
             chi2_kf = t_in.chi2_kf
             rm_Dpipi = (cms-pD-pPip-pPim).M()
-            if m_pipi > 0.28 and chi2_kf < chi2_kf_cut and rm_Dpipi > 1.857 and rm_Dpipi < 1.882 and math.fabs(t_in.charge_left) == 1:
+            if m_pipi > 0.28 and chi2_kf < chi2_kf_cut and rm_Dpipi > 1.857 and rm_Dpipi < 1.882 and ((t_in.charm == 1 and t_in.charge_left == -1) or (t_in.charm == -1 and t_in.charge_left == 1)):
                 m_runNo[0] = t_in.runNo
                 m_evtNo[0] = t_in.evtNo
                 m_charge_left[0] = t_in.charge_left
