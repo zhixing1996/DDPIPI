@@ -562,9 +562,9 @@ case $option in
             ./subAna.sh incMC_inclusive_hadrons_4420
             ;;
 
-    # ------------------------------------------
-    #  0.12 run on inclusive MC (DDbar) @4600MeV
-    # ------------------------------------------
+    # ----------------------------------
+    #  0.12 run on inclusive MC @4600MeV
+    # ----------------------------------
 
     0.12) echo "inclusive MC @4600MeV..."
           echo "--> E_{CMS}: 4599.530MeV"
