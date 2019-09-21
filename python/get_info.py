@@ -7,8 +7,8 @@ __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
 __copyright__ = "Copyright (c) Maoqiang JING"
 __created__ = "[2019-09-03 Tue 05:41]"
 
+import math
 from array import array
-# import numpy as np
 import ROOT
 from ROOT import TCanvas, gStyle, TLorentzVector, TTree
 from ROOT import TFile, TH1F, TLegend, TArrow, TChain
@@ -47,6 +47,7 @@ def save_missing(f_in, cms, t, MODE):
         m_rm_Dpipi = array('d', [999.])
         m_chi2_vf = array('d', [999.])
         m_chi2_kf = array('d', [999.])
+        m_charge_left = array('i', [0])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
         t.Branch('mode', m_mode, 'm_mode/I')
@@ -61,6 +62,7 @@ def save_missing(f_in, cms, t, MODE):
         t.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
         t.Branch('chi2_vf', m_chi2_vf, 'm_chi2_vf/D')
         t.Branch('chi2_kf', m_chi2_kf, 'm_chi2_kf/D')
+        t.Branch('charge_left', m_charge_left, 'm_charge_left/I')
     if MODE == 'signal':
         t_in = f_in.Get('STD_signal')
     if MODE == 'sidebandlow':
@@ -103,6 +105,7 @@ def save_missing(f_in, cms, t, MODE):
             m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
             m_chi2_vf[0] = t_in.chi2_vf
             m_chi2_kf[0] = t_in.chi2_kf
+            m_charge_left[0] = t_in.charge_left
             t.Fill()
 
 def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
@@ -121,6 +124,7 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
         m_rm_Dpipi = array('d', [999.])
         m_chi2_vf = array('d', [999.])
         m_chi2_kf = array('d', [999.])
+        m_charge_left = array('i', [0])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
         t.Branch('mode', m_mode, 'm_mode/I')
@@ -135,6 +139,7 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
         t.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
         t.Branch('chi2_vf', m_chi2_vf, 'm_chi2_vf/D')
         t.Branch('chi2_kf', m_chi2_kf, 'm_chi2_kf/D')
+        t.Branch('charge_left', m_mode, 'm_charge_left/I')
         t_std = f_in.Get('STD')
         t_otherTrk = f_in.Get('otherTrk')
         nentries = t_std.GetEntries()
@@ -183,15 +188,18 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
                     m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
                     m_chi2_vf[0] = t_std.chi2_vf
                     m_chi2_kf[0] = t_std.chi2_kf
+                    m_charge_left[0] = t_std.charge_left
                     t.Fill()
     if MODE == 'truth':
         m_runNo = array('i', [0])
         m_evtNo = array('i', [0])
+        m_charge_left = array('i', [0])
         m_indexmc = array('i', [0])
         m_motheridx = array('i', 100*[0])
         m_pdgid = array('i', 100*[0])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
+        t.Branch('charge_left', m_charge_left, 'm_charge_left/I')
         t.Branch('indexmc', m_indexmc, 'indexmc/I')
         t.Branch('motheridx', m_motheridx, 'motheridx[100]/I')
         t.Branch('pdgid', m_pdgid, 'pdgid[100]/I')
@@ -217,9 +225,10 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
             m_pipi = (pPip+pPim).M()
             chi2_kf = t_in.chi2_kf
             rm_Dpipi = (cms-pD-pPip-pPim).M()
-            if m_pipi > 0.28 and chi2_kf < chi2_kf_cut and rm_Dpipi > 1.857 and rm_Dpipi < 1.882:
+            if m_pipi > 0.28 and chi2_kf < chi2_kf_cut and rm_Dpipi > 1.857 and rm_Dpipi < 1.882 and math.fabs(t_in.charge_left) == 1:
                 m_runNo[0] = t_in.runNo
                 m_evtNo[0] = t_in.evtNo
+                m_charge_left[0] = t_in.charge_left
                 m_indexmc[0] = t_in.indexmc
                 for i in range(t_in.indexmc):
                     m_motheridx[i] = t_in.motheridx[i]

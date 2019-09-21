@@ -207,6 +207,7 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple8->addItem("indexmc", m_idxmc_signal, 0, 100);
             status = m_tuple8->addIndexedItem("pdgid", m_idxmc_signal, m_pdgid_signal);
             status = m_tuple8->addIndexedItem("motheridx", m_idxmc_signal, m_motheridx_signal);
+            status = m_tuple8->addItem("charge_left", m_charge_left_signal);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple8) << endmsg;
@@ -237,6 +238,7 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple9->addItem("indexmc", m_idxmc_sidebandlow, 0, 100);
             status = m_tuple9->addIndexedItem("pdgid", m_idxmc_sidebandlow, m_pdgid_sidebandlow);
             status = m_tuple9->addIndexedItem("motheridx", m_idxmc_sidebandlow, m_motheridx_sidebandlow);
+            status = m_tuple9->addItem("charge_left", m_charge_left_sidebandlow);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple9) << endmsg;
@@ -267,6 +269,7 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple10->addItem("indexmc", m_idxmc_sidebandup, 0, 100);
             status = m_tuple10->addIndexedItem("pdgid", m_idxmc_sidebandup, m_pdgid_sidebandup);
             status = m_tuple10->addIndexedItem("motheridx", m_idxmc_sidebandup, m_motheridx_sidebandup);
+            status = m_tuple10->addItem("charge_left", m_charge_left_sidebandup);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple10) << endmsg;
@@ -1116,6 +1119,11 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
                     for (int l = 0; l < 4; l++) m_rawp4_Dshw_signal[k][l] = Gm_p4[l];
                 }
+                charge_left_signal = 0;
+                m_charge_left_signal = 0;
+                for (int k = 0; k < othertracks.size(); k++) {
+                    if (k != i && k != j) charge_left_signal += m_rawp4_otherMdcKaltrk[k][4];
+                }
                 recordVariables_signal();
             }
             if (fabs(chi2_kf_sidebandlow) < 999) {
@@ -1140,6 +1148,11 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
                     for (int l = 0; l < 4; l++) m_rawp4_Dshw_sidebandlow[k][l] = Gm_p4[l];
                 }
+                charge_left_sidebandlow = 0;
+                m_charge_left_sidebandlow = 0;
+                for (int k = 0; k < othertracks.size(); k++) {
+                    if (k != i && k != j) charge_left_sidebandlow += m_rawp4_otherMdcKaltrk[k][4];
+                }
                 recordVariables_sidebandlow();
             }
             if (fabs(chi2_kf_sidebandup) < 999) {
@@ -1163,6 +1176,11 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     Gm_Mom.setMag(gTrk->energy());
                     HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
                     for (int l = 0; l < 4; l++) m_rawp4_Dshw_sidebandup[k][l] = Gm_p4[l];
+                }
+                charge_left_sidebandup = 0;
+                m_charge_left_sidebandup = 0;
+                for (int k = 0; k < othertracks.size(); k++) {
+                    if (k != i && k != j) charge_left_sidebandup += m_rawp4_otherMdcKaltrk[k][4];
                 }
                 recordVariables_sidebandup();
             }
@@ -1289,6 +1307,7 @@ void DDecayAlg::recordVariables_signal() {
     m_charm_signal = charm;
     m_chi2_vf_signal = chi2_vf;
     m_chi2_kf_signal = chi2_kf_signal;
+    m_charge_left_signal = charge_left_signal;
 
     // save all McTruth info for fitKM_signal
     if (m_runNo_signal < 0 && m_isMonteCarlo) {
@@ -1316,6 +1335,7 @@ void DDecayAlg::recordVariables_sidebandlow() {
     m_charm_sidebandlow = charm;
     m_chi2_vf_sidebandlow = chi2_vf;
     m_chi2_kf_sidebandlow = chi2_kf_sidebandlow;
+    m_charge_left_sidebandlow = charge_left_sidebandlow;
 
     // save all McTruth info for fitKM_sidebandlow
     if (m_runNo_sidebandlow < 0 && m_isMonteCarlo) {
@@ -1343,6 +1363,7 @@ void DDecayAlg::recordVariables_sidebandup() {
     m_charm_sidebandup = charm;
     m_chi2_vf_sidebandup = chi2_vf;
     m_chi2_kf_sidebandup = chi2_kf_sidebandup;
+    m_charge_left_sidebandup = charge_left_sidebandup;
 
     // save all McTruth info for fitKM_sidebandup
     if (m_runNo_sidebandup < 0 && m_isMonteCarlo) {

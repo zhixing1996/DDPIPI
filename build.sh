@@ -9,8 +9,9 @@ usage() {
     printf "NAME\n\tbuild.sh - Main driver to build programs\n"
     printf "\nSYNOPSIS\n"
     printf "\n\t%5-5s\n" "./build.sh [OPTION]"
-    printf "\n\t%-5s  %-40s\n" "1" "Build DDecay analyzer: DDecayAlg-00-00-01"
-    printf "\n\t%-5s  %-40s\n" "2" "Build DDecay analyzer: DDecayAlg-00-00-02"
+    printf "\n\t%-5s  %-40s\n" "1" "Build DDecay analyzer: DDecayAlg-00-00-01: Repeat Yi Zheng's work"
+    printf "\n\t%-5s  %-40s\n" "2" "Build DDecay analyzer: DDecayAlg-00-00-02: Add missing D track"
+    printf "\n\t%-5s  %-40s\n" "3" "Build DDecay analyzer: DDecayAlg-00-00-02: Background study"
     printf "\n\n"
 }
 
@@ -32,4 +33,10 @@ case $option in
        cd Analysis/Physics/DDecayAlg/DDecayAlg-00-00-02/cmt
        gmake
        ;;
+
+    3) echo "Building DDecay analyzer: DDecayAlg-00-00-03..."
+       cd Analysis/Physics/DDecayAlg/DDecayAlg-00-00-03/cmt
+       gmake
+       ;;
+
 esac
