@@ -56,7 +56,7 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple1->addItem("evtNo", m_evtNo);
             status = m_tuple1->addItem("flag1", m_flag1);
             status = m_tuple1->addItem("n_trkD", m_n_trkD, 0, 5); // number of members should locates in 0~5
-            status = m_tuple1->addIndexedItem("rawp4_Dtrk", m_n_trkD, 6, m_rawp4_Dtrk); // four members array
+            status = m_tuple1->addIndexedItem("rawp4_Dtrk", m_n_trkD, 4, m_rawp4_Dtrk); // four members array
             status = m_tuple1->addIndexedItem("p4_Dtrk", m_n_trkD, 4, m_p4_Dtrk);
             status = m_tuple1->addItem("n_shwD", m_n_shwD, 0, 2); 
             status = m_tuple1->addIndexedItem("rawp4_Dshw", m_n_shwD, 4, m_rawp4_Dshw);
