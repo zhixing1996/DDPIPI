@@ -208,6 +208,13 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple8->addIndexedItem("pdgid", m_idxmc_signal, m_pdgid_signal);
             status = m_tuple8->addIndexedItem("motheridx", m_idxmc_signal, m_motheridx_signal);
             status = m_tuple8->addItem("charge_left", m_charge_left_signal);
+            status = m_tuple8->addItem("n_othertrks", m_n_othertrks_signal, 0, 20);
+            status = m_tuple8->addIndexedItem("rawp4_otherMdctrk", m_n_othertrks_signal, 6, m_rawp4_otherMdctrk_signal);
+            status = m_tuple8->addIndexedItem("rawp4_otherMdcKaltrk", m_n_othertrks_signal, 6, m_rawp4_otherMdcKaltrk_signal);
+            status = m_tuple8->addItem("rawp4_tagPiplus", 4, m_rawp4_tagPiplus_signal);
+            status = m_tuple8->addItem("rawp4_tagPiminus", 4, m_rawp4_tagPiminus_signal);
+            status = m_tuple8->addItem("n_othershws", m_n_othershws_signal, 0, 50);
+            status = m_tuple8->addIndexedItem("rawp4_othershw", m_n_othershws_signal, 4, m_rawp4_othershw_signal);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple8) << endmsg;
@@ -239,6 +246,13 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple9->addIndexedItem("pdgid", m_idxmc_sidebandlow, m_pdgid_sidebandlow);
             status = m_tuple9->addIndexedItem("motheridx", m_idxmc_sidebandlow, m_motheridx_sidebandlow);
             status = m_tuple9->addItem("charge_left", m_charge_left_sidebandlow);
+            status = m_tuple9->addItem("n_othertrks", m_n_othertrks_sidebandlow, 0, 20);
+            status = m_tuple9->addIndexedItem("rawp4_otherMdctrk", m_n_othertrks_sidebandlow, 6, m_rawp4_otherMdctrk_sidebandlow);
+            status = m_tuple9->addIndexedItem("rawp4_otherMdcKaltrk", m_n_othertrks_sidebandlow, 6, m_rawp4_otherMdcKaltrk_sidebandlow);
+            status = m_tuple9->addItem("rawp4_tagPiplus", 4, m_rawp4_tagPiplus_sidebandlow);
+            status = m_tuple9->addItem("rawp4_tagPiminus", 4, m_rawp4_tagPiminus_sidebandlow);
+            status = m_tuple9->addItem("n_othershws", m_n_othershws_sidebandlow, 0, 50);
+            status = m_tuple9->addIndexedItem("rawp4_othershw", m_n_othershws_sidebandlow, 4, m_rawp4_othershw_sidebandlow);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple9) << endmsg;
@@ -270,6 +284,13 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple10->addIndexedItem("pdgid", m_idxmc_sidebandup, m_pdgid_sidebandup);
             status = m_tuple10->addIndexedItem("motheridx", m_idxmc_sidebandup, m_motheridx_sidebandup);
             status = m_tuple10->addItem("charge_left", m_charge_left_sidebandup);
+            status = m_tuple10->addItem("n_othertrks", m_n_othertrks_sidebandup, 0, 20);
+            status = m_tuple10->addIndexedItem("rawp4_otherMdctrk", m_n_othertrks_sidebandup, 6, m_rawp4_otherMdctrk_sidebandup);
+            status = m_tuple10->addIndexedItem("rawp4_otherMdcKaltrk", m_n_othertrks_sidebandup, 6, m_rawp4_otherMdcKaltrk_sidebandup);
+            status = m_tuple10->addItem("rawp4_tagPiplus", 4, m_rawp4_tagPiplus_sidebandup);
+            status = m_tuple10->addItem("rawp4_tagPiminus", 4, m_rawp4_tagPiminus_sidebandup);
+            status = m_tuple10->addItem("n_othershws", m_n_othershws_sidebandup, 0, 50);
+            status = m_tuple10->addIndexedItem("rawp4_othershw", m_n_othershws_sidebandup, 4, m_rawp4_othershw_sidebandup);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple10) << endmsg;
@@ -1049,7 +1070,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
     if (m_debug) std::cout << " other track number : " << othertracks.size() << " for mode " << mode << std::endl;
     DTagTool dtagTool;
     m_n_othertrks = 0;
-    // to find the good pions
+    // to find the good pions and kaons
     for (int i = 0; i < othertracks.size(); i++) {
         if (!(dtagTool.isGoodTrack(othertracks[i]))) continue;
         if (dtagTool.isPion(othertracks[i])) {
@@ -1067,9 +1088,15 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
             m_rawp4_otherMdcKaltrk[m_n_othertrks][5] = 2;
         }
         if (dtagTool.isKaon(othertracks[i])) {
+            RecMdcTrack *mdcTrk = othertracks[i]->mdcTrack();
             RecMdcKalTrack *mdcKalTrk = othertracks[i]->mdcKalTrack();
             mdcKalTrk->setPidType(RecMdcKalTrack::kaon);
-            for (int j = 0; j < 4; j++) m_rawp4_otherMdcKaltrk[m_n_othertrks][j] = mdcKalTrk->p4(mass[3])[j];
+            for (int j = 0; j < 4; j++) {
+                m_rawp4_otherMdctrk[m_n_othertrks][j] = mdcTrk->p4(mass[2])[j];
+                m_rawp4_otherMdcKaltrk[m_n_othertrks][j] = mdcKalTrk->p4(mass[3])[j];
+            }
+            m_rawp4_otherMdctrk[m_n_othertrks][4] = mdcTrk->chi2();
+            m_rawp4_otherMdctrk[m_n_othertrks][5] = mdcTrk->stat(); // stat: status
             m_rawp4_otherMdcKaltrk[m_n_othertrks][4] = mdcKalTrk->charge();
             m_rawp4_otherMdcKaltrk[m_n_othertrks][5] = 3;
         }
@@ -1124,6 +1151,59 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 for (int k = 0; k < othertracks.size(); k++) {
                     if (k != i && k != j) charge_left_signal += m_rawp4_otherMdcKaltrk[k][4];
                 }
+                // to find the good pions and kaons
+                m_n_othertrks_signal = 0;
+                for (int k = 0; k < othertracks.size(); k++) {
+                    if (k != i && k != j) {
+                        if (!(dtagTool.isGoodTrack(othertracks[k]))) continue;
+                        if (dtagTool.isPion(othertracks[k])) {
+                            RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
+                            RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
+                            mdcKalTrk->setPidType(RecMdcKalTrack::pion);
+                            for (int m = 0; m < 4; m++) {
+                                m_rawp4_otherMdctrk_signal[m_n_othertrks_signal][m] = mdcTrk->p4(mass[2])[m];
+                                m_rawp4_otherMdcKaltrk_signal[m_n_othertrks_signal][m] = mdcKalTrk->p4(mass[2])[m];
+                            }
+                            m_rawp4_otherMdctrk_signal[m_n_othertrks_signal][4] = mdcTrk->chi2();
+                            m_rawp4_otherMdctrk_signal[m_n_othertrks_signal][5] = mdcTrk->stat(); // stat: status
+                            m_rawp4_otherMdcKaltrk_signal[m_n_othertrks_signal][4] = mdcKalTrk->charge();
+                            m_rawp4_otherMdcKaltrk_signal[m_n_othertrks_signal][5] = 2;
+                        }
+                        if (dtagTool.isKaon(othertracks[k])) {
+                            RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
+                            RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
+                            mdcKalTrk->setPidType(RecMdcKalTrack::kaon);
+                            for (int m = 0; m < 4; m++) {
+                                m_rawp4_otherMdctrk_signal[m_n_othertrks_signal][m] = mdcTrk->p4(mass[2])[m];
+                                m_rawp4_otherMdcKaltrk_signal[m_n_othertrks_signal][m] = mdcKalTrk->p4(mass[3])[m];
+                            }
+                            m_rawp4_otherMdctrk_signal[m_n_othertrks_signal][4] = mdcTrk->chi2();
+                            m_rawp4_otherMdctrk_signal[m_n_othertrks_signal][5] = mdcTrk->stat(); // stat: status
+                            m_rawp4_otherMdcKaltrk_signal[m_n_othertrks_signal][4] = mdcKalTrk->charge();
+                            m_rawp4_otherMdcKaltrk_signal[m_n_othertrks_signal][5] = 3;
+                        }
+                        m_n_othertrks_signal++;
+                        if (m_n_othertrks_signal >= 20) continue;
+                    }
+                }
+                RecMdcKalTrack *Piplus = othertracks[i]->mdcKalTrack();
+                for (int k = 0; k < 4; k++) m_rawp4_tagPiplus_signal[k] = Piplus->p4(mass[2])[k];
+                RecMdcKalTrack *Piminus = othertracks[j]->mdcKalTrack();
+                for (int k = 0; k < 4; k++) m_rawp4_tagPiminus_signal[k] = Piminus->p4(mass[2])[k];
+                SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
+                // to find the good photons in the othershowers list
+                m_n_othershws_signal = 0;
+                for (int k = 0; k < othershowers.size(); k++) {
+                    if (!(dtagTool.isGoodShower(othershowers[k]))) continue;
+                    RecEmcShower *gTrk = othershowers[k]->emcShower();
+                    Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
+                    Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
+                    Gm_Mom.setMag(gTrk->energy());
+                    HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
+                    for (int m = 0; m < 4; m++) m_rawp4_othershw_signal[m_n_othershws_signal][m] = Gm_p4[m];
+                    m_n_othershws_signal++;
+                    if (m_n_othershws_signal >= 50) continue;
+                }
                 recordVariables_signal();
             }
             if (fabs(chi2_kf_sidebandlow) < 999) {
@@ -1153,6 +1233,59 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 for (int k = 0; k < othertracks.size(); k++) {
                     if (k != i && k != j) charge_left_sidebandlow += m_rawp4_otherMdcKaltrk[k][4];
                 }
+                // to find the good pions and kaons
+                m_n_othertrks_sidebandlow = 0;
+                for (int k = 0; k < othertracks.size(); k++) {
+                    if (k != i && k != j) {
+                        if (!(dtagTool.isGoodTrack(othertracks[k]))) continue;
+                        if (dtagTool.isPion(othertracks[k])) {
+                            RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
+                            RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
+                            mdcKalTrk->setPidType(RecMdcKalTrack::pion);
+                            for (int m = 0; m < 4; m++) {
+                                m_rawp4_otherMdctrk_sidebandlow[m_n_othertrks_sidebandlow][m] = mdcTrk->p4(mass[2])[m];
+                                m_rawp4_otherMdcKaltrk_sidebandlow[m_n_othertrks_sidebandlow][m] = mdcKalTrk->p4(mass[2])[m];
+                            }
+                            m_rawp4_otherMdctrk_sidebandlow[m_n_othertrks_sidebandlow][4] = mdcTrk->chi2();
+                            m_rawp4_otherMdctrk_sidebandlow[m_n_othertrks_sidebandlow][5] = mdcTrk->stat(); // stat: status
+                            m_rawp4_otherMdcKaltrk_sidebandlow[m_n_othertrks_sidebandlow][4] = mdcKalTrk->charge();
+                            m_rawp4_otherMdcKaltrk_sidebandlow[m_n_othertrks_sidebandlow][5] = 2;
+                        }
+                        if (dtagTool.isKaon(othertracks[k])) {
+                            RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
+                            RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
+                            mdcKalTrk->setPidType(RecMdcKalTrack::kaon);
+                            for (int m = 0; m < 4; m++) {
+                                m_rawp4_otherMdctrk_sidebandlow[m_n_othertrks_sidebandlow][m] = mdcTrk->p4(mass[2])[m];
+                                m_rawp4_otherMdcKaltrk_sidebandlow[m_n_othertrks_sidebandlow][m] = mdcKalTrk->p4(mass[3])[m];
+                            }
+                            m_rawp4_otherMdctrk_sidebandlow[m_n_othertrks_sidebandlow][4] = mdcTrk->chi2();
+                            m_rawp4_otherMdctrk_sidebandlow[m_n_othertrks_sidebandlow][5] = mdcTrk->stat(); // stat: status
+                            m_rawp4_otherMdcKaltrk_sidebandlow[m_n_othertrks_sidebandlow][4] = mdcKalTrk->charge();
+                            m_rawp4_otherMdcKaltrk_sidebandlow[m_n_othertrks_sidebandlow][5] = 3;
+                        }
+                        m_n_othertrks_sidebandlow++;
+                        if (m_n_othertrks_sidebandlow >= 20) continue;
+                    }
+                }
+                RecMdcKalTrack *Piplus = othertracks[i]->mdcKalTrack();
+                for (int k = 0; k < 4; k++) m_rawp4_tagPiplus_sidebandlow[k] = Piplus->p4(mass[2])[k];
+                RecMdcKalTrack *Piminus = othertracks[j]->mdcKalTrack();
+                for (int k = 0; k < 4; k++) m_rawp4_tagPiminus_sidebandlow[k] = Piminus->p4(mass[2])[k];
+                SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
+                // to find the good photons in the othershowers list
+                m_n_othershws_sidebandlow = 0;
+                for (int k = 0; k < othershowers.size(); k++) {
+                    if (!(dtagTool.isGoodShower(othershowers[k]))) continue;
+                    RecEmcShower *gTrk = othershowers[k]->emcShower();
+                    Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
+                    Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
+                    Gm_Mom.setMag(gTrk->energy());
+                    HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
+                    for (int m = 0; m < 4; m++) m_rawp4_othershw_sidebandlow[m_n_othershws_sidebandlow][m] = Gm_p4[m];
+                    m_n_othershws_sidebandlow++;
+                    if (m_n_othershws_sidebandlow >= 50) continue;
+                }
                 recordVariables_sidebandlow();
             }
             if (fabs(chi2_kf_sidebandup) < 999) {
@@ -1181,6 +1314,59 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 m_charge_left_sidebandup = 0;
                 for (int k = 0; k < othertracks.size(); k++) {
                     if (k != i && k != j) charge_left_sidebandup += m_rawp4_otherMdcKaltrk[k][4];
+                }
+                // to find the good pions and kaons
+                m_n_othertrks_sidebandup = 0;
+                for (int k = 0; k < othertracks.size(); k++) {
+                    if (k != i && k != j) {
+                        if (!(dtagTool.isGoodTrack(othertracks[k]))) continue;
+                        if (dtagTool.isPion(othertracks[k])) {
+                            RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
+                            RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
+                            mdcKalTrk->setPidType(RecMdcKalTrack::pion);
+                            for (int m = 0; m < 4; m++) {
+                                m_rawp4_otherMdctrk_sidebandup[m_n_othertrks_sidebandup][m] = mdcTrk->p4(mass[2])[m];
+                                m_rawp4_otherMdcKaltrk_sidebandup[m_n_othertrks_sidebandup][m] = mdcKalTrk->p4(mass[2])[m];
+                            }
+                            m_rawp4_otherMdctrk_sidebandup[m_n_othertrks_sidebandup][4] = mdcTrk->chi2();
+                            m_rawp4_otherMdctrk_sidebandup[m_n_othertrks_sidebandup][5] = mdcTrk->stat(); // stat: status
+                            m_rawp4_otherMdcKaltrk_sidebandup[m_n_othertrks_sidebandup][4] = mdcKalTrk->charge();
+                            m_rawp4_otherMdcKaltrk_sidebandup[m_n_othertrks_sidebandup][5] = 2;
+                        }
+                        if (dtagTool.isKaon(othertracks[k])) {
+                            RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
+                            RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
+                            mdcKalTrk->setPidType(RecMdcKalTrack::kaon);
+                            for (int m = 0; m < 4; m++) {
+                                m_rawp4_otherMdctrk_sidebandup[m_n_othertrks_sidebandup][m] = mdcTrk->p4(mass[2])[m];
+                                m_rawp4_otherMdcKaltrk_sidebandup[m_n_othertrks_sidebandup][m] = mdcKalTrk->p4(mass[3])[m];
+                            }
+                            m_rawp4_otherMdctrk_sidebandup[m_n_othertrks_sidebandup][4] = mdcTrk->chi2();
+                            m_rawp4_otherMdctrk_sidebandup[m_n_othertrks_sidebandup][5] = mdcTrk->stat(); // stat: status
+                            m_rawp4_otherMdcKaltrk_sidebandup[m_n_othertrks_sidebandup][4] = mdcKalTrk->charge();
+                            m_rawp4_otherMdcKaltrk_sidebandup[m_n_othertrks_sidebandup][5] = 3;
+                        }
+                        m_n_othertrks_sidebandup++;
+                        if (m_n_othertrks_sidebandup >= 20) continue;
+                    }
+                }
+                RecMdcKalTrack *Piplus = othertracks[i]->mdcKalTrack();
+                for (int k = 0; k < 4; k++) m_rawp4_tagPiplus_sidebandup[k] = Piplus->p4(mass[2])[k];
+                RecMdcKalTrack *Piminus = othertracks[j]->mdcKalTrack();
+                for (int k = 0; k < 4; k++) m_rawp4_tagPiminus_sidebandup[k] = Piminus->p4(mass[2])[k];
+                SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
+                // to find the good photons in the othershowers list
+                m_n_othershws_sidebandup = 0;
+                for (int k = 0; k < othershowers.size(); k++) {
+                    if (!(dtagTool.isGoodShower(othershowers[k]))) continue;
+                    RecEmcShower *gTrk = othershowers[k]->emcShower();
+                    Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
+                    Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
+                    Gm_Mom.setMag(gTrk->energy());
+                    HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
+                    for (int m = 0; m < 4; m++) m_rawp4_othershw_sidebandup[m_n_othershws_sidebandup][m] = Gm_p4[m];
+                    m_n_othershws_sidebandup++;
+                    if (m_n_othershws_sidebandup >= 50) continue;
                 }
                 recordVariables_sidebandup();
             }

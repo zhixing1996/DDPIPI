@@ -108,7 +108,7 @@ def save_missing(f_in, cms, t, MODE):
             m_charge_left[0] = t_in.charge_left
             t.Fill()
 
-def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
+def save_raw(f_in, cms, t, MODE):
     if MODE == 'raw':
         m_runNo = array('i', [0])
         m_evtNo = array('i', [0])
@@ -124,7 +124,6 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
         m_rm_Dpipi = array('d', [999.])
         m_chi2_vf = array('d', [999.])
         m_chi2_kf = array('d', [999.])
-        m_charge_left = array('i', [0])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
         t.Branch('mode', m_mode, 'm_mode/I')
@@ -139,7 +138,6 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
         t.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
         t.Branch('chi2_vf', m_chi2_vf, 'm_chi2_vf/D')
         t.Branch('chi2_kf', m_chi2_kf, 'm_chi2_kf/D')
-        t.Branch('charge_left', m_mode, 'm_charge_left/I')
         t_std = f_in.Get('STD')
         t_otherTrk = f_in.Get('otherTrk')
         nentries = t_std.GetEntries()
@@ -188,8 +186,9 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
                     m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
                     m_chi2_vf[0] = t_std.chi2_vf
                     m_chi2_kf[0] = t_std.chi2_kf
-                    m_charge_left[0] = t_std.charge_left
                     t.Fill()
+
+def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
     if MODE == 'truth':
         m_runNo = array('i', [0])
         m_evtNo = array('i', [0])
@@ -204,6 +203,7 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
         t.Branch('motheridx', m_motheridx, 'motheridx[100]/I')
         t.Branch('pdgid', m_pdgid, 'pdgid[100]/I')
         t_in = f_in.Get('STD_signal')
+        t_shw = f_in.Get('otherShw')
         nentries = t_in.GetEntries()
         for ientry in range(nentries):
             t_in.GetEntry(ientry)
@@ -225,7 +225,7 @@ def save_raw(f_in, cms, t, MODE, chi2_kf_cut):
             m_pipi = (pPip+pPim).M()
             chi2_kf = t_in.chi2_kf
             rm_Dpipi = (cms-pD-pPip-pPim).M()
-            if m_pipi > 0.28 and chi2_kf < chi2_kf_cut and rm_Dpipi > 1.857 and rm_Dpipi < 1.882 and ((t_in.charm == 1 and t_in.charge_left == -1) or (t_in.charm == -1 and t_in.charge_left == 1)):
+            if m_pipi > 0.28 and chi2_kf < chi2_kf_cut and rm_Dpipi > 1.857 and rm_Dpipi < 1.882:
                 m_runNo[0] = t_in.runNo
                 m_evtNo[0] = t_in.evtNo
                 m_charge_left[0] = t_in.charge_left
@@ -252,13 +252,15 @@ def main():
     cms = TLorentzVector(0.011*ecms, 0, 0, ecms)
     chi2_kf_cut = 999
     if ecms == 4.358:
-        chi2_kf_cut = 46
+        chi2_kf_cut = 45
     if ecms == 4.415:
-        chi2_kf_cut = 42
+        chi2_kf_cut = 46
     if ecms == 4.600:
         chi2_kf_cut = 25
-    if MODE == 'raw' or MODE == 'truth':
-        save_raw(f_in, cms, t_out, MODE, chi2_kf_cut)
+    if MODE == 'raw':
+        save_raw(f_in, cms, t_out, MODE)
+    if MODE == 'truth':
+        save_truth(f_in, cms, t_out, MODE, chi2_kf_cut)
     if MODE == 'signal' or MODE == 'sidebandlow' or MODE == 'sidebandup':
         save_missing(f_in, cms, t_out, MODE)
 

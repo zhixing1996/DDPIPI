@@ -221,6 +221,13 @@ class DDecayAlg : public Algorithm {
         NTuple::Array<int> m_pdgid_signal;
         NTuple::Array<int> m_motheridx_signal;
         NTuple::Item<int> m_charge_left_signal;
+        NTuple::Item<int> m_n_othertrks_signal;
+        NTuple::Matrix<double> m_rawp4_otherMdctrk_signal;
+        NTuple::Matrix<double> m_rawp4_otherMdcKaltrk_signal;
+        NTuple::Array<double> m_rawp4_tagPiplus_signal;
+        NTuple::Array<double> m_rawp4_tagPiminus_signal;
+        NTuple::Item<int> m_n_othershws_signal;
+        NTuple::Matrix<double> m_rawp4_othershw_signal;
 
         // Ntuple9 info
         NTuple::Tuple* m_tuple9;
@@ -243,6 +250,13 @@ class DDecayAlg : public Algorithm {
         NTuple::Array<int> m_pdgid_sidebandlow;
         NTuple::Array<int> m_motheridx_sidebandlow;
         NTuple::Item<int> m_charge_left_sidebandlow;
+        NTuple::Item<int> m_n_othertrks_sidebandlow;
+        NTuple::Matrix<double> m_rawp4_otherMdctrk_sidebandlow;
+        NTuple::Matrix<double> m_rawp4_otherMdcKaltrk_sidebandlow;
+        NTuple::Array<double> m_rawp4_tagPiplus_sidebandlow;
+        NTuple::Array<double> m_rawp4_tagPiminus_sidebandlow;
+        NTuple::Item<int> m_n_othershws_sidebandlow;
+        NTuple::Matrix<double> m_rawp4_othershw_sidebandlow;
 
         // Ntuple10 info
         NTuple::Tuple* m_tuple10;
@@ -265,6 +279,13 @@ class DDecayAlg : public Algorithm {
         NTuple::Array<int> m_pdgid_sidebandup;
         NTuple::Array<int> m_motheridx_sidebandup;
         NTuple::Item<int> m_charge_left_sidebandup;
+        NTuple::Item<int> m_n_othertrks_sidebandup;
+        NTuple::Matrix<double> m_rawp4_otherMdctrk_sidebandup;
+        NTuple::Matrix<double> m_rawp4_otherMdcKaltrk_sidebandup;
+        NTuple::Array<double> m_rawp4_tagPiplus_sidebandup;
+        NTuple::Array<double> m_rawp4_tagPiminus_sidebandup;
+        NTuple::Item<int> m_n_othershws_sidebandup;
+        NTuple::Matrix<double> m_rawp4_othershw_sidebandup;
 
         // functions
         void clearVariables();
