@@ -65,6 +65,15 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.15"   "[run on data @4600MeV]"
     printf "\n\t%-9s  %-40s\n" "0.15.1" "Single D tag -- data sample"
 
+    printf "\n\t%-9s  %-40s\n" "0.16"   "[run on inclusive MC (DDbar) @4360MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.16.1" "Single D tag -- inclusive MC sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.17"   "[run on inclusive MC (DDbar) @4420MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.17.1" "Single D tag -- inclusive MC sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.18"   "[run on inclusive MC (DDbar) @4600MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.18.1" "Single D tag -- inclusive MC sample"
+
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -681,6 +690,94 @@ case $option in
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4600/*root
             ./subAna.sh data
+            ;;
+
+    # ------------------------------------------
+    #  0.16 run on inclusive MC (DDbar) @4360MeV
+    # ------------------------------------------
+
+    0.16) echo "inclusive MC @4360MeV..."
+          echo "--> E_{CMS}: 4358.260MeV"
+          echo "--> Mode: DDbar"
+          echo "--> Energy Spread: 1.97MeV"
+          ;;
+
+    0.16.1) echo "Single D tag -- run on inclusive MC sample..."
+            mkdir -p scripts/incMC/DD/4360
+            cd scripts/incMC/DD/4360
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4360/jobs_inc" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4360/jobs_inc
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4360/jobs_inc ./jobs_inc
+            fi
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile
+            cd jobs_inc
+            rm -rf incMC_inclusive_DD_4360_*txt
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/res/DD incMC inclusive DD DD 4360 50
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
+            rm -rf *boss*
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile/*root
+            echo "/besfs/groups/psip/psipgroup/664p01-MC/4360/res/DD/raw/2.dst is a bad file, please remove it from jobOption!"
+            # ./subAna.sh incMC_inclusive_DD_4360
+            ;;
+
+    # ------------------------------------------
+    #  0.17 run on inclusive MC (DDbar) @4420MeV
+    # ------------------------------------------
+
+    0.17) echo "inclusive MC @4420MeV..."
+          echo "--> E_{CMS}: 4415.580MeV"
+          echo "--> Mode: DDbar"
+          echo "--> Energy Spread: 2.03MeV"
+          ;;
+
+    0.17.1) echo "Single D tag -- run on inclusive MC sample..."
+            mkdir -p scripts/incMC/DD/4420
+            cd scripts/incMC/DD/4420
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4420/jobs_inc" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4420/jobs_inc
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4420/jobs_inc ./jobs_inc
+            fi
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/rootfile
+            cd jobs_inc
+            rm -rf incMC_inclusive_DD_4420_*txt
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/DD incMC inclusive DD DD 4420 50
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
+            rm -rf *boss*
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/rootfile/*root
+            ./subAna.sh incMC_inclusive_DD_4420
+            ;;
+
+    # ------------------------------------------
+    #  0.18 run on inclusive MC (DDbar) @4600MeV
+    # ------------------------------------------
+
+    0.18) echo "inclusive MC @4600MeV..."
+          echo "--> E_{CMS}: 4599.530MeV"
+          echo "--> Mode: DDbar"
+          echo "--> Energy Spread: 2.20MeV"
+          ;;
+
+    0.18.1) echo "Single D tag -- run on inclusive MC sample..."
+            mkdir -p scripts/incMC/DD/4600
+            cd scripts/incMC/DD/4600
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4600/jobs_inc" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4600/jobs_inc
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4600/jobs_inc ./jobs_inc
+            fi
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/rootfile
+            cd jobs_inc
+            rm -rf incMC_inclusive_DD_4600_*txt
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/DD incMC inclusive DD DD 4600 50
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
+            rm -rf *boss*
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/rootfile/*root
+            ./subAna.sh incMC_inclusive_DD_4600
             ;;
 
 esac

@@ -11,3 +11,13 @@ python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/rootf
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/*topo*.root
 python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/rootfile/incMC_hadrons_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_topo.root 4.600 truth
+# inclusive MC: DD
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/*topo*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile/incMC_DD_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_topo.root 4.358 truth
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/*topo*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/rootfile/incMC_DD_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_topo.root 4.415 truth
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/*topo*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/rootfile/incMC_DD_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_topo.root 4.600 truth
