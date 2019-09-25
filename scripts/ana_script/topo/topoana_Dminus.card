@@ -41,11 +41,14 @@
   e+
   e-
   D+
+  D-
+  D0
+  anti-D0
 }
 
 % Ignore the decay of the daughters of the following particles
 {
-  D- 
+
 }
 
 % Component analysis --- decay trees
@@ -62,6 +65,8 @@
 {
   0 	& 	e+e- --> gammaI pi+ pi- D+ D- 	        & -1 
   1	&	D- --> K+ pi- pi-		&  0 
+  # 0 	& 	e+e- --> gammaI pi+ pi- D+ D- 	        & -1 
+  # 1	&	D+ --> K- pi+ pi+		&  0 
 }
 
 # Four files with the same name but in different (root/txt/tex/pdf) formats will be outputed. The filename extensions are appended automatically by the program as suffixes. Thus, to avoid repetition, any filename extension is not recommended to be used in the name as a suffix.
@@ -73,4 +78,9 @@
 % Sort the topology structures for signal identifications (Two options: Y and N. Default: N)
 {
     Y
+}
+
+% Cut to select entries
+{
+    m_pipi>0.28&&m_rm_Dpipi>1.857&&m_rm_Dpipi<1.882&&m_chi2_kf<cut_chi2_kf
 }

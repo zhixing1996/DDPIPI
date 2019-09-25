@@ -14,6 +14,7 @@ const double PI = 3.1415927;
 const double M_Pi0 = 0.1349766;
 const double M_D0 = 1.86483;
 const double M_Dplus = 1.86965;
+const double M_Dst = 2.01026;
 const double mass[5] = {
     0.000511, 0.105658, 0.139570, 0.493677, 0.938272 // e, mu, pi, K, p
 };
@@ -215,6 +216,11 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple8->addItem("rawp4_tagPiminus", 4, m_rawp4_tagPiminus_signal);
             status = m_tuple8->addItem("n_othershws", m_n_othershws_signal, 0, 50);
             status = m_tuple8->addIndexedItem("rawp4_othershw", m_n_othershws_signal, 4, m_rawp4_othershw_signal);
+            status = m_tuple8->addItem("n_pi0", m_n_pi0_signal, 0, 200);
+            status = m_tuple8->addIndexedItem("chi2_pi0", m_n_pi0_signal, m_chi2_pi0_signal);
+            status = m_tuple8->addIndexedItem("p4_pi0", m_n_pi0_signal, 4, m_p4_pi0_signal);
+            status = m_tuple8->addItem("chi2_pi0_save", m_chi2_pi0_save_signal);
+            status = m_tuple8->addItem("p4_pi0_save", 4, m_p4_pi0_save_signal);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple8) << endmsg;
@@ -253,6 +259,11 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple9->addItem("rawp4_tagPiminus", 4, m_rawp4_tagPiminus_sidebandlow);
             status = m_tuple9->addItem("n_othershws", m_n_othershws_sidebandlow, 0, 50);
             status = m_tuple9->addIndexedItem("rawp4_othershw", m_n_othershws_sidebandlow, 4, m_rawp4_othershw_sidebandlow);
+            status = m_tuple9->addItem("n_pi0", m_n_pi0_sidebandlow, 0, 200);
+            status = m_tuple9->addIndexedItem("chi2_pi0", m_n_pi0_sidebandlow, m_chi2_pi0_sidebandlow);
+            status = m_tuple9->addIndexedItem("p4_pi0", m_n_pi0_sidebandlow, 4, m_p4_pi0_sidebandlow);
+            status = m_tuple9->addItem("chi2_pi0_save", m_chi2_pi0_save_sidebandlow);
+            status = m_tuple9->addItem("p4_pi0_save", 4, m_p4_pi0_save_sidebandlow);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple9) << endmsg;
@@ -291,6 +302,11 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple10->addItem("rawp4_tagPiminus", 4, m_rawp4_tagPiminus_sidebandup);
             status = m_tuple10->addItem("n_othershws", m_n_othershws_sidebandup, 0, 50);
             status = m_tuple10->addIndexedItem("rawp4_othershw", m_n_othershws_sidebandup, 4, m_rawp4_othershw_sidebandup);
+            status = m_tuple10->addItem("n_pi0", m_n_pi0_sidebandup, 0, 200);
+            status = m_tuple10->addIndexedItem("chi2_pi0", m_n_pi0_sidebandup, m_chi2_pi0_sidebandup);
+            status = m_tuple10->addIndexedItem("p4_pi0", m_n_pi0_sidebandup, 4, m_p4_pi0_sidebandup);
+            status = m_tuple10->addItem("chi2_pi0_save", m_chi2_pi0_save_sidebandup);
+            status = m_tuple10->addItem("p4_pi0_save", 4, m_p4_pi0_save_sidebandup);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple10) << endmsg;
@@ -767,7 +783,7 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
             Hep3Vector Gm_Mom = Gm_Vec - birth.vx(); // vx: Vertex, we regard that the track of the gamma before it enters EMC is a line, so to get the info of this line, we can just subtract the vertex info from the EMC hit point
             Gm_Mom.setMag(gTrk->energy());
             HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
-            vwtrkpara_photon.push_back( WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE())); // dE, error of the gamma energy
+            vwtrkpara_photon.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE())); // dE, error of the gamma energy
             for (int k = 0; k < 4; k++) m_rawp4_Dshw[j][k] = Gm_p4[k];
         }
         
@@ -1125,6 +1141,11 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
             chi2_kf_sidebandup = fitKM_sidebandup(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
             if (m_debug) std::cout << "Start recording region info if passed the requirement" << std::endl;
             if (fabs(chi2_kf_signal) < 999) {
+                HepLorentzVector pD;
+                pD.setPx(0.);
+                pD.setPy(0.);
+                pD.setPz(0.);
+                pD.setE(0.);
                 SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
                 for (int k = 0; k < n_trkD; k++) {
                     RecMdcKalTrack* KalTrk = Dtrks[k]->mdcKalTrack();
@@ -1136,6 +1157,12 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                         KalTrk->setPidType(RecMdcKalTrack::pion);
                         for (int l = 0; l < 4; l++) m_rawp4_Dtrk_signal[k][l] = KalTrk->p4(mass[2])[l];
                     }
+                    HepLorentzVector ptrack;
+                    ptrack.setPx(m_rawp4_Dtrk_signal[k][0]);
+                    ptrack.setPy(m_rawp4_Dtrk_signal[k][1]);
+                    ptrack.setPz(m_rawp4_Dtrk_signal[k][2]);
+                    ptrack.setE(m_rawp4_Dtrk_signal[k][3]);
+                    pD += ptrack;
                 }
                 SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
                 for(int k = 0; k < Dshws.size(); k++) {
@@ -1192,6 +1219,8 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 for (int k = 0; k < 4; k++) m_rawp4_tagPiminus_signal[k] = Piminus->p4(mass[2])[k];
                 SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
                 // to find the good photons in the othershowers list
+                VWTrkPara vwtrkpara_photons_signal;
+                vwtrkpara_photons_signal.clear();
                 m_n_othershws_signal = 0;
                 for (int k = 0; k < othershowers.size(); k++) {
                     if (!(dtagTool.isGoodShower(othershowers[k]))) continue;
@@ -1203,10 +1232,17 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     for (int m = 0; m < 4; m++) m_rawp4_othershw_signal[m_n_othershws_signal][m] = Gm_p4[m];
                     m_n_othershws_signal++;
                     if (m_n_othershws_signal >= 50) continue;
+                    vwtrkpara_photons_signal.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE()));
                 }
+                fitpi0_signal(vwtrkpara_photons_signal, birth, pD);
                 recordVariables_signal();
             }
             if (fabs(chi2_kf_sidebandlow) < 999) {
+                HepLorentzVector pD;
+                pD.setPx(0.);
+                pD.setPy(0.);
+                pD.setPz(0.);
+                pD.setE(0.);
                 SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
                 for (int k = 0; k < n_trkD; k++) {
                     RecMdcKalTrack* KalTrk = Dtrks[k]->mdcKalTrack();
@@ -1218,6 +1254,12 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                         KalTrk->setPidType(RecMdcKalTrack::pion);
                         for (int l = 0; l < 4; l++) m_rawp4_Dtrk_sidebandlow[k][l] = KalTrk->p4(mass[2])[l];
                     }
+                    HepLorentzVector ptrack;
+                    ptrack.setPx(m_rawp4_Dtrk_signal[k][0]);
+                    ptrack.setPy(m_rawp4_Dtrk_signal[k][1]);
+                    ptrack.setPz(m_rawp4_Dtrk_signal[k][2]);
+                    ptrack.setE(m_rawp4_Dtrk_signal[k][3]);
+                    pD += ptrack;
                 }
                 SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
                 for(int k = 0; k < Dshws.size(); k++) {
@@ -1274,6 +1316,8 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 for (int k = 0; k < 4; k++) m_rawp4_tagPiminus_sidebandlow[k] = Piminus->p4(mass[2])[k];
                 SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
                 // to find the good photons in the othershowers list
+                VWTrkPara vwtrkpara_photons_sidebandlow;
+                vwtrkpara_photons_sidebandlow.clear();
                 m_n_othershws_sidebandlow = 0;
                 for (int k = 0; k < othershowers.size(); k++) {
                     if (!(dtagTool.isGoodShower(othershowers[k]))) continue;
@@ -1285,10 +1329,17 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     for (int m = 0; m < 4; m++) m_rawp4_othershw_sidebandlow[m_n_othershws_sidebandlow][m] = Gm_p4[m];
                     m_n_othershws_sidebandlow++;
                     if (m_n_othershws_sidebandlow >= 50) continue;
+                    vwtrkpara_photons_sidebandlow.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE()));
                 }
+                fitpi0_sidebandlow(vwtrkpara_photons_sidebandlow, birth, pD);
                 recordVariables_sidebandlow();
             }
             if (fabs(chi2_kf_sidebandup) < 999) {
+                HepLorentzVector pD;
+                pD.setPx(0.);
+                pD.setPy(0.);
+                pD.setPz(0.);
+                pD.setE(0.);
                 SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
                 for (int k = 0; k < n_trkD; k++) {
                     RecMdcKalTrack* KalTrk = Dtrks[k]->mdcKalTrack();
@@ -1300,6 +1351,12 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                         KalTrk->setPidType(RecMdcKalTrack::pion);
                         for (int l = 0; l < 4; l++) m_rawp4_Dtrk_sidebandup[k][l] = KalTrk->p4(mass[2])[l];
                     }
+                    HepLorentzVector ptrack;
+                    ptrack.setPx(m_rawp4_Dtrk_signal[k][0]);
+                    ptrack.setPy(m_rawp4_Dtrk_signal[k][1]);
+                    ptrack.setPz(m_rawp4_Dtrk_signal[k][2]);
+                    ptrack.setE(m_rawp4_Dtrk_signal[k][3]);
+                    pD += ptrack;
                 }
                 SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
                 for(int k = 0; k < Dshws.size(); k++) {
@@ -1356,6 +1413,8 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 for (int k = 0; k < 4; k++) m_rawp4_tagPiminus_sidebandup[k] = Piminus->p4(mass[2])[k];
                 SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
                 // to find the good photons in the othershowers list
+                VWTrkPara vwtrkpara_photons_sidebandup;
+                vwtrkpara_photons_sidebandup.clear();
                 m_n_othershws_sidebandup = 0;
                 for (int k = 0; k < othershowers.size(); k++) {
                     if (!(dtagTool.isGoodShower(othershowers[k]))) continue;
@@ -1367,7 +1426,9 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     for (int m = 0; m < 4; m++) m_rawp4_othershw_sidebandup[m_n_othershws_sidebandup][m] = Gm_p4[m];
                     m_n_othershws_sidebandup++;
                     if (m_n_othershws_sidebandup >= 50) continue;
+                    vwtrkpara_photons_sidebandup.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE()));
                 }
+                fitpi0_sidebandup(vwtrkpara_photons_sidebandup, birth, pD);
                 recordVariables_sidebandup();
             }
         }
@@ -1401,6 +1462,99 @@ bool DDecayAlg::saveOthershws() {
     if (m_debug) std::cout << " recorded " << m_n_othershws << " other good showers " << std::endl;
     if (m_n_othershws >= 50) return false;
     else return true;
+}
+
+void DDecayAlg::fitpi0_signal(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
+    m_n_pi0_signal = 0;
+    for (int i = 0; i < 4; i++) {
+        m_p4_pi0_save_signal[i] = -999.;
+    }
+    m_chi2_pi0_save_signal = -999.;
+    double delta_M = 999.;
+    for (int i = 0; i < vwtrkpara_photons.size() - 1; i++) {
+        for (int j = i + 1; j < vwtrkpara_photons.size(); j++) {
+            kmfit->init();
+            kmfit->AddTrack(0, vwtrkpara_photons[i]);
+            kmfit->AddTrack(1, vwtrkpara_photons[j]);
+            kmfit->AddResonance(0, M_Pi0, 0, 1);
+            bool oksq = kmfit->Fit();
+            if (oksq) {
+                double chi2 = kmfit->chisq();
+                if (chi2 < 200) {
+                    m_chi2_pi0_signal[m_n_pi0_signal] = chi2;
+                    HepLorentzVector ppi0 = kmfit->pfit(0) + kmfit->pfit(1);
+                    for (int k = 0; k < 2; k++) m_p4_pi0_signal[m_n_pi0_signal][k] = ppi0[k];
+                    m_n_pi0_signal++;
+                    if (fabs((ppi0 + pD).m() - M_Dst) < delta_M) {
+                        m_chi2_pi0_save_signal = chi2;
+                        for (int k = 0; k < 4; k++) m_p4_pi0_save_signal[k] = ppi0[k];
+                    }
+                }
+            }
+        }
+    }
+}
+
+void DDecayAlg::fitpi0_sidebandlow(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
+    m_n_pi0_sidebandlow = 0;
+    for (int i = 0; i < 4; i++) {
+        m_p4_pi0_save_sidebandlow[i] = -999.;
+    }
+    m_chi2_pi0_save_sidebandlow = -999.;
+    double delta_M = 999.;
+    for (int i = 0; i < vwtrkpara_photons.size() - 1; i++) {
+        for (int j = i + 1; j < vwtrkpara_photons.size(); j++) {
+            kmfit->init();
+            kmfit->AddTrack(0, vwtrkpara_photons[i]);
+            kmfit->AddTrack(1, vwtrkpara_photons[j]);
+            kmfit->AddResonance(0, M_Pi0, 0, 1);
+            bool oksq = kmfit->Fit();
+            if (oksq) {
+                double chi2 = kmfit->chisq();
+                if (chi2 < 200) {
+                    m_chi2_pi0_sidebandlow[m_n_pi0_sidebandlow] = chi2;
+                    HepLorentzVector ppi0 = kmfit->pfit(0) + kmfit->pfit(1);
+                    for (int k = 0; k < 2; k++) m_p4_pi0_sidebandlow[m_n_pi0_sidebandlow][k] = ppi0[k];
+                    m_n_pi0_sidebandlow++;
+                    if (fabs((ppi0 + pD).m() - M_Dst) < delta_M) {
+                        m_chi2_pi0_save_sidebandlow = chi2;
+                        for (int k = 0; k < 4; k++) m_p4_pi0_save_sidebandlow[k] = ppi0[k];
+                    }
+                }
+            }
+        }
+    }
+}
+
+void DDecayAlg::fitpi0_sidebandup(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
+    m_n_pi0_sidebandup = 0;
+    for (int i = 0; i < 4; i++) {
+        m_p4_pi0_save_sidebandup[i] = -999.;
+    }
+    m_chi2_pi0_save_sidebandup = -999.;
+    double delta_M = 999.;
+    for (int i = 0; i < vwtrkpara_photons.size() - 1; i++) {
+        for (int j = i + 1; j < vwtrkpara_photons.size(); j++) {
+            kmfit->init();
+            kmfit->AddTrack(0, vwtrkpara_photons[i]);
+            kmfit->AddTrack(1, vwtrkpara_photons[j]);
+            kmfit->AddResonance(0, M_Pi0, 0, 1);
+            bool oksq = kmfit->Fit();
+            if (oksq) {
+                double chi2 = kmfit->chisq();
+                if (chi2 < 200) {
+                    m_chi2_pi0_sidebandup[m_n_pi0_sidebandup] = chi2;
+                    HepLorentzVector ppi0 = kmfit->pfit(0) + kmfit->pfit(1);
+                    for (int k = 0; k < 2; k++) m_p4_pi0_sidebandup[m_n_pi0_sidebandup][k] = ppi0[k];
+                    m_n_pi0_sidebandup++;
+                    if (fabs((ppi0 + pD).m() - M_Dst) < delta_M) {
+                        m_chi2_pi0_save_sidebandup = chi2;
+                        for (int k = 0; k < 4; k++) m_p4_pi0_save_sidebandup[k] = ppi0[k];
+                    }
+                }
+            }
+        }
+    }
 }
 
 void DDecayAlg::recordVariables() {

@@ -228,6 +228,11 @@ class DDecayAlg : public Algorithm {
         NTuple::Array<double> m_rawp4_tagPiminus_signal;
         NTuple::Item<int> m_n_othershws_signal;
         NTuple::Matrix<double> m_rawp4_othershw_signal;
+        NTuple::Item<int> m_n_pi0_signal;
+        NTuple::Array<double> m_chi2_pi0_signal;
+        NTuple::Matrix<double> m_p4_pi0_signal;
+        NTuple::Item<double> m_chi2_pi0_save_signal;
+        NTuple::Array<double> m_p4_pi0_save_signal;
 
         // Ntuple9 info
         NTuple::Tuple* m_tuple9;
@@ -257,6 +262,11 @@ class DDecayAlg : public Algorithm {
         NTuple::Array<double> m_rawp4_tagPiminus_sidebandlow;
         NTuple::Item<int> m_n_othershws_sidebandlow;
         NTuple::Matrix<double> m_rawp4_othershw_sidebandlow;
+        NTuple::Item<int> m_n_pi0_sidebandlow;
+        NTuple::Array<double> m_chi2_pi0_sidebandlow;
+        NTuple::Matrix<double> m_p4_pi0_sidebandlow;
+        NTuple::Item<double> m_chi2_pi0_save_sidebandlow;
+        NTuple::Array<double> m_p4_pi0_save_sidebandlow;
 
         // Ntuple10 info
         NTuple::Tuple* m_tuple10;
@@ -286,6 +296,11 @@ class DDecayAlg : public Algorithm {
         NTuple::Array<double> m_rawp4_tagPiminus_sidebandup;
         NTuple::Item<int> m_n_othershws_sidebandup;
         NTuple::Matrix<double> m_rawp4_othershw_sidebandup;
+        NTuple::Item<int> m_n_pi0_sidebandup;
+        NTuple::Array<double> m_chi2_pi0_sidebandup;
+        NTuple::Matrix<double> m_p4_pi0_sidebandup;
+        NTuple::Item<double> m_chi2_pi0_save_sidebandup;
+        NTuple::Array<double> m_p4_pi0_save_sidebandup;
 
         // functions
         void clearVariables();
@@ -305,6 +320,9 @@ class DDecayAlg : public Algorithm {
         double fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth);
         double fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth);
         double fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth);
+        void fitpi0_signal(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);
+        void fitpi0_sidebandlow(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);
+        void fitpi0_sidebandup(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);
         bool saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth);
         bool saveOthershws();
 };

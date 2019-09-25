@@ -216,12 +216,12 @@ case $option in
            cd 4360
            rm * -rf
            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dplus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4360\/incMC_hadrons_4360_topo.root/g" topoana_Dplus.card
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4360\/incMC_DD_4360_topo.root/g" topoana_Dplus.card
            sed -i "s/NAME/TopoResultDplus_4360/g" topoana_Dplus.card
            sed -i "s/cut_chi2_kf/45/g" topoana_Dplus.card
            topoana.exe topoana_Dplus.card
            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dminus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4360\/incMC_hadrons_4360_topo.root/g" topoana_Dminus.card
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4360\/incMC_DD_4360_topo.root/g" topoana_Dminus.card
            sed -i "s/NAME/TopoResultDminus_4360/g" topoana_Dminus.card
            sed -i "s/cut_chi2_kf/45/g" topoana_Dminus.card
            topoana.exe topoana_Dminus.card
@@ -230,12 +230,12 @@ case $option in
            cd 4420
            rm * -rf
            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dplus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4420\/incMC_hadrons_4420_topo.root/g" topoana_Dplus.card
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4420\/incMC_DD_4420_topo.root/g" topoana_Dplus.card
            sed -i "s/NAME/TopoResultDplus_4420/g" topoana_Dplus.card
            sed -i "s/cut_chi2_kf/46/g" topoana_Dplus.card
            topoana.exe topoana_Dplus.card
            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dminus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4420\/incMC_hadrons_4420_topo.root/g" topoana_Dminus.card
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4420\/incMC_DD_4420_topo.root/g" topoana_Dminus.card
            sed -i "s/NAME/TopoResultDminus_4420/g" topoana_Dminus.card
            sed -i "s/cut_chi2_kf/46/g" topoana_Dminus.card
            topoana.exe topoana_Dminus.card
@@ -244,12 +244,12 @@ case $option in
            cd 4600
            rm * -rf
            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dplus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4600\/incMC_hadrons_4600_topo.root/g" topoana_Dplus.card
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4600\/incMC_DD_4600_topo.root/g" topoana_Dplus.card
            sed -i "s/NAME/TopoResultDplus_4600/g" topoana_Dplus.card
            sed -i "s/cut_chi2_kf/25/g" topoana_Dplus.card
            topoana.exe topoana_Dplus.card
            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dminus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4600\/incMC_hadrons_4600_topo.root/g" topoana_Dminus.card
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4600\/incMC_DD_4600_topo.root/g" topoana_Dminus.card
            sed -i "s/NAME/TopoResultDminus_4600/g" topoana_Dminus.card
            sed -i "s/cut_chi2_kf/25/g" topoana_Dminus.card
            topoana.exe topoana_Dminus.card
