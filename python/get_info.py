@@ -50,6 +50,7 @@ def save_missing(f_in, cms, t, MODE):
         m_charge_left = array('i', [0])
         m_chi2_pi0 = array('d', [999.])
         m_m_Dpi0 = array('d', [999.])
+        m_n_pi0 = array('i', [0])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
         t.Branch('mode', m_mode, 'm_mode/I')
@@ -67,6 +68,7 @@ def save_missing(f_in, cms, t, MODE):
         t.Branch('charge_left', m_charge_left, 'm_charge_left/I')
         t.Branch('chi2_pi0', m_chi2_pi0, 'm_chi2_pi0/D')
         t.Branch('m_Dpi0', m_m_Dpi0, 'm_m_Dpi0/D')
+        t.Branch('n_pi0', m_n_pi0, 'm_n_pi0/I')
     if MODE == 'signal':
         t_in = f_in.Get('STD_signal')
     if MODE == 'sidebandlow':
@@ -113,7 +115,8 @@ def save_missing(f_in, cms, t, MODE):
             m_chi2_kf[0] = t_in.chi2_kf
             m_charge_left[0] = t_in.charge_left
             m_chi2_pi0[0] = t_in.chi2_pi0_save
-            m_m_Dpi0[0] = (pD+pPip0).M()
+            m_m_Dpi0[0] = (pD+pPi0).M()
+            m_n_pi0[0] = t_in.n_pi0
             t.Fill()
 
 def save_raw(f_in, cms, t, MODE):
