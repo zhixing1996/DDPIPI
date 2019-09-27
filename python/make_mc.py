@@ -97,7 +97,7 @@ def main():
         f.write('ApplicationMgr.EvtMax = -1;\n')
         f.write('\n')
         f.write('ApplicationMgr.HistogramPersistency = "ROOT";\n')
-        f.write('NTupleSvc.Output = {\"FILE1 DATAFILE=\'/scratchfs/bes/jingmq/bes/DDPIPI/v0.2/'+sample+'/'+type+'/'+energy+'/rootfile/'+sample+'_'+decay+'_'+mode+'_'+energy+'_'+str(i)+'.root'+'\' OPT=\'NEW\' TYP=\'ROOT\'\"};\n')
+        f.write('NTupleSvc.Output = {\"FILE1 DATAFILE=\'/scratchfs/bes/$USER/bes/DDPIPI/v0.2/'+sample+'/'+type+'/'+energy+'/rootfile/'+sample+'_'+decay+'_'+mode+'_'+energy+'_'+str(i)+'.root'+'\' OPT=\'NEW\' TYP=\'ROOT\'\"};\n')
         f.close()
         i = i + 1
     print 'All done!'

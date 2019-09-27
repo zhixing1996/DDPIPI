@@ -103,22 +103,22 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax):
     mbc.SaveAs('./figs/chi2_kf_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
+    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
+    sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
     leg_title = '(a)'
     ecms = 4360
     ymax = 1200
     plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
-    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_signal.root'
+    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
+    sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_signal.root'
     leg_title = '(b)'
     ecms = 4420
     ymax = 4000
     plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
-    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
-    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
+    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
+    sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
     leg_title = '(c)'
     ecms = 4600
     ymax = 3000

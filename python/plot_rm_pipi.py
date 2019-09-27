@@ -168,11 +168,11 @@ if __name__ == '__main__':
         logging.error('python plot_rm_pipi.py [MODE]: MODE = raw or cut')
         sys.exit()
 
-    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
-    data_sideband_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root'
+    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
+    data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root'
     sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root'
     sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_signal.root'
-    sigMC3_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
+    sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
     leg_title = '(a)'
     ecms = 4360
     scale = 0.5
@@ -183,11 +183,11 @@ if __name__ == '__main__':
     chi2_cut = 45
     plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)
 
-    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
-    data_sideband_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_sideband.root'
+    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
+    data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_sideband.root'
     sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root'
     sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_signal.root'
-    sigMC3_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_signal.root'
+    sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_signal.root'
     leg_title = '(b)'
     ecms = 4420
     scale = 0.5
@@ -198,11 +198,11 @@ if __name__ == '__main__':
     chi2_cut = 46
     plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)
 
-    data_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
-    data_sideband_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root'
+    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
+    data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root'
     sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root'
     sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root'
-    sigMC3_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
+    sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
     leg_title = '(c)'
     ecms = 4600
     scale = 0.5
