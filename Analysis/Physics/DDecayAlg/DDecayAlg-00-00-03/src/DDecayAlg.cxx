@@ -479,6 +479,9 @@ void DDecayAlg::clearVariables() {
     stat_saveCandD = false;
     stat_saveOthertrks = false;
     stat_saveOthershws = false;
+    stat_fitpi0_signal = false;
+    stat_fitpi0_sidebandlow = false;
+    stat_fitpi0_sidebandup = false;
 }
 
 void DDecayAlg::saveAllMcTruthInfo() {
@@ -1234,7 +1237,8 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     if (m_n_othershws_signal >= 50) continue;
                     vwtrkpara_photons_signal.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE()));
                 }
-                fitpi0_signal(vwtrkpara_photons_signal, birth, pD);
+                stat_fitpi0_signal = fitpi0_signal(vwtrkpara_photons_signal, birth, pD);
+                if (!stat_fitpi0_signal && m_debug) std::cout << "Cannot find enough gamma to reconstruct pi0 for signal!" << std::endl;
                 recordVariables_signal();
             }
             if (fabs(chi2_kf_sidebandlow) < 999) {
@@ -1331,7 +1335,8 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     if (m_n_othershws_sidebandlow >= 50) continue;
                     vwtrkpara_photons_sidebandlow.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE()));
                 }
-                fitpi0_sidebandlow(vwtrkpara_photons_sidebandlow, birth, pD);
+                stat_fitpi0_sidebandlow = fitpi0_sidebandlow(vwtrkpara_photons_sidebandlow, birth, pD);
+                if (!stat_fitpi0_sidebandlow && m_debug) std::cout << "Cannot find enough gamma to reconstruct pi0 for sidebandlow!" << std::endl;
                 recordVariables_sidebandlow();
             }
             if (fabs(chi2_kf_sidebandup) < 999) {
@@ -1428,7 +1433,8 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     if (m_n_othershws_sidebandup >= 50) continue;
                     vwtrkpara_photons_sidebandup.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE()));
                 }
-                fitpi0_sidebandup(vwtrkpara_photons_sidebandup, birth, pD);
+                stat_fitpi0_sidebandup = fitpi0_sidebandup(vwtrkpara_photons_sidebandup, birth, pD);
+                if (!stat_fitpi0_sidebandup && m_debug) std::cout << "Cannot find enough gamma to reconstruct pi0 for sidebandup!" << std::endl;
                 recordVariables_sidebandup();
             }
         }
@@ -1464,12 +1470,13 @@ bool DDecayAlg::saveOthershws() {
     else return true;
 }
 
-void DDecayAlg::fitpi0_signal(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
+bool DDecayAlg::fitpi0_signal(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
     m_n_pi0_signal = 0;
     for (int i = 0; i < 4; i++) {
         m_p4_pi0_save_signal[i] = -999.;
     }
     m_chi2_pi0_save_signal = -999.;
+    if (vwtrkpara_photons.size() <= 1) return false;
     double delta_M = 999.;
     for (int i = 0; i < vwtrkpara_photons.size() - 1; i++) {
         for (int j = i + 1; j < vwtrkpara_photons.size(); j++) {
@@ -1478,6 +1485,7 @@ void DDecayAlg::fitpi0_signal(VWTrkPara &vwtrkpara_photons, VertexParameter &bir
             kmfit->AddTrack(1, vwtrkpara_photons[j]);
             kmfit->AddResonance(0, M_Pi0, 0, 1);
             bool oksq = kmfit->Fit();
+            double chi2_test = kmfit->chisq();
             if (oksq) {
                 double chi2 = kmfit->chisq();
                 if (chi2 < 200) {
@@ -1491,16 +1499,21 @@ void DDecayAlg::fitpi0_signal(VWTrkPara &vwtrkpara_photons, VertexParameter &bir
                     }
                 }
             }
+            else {
+                continue;
+            }
         }
     }
+    return true;
 }
 
-void DDecayAlg::fitpi0_sidebandlow(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
+bool DDecayAlg::fitpi0_sidebandlow(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
     m_n_pi0_sidebandlow = 0;
     for (int i = 0; i < 4; i++) {
         m_p4_pi0_save_sidebandlow[i] = -999.;
     }
     m_chi2_pi0_save_sidebandlow = -999.;
+    if (vwtrkpara_photons.size() <= 1) return false;
     double delta_M = 999.;
     for (int i = 0; i < vwtrkpara_photons.size() - 1; i++) {
         for (int j = i + 1; j < vwtrkpara_photons.size(); j++) {
@@ -1524,14 +1537,16 @@ void DDecayAlg::fitpi0_sidebandlow(VWTrkPara &vwtrkpara_photons, VertexParameter
             }
         }
     }
+    return true;
 }
 
-void DDecayAlg::fitpi0_sidebandup(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
+bool DDecayAlg::fitpi0_sidebandup(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
     m_n_pi0_sidebandup = 0;
     for (int i = 0; i < 4; i++) {
         m_p4_pi0_save_sidebandup[i] = -999.;
     }
     m_chi2_pi0_save_sidebandup = -999.;
+    if (vwtrkpara_photons.size() <= 1) return false;
     double delta_M = 999.;
     for (int i = 0; i < vwtrkpara_photons.size() - 1; i++) {
         for (int j = i + 1; j < vwtrkpara_photons.size(); j++) {
@@ -1555,6 +1570,7 @@ void DDecayAlg::fitpi0_sidebandup(VWTrkPara &vwtrkpara_photons, VertexParameter 
             }
         }
     }
+    return true;
 }
 
 void DDecayAlg::recordVariables() {
