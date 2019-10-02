@@ -1494,6 +1494,7 @@ bool DDecayAlg::fitpi0_signal(VWTrkPara &vwtrkpara_photons, VertexParameter &bir
                     for (int k = 0; k < 2; k++) m_p4_pi0_signal[m_n_pi0_signal][k] = ppi0[k];
                     m_n_pi0_signal++;
                     if (fabs((ppi0 + pD).m() - M_Dst) < delta_M) {
+                        delta_M = fabs((ppi0 + pD).m() - M_Dst);
                         m_chi2_pi0_save_signal = chi2;
                         for (int k = 0; k < 4; k++) m_p4_pi0_save_signal[k] = ppi0[k];
                     }
@@ -1530,6 +1531,7 @@ bool DDecayAlg::fitpi0_sidebandlow(VWTrkPara &vwtrkpara_photons, VertexParameter
                     for (int k = 0; k < 2; k++) m_p4_pi0_sidebandlow[m_n_pi0_sidebandlow][k] = ppi0[k];
                     m_n_pi0_sidebandlow++;
                     if (fabs((ppi0 + pD).m() - M_Dst) < delta_M) {
+                        delta_M = fabs((ppi0 + pD).m() - M_Dst);
                         m_chi2_pi0_save_sidebandlow = chi2;
                         for (int k = 0; k < 4; k++) m_p4_pi0_save_sidebandlow[k] = ppi0[k];
                     }
@@ -1563,6 +1565,7 @@ bool DDecayAlg::fitpi0_sidebandup(VWTrkPara &vwtrkpara_photons, VertexParameter 
                     for (int k = 0; k < 2; k++) m_p4_pi0_sidebandup[m_n_pi0_sidebandup][k] = ppi0[k];
                     m_n_pi0_sidebandup++;
                     if (fabs((ppi0 + pD).m() - M_Dst) < delta_M) {
+                        delta_M = fabs((ppi0 + pD).m() - M_Dst);
                         m_chi2_pi0_save_sidebandup = chi2;
                         for (int k = 0; k < 4; k++) m_p4_pi0_save_sidebandup[k] = ppi0[k];
                     }

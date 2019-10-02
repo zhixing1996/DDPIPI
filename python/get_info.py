@@ -11,7 +11,7 @@ import math
 from array import array
 import ROOT
 from ROOT import TCanvas, gStyle, TLorentzVector, TTree
-from ROOT import TFile, TH1F, TLegend, TArrow, TChain
+from ROOT import TFile, TH1F, TLegend, TArrow, TChain, TVector3
 import sys, os
 import logging
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
@@ -50,7 +50,9 @@ def save_missing(f_in, cms, t, MODE):
         m_charge_left = array('i', [0])
         m_chi2_pi0 = array('d', [999.])
         m_m_Dpi0 = array('d', [999.])
+        m_m_pi0 = array('d', [999.])
         m_n_pi0 = array('i', [0])
+        m_m_D0 = array('d', [999.])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
         t.Branch('mode', m_mode, 'm_mode/I')
@@ -68,7 +70,9 @@ def save_missing(f_in, cms, t, MODE):
         t.Branch('charge_left', m_charge_left, 'm_charge_left/I')
         t.Branch('chi2_pi0', m_chi2_pi0, 'm_chi2_pi0/D')
         t.Branch('m_Dpi0', m_m_Dpi0, 'm_m_Dpi0/D')
+        t.Branch('m_pi0', m_m_pi0, 'm_m_pi0/D')
         t.Branch('n_pi0', m_n_pi0, 'm_n_pi0/I')
+        t.Branch('m_D0', m_m_D0, 'm_m_D0/D')
     if MODE == 'signal':
         t_in = f_in.Get('STD_signal')
     if MODE == 'sidebandlow':
@@ -116,7 +120,52 @@ def save_missing(f_in, cms, t, MODE):
             m_charge_left[0] = t_in.charge_left
             m_chi2_pi0[0] = t_in.chi2_pi0_save
             m_m_Dpi0[0] = (pD+pPi0).M()
+            m_m_pi0[0] = pPi0.M()
             m_n_pi0[0] = t_in.n_pi0
+            if t_in.charm == 1:
+                pothers = TLorentzVector(0, 0, 0, 0)
+                pD0_cand = TLorentzVector(0, 0, 0, 0)
+                for iTrk in range(t_in.n_othertrks):
+                    pKpi = TLorentzVector(0, 0, 0, 0)
+                    pKpi.SetPxPyPzE(t_in.rawp4_otherMdcKaltrk[iTrk*6+0], t_in.rawp4_otherMdcKaltrk[iTrk*6+1], t_in.rawp4_otherMdcKaltrk[iTrk*6+2], t_in.rawp4_otherMdcKaltrk[iTrk*6+3])
+                    pothers += pKpi
+                pD0_cand = pothers + pPip
+                m_D0_back = pD0_cand.M()
+                delta_M = 999.
+                for iPi0 in range(t_in.n_pi0):
+                    pPi0_cand = TLorentzVector(0, 0, 0, 0)
+                    pPi0_cand = SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                    if pPi0_cand.M() != pPi0.M():
+                        pD0_cand += pPi0_cand
+                        if (pD0_cand.M() - 1.86483) < delta_M:
+                            delta_M = pD0_cand.M() - m_D0_cand
+                            m_D0 = pD0_cand.M()
+                if (m_D0 - 1.86483) <= (m_D0_cand - 1.86483):
+                    m_m_D0[0] = m_D0
+                else:
+                    m_m_d0[0] = m_D0_back
+            if t_in.charm == -1:
+                pothers = TLorentzVector(0, 0, 0, 0)
+                pD0_cand = TLorentzVector(0, 0, 0, 0)
+                for iTrk in range(t_in.n_othertrks):
+                    pKpi = TLorentzVector(0, 0, 0, 0)
+                    pKpi.SetPxPyPzE(t_in.rawp4_otherMdcKaltrk[iTrk*6+0], t_in.rawp4_otherMdcKaltrk[iTrk*6+1], t_in.rawp4_otherMdcKaltrk[iTrk*6+2], t_in.rawp4_otherMdcKaltrk[iTrk*6+3])
+                    pothers += pKpi
+                pD0_cand = pothers + pPim
+                m_D0_back = pD0_cand.M()
+                delta_M = 999.
+                for iPi0 in range(t_in.n_pi0):
+                    pPi0_cand = TLorentzVector(0, 0, 0, 0)
+                    pPi0_cand = SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                    if pPi0_cand.M() != pPi0.M():
+                        pD0_cand += pPi0_cand
+                        if (pD0_cand.M() - 1.86483) < delta_M:
+                            delta_M = pD0_cand.M() - m_D0_cand
+                            m_D0 = pD0_cand.M()
+                if (m_D0 - 1.86483) <= (m_D0_cand - 1.86483):
+                    m_m_D0[0] = m_D0
+                else:
+                    m_m_d0[0] = m_D0_back
             t.Fill()
 
 def save_raw(f_in, cms, t, MODE):
@@ -212,6 +261,11 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
         m_n_othershws = array('i', [0])
         m_n_othertrks = array('i', [0])
         m_charge_left = array('i', [0])
+        m_chi2_pi0 = array('d', [999.])
+        m_m_Dpi0 = array('d', [999.])
+        m_m_pi0 = array('d', [999.])
+        m_n_pi0 = array('i', [0])
+        m_m_D0 = array('d', [999.])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
         t.Branch('m_pipi', m_m_pipi, 'm_m_pipi/D')
@@ -223,6 +277,11 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
         t.Branch('n_othershws', m_n_othershws, 'm_n_othershws/I')
         t.Branch('n_othertrks', m_n_othertrks, 'm_n_othertrks/I')
         t.Branch('charge_left', m_charge_left, 'm_charge_left/I')
+        t.Branch('chi2_pi0', m_chi2_pi0, 'm_chi2_pi0/D')
+        t.Branch('m_Dpi0', m_m_Dpi0, 'm_m_Dpi0/D')
+        t.Branch('m_pi0', m_m_pi0, 'm_m_pi0/D')
+        t.Branch('n_pi0', m_n_pi0, 'm_n_pi0/I')
+        t.Branch('m_D0', m_m_D0, 'm_m_D0/D')
         t_in = f_in.Get('STD_signal')
         t_shw = f_in.Get('otherShw')
         nentries = t_in.GetEntries()
@@ -241,8 +300,10 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                 pD += ptrack
             pPip = TLorentzVector(0,0,0,0)
             pPim = TLorentzVector(0,0,0,0)
+            pPi0 = TLorentzVector(0, 0, 0, 0)
             pPip.SetPxPyPzE(t_in.p4_piplus[0], t_in.p4_piplus[1], t_in.p4_piplus[2], t_in.p4_piplus[3])
             pPim.SetPxPyPzE(t_in.p4_piminus[0], t_in.p4_piminus[1], t_in.p4_piminus[2], t_in.p4_piminus[3])
+            pPi0.SetPxPyPzE(t_in.p4_pi0_save[0], t_in.p4_pi0_save[1], t_in.p4_pi0_save[2], t_in.p4_pi0_save[3])
             rm_Dpipi = (cms-pD-pPip-pPim).M()
             m_runNo[0] = t_in.runNo
             m_evtNo[0] = t_in.evtNo
@@ -253,9 +314,31 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
             m_n_othershws[0] = t_in.n_othershws
             m_n_othertrks[0] = t_in.n_othertrks
             m_charge_left[0] = t_in.charge_left
+            m_chi2_pi0[0] = t_in.chi2_pi0_save
+            m_m_Dpi0[0] = (pD+pPi0).M()
+            m_m_pi0[0] = pPi0.M()
+            m_n_pi0[0] = t_in.n_pi0
             for i in range(t_in.indexmc):
                 m_motheridx[i] = t_in.motheridx[i]
                 m_pdgid[i] = t_in.pdgid[i]
+            if t_in.charm == 1:
+                pothers = TLorentzVector(0, 0, 0, 0)
+                pD0 = TLorentzVector(0, 0, 0, 0)
+                for iTrk in range(t_in.n_othertrks):
+                    pKpi = TLorentzVector(0, 0, 0, 0)
+                    pKpi.SetPxPyPzE(t_in.rawp4_otherMdcKaltrk[iTrk*6+0], t_in.rawp4_otherMdcKaltrk[iTrk*6+1], t_in.rawp4_otherMdcKaltrk[iTrk*6+2], t_in.rawp4_otherMdcKaltrk[iTrk*6+3])
+                    pothers += pKpi
+                pD0 = pothers + pPip
+                m_m_D0[0] = pD0.M()
+            if t_in.charm == -1:
+                pothers = TLorentzVector(0, 0, 0, 0)
+                pD0 = TLorentzVector(0, 0, 0, 0)
+                for iTrk in range(t_in.n_othertrks):
+                    pKpi = TLorentzVector(0, 0, 0, 0)
+                    pKpi.SetPxPyPzE(t_in.rawp4_otherMdcKaltrk[iTrk*6+0], t_in.rawp4_otherMdcKaltrk[iTrk*6+1], t_in.rawp4_otherMdcKaltrk[iTrk*6+2], t_in.rawp4_otherMdcKaltrk[iTrk*6+3])
+                    pothers += pKpi
+                pD0 = pothers + pPim
+                m_m_D0[0] = pD0.M()
             t.Fill()
 
 def main():

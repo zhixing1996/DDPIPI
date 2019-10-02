@@ -5,7 +5,7 @@ Plot chi2 of D kinematic fit
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
 __copyright__ = "Copyright (c) Maoqiang JING"
-__created__ = "[2019-09-5 Thu 00:04]"
+__created__ = "[2019-09-05 Thu 00:04]"
 
 import ROOT
 from ROOT import TCanvas, gStyle
