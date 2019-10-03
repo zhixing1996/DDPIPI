@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Optiomize mass window of signal region of RM(DPIPI)
+Optiomize mass window of signal region of M(D)
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"

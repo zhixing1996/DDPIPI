@@ -132,18 +132,29 @@ def save_missing(f_in, cms, t, MODE):
                 pD0_cand = pothers + pPip
                 m_D0_back = pD0_cand.M()
                 delta_M = 999.
+                m_D0 = 0.
                 for iPi0 in range(t_in.n_pi0):
-                    pPi0_cand = TLorentzVector(0, 0, 0, 0)
-                    pPi0_cand = SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
-                    if pPi0_cand.M() != pPi0.M():
-                        pD0_cand += pPi0_cand
-                        if (pD0_cand.M() - 1.86483) < delta_M:
-                            delta_M = pD0_cand.M() - m_D0_cand
-                            m_D0 = pD0_cand.M()
-                if (m_D0 - 1.86483) <= (m_D0_cand - 1.86483):
+                    pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                    pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                    if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                        pD01 = TLorentzVector(0, 0, 0, 0)
+                        pD01 = pD0_cand + pPi0_cand1
+                        if math.fabs(pD01.M() - 1.86483) < delta_M:
+                            delta_M = pD01.M() - 1.86483
+                            m_D0 = pD01.M()
+                            for jPi0 in range(t_in.n_pi0):
+                                pPi0_cand2 = TLorentzVector(0, 0, 0, 0)
+                                pPi0_cand2.SetPxPyPzE(t_in.p4_pi0[jPi0*4+0], t_in.p4_pi0[jPi0*4+1], t_in.p4_pi0[jPi0*4+2], t_in.p4_pi0[jPi0*4+3])
+                                if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand1.M() and pPi0_cand2.M() > 0:
+                                    pD02 = TLorentzVector(0, 0, 0, 0)
+                                    pD02 = pD01 + pPi0_cand2
+                                    if math.fabs(pD02.M() - 1.86483) < delta_M:
+                                        delta_M = pD02.M() - 1.86483
+                                        m_D0 = pD02.M()
+                if (m_D0 - 1.86483) <= (m_D0_back - 1.86483):
                     m_m_D0[0] = m_D0
                 else:
-                    m_m_d0[0] = m_D0_back
+                    m_m_D0[0] = m_D0_back
             if t_in.charm == -1:
                 pothers = TLorentzVector(0, 0, 0, 0)
                 pD0_cand = TLorentzVector(0, 0, 0, 0)
@@ -154,18 +165,29 @@ def save_missing(f_in, cms, t, MODE):
                 pD0_cand = pothers + pPim
                 m_D0_back = pD0_cand.M()
                 delta_M = 999.
+                m_D0 = 0.
                 for iPi0 in range(t_in.n_pi0):
-                    pPi0_cand = TLorentzVector(0, 0, 0, 0)
-                    pPi0_cand = SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
-                    if pPi0_cand.M() != pPi0.M():
-                        pD0_cand += pPi0_cand
-                        if (pD0_cand.M() - 1.86483) < delta_M:
-                            delta_M = pD0_cand.M() - m_D0_cand
-                            m_D0 = pD0_cand.M()
-                if (m_D0 - 1.86483) <= (m_D0_cand - 1.86483):
+                    pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                    pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                    if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                        pD01 = TLorentzVector(0, 0, 0, 0)
+                        pD01 = pD0_cand + pPi0_cand1
+                        if math.fabs(pD01.M() - 1.86483) < delta_M:
+                            delta_M = pD01.M() - 1.86483
+                            m_D0 = pD01.M()
+                            for jPi0 in range(t_in.n_pi0):
+                                pPi0_cand2 = TLorentzVector(0, 0, 0, 0)
+                                pPi0_cand2.SetPxPyPzE(t_in.p4_pi0[jPi0*4+0], t_in.p4_pi0[jPi0*4+1], t_in.p4_pi0[jPi0*4+2], t_in.p4_pi0[jPi0*4+3])
+                                if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand2.M() and pPi0_cand2.M() > 0:
+                                    pD02 = TLorentzVector(0, 0, 0, 0)
+                                    pD02 = pD01 + pPi0_cand2
+                                    if math.fabs(pD02.M() - 1.86483) < delta_M:
+                                        delta_M = pD02.M() - 1.86483
+                                        m_D0 = pD02.M()
+                if (m_D0 - 1.86483) <= (m_D0_back - 1.86483):
                     m_m_D0[0] = m_D0
                 else:
-                    m_m_d0[0] = m_D0_back
+                    m_m_D0[0] = m_D0_back
             t.Fill()
 
 def save_raw(f_in, cms, t, MODE):
