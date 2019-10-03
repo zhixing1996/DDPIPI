@@ -29,6 +29,8 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.2" "Download software -- download topology"
     printf "\n\t%-9s  %-40s\n" "0.3.3" "Install software -- install topology"
     printf "\n\t%-9s  %-40s\n" "0.3.4" "Topo analysis -- apply topology analysis"
+    printf "\n\t%-9s  %-40s\n" "0.3.5" "Draw figures -- compare data, and X(3842) signal samples: M(Dpi0)"
+    printf "\n\t%-9s  %-40s\n" "0.3.6" "Draw figures -- study signal region of M(Dpi0)"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -104,9 +106,9 @@ case $option in
 
     0.2.2) echo "Draw figures -- studying mass window of M(Kpipi)..."
            cd $HOME/bes/DDPIPI/v0.2/python
-           python opt_mass_window.py 4360
-           python opt_mass_window.py 4420
-           python opt_mass_window.py 4600
+           python opt_mass_D.py 4360
+           python opt_mass_D.py 4420
+           python opt_mass_D.py 4600
            ;;
 
     0.2.3) echo "Get samples -- extracting useful info: signal region and sideband region..."
@@ -215,44 +217,41 @@ case $option in
            mkdir -p 4360
            cd 4360
            rm * -rf
-           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dplus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4360\/incMC_DD_4360_topo.root/g" topoana_Dplus.card
-           sed -i "s/NAME/TopoResultDplus_4360/g" topoana_Dplus.card
-           sed -i "s/cut_chi2_kf/45/g" topoana_Dplus.card
-           topoana.exe topoana_Dplus.card
-           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dminus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4360\/incMC_DD_4360_topo.root/g" topoana_Dminus.card
-           sed -i "s/NAME/TopoResultDminus_4360/g" topoana_Dminus.card
-           sed -i "s/cut_chi2_kf/45/g" topoana_Dminus.card
-           topoana.exe topoana_Dminus.card
+           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4360\/incMC_DD_4360_topo.root/g" topoana.card
+           sed -i "s/NAME/TopoResult_4360/g" topoana.card
+           sed -i "s/cut_chi2_kf/45/g" topoana.card
+           topoana.exe topoana.card
            cd ..
            mkdir -p 4420
            cd 4420
            rm * -rf
-           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dplus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4420\/incMC_DD_4420_topo.root/g" topoana_Dplus.card
-           sed -i "s/NAME/TopoResultDplus_4420/g" topoana_Dplus.card
-           sed -i "s/cut_chi2_kf/46/g" topoana_Dplus.card
-           topoana.exe topoana_Dplus.card
-           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dminus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4420\/incMC_DD_4420_topo.root/g" topoana_Dminus.card
-           sed -i "s/NAME/TopoResultDminus_4420/g" topoana_Dminus.card
-           sed -i "s/cut_chi2_kf/46/g" topoana_Dminus.card
-           topoana.exe topoana_Dminus.card
+           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4420\/incMC_DD_4420_topo.root/g" topoana.card
+           sed -i "s/NAME/TopoResult_4420/g" topoana.card
+           sed -i "s/cut_chi2_kf/46/g" topoana.card
+           topoana.exe topoana.card
            cd ..
            mkdir -p 4600
            cd 4600
            rm * -rf
-           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dplus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4600\/incMC_DD_4600_topo.root/g" topoana_Dplus.card
-           sed -i "s/NAME/TopoResultDplus_4600/g" topoana_Dplus.card
-           sed -i "s/cut_chi2_kf/25/g" topoana_Dplus.card
-           topoana.exe topoana_Dplus.card
-           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana_Dminus.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4600\/incMC_DD_4600_topo.root/g" topoana_Dminus.card
-           sed -i "s/NAME/TopoResultDminus_4600/g" topoana_Dminus.card
-           sed -i "s/cut_chi2_kf/25/g" topoana_Dminus.card
-           topoana.exe topoana_Dminus.card
+           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4600\/incMC_DD_4600_topo.root/g" topoana.card
+           sed -i "s/NAME/TopoResult_4600/g" topoana.card
+           sed -i "s/cut_chi2_kf/25/g" topoana.card
+           topoana.exe topoana.card
+           ;;
+
+    0.3.5) echo "Draw figures -- comparing data, and X(3842) signal samples: M(Dpi0)..."
+           cd python
+           python plot_m_Dpi0.py
+           ;;
+
+    0.3.6) echo "Draw figures -- studying signal region of M(Dpi0)..."
+           cd python
+           python opt_mass_Dpi0.py 4360
+           python opt_mass_Dpi0.py 4420
+           python opt_mass_Dpi0.py 4600
            ;;
 
 esac
