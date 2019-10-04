@@ -31,6 +31,9 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.4" "Topo analysis -- apply topology analysis"
     printf "\n\t%-9s  %-40s\n" "0.3.5" "Draw figures -- compare data, and X(3842) signal samples: M(Dpi0)"
     printf "\n\t%-9s  %-40s\n" "0.3.6" "Draw figures -- study signal region of M(Dpi0)"
+    printf "\n\t%-9s  %-40s\n" "0.3.7" "Get samples -- apply cuts before background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.8" "Draw figures -- fit to M(Dpi0)"
+    printf "\n\t%-9s  %-40s\n" "0.3.9" "Draw figures -- fit to M(D0 or Dst0)"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -185,7 +188,7 @@ case $option in
            rm -rf jobs.err
            mkdir jobs.out
            mkdir jobs.err
-           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info_topo
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_info_topo .
            hep_sub -g physics get_info_topo -o jobs.out -e jobs.err
            ;;
 
@@ -252,6 +255,22 @@ case $option in
            python opt_mass_Dpi0.py 4360
            python opt_mass_Dpi0.py 4420
            python opt_mass_Dpi0.py 4600
+           ;;
+
+    0.3.7) echo "Get samples -- applying cuts before background study..."
+           cd jobs
+           bash apply_cuts
+           ;;
+
+    0.3.8) echo "Draw figures -- fitting to M(Dpi0)..."
+           cd cxx
+           root -l -q fit_mDpi0_4420.cxx
+           ;;
+
+    0.3.9) echo "Draw figures -- fitting to M(D0 or Dst0)..."
+           cd cxx
+           root -l -q fit_mD0_4420.cxx
+           root -l -q fit_mDst_4420.cxx
            ;;
 
 esac

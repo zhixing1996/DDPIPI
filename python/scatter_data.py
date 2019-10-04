@@ -91,7 +91,7 @@ if __name__ == '__main__':
     x_max = 2.55
     y_min = 3.7
     y_max = 4.1
-    chi2_cut = 45
+    chi2_cut = 46
     plot(data, leg_title, ecms, x_min, x_max, y_min, y_max, chi2_cut)
 
     data = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
@@ -101,7 +101,7 @@ if __name__ == '__main__':
     x_max = 2.6
     y_min = 3.7
     y_max = 4.2
-    chi2_cut = 46
+    chi2_cut = 42
     plot(data, leg_title, ecms, x_min, x_max, y_min, y_max, chi2_cut)
 
     data = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'

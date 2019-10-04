@@ -109,7 +109,7 @@ if __name__ == '__main__':
     ecms = 4360
     scale = 0.00065
     xmax = 3.
-    chi2_cut = 45
+    chi2_cut = 46
     plot(data_path, sigMC_path, leg_title, ecms, scale, xmax, chi2_cut)
 
     data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
@@ -118,7 +118,7 @@ if __name__ == '__main__':
     ecms = 4420
     scale = 0.0015
     xmax = 3.
-    chi2_cut = 46
+    chi2_cut = 42
     plot(data_path, sigMC_path, leg_title, ecms, scale, xmax, chi2_cut)
 
     data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'

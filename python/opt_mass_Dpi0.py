@@ -65,7 +65,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
         S1 = 0
         for j in xrange(int(entries1*ratio1)):
             t1.GetEntry(j)
-            if t1.m_m_Dpi0 > (2.0 + step + i*step) and t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882 and t1.m_chi2_kf < chi2_cut and t1.m_chi2_pi0 < 100:
+            if t1.m_m_Dpi0 > (2.0 + step + i*step) and t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882 and t1.m_chi2_kf < chi2_cut:
                 S1 = S1 + 1
         S1_list.append(S1)
     print 'Start of sigMC2...'
@@ -73,7 +73,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
         S2 = 0
         for j in xrange(int(entries2*ratio2)):
             t2.GetEntry(j)
-            if t2.m_m_Dpi0 > (2.0 + step + i*step) and t2.m_m_pipi > 0.28 and t2.m_rm_Dpipi > 1.857 and t2.m_rm_Dpipi < 1.882 and t2.m_chi2_kf < chi2_cut and t2.m_chi2_pi0 < 100:
+            if t2.m_m_Dpi0 > (2.0 + step + i*step) and t2.m_m_pipi > 0.28 and t2.m_rm_Dpipi > 1.857 and t2.m_rm_Dpipi < 1.882 and t2.m_chi2_kf < chi2_cut:
                 S2 = S2 + 1
         S2_list.append(S2)
     for i in xrange(N):
@@ -84,7 +84,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
         B = 0
         for j in xrange(entries3/5):
             t3.GetEntry(j)
-            if t3.m_m_Dpi0 > (2.0 + step + i*step) and t3.m_m_pipi > 0.28 and t3.m_rm_Dpipi > 1.857 and t3.m_rm_Dpipi < 1.882 and t3.m_chi2_kf < chi2_cut and t3.m_chi2_pi0 < 100:
+            if t3.m_m_Dpi0 > (2.0 + step + i*step) and t3.m_m_pipi > 0.28 and t3.m_rm_Dpipi > 1.857 and t3.m_rm_Dpipi < 1.882 and t3.m_chi2_kf < chi2_cut:
                 B = B + 1
         B_list.append(B)
     Ratio_list = []
@@ -177,7 +177,7 @@ def main():
         XS1 = 41.8
         XS2 = 17.3
         GenNum = 500000
-        chi2_cut = 45
+        chi2_cut = 46
         plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, chi2_cut)
 
     if int(energy) == 4420:
@@ -190,7 +190,7 @@ def main():
         XS1 = 65.4
         XS2 = 23.8
         GenNum = 500000
-        chi2_cut = 46
+        chi2_cut = 42
         plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, chi2_cut)
 
     if int(energy) == 4600:

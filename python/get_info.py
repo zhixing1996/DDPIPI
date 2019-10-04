@@ -22,7 +22,7 @@ NAME
     get_info.py
 
 SYNOPSIS
-    ./get_info.py [infile_path] [outfile_path] [Ecms]
+    ./get_info.py [infile_path] [outfile_path] [Ecms] [MODE]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -119,7 +119,10 @@ def save_missing(f_in, cms, t, MODE):
             m_chi2_kf[0] = t_in.chi2_kf
             m_charge_left[0] = t_in.charge_left
             m_chi2_pi0[0] = t_in.chi2_pi0_save
-            m_m_Dpi0[0] = (pD+pPi0).M()
+            m_Dpi0 = pD.M()
+            if pPi0.M() > 0:
+                m_Dpi0 = (pD + pPi0).M()
+            m_m_Dpi0[0] = m_Dpi0
             m_m_pi0[0] = pPi0.M()
             m_n_pi0[0] = t_in.n_pi0
             if t_in.charm == 1:
@@ -130,31 +133,119 @@ def save_missing(f_in, cms, t, MODE):
                     pKpi.SetPxPyPzE(t_in.rawp4_otherMdcKaltrk[iTrk*6+0], t_in.rawp4_otherMdcKaltrk[iTrk*6+1], t_in.rawp4_otherMdcKaltrk[iTrk*6+2], t_in.rawp4_otherMdcKaltrk[iTrk*6+3])
                     pothers += pKpi
                 pD0_cand = pothers + pPip
-                m_D0_back = pD0_cand.M()
-                delta_M = 999.
-                m_D0 = 0.
-                for iPi0 in range(t_in.n_pi0):
-                    pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
-                    pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
-                    if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
-                        pD01 = TLorentzVector(0, 0, 0, 0)
-                        pD01 = pD0_cand + pPi0_cand1
-                        if math.fabs(pD01.M() - 1.86483) < delta_M:
-                            delta_M = pD01.M() - 1.86483
-                            m_D0 = pD01.M()
+                m_D0_cand1 = pD0_cand.M()
+                m_D0_cand2 = pothers.M()
+                delta_M1 = 999.
+                delta_M2 = 999.
+                delta_M3 = 999.
+                delta_M4 = 999.
+                delta_M5 = 999.
+                delta_M6 = 999.
+                delta_M7 = 999.
+                delta_M8 = 999.
+                delta_M9 = 999.
+                delta_M10 = 999.
+                delta_M11 = 999.
+                delta_M12 = 999.
+                m_D01 = 0.
+                m_D02 = 0.
+                m_D03 = 0.
+                m_D04 = 0.
+                m_D05 = 0.
+                m_D06 = 0.
+                m_D07 = 0.
+                m_D08 = 0.
+                m_D09 = 0.
+                m_D10 = 0.
+                m_D11 = 0.
+                m_D12 = 0.
+                if t_in.n_pi0 > 1:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0)
+                            pD02 = pothers + pPi0_cand1
+                            if math.fabs(pD01.M() - 1.86483) < delta_M1:
+                                delta_M1 = pD01.M() - 1.86483
+                                m_D01 = pD01.M()
+                            if math.fabs(pD02.M() - 1.86483) < delta_M2:
+                                delta_M2 = pD02.M() - 1.86483
+                                m_D02 = pD02.M()
+                            if math.fabs(pD01.M() - 2.01026) < delta_M3:
+                                delta_M3 = pD01.M() - 2.01026
+                                m_D03 = pD01.M()
+                            if math.fabs(pD02.M() - 2.01026) < delta_M4:
+                                delta_M4 = pD02.M() - 2.01026
+                                m_D04 = pD02.M()
+                if t_in.n_pi0 > 2:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0) 
+                            pD02 = pothers + pPi0_cand1
                             for jPi0 in range(t_in.n_pi0):
                                 pPi0_cand2 = TLorentzVector(0, 0, 0, 0)
                                 pPi0_cand2.SetPxPyPzE(t_in.p4_pi0[jPi0*4+0], t_in.p4_pi0[jPi0*4+1], t_in.p4_pi0[jPi0*4+2], t_in.p4_pi0[jPi0*4+3])
                                 if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand1.M() and pPi0_cand2.M() > 0:
-                                    pD02 = TLorentzVector(0, 0, 0, 0)
-                                    pD02 = pD01 + pPi0_cand2
-                                    if math.fabs(pD02.M() - 1.86483) < delta_M:
-                                        delta_M = pD02.M() - 1.86483
-                                        m_D0 = pD02.M()
-                if (m_D0 - 1.86483) <= (m_D0_back - 1.86483):
-                    m_m_D0[0] = m_D0
-                else:
-                    m_m_D0[0] = m_D0_back
+                                    pD03 = TLorentzVector(0, 0, 0, 0)
+                                    pD03 = pD01 + pPi0_cand2
+                                    pD04 = TLorentzVector(0, 0, 0, 0)
+                                    pD04 = pD02 + pPi0_cand2
+                                    if math.fabs(pD03.M() - 1.86483) < delta_M5:
+                                        delta_M5 = pD03.M() - 1.86483
+                                        m_D05 = pD03.M()
+                                    if math.fabs(pD04.M() - 1.86483) < delta_M6:
+                                        delta_M6 = pD04.M() - 1.86483
+                                        m_D06 = pD04.M()
+                                    if math.fabs(pD03.M() - 2.01026) < delta_M7:
+                                        delta_M7 = pD03.M() - 2.01026
+                                        m_D07 = pD03.M()
+                                    if math.fabs(pD04.M() - 2.01026) < delta_M8:
+                                        delta_M8 = pD04.M() - 2.01026
+                                        m_D08 = pD04.M()
+                if t_in.n_pi0 > 3:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0) 
+                            pD02 = pothers + pPi0_cand1
+                            for jPi0 in range(t_in.n_pi0):
+                                pPi0_cand2 = TLorentzVector(0, 0, 0, 0)
+                                pPi0_cand2.SetPxPyPzE(t_in.p4_pi0[jPi0*4+0], t_in.p4_pi0[jPi0*4+1], t_in.p4_pi0[jPi0*4+2], t_in.p4_pi0[jPi0*4+3])
+                                if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand1.M() and pPi0_cand2.M() > 0:
+                                    pD03 = TLorentzVector(0, 0, 0, 0)
+                                    pD03 = pD01 + pPi0_cand2
+                                    pD04 = TLorentzVector(0, 0, 0, 0)
+                                    pD04 = pD02 + pPi0_cand2
+                                    for kPi0 in range(t_in.n_pi0):
+                                        pPi0_cand3 = TLorentzVector(0, 0, 0, 0)
+                                        pPi0_cand3.SetPxPyPzE(t_in.p4_pi0[kPi0*4+0], t_in.p4_pi0[kPi0*4+1], t_in.p4_pi0[kPi0*4+2], t_in.p4_pi0[kPi0*4+3])
+                                        if pPi0_cand3.M() != pPi0.M() and pPi0_cand3.M() != pPi0_cand1.M() and pPi0_cand3.M() != pPi0_cand2.M() and pPi0_cand3.M() > 0:
+                                            pD05 = TLorentzVector(0, 0, 0, 0)
+                                            pD05 = pD03 + pPi0_cand3
+                                            pD06 = TLorentzVector(0, 0, 0, 0)
+                                            pD06 = pD04 + pPi0_cand3
+                                            if math.fabs(pD05.M() - 1.86483) < delta_M9:
+                                                delta_M9 = pD05.M() - 1.86483
+                                                m_D09 = pD05.M()
+                                            if math.fabs(pD06.M() - 1.86483) < delta_M10:
+                                                delta_M10 = pD06.M() - 1.86483
+                                                m_D10 = pD06.M()
+                                            if math.fabs(pD05.M() - 2.01026) < delta_M11:
+                                                delta_M11 = pD05.M() - 2.01026
+                                                m_D11 = pD05.M()
+                                            if math.fabs(pD06.M() - 2.01026) < delta_M12:
+                                                delta_M12 = pD06.M() - 2.01026
+                                                m_D12 = pD06.M()
             if t_in.charm == -1:
                 pothers = TLorentzVector(0, 0, 0, 0)
                 pD0_cand = TLorentzVector(0, 0, 0, 0)
@@ -163,31 +254,169 @@ def save_missing(f_in, cms, t, MODE):
                     pKpi.SetPxPyPzE(t_in.rawp4_otherMdcKaltrk[iTrk*6+0], t_in.rawp4_otherMdcKaltrk[iTrk*6+1], t_in.rawp4_otherMdcKaltrk[iTrk*6+2], t_in.rawp4_otherMdcKaltrk[iTrk*6+3])
                     pothers += pKpi
                 pD0_cand = pothers + pPim
-                m_D0_back = pD0_cand.M()
-                delta_M = 999.
-                m_D0 = 0.
-                for iPi0 in range(t_in.n_pi0):
-                    pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
-                    pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
-                    if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
-                        pD01 = TLorentzVector(0, 0, 0, 0)
-                        pD01 = pD0_cand + pPi0_cand1
-                        if math.fabs(pD01.M() - 1.86483) < delta_M:
-                            delta_M = pD01.M() - 1.86483
-                            m_D0 = pD01.M()
+                m_D0_cand1 = pD0_cand.M()
+                m_D0_cand2 = pothers.M()
+                delta_M1 = 999.
+                delta_M2 = 999.
+                delta_M3 = 999.
+                delta_M4 = 999.
+                delta_M5 = 999.
+                delta_M6 = 999.
+                delta_M7 = 999.
+                delta_M8 = 999.
+                delta_M9 = 999.
+                delta_M10 = 999.
+                delta_M11 = 999.
+                delta_M12 = 999.
+                m_D01 = 0.
+                m_D02 = 0.
+                m_D03 = 0.
+                m_D04 = 0.
+                m_D05 = 0.
+                m_D06 = 0.
+                m_D07 = 0.
+                m_D08 = 0.
+                m_D09 = 0.
+                m_D10 = 0.
+                m_D11 = 0.
+                m_D12 = 0.
+                if t_in.n_pi0 > 1:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0)
+                            pD02 = pothers + pPi0_cand1
+                            if math.fabs(pD01.M() - 1.86483) < delta_M1:
+                                delta_M1 = pD01.M() - 1.86483
+                                m_D01 = pD01.M()
+                            if math.fabs(pD02.M() - 1.86483) < delta_M2:
+                                delta_M2 = pD02.M() - 1.86483
+                                m_D02 = pD02.M()
+                            if math.fabs(pD01.M() - 2.01026) < delta_M3:
+                                delta_M3 = pD01.M() - 2.01026
+                                m_D03 = pD01.M()
+                            if math.fabs(pD02.M() - 2.01026) < delta_M4:
+                                delta_M4 = pD02.M() - 2.01026
+                                m_D04 = pD02.M()
+                if t_in.n_pi0 > 2:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0) 
+                            pD02 = pothers + pPi0_cand1
                             for jPi0 in range(t_in.n_pi0):
                                 pPi0_cand2 = TLorentzVector(0, 0, 0, 0)
                                 pPi0_cand2.SetPxPyPzE(t_in.p4_pi0[jPi0*4+0], t_in.p4_pi0[jPi0*4+1], t_in.p4_pi0[jPi0*4+2], t_in.p4_pi0[jPi0*4+3])
-                                if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand2.M() and pPi0_cand2.M() > 0:
-                                    pD02 = TLorentzVector(0, 0, 0, 0)
-                                    pD02 = pD01 + pPi0_cand2
-                                    if math.fabs(pD02.M() - 1.86483) < delta_M:
-                                        delta_M = pD02.M() - 1.86483
-                                        m_D0 = pD02.M()
-                if (m_D0 - 1.86483) <= (m_D0_back - 1.86483):
-                    m_m_D0[0] = m_D0
-                else:
-                    m_m_D0[0] = m_D0_back
+                                if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand1.M() and pPi0_cand2.M() > 0:
+                                    pD03 = TLorentzVector(0, 0, 0, 0)
+                                    pD03 = pD01 + pPi0_cand2
+                                    pD04 = TLorentzVector(0, 0, 0, 0)
+                                    pD04 = pD02 + pPi0_cand2
+                                    if math.fabs(pD03.M() - 1.86483) < delta_M5:
+                                        delta_M5 = pD03.M() - 1.86483
+                                        m_D05 = pD03.M()
+                                    if math.fabs(pD04.M() - 1.86483) < delta_M6:
+                                        delta_M6 = pD04.M() - 1.86483
+                                        m_D06 = pD04.M()
+                                    if math.fabs(pD03.M() - 2.01026) < delta_M7:
+                                        delta_M7 = pD03.M() - 2.01026
+                                        m_D07 = pD03.M()
+                                    if math.fabs(pD04.M() - 2.01026) < delta_M8:
+                                        delta_M8 = pD04.M() - 2.01026
+                                        m_D08 = pD04.M()
+                if t_in.n_pi0 > 3:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0) 
+                            pD02 = pothers + pPi0_cand1
+                            for jPi0 in range(t_in.n_pi0):
+                                pPi0_cand2 = TLorentzVector(0, 0, 0, 0)
+                                pPi0_cand2.SetPxPyPzE(t_in.p4_pi0[jPi0*4+0], t_in.p4_pi0[jPi0*4+1], t_in.p4_pi0[jPi0*4+2], t_in.p4_pi0[jPi0*4+3])
+                                if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand1.M() and pPi0_cand2.M() > 0:
+                                    pD03 = TLorentzVector(0, 0, 0, 0)
+                                    pD03 = pD01 + pPi0_cand2
+                                    pD04 = TLorentzVector(0, 0, 0, 0)
+                                    pD04 = pD02 + pPi0_cand2
+                                    for kPi0 in range(t_in.n_pi0):
+                                        pPi0_cand3 = TLorentzVector(0, 0, 0, 0)
+                                        pPi0_cand3.SetPxPyPzE(t_in.p4_pi0[kPi0*4+0], t_in.p4_pi0[kPi0*4+1], t_in.p4_pi0[kPi0*4+2], t_in.p4_pi0[kPi0*4+3])
+                                        if pPi0_cand3.M() != pPi0.M() and pPi0_cand3.M() != pPi0_cand1.M() and pPi0_cand3.M() != pPi0_cand2.M() and pPi0_cand3.M() > 0:
+                                            pD05 = TLorentzVector(0, 0, 0, 0)
+                                            pD05 = pD03 + pPi0_cand3
+                                            pD06 = TLorentzVector(0, 0, 0, 0)
+                                            pD06 = pD04 + pPi0_cand3
+                                            if math.fabs(pD05.M() - 1.86483) < delta_M9:
+                                                delta_M9 = pD05.M() - 1.86483
+                                                m_D09 = pD05.M()
+                                            if math.fabs(pD06.M() - 1.86483) < delta_M10:
+                                                delta_M10 = pD06.M() - 1.86483
+                                                m_D10 = pD06.M()
+                                            if math.fabs(pD05.M() - 2.01026) < delta_M11:
+                                                delta_M11 = pD05.M() - 2.01026
+                                                m_D11 = pD05.M()
+                                            if math.fabs(pD06.M() - 2.01026) < delta_M12:
+                                                delta_M12 = pD06.M() - 2.01026
+                                                m_D12 = pD06.M()
+            delta_list = []
+            delta_list.append(math.fabs(m_D01 - 1.86483))
+            delta_list.append(math.fabs(m_D02 - 1.86483))
+            delta_list.append(math.fabs(m_D03 - 2.01026))
+            delta_list.append(math.fabs(m_D04 - 2.01026))
+            delta_list.append(math.fabs(m_D05 - 1.86483))
+            delta_list.append(math.fabs(m_D06 - 1.86483))
+            delta_list.append(math.fabs(m_D07 - 2.01026))
+            delta_list.append(math.fabs(m_D08 - 2.01026))
+            delta_list.append(math.fabs(m_D09 - 1.86483))
+            delta_list.append(math.fabs(m_D10 - 1.86483))
+            delta_list.append(math.fabs(m_D11 - 2.01026))
+            delta_list.append(math.fabs(m_D12 - 2.01026))
+            delta_list.append(math.fabs(m_D0_cand1 - 1.86483))
+            delta_list.append(math.fabs(m_D0_cand1 - 1.86483))
+            delta_list.append(math.fabs(m_D0_cand1 - 2.01026))
+            delta_list.append(math.fabs(m_D0_cand1 - 2.01026))
+            delta_list.sort()
+            if delta_list[0] == math.fabs(m_D01 - 1.86483):
+                m_m_D0[0] = m_D01
+            if delta_list[0] == math.fabs(m_D02 - 1.86483):
+                m_m_D0[0] = m_D02
+            if delta_list[0] == math.fabs(m_D03 - 2.01026):
+                m_m_D0[0] = m_D03
+            if delta_list[0] == math.fabs(m_D04 - 2.01026):
+                m_m_D0[0] = m_D04
+            if delta_list[0] == math.fabs(m_D05 - 1.86483):
+                m_m_D0[0] = m_D05
+            if delta_list[0] == math.fabs(m_D06 - 1.86483):
+                m_m_D0[0] = m_D06
+            if delta_list[0] == math.fabs(m_D07 - 2.01026):
+                m_m_D0[0] = m_D07
+            if delta_list[0] == math.fabs(m_D08 - 2.01026):
+                m_m_D0[0] = m_D08
+            if delta_list[0] == math.fabs(m_D09 - 1.86483):
+                m_m_D0[0] = m_D09
+            if delta_list[0] == math.fabs(m_D10 - 1.86483):
+                m_m_D0[0] = m_D10
+            if delta_list[0] == math.fabs(m_D11 - 2.01026):
+                m_m_D0[0] = m_D11
+            if delta_list[0] == math.fabs(m_D12 - 2.01026):
+                m_m_D0[0] = m_D12
+            if delta_list[0] == math.fabs(m_D0_cand1 - 1.86483):
+                m_m_D0[0] = m_D0_cand1
+            if delta_list[0] == math.fabs(m_D0_cand2 - 1.86483):
+                m_m_D0[0] = m_D0_cand2
+            if delta_list[0] == math.fabs(m_D0_cand1 - 2.01026):
+                m_m_D0[0] = m_D0_cand1
+            if delta_list[0] == math.fabs(m_D0_cand2 - 2.01026):
+                m_m_D0[0] = m_D0_cand2
             t.Fill()
 
 def save_raw(f_in, cms, t, MODE):
@@ -340,27 +569,301 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
             m_m_Dpi0[0] = (pD+pPi0).M()
             m_m_pi0[0] = pPi0.M()
             m_n_pi0[0] = t_in.n_pi0
+            if t_in.charm == 1:
+                pothers = TLorentzVector(0, 0, 0, 0)
+                pD0_cand = TLorentzVector(0, 0, 0, 0)
+                for iTrk in range(t_in.n_othertrks):
+                    pKpi = TLorentzVector(0, 0, 0, 0)
+                    pKpi.SetPxPyPzE(t_in.rawp4_otherMdcKaltrk[iTrk*6+0], t_in.rawp4_otherMdcKaltrk[iTrk*6+1], t_in.rawp4_otherMdcKaltrk[iTrk*6+2], t_in.rawp4_otherMdcKaltrk[iTrk*6+3])
+                    pothers += pKpi
+                pD0_cand = pothers + pPip
+                m_D0_cand1 = pD0_cand.M()
+                m_D0_cand2 = pothers.M()
+                delta_M1 = 999.
+                delta_M2 = 999.
+                delta_M3 = 999.
+                delta_M4 = 999.
+                delta_M5 = 999.
+                delta_M6 = 999.
+                delta_M7 = 999.
+                delta_M8 = 999.
+                delta_M9 = 999.
+                delta_M10 = 999.
+                delta_M11 = 999.
+                delta_M12 = 999.
+                m_D01 = 0.
+                m_D02 = 0.
+                m_D03 = 0.
+                m_D04 = 0.
+                m_D05 = 0.
+                m_D06 = 0.
+                m_D07 = 0.
+                m_D08 = 0.
+                m_D09 = 0.
+                m_D10 = 0.
+                m_D11 = 0.
+                m_D12 = 0.
+                if t_in.n_pi0 > 1:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0)
+                            pD02 = pothers + pPi0_cand1
+                            if math.fabs(pD01.M() - 1.86483) < delta_M1:
+                                delta_M1 = pD01.M() - 1.86483
+                                m_D01 = pD01.M()
+                            if math.fabs(pD02.M() - 1.86483) < delta_M2:
+                                delta_M2 = pD02.M() - 1.86483
+                                m_D02 = pD02.M()
+                            if math.fabs(pD01.M() - 2.01026) < delta_M3:
+                                delta_M3 = pD01.M() - 2.01026
+                                m_D03 = pD01.M()
+                            if math.fabs(pD02.M() - 2.01026) < delta_M4:
+                                delta_M4 = pD02.M() - 2.01026
+                                m_D04 = pD02.M()
+                if t_in.n_pi0 > 2:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0) 
+                            pD02 = pothers + pPi0_cand1
+                            for jPi0 in range(t_in.n_pi0):
+                                pPi0_cand2 = TLorentzVector(0, 0, 0, 0)
+                                pPi0_cand2.SetPxPyPzE(t_in.p4_pi0[jPi0*4+0], t_in.p4_pi0[jPi0*4+1], t_in.p4_pi0[jPi0*4+2], t_in.p4_pi0[jPi0*4+3])
+                                if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand1.M() and pPi0_cand2.M() > 0:
+                                    pD03 = TLorentzVector(0, 0, 0, 0)
+                                    pD03 = pD01 + pPi0_cand2
+                                    pD04 = TLorentzVector(0, 0, 0, 0)
+                                    pD04 = pD02 + pPi0_cand2
+                                    if math.fabs(pD03.M() - 1.86483) < delta_M5:
+                                        delta_M5 = pD03.M() - 1.86483
+                                        m_D05 = pD03.M()
+                                    if math.fabs(pD04.M() - 1.86483) < delta_M6:
+                                        delta_M6 = pD04.M() - 1.86483
+                                        m_D06 = pD04.M()
+                                    if math.fabs(pD03.M() - 2.01026) < delta_M7:
+                                        delta_M7 = pD03.M() - 2.01026
+                                        m_D07 = pD03.M()
+                                    if math.fabs(pD04.M() - 2.01026) < delta_M8:
+                                        delta_M8 = pD04.M() - 2.01026
+                                        m_D08 = pD04.M()
+                if t_in.n_pi0 > 3:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0) 
+                            pD02 = pothers + pPi0_cand1
+                            for jPi0 in range(t_in.n_pi0):
+                                pPi0_cand2 = TLorentzVector(0, 0, 0, 0)
+                                pPi0_cand2.SetPxPyPzE(t_in.p4_pi0[jPi0*4+0], t_in.p4_pi0[jPi0*4+1], t_in.p4_pi0[jPi0*4+2], t_in.p4_pi0[jPi0*4+3])
+                                if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand1.M() and pPi0_cand2.M() > 0:
+                                    pD03 = TLorentzVector(0, 0, 0, 0)
+                                    pD03 = pD01 + pPi0_cand2
+                                    pD04 = TLorentzVector(0, 0, 0, 0)
+                                    pD04 = pD02 + pPi0_cand2
+                                    for kPi0 in range(t_in.n_pi0):
+                                        pPi0_cand3 = TLorentzVector(0, 0, 0, 0)
+                                        pPi0_cand3.SetPxPyPzE(t_in.p4_pi0[kPi0*4+0], t_in.p4_pi0[kPi0*4+1], t_in.p4_pi0[kPi0*4+2], t_in.p4_pi0[kPi0*4+3])
+                                        if pPi0_cand3.M() != pPi0.M() and pPi0_cand3.M() != pPi0_cand1.M() and pPi0_cand3.M() != pPi0_cand2.M() and pPi0_cand3.M() > 0:
+                                            pD05 = TLorentzVector(0, 0, 0, 0)
+                                            pD05 = pD03 + pPi0_cand3
+                                            pD06 = TLorentzVector(0, 0, 0, 0)
+                                            pD06 = pD04 + pPi0_cand3
+                                            if math.fabs(pD05.M() - 1.86483) < delta_M9:
+                                                delta_M9 = pD05.M() - 1.86483
+                                                m_D09 = pD05.M()
+                                            if math.fabs(pD06.M() - 1.86483) < delta_M10:
+                                                delta_M10 = pD06.M() - 1.86483
+                                                m_D10 = pD06.M()
+                                            if math.fabs(pD05.M() - 2.01026) < delta_M11:
+                                                delta_M11 = pD05.M() - 2.01026
+                                                m_D11 = pD05.M()
+                                            if math.fabs(pD06.M() - 2.01026) < delta_M12:
+                                                delta_M12 = pD06.M() - 2.01026
+                                                m_D12 = pD06.M()
+            if t_in.charm == -1:
+                pothers = TLorentzVector(0, 0, 0, 0)
+                pD0_cand = TLorentzVector(0, 0, 0, 0)
+                for iTrk in range(t_in.n_othertrks):
+                    pKpi = TLorentzVector(0, 0, 0, 0)
+                    pKpi.SetPxPyPzE(t_in.rawp4_otherMdcKaltrk[iTrk*6+0], t_in.rawp4_otherMdcKaltrk[iTrk*6+1], t_in.rawp4_otherMdcKaltrk[iTrk*6+2], t_in.rawp4_otherMdcKaltrk[iTrk*6+3])
+                    pothers += pKpi
+                pD0_cand = pothers + pPim
+                m_D0_cand1 = pD0_cand.M()
+                m_D0_cand2 = pothers.M()
+                delta_M1 = 999.
+                delta_M2 = 999.
+                delta_M3 = 999.
+                delta_M4 = 999.
+                delta_M5 = 999.
+                delta_M6 = 999.
+                delta_M7 = 999.
+                delta_M8 = 999.
+                delta_M9 = 999.
+                delta_M10 = 999.
+                delta_M11 = 999.
+                delta_M12 = 999.
+                m_D01 = 0.
+                m_D02 = 0.
+                m_D03 = 0.
+                m_D04 = 0.
+                m_D05 = 0.
+                m_D06 = 0.
+                m_D07 = 0.
+                m_D08 = 0.
+                m_D09 = 0.
+                m_D10 = 0.
+                m_D11 = 0.
+                m_D12 = 0.
+                if t_in.n_pi0 > 1:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0)
+                            pD02 = pothers + pPi0_cand1
+                            if math.fabs(pD01.M() - 1.86483) < delta_M1:
+                                delta_M1 = pD01.M() - 1.86483
+                                m_D01 = pD01.M()
+                            if math.fabs(pD02.M() - 1.86483) < delta_M2:
+                                delta_M2 = pD02.M() - 1.86483
+                                m_D02 = pD02.M()
+                            if math.fabs(pD01.M() - 2.01026) < delta_M3:
+                                delta_M3 = pD01.M() - 2.01026
+                                m_D03 = pD01.M()
+                            if math.fabs(pD02.M() - 2.01026) < delta_M4:
+                                delta_M4 = pD02.M() - 2.01026
+                                m_D04 = pD02.M()
+                if t_in.n_pi0 > 2:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0) 
+                            pD02 = pothers + pPi0_cand1
+                            for jPi0 in range(t_in.n_pi0):
+                                pPi0_cand2 = TLorentzVector(0, 0, 0, 0)
+                                pPi0_cand2.SetPxPyPzE(t_in.p4_pi0[jPi0*4+0], t_in.p4_pi0[jPi0*4+1], t_in.p4_pi0[jPi0*4+2], t_in.p4_pi0[jPi0*4+3])
+                                if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand1.M() and pPi0_cand2.M() > 0:
+                                    pD03 = TLorentzVector(0, 0, 0, 0)
+                                    pD03 = pD01 + pPi0_cand2
+                                    pD04 = TLorentzVector(0, 0, 0, 0)
+                                    pD04 = pD02 + pPi0_cand2
+                                    if math.fabs(pD03.M() - 1.86483) < delta_M5:
+                                        delta_M5 = pD03.M() - 1.86483
+                                        m_D05 = pD03.M()
+                                    if math.fabs(pD04.M() - 1.86483) < delta_M6:
+                                        delta_M6 = pD04.M() - 1.86483
+                                        m_D06 = pD04.M()
+                                    if math.fabs(pD03.M() - 2.01026) < delta_M7:
+                                        delta_M7 = pD03.M() - 2.01026
+                                        m_D07 = pD03.M()
+                                    if math.fabs(pD04.M() - 2.01026) < delta_M8:
+                                        delta_M8 = pD04.M() - 2.01026
+                                        m_D08 = pD04.M()
+                if t_in.n_pi0 > 3:
+                    for iPi0 in range(t_in.n_pi0):
+                        pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
+                        pPi0_cand1.SetPxPyPzE(t_in.p4_pi0[iPi0*4+0], t_in.p4_pi0[iPi0*4+1], t_in.p4_pi0[iPi0*4+2], t_in.p4_pi0[iPi0*4+3])
+                        if pPi0_cand1.M() != pPi0.M() and pPi0_cand1.M() > 0:
+                            pD01 = TLorentzVector(0, 0, 0, 0)
+                            pD01 = pD0_cand + pPi0_cand1
+                            pD02 = TLorentzVector(0, 0, 0, 0) 
+                            pD02 = pothers + pPi0_cand1
+                            for jPi0 in range(t_in.n_pi0):
+                                pPi0_cand2 = TLorentzVector(0, 0, 0, 0)
+                                pPi0_cand2.SetPxPyPzE(t_in.p4_pi0[jPi0*4+0], t_in.p4_pi0[jPi0*4+1], t_in.p4_pi0[jPi0*4+2], t_in.p4_pi0[jPi0*4+3])
+                                if pPi0_cand2.M() != pPi0.M() and pPi0_cand2.M() != pPi0_cand1.M() and pPi0_cand2.M() > 0:
+                                    pD03 = TLorentzVector(0, 0, 0, 0)
+                                    pD03 = pD01 + pPi0_cand2
+                                    pD04 = TLorentzVector(0, 0, 0, 0)
+                                    pD04 = pD02 + pPi0_cand2
+                                    for kPi0 in range(t_in.n_pi0):
+                                        pPi0_cand3 = TLorentzVector(0, 0, 0, 0)
+                                        pPi0_cand3.SetPxPyPzE(t_in.p4_pi0[kPi0*4+0], t_in.p4_pi0[kPi0*4+1], t_in.p4_pi0[kPi0*4+2], t_in.p4_pi0[kPi0*4+3])
+                                        if pPi0_cand3.M() != pPi0.M() and pPi0_cand3.M() != pPi0_cand1.M() and pPi0_cand3.M() != pPi0_cand2.M() and pPi0_cand3.M() > 0:
+                                            pD05 = TLorentzVector(0, 0, 0, 0)
+                                            pD05 = pD03 + pPi0_cand3
+                                            pD06 = TLorentzVector(0, 0, 0, 0)
+                                            pD06 = pD04 + pPi0_cand3
+                                            if math.fabs(pD05.M() - 1.86483) < delta_M9:
+                                                delta_M9 = pD05.M() - 1.86483
+                                                m_D09 = pD05.M()
+                                            if math.fabs(pD06.M() - 1.86483) < delta_M10:
+                                                delta_M10 = pD06.M() - 1.86483
+                                                m_D10 = pD06.M()
+                                            if math.fabs(pD05.M() - 2.01026) < delta_M11:
+                                                delta_M11 = pD05.M() - 2.01026
+                                                m_D11 = pD05.M()
+                                            if math.fabs(pD06.M() - 2.01026) < delta_M12:
+                                                delta_M12 = pD06.M() - 2.01026
+                                                m_D12 = pD06.M()
+            delta_list = []
+            delta_list.append(math.fabs(m_D01 - 1.86483))
+            delta_list.append(math.fabs(m_D02 - 1.86483))
+            delta_list.append(math.fabs(m_D03 - 2.01026))
+            delta_list.append(math.fabs(m_D04 - 2.01026))
+            delta_list.append(math.fabs(m_D05 - 1.86483))
+            delta_list.append(math.fabs(m_D06 - 1.86483))
+            delta_list.append(math.fabs(m_D07 - 2.01026))
+            delta_list.append(math.fabs(m_D08 - 2.01026))
+            delta_list.append(math.fabs(m_D09 - 1.86483))
+            delta_list.append(math.fabs(m_D10 - 1.86483))
+            delta_list.append(math.fabs(m_D11 - 2.01026))
+            delta_list.append(math.fabs(m_D12 - 2.01026))
+            delta_list.append(math.fabs(m_D0_cand1 - 1.86483))
+            delta_list.append(math.fabs(m_D0_cand1 - 1.86483))
+            delta_list.append(math.fabs(m_D0_cand1 - 2.01026))
+            delta_list.append(math.fabs(m_D0_cand1 - 2.01026))
+            delta_list.sort()
+            if delta_list[0] == math.fabs(m_D01 - 1.86483):
+                m_m_D0[0] = m_D01
+            if delta_list[0] == math.fabs(m_D02 - 1.86483):
+                m_m_D0[0] = m_D02
+            if delta_list[0] == math.fabs(m_D03 - 2.01026):
+                m_m_D0[0] = m_D03
+            if delta_list[0] == math.fabs(m_D04 - 2.01026):
+                m_m_D0[0] = m_D04
+            if delta_list[0] == math.fabs(m_D05 - 1.86483):
+                m_m_D0[0] = m_D05
+            if delta_list[0] == math.fabs(m_D06 - 1.86483):
+                m_m_D0[0] = m_D06
+            if delta_list[0] == math.fabs(m_D07 - 2.01026):
+                m_m_D0[0] = m_D07
+            if delta_list[0] == math.fabs(m_D08 - 2.01026):
+                m_m_D0[0] = m_D08
+            if delta_list[0] == math.fabs(m_D09 - 1.86483):
+                m_m_D0[0] = m_D09
+            if delta_list[0] == math.fabs(m_D10 - 1.86483):
+                m_m_D0[0] = m_D10
+            if delta_list[0] == math.fabs(m_D11 - 2.01026):
+                m_m_D0[0] = m_D11
+            if delta_list[0] == math.fabs(m_D12 - 2.01026):
+                m_m_D0[0] = m_D12
+            if delta_list[0] == math.fabs(m_D0_cand1 - 1.86483):
+                m_m_D0[0] = m_D0_cand1
+            if delta_list[0] == math.fabs(m_D0_cand2 - 1.86483):
+                m_m_D0[0] = m_D0_cand2
+            if delta_list[0] == math.fabs(m_D0_cand1 - 2.01026):
+                m_m_D0[0] = m_D0_cand1
+            if delta_list[0] == math.fabs(m_D0_cand2 - 2.01026):
+                m_m_D0[0] = m_D0_cand2
             for i in range(t_in.indexmc):
                 m_motheridx[i] = t_in.motheridx[i]
                 m_pdgid[i] = t_in.pdgid[i]
-            if t_in.charm == 1:
-                pothers = TLorentzVector(0, 0, 0, 0)
-                pD0 = TLorentzVector(0, 0, 0, 0)
-                for iTrk in range(t_in.n_othertrks):
-                    pKpi = TLorentzVector(0, 0, 0, 0)
-                    pKpi.SetPxPyPzE(t_in.rawp4_otherMdcKaltrk[iTrk*6+0], t_in.rawp4_otherMdcKaltrk[iTrk*6+1], t_in.rawp4_otherMdcKaltrk[iTrk*6+2], t_in.rawp4_otherMdcKaltrk[iTrk*6+3])
-                    pothers += pKpi
-                pD0 = pothers + pPip
-                m_m_D0[0] = pD0.M()
-            if t_in.charm == -1:
-                pothers = TLorentzVector(0, 0, 0, 0)
-                pD0 = TLorentzVector(0, 0, 0, 0)
-                for iTrk in range(t_in.n_othertrks):
-                    pKpi = TLorentzVector(0, 0, 0, 0)
-                    pKpi.SetPxPyPzE(t_in.rawp4_otherMdcKaltrk[iTrk*6+0], t_in.rawp4_otherMdcKaltrk[iTrk*6+1], t_in.rawp4_otherMdcKaltrk[iTrk*6+2], t_in.rawp4_otherMdcKaltrk[iTrk*6+3])
-                    pothers += pKpi
-                pD0 = pothers + pPim
-                m_m_D0[0] = pD0.M()
             t.Fill()
 
 def main():
