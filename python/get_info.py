@@ -144,9 +144,6 @@ def save_missing(f_in, cms, t, MODE):
                 delta_M7 = 999.
                 delta_M8 = 999.
                 delta_M9 = 999.
-                delta_M10 = 999.
-                delta_M11 = 999.
-                delta_M12 = 999.
                 m_D01 = 0.
                 m_D02 = 0.
                 m_D03 = 0.
@@ -156,9 +153,6 @@ def save_missing(f_in, cms, t, MODE):
                 m_D07 = 0.
                 m_D08 = 0.
                 m_D09 = 0.
-                m_D10 = 0.
-                m_D11 = 0.
-                m_D12 = 0.
                 if t_in.n_pi0 > 1:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -171,15 +165,12 @@ def save_missing(f_in, cms, t, MODE):
                             if math.fabs(pD01.M() - 1.86483) < delta_M1:
                                 delta_M1 = pD01.M() - 1.86483
                                 m_D01 = pD01.M()
-                            if math.fabs(pD02.M() - 1.86483) < delta_M2:
-                                delta_M2 = pD02.M() - 1.86483
-                                m_D02 = pD02.M()
-                            if math.fabs(pD01.M() - 2.01026) < delta_M3:
-                                delta_M3 = pD01.M() - 2.01026
-                                m_D03 = pD01.M()
-                            if math.fabs(pD02.M() - 2.01026) < delta_M4:
-                                delta_M4 = pD02.M() - 2.01026
-                                m_D04 = pD02.M()
+                            if math.fabs(pD01.M() - 2.01026) < delta_M2:
+                                delta_M2 = pD01.M() - 2.01026
+                                m_D02 = pD01.M()
+                            if math.fabs(pD02.M() - 2.01026) < delta_M3:
+                                delta_M3 = pD02.M() - 2.01026
+                                m_D03 = pD02.M()
                 if t_in.n_pi0 > 2:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -197,18 +188,15 @@ def save_missing(f_in, cms, t, MODE):
                                     pD03 = pD01 + pPi0_cand2
                                     pD04 = TLorentzVector(0, 0, 0, 0)
                                     pD04 = pD02 + pPi0_cand2
-                                    if math.fabs(pD03.M() - 1.86483) < delta_M5:
-                                        delta_M5 = pD03.M() - 1.86483
+                                    if math.fabs(pD03.M() - 1.86483) < delta_M4:
+                                        delta_M4 = pD03.M() - 1.86483
+                                        m_D04 = pD03.M()
+                                    if math.fabs(pD03.M() - 2.01026) < delta_M5:
+                                        delta_M5 = pD03.M() - 2.01026
                                         m_D05 = pD03.M()
-                                    if math.fabs(pD04.M() - 1.86483) < delta_M6:
-                                        delta_M6 = pD04.M() - 1.86483
+                                    if math.fabs(pD04.M() - 2.01026) < delta_M6:
+                                        delta_M6 = pD04.M() - 2.01026
                                         m_D06 = pD04.M()
-                                    if math.fabs(pD03.M() - 2.01026) < delta_M7:
-                                        delta_M7 = pD03.M() - 2.01026
-                                        m_D07 = pD03.M()
-                                    if math.fabs(pD04.M() - 2.01026) < delta_M8:
-                                        delta_M8 = pD04.M() - 2.01026
-                                        m_D08 = pD04.M()
                 if t_in.n_pi0 > 3:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -234,18 +222,15 @@ def save_missing(f_in, cms, t, MODE):
                                             pD05 = pD03 + pPi0_cand3
                                             pD06 = TLorentzVector(0, 0, 0, 0)
                                             pD06 = pD04 + pPi0_cand3
-                                            if math.fabs(pD05.M() - 1.86483) < delta_M9:
-                                                delta_M9 = pD05.M() - 1.86483
-                                                m_D09 = pD05.M()
-                                            if math.fabs(pD06.M() - 1.86483) < delta_M10:
-                                                delta_M10 = pD06.M() - 1.86483
-                                                m_D10 = pD06.M()
-                                            if math.fabs(pD05.M() - 2.01026) < delta_M11:
-                                                delta_M11 = pD05.M() - 2.01026
-                                                m_D11 = pD05.M()
-                                            if math.fabs(pD06.M() - 2.01026) < delta_M12:
-                                                delta_M12 = pD06.M() - 2.01026
-                                                m_D12 = pD06.M()
+                                            if math.fabs(pD05.M() - 1.86483) < delta_M7:
+                                                delta_M7 = pD05.M() - 1.86483
+                                                m_D07 = pD05.M()
+                                            if math.fabs(pD05.M() - 2.01026) < delta_M8:
+                                                delta_M8 = pD05.M() - 2.01026
+                                                m_D08 = pD05.M()
+                                            if math.fabs(pD06.M() - 2.01026) < delta_M9:
+                                                delta_M9 = pD06.M() - 2.01026
+                                                m_D09 = pD06.M()
             if t_in.charm == -1:
                 pothers = TLorentzVector(0, 0, 0, 0)
                 pD0_cand = TLorentzVector(0, 0, 0, 0)
@@ -265,9 +250,6 @@ def save_missing(f_in, cms, t, MODE):
                 delta_M7 = 999.
                 delta_M8 = 999.
                 delta_M9 = 999.
-                delta_M10 = 999.
-                delta_M11 = 999.
-                delta_M12 = 999.
                 m_D01 = 0.
                 m_D02 = 0.
                 m_D03 = 0.
@@ -277,9 +259,6 @@ def save_missing(f_in, cms, t, MODE):
                 m_D07 = 0.
                 m_D08 = 0.
                 m_D09 = 0.
-                m_D10 = 0.
-                m_D11 = 0.
-                m_D12 = 0.
                 if t_in.n_pi0 > 1:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -292,15 +271,12 @@ def save_missing(f_in, cms, t, MODE):
                             if math.fabs(pD01.M() - 1.86483) < delta_M1:
                                 delta_M1 = pD01.M() - 1.86483
                                 m_D01 = pD01.M()
-                            if math.fabs(pD02.M() - 1.86483) < delta_M2:
-                                delta_M2 = pD02.M() - 1.86483
-                                m_D02 = pD02.M()
-                            if math.fabs(pD01.M() - 2.01026) < delta_M3:
-                                delta_M3 = pD01.M() - 2.01026
-                                m_D03 = pD01.M()
-                            if math.fabs(pD02.M() - 2.01026) < delta_M4:
-                                delta_M4 = pD02.M() - 2.01026
-                                m_D04 = pD02.M()
+                            if math.fabs(pD01.M() - 2.01026) < delta_M2:
+                                delta_M2 = pD01.M() - 2.01026
+                                m_D02 = pD01.M()
+                            if math.fabs(pD02.M() - 2.01026) < delta_M3:
+                                delta_M3 = pD02.M() - 2.01026
+                                m_D03 = pD02.M()
                 if t_in.n_pi0 > 2:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -318,18 +294,15 @@ def save_missing(f_in, cms, t, MODE):
                                     pD03 = pD01 + pPi0_cand2
                                     pD04 = TLorentzVector(0, 0, 0, 0)
                                     pD04 = pD02 + pPi0_cand2
-                                    if math.fabs(pD03.M() - 1.86483) < delta_M5:
-                                        delta_M5 = pD03.M() - 1.86483
+                                    if math.fabs(pD03.M() - 1.86483) < delta_M4:
+                                        delta_M4 = pD03.M() - 1.86483
+                                        m_D04 = pD03.M()
+                                    if math.fabs(pD03.M() - 2.01026) < delta_M5:
+                                        delta_M5 = pD03.M() - 2.01026
                                         m_D05 = pD03.M()
-                                    if math.fabs(pD04.M() - 1.86483) < delta_M6:
-                                        delta_M6 = pD04.M() - 1.86483
+                                    if math.fabs(pD04.M() - 2.01026) < delta_M6:
+                                        delta_M6 = pD04.M() - 2.01026
                                         m_D06 = pD04.M()
-                                    if math.fabs(pD03.M() - 2.01026) < delta_M7:
-                                        delta_M7 = pD03.M() - 2.01026
-                                        m_D07 = pD03.M()
-                                    if math.fabs(pD04.M() - 2.01026) < delta_M8:
-                                        delta_M8 = pD04.M() - 2.01026
-                                        m_D08 = pD04.M()
                 if t_in.n_pi0 > 3:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -355,64 +328,49 @@ def save_missing(f_in, cms, t, MODE):
                                             pD05 = pD03 + pPi0_cand3
                                             pD06 = TLorentzVector(0, 0, 0, 0)
                                             pD06 = pD04 + pPi0_cand3
-                                            if math.fabs(pD05.M() - 1.86483) < delta_M9:
-                                                delta_M9 = pD05.M() - 1.86483
-                                                m_D09 = pD05.M()
-                                            if math.fabs(pD06.M() - 1.86483) < delta_M10:
-                                                delta_M10 = pD06.M() - 1.86483
-                                                m_D10 = pD06.M()
-                                            if math.fabs(pD05.M() - 2.01026) < delta_M11:
-                                                delta_M11 = pD05.M() - 2.01026
-                                                m_D11 = pD05.M()
-                                            if math.fabs(pD06.M() - 2.01026) < delta_M12:
-                                                delta_M12 = pD06.M() - 2.01026
-                                                m_D12 = pD06.M()
+                                            if math.fabs(pD05.M() - 1.86483) < delta_M7:
+                                                delta_M07 = pD05.M() - 1.86483
+                                                m_D07 = pD05.M()
+                                            if math.fabs(pD05.M() - 2.01026) < delta_M8:
+                                                delta_M08 = pD05.M() - 2.01026
+                                                m_D08 = pD05.M()
+                                            if math.fabs(pD06.M() - 2.01026) < delta_M9:
+                                                delta_M09 = pD06.M() - 2.01026
+                                                m_D09 = pD06.M()
             delta_list = []
             delta_list.append(math.fabs(m_D01 - 1.86483))
-            delta_list.append(math.fabs(m_D02 - 1.86483))
+            delta_list.append(math.fabs(m_D02 - 2.01026))
             delta_list.append(math.fabs(m_D03 - 2.01026))
-            delta_list.append(math.fabs(m_D04 - 2.01026))
-            delta_list.append(math.fabs(m_D05 - 1.86483))
-            delta_list.append(math.fabs(m_D06 - 1.86483))
-            delta_list.append(math.fabs(m_D07 - 2.01026))
+            delta_list.append(math.fabs(m_D04 - 1.86483))
+            delta_list.append(math.fabs(m_D05 - 2.01026))
+            delta_list.append(math.fabs(m_D06 - 2.01026))
+            delta_list.append(math.fabs(m_D07 - 1.86483))
             delta_list.append(math.fabs(m_D08 - 2.01026))
-            delta_list.append(math.fabs(m_D09 - 1.86483))
-            delta_list.append(math.fabs(m_D10 - 1.86483))
-            delta_list.append(math.fabs(m_D11 - 2.01026))
-            delta_list.append(math.fabs(m_D12 - 2.01026))
-            delta_list.append(math.fabs(m_D0_cand1 - 1.86483))
+            delta_list.append(math.fabs(m_D09 - 2.01026))
             delta_list.append(math.fabs(m_D0_cand1 - 1.86483))
             delta_list.append(math.fabs(m_D0_cand1 - 2.01026))
             delta_list.append(math.fabs(m_D0_cand1 - 2.01026))
             delta_list.sort()
             if delta_list[0] == math.fabs(m_D01 - 1.86483):
                 m_m_D0[0] = m_D01
-            if delta_list[0] == math.fabs(m_D02 - 1.86483):
+            if delta_list[0] == math.fabs(m_D02 - 2.01026):
                 m_m_D0[0] = m_D02
             if delta_list[0] == math.fabs(m_D03 - 2.01026):
                 m_m_D0[0] = m_D03
-            if delta_list[0] == math.fabs(m_D04 - 2.01026):
+            if delta_list[0] == math.fabs(m_D04 - 1.86483):
                 m_m_D0[0] = m_D04
-            if delta_list[0] == math.fabs(m_D05 - 1.86483):
+            if delta_list[0] == math.fabs(m_D05 - 2.01026):
                 m_m_D0[0] = m_D05
-            if delta_list[0] == math.fabs(m_D06 - 1.86483):
+            if delta_list[0] == math.fabs(m_D06 - 2.01026):
                 m_m_D0[0] = m_D06
-            if delta_list[0] == math.fabs(m_D07 - 2.01026):
+            if delta_list[0] == math.fabs(m_D07 - 1.86483):
                 m_m_D0[0] = m_D07
             if delta_list[0] == math.fabs(m_D08 - 2.01026):
                 m_m_D0[0] = m_D08
-            if delta_list[0] == math.fabs(m_D09 - 1.86483):
+            if delta_list[0] == math.fabs(m_D09 - 2.01026):
                 m_m_D0[0] = m_D09
-            if delta_list[0] == math.fabs(m_D10 - 1.86483):
-                m_m_D0[0] = m_D10
-            if delta_list[0] == math.fabs(m_D11 - 2.01026):
-                m_m_D0[0] = m_D11
-            if delta_list[0] == math.fabs(m_D12 - 2.01026):
-                m_m_D0[0] = m_D12
             if delta_list[0] == math.fabs(m_D0_cand1 - 1.86483):
                 m_m_D0[0] = m_D0_cand1
-            if delta_list[0] == math.fabs(m_D0_cand2 - 1.86483):
-                m_m_D0[0] = m_D0_cand2
             if delta_list[0] == math.fabs(m_D0_cand1 - 2.01026):
                 m_m_D0[0] = m_D0_cand1
             if delta_list[0] == math.fabs(m_D0_cand2 - 2.01026):
@@ -588,9 +546,6 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                 delta_M7 = 999.
                 delta_M8 = 999.
                 delta_M9 = 999.
-                delta_M10 = 999.
-                delta_M11 = 999.
-                delta_M12 = 999.
                 m_D01 = 0.
                 m_D02 = 0.
                 m_D03 = 0.
@@ -600,9 +555,6 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                 m_D07 = 0.
                 m_D08 = 0.
                 m_D09 = 0.
-                m_D10 = 0.
-                m_D11 = 0.
-                m_D12 = 0.
                 if t_in.n_pi0 > 1:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -615,15 +567,12 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                             if math.fabs(pD01.M() - 1.86483) < delta_M1:
                                 delta_M1 = pD01.M() - 1.86483
                                 m_D01 = pD01.M()
-                            if math.fabs(pD02.M() - 1.86483) < delta_M2:
-                                delta_M2 = pD02.M() - 1.86483
-                                m_D02 = pD02.M()
-                            if math.fabs(pD01.M() - 2.01026) < delta_M3:
-                                delta_M3 = pD01.M() - 2.01026
-                                m_D03 = pD01.M()
-                            if math.fabs(pD02.M() - 2.01026) < delta_M4:
-                                delta_M4 = pD02.M() - 2.01026
-                                m_D04 = pD02.M()
+                            if math.fabs(pD01.M() - 2.01026) < delta_M2:
+                                delta_M2 = pD01.M() - 2.01026
+                                m_D02 = pD01.M()
+                            if math.fabs(pD02.M() - 2.01026) < delta_M3:
+                                delta_M3 = pD02.M() - 2.01026
+                                m_D03 = pD02.M()
                 if t_in.n_pi0 > 2:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -641,18 +590,15 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                                     pD03 = pD01 + pPi0_cand2
                                     pD04 = TLorentzVector(0, 0, 0, 0)
                                     pD04 = pD02 + pPi0_cand2
-                                    if math.fabs(pD03.M() - 1.86483) < delta_M5:
-                                        delta_M5 = pD03.M() - 1.86483
+                                    if math.fabs(pD03.M() - 1.86483) < delta_M4:
+                                        delta_M4 = pD03.M() - 1.86483
+                                        m_D04 = pD03.M()
+                                    if math.fabs(pD03.M() - 2.01026) < delta_M5:
+                                        delta_M5 = pD03.M() - 2.01026
                                         m_D05 = pD03.M()
-                                    if math.fabs(pD04.M() - 1.86483) < delta_M6:
-                                        delta_M6 = pD04.M() - 1.86483
+                                    if math.fabs(pD04.M() - 2.01026) < delta_M6:
+                                        delta_M6 = pD04.M() - 2.01026
                                         m_D06 = pD04.M()
-                                    if math.fabs(pD03.M() - 2.01026) < delta_M7:
-                                        delta_M7 = pD03.M() - 2.01026
-                                        m_D07 = pD03.M()
-                                    if math.fabs(pD04.M() - 2.01026) < delta_M8:
-                                        delta_M8 = pD04.M() - 2.01026
-                                        m_D08 = pD04.M()
                 if t_in.n_pi0 > 3:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -678,18 +624,15 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                                             pD05 = pD03 + pPi0_cand3
                                             pD06 = TLorentzVector(0, 0, 0, 0)
                                             pD06 = pD04 + pPi0_cand3
-                                            if math.fabs(pD05.M() - 1.86483) < delta_M9:
-                                                delta_M9 = pD05.M() - 1.86483
-                                                m_D09 = pD05.M()
-                                            if math.fabs(pD06.M() - 1.86483) < delta_M10:
-                                                delta_M10 = pD06.M() - 1.86483
-                                                m_D10 = pD06.M()
-                                            if math.fabs(pD05.M() - 2.01026) < delta_M11:
-                                                delta_M11 = pD05.M() - 2.01026
-                                                m_D11 = pD05.M()
-                                            if math.fabs(pD06.M() - 2.01026) < delta_M12:
-                                                delta_M12 = pD06.M() - 2.01026
-                                                m_D12 = pD06.M()
+                                            if math.fabs(pD05.M() - 1.86483) < delta_M7:
+                                                delta_M7 = pD05.M() - 1.86483
+                                                m_D07 = pD05.M()
+                                            if math.fabs(pD05.M() - 2.01026) < delta_M8:
+                                                delta_M8 = pD05.M() - 2.01026
+                                                m_D08 = pD05.M()
+                                            if math.fabs(pD06.M() - 2.01026) < delta_M9:
+                                                delta_M9 = pD06.M() - 2.01026
+                                                m_D09 = pD06.M()
             if t_in.charm == -1:
                 pothers = TLorentzVector(0, 0, 0, 0)
                 pD0_cand = TLorentzVector(0, 0, 0, 0)
@@ -709,9 +652,6 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                 delta_M7 = 999.
                 delta_M8 = 999.
                 delta_M9 = 999.
-                delta_M10 = 999.
-                delta_M11 = 999.
-                delta_M12 = 999.
                 m_D01 = 0.
                 m_D02 = 0.
                 m_D03 = 0.
@@ -721,9 +661,6 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                 m_D07 = 0.
                 m_D08 = 0.
                 m_D09 = 0.
-                m_D10 = 0.
-                m_D11 = 0.
-                m_D12 = 0.
                 if t_in.n_pi0 > 1:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -736,15 +673,12 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                             if math.fabs(pD01.M() - 1.86483) < delta_M1:
                                 delta_M1 = pD01.M() - 1.86483
                                 m_D01 = pD01.M()
-                            if math.fabs(pD02.M() - 1.86483) < delta_M2:
-                                delta_M2 = pD02.M() - 1.86483
-                                m_D02 = pD02.M()
-                            if math.fabs(pD01.M() - 2.01026) < delta_M3:
-                                delta_M3 = pD01.M() - 2.01026
-                                m_D03 = pD01.M()
-                            if math.fabs(pD02.M() - 2.01026) < delta_M4:
-                                delta_M4 = pD02.M() - 2.01026
-                                m_D04 = pD02.M()
+                            if math.fabs(pD01.M() - 2.01026) < delta_M2:
+                                delta_M2 = pD01.M() - 2.01026
+                                m_D02 = pD01.M()
+                            if math.fabs(pD02.M() - 2.01026) < delta_M3:
+                                delta_M3 = pD02.M() - 2.01026
+                                m_D03 = pD02.M()
                 if t_in.n_pi0 > 2:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -762,18 +696,15 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                                     pD03 = pD01 + pPi0_cand2
                                     pD04 = TLorentzVector(0, 0, 0, 0)
                                     pD04 = pD02 + pPi0_cand2
-                                    if math.fabs(pD03.M() - 1.86483) < delta_M5:
-                                        delta_M5 = pD03.M() - 1.86483
+                                    if math.fabs(pD03.M() - 1.86483) < delta_M4:
+                                        delta_M4 = pD03.M() - 1.86483
+                                        m_D04 = pD03.M()
+                                    if math.fabs(pD03.M() - 2.01026) < delta_M5:
+                                        delta_M5 = pD03.M() - 2.01026
                                         m_D05 = pD03.M()
-                                    if math.fabs(pD04.M() - 1.86483) < delta_M6:
-                                        delta_M6 = pD04.M() - 1.86483
+                                    if math.fabs(pD04.M() - 2.01026) < delta_M6:
+                                        delta_M6 = pD04.M() - 2.01026
                                         m_D06 = pD04.M()
-                                    if math.fabs(pD03.M() - 2.01026) < delta_M7:
-                                        delta_M7 = pD03.M() - 2.01026
-                                        m_D07 = pD03.M()
-                                    if math.fabs(pD04.M() - 2.01026) < delta_M8:
-                                        delta_M8 = pD04.M() - 2.01026
-                                        m_D08 = pD04.M()
                 if t_in.n_pi0 > 3:
                     for iPi0 in range(t_in.n_pi0):
                         pPi0_cand1 = TLorentzVector(0, 0, 0, 0)
@@ -799,64 +730,49 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
                                             pD05 = pD03 + pPi0_cand3
                                             pD06 = TLorentzVector(0, 0, 0, 0)
                                             pD06 = pD04 + pPi0_cand3
-                                            if math.fabs(pD05.M() - 1.86483) < delta_M9:
-                                                delta_M9 = pD05.M() - 1.86483
-                                                m_D09 = pD05.M()
-                                            if math.fabs(pD06.M() - 1.86483) < delta_M10:
-                                                delta_M10 = pD06.M() - 1.86483
-                                                m_D10 = pD06.M()
-                                            if math.fabs(pD05.M() - 2.01026) < delta_M11:
-                                                delta_M11 = pD05.M() - 2.01026
-                                                m_D11 = pD05.M()
-                                            if math.fabs(pD06.M() - 2.01026) < delta_M12:
-                                                delta_M12 = pD06.M() - 2.01026
-                                                m_D12 = pD06.M()
+                                            if math.fabs(pD05.M() - 1.86483) < delta_M7:
+                                                delta_M07 = pD05.M() - 1.86483
+                                                m_D07 = pD05.M()
+                                            if math.fabs(pD05.M() - 2.01026) < delta_M8:
+                                                delta_M08 = pD05.M() - 2.01026
+                                                m_D08 = pD05.M()
+                                            if math.fabs(pD06.M() - 2.01026) < delta_M9:
+                                                delta_M09 = pD06.M() - 2.01026
+                                                m_D09 = pD06.M()
             delta_list = []
             delta_list.append(math.fabs(m_D01 - 1.86483))
-            delta_list.append(math.fabs(m_D02 - 1.86483))
+            delta_list.append(math.fabs(m_D02 - 2.01026))
             delta_list.append(math.fabs(m_D03 - 2.01026))
-            delta_list.append(math.fabs(m_D04 - 2.01026))
-            delta_list.append(math.fabs(m_D05 - 1.86483))
-            delta_list.append(math.fabs(m_D06 - 1.86483))
-            delta_list.append(math.fabs(m_D07 - 2.01026))
+            delta_list.append(math.fabs(m_D04 - 1.86483))
+            delta_list.append(math.fabs(m_D05 - 2.01026))
+            delta_list.append(math.fabs(m_D06 - 2.01026))
+            delta_list.append(math.fabs(m_D07 - 1.86483))
             delta_list.append(math.fabs(m_D08 - 2.01026))
-            delta_list.append(math.fabs(m_D09 - 1.86483))
-            delta_list.append(math.fabs(m_D10 - 1.86483))
-            delta_list.append(math.fabs(m_D11 - 2.01026))
-            delta_list.append(math.fabs(m_D12 - 2.01026))
-            delta_list.append(math.fabs(m_D0_cand1 - 1.86483))
+            delta_list.append(math.fabs(m_D09 - 2.01026))
             delta_list.append(math.fabs(m_D0_cand1 - 1.86483))
             delta_list.append(math.fabs(m_D0_cand1 - 2.01026))
             delta_list.append(math.fabs(m_D0_cand1 - 2.01026))
             delta_list.sort()
             if delta_list[0] == math.fabs(m_D01 - 1.86483):
                 m_m_D0[0] = m_D01
-            if delta_list[0] == math.fabs(m_D02 - 1.86483):
+            if delta_list[0] == math.fabs(m_D02 - 2.01026):
                 m_m_D0[0] = m_D02
             if delta_list[0] == math.fabs(m_D03 - 2.01026):
                 m_m_D0[0] = m_D03
-            if delta_list[0] == math.fabs(m_D04 - 2.01026):
+            if delta_list[0] == math.fabs(m_D04 - 1.86483):
                 m_m_D0[0] = m_D04
-            if delta_list[0] == math.fabs(m_D05 - 1.86483):
+            if delta_list[0] == math.fabs(m_D05 - 2.01026):
                 m_m_D0[0] = m_D05
-            if delta_list[0] == math.fabs(m_D06 - 1.86483):
+            if delta_list[0] == math.fabs(m_D06 - 2.01026):
                 m_m_D0[0] = m_D06
-            if delta_list[0] == math.fabs(m_D07 - 2.01026):
+            if delta_list[0] == math.fabs(m_D07 - 1.86483):
                 m_m_D0[0] = m_D07
             if delta_list[0] == math.fabs(m_D08 - 2.01026):
                 m_m_D0[0] = m_D08
-            if delta_list[0] == math.fabs(m_D09 - 1.86483):
+            if delta_list[0] == math.fabs(m_D09 - 2.01026):
                 m_m_D0[0] = m_D09
-            if delta_list[0] == math.fabs(m_D10 - 1.86483):
-                m_m_D0[0] = m_D10
-            if delta_list[0] == math.fabs(m_D11 - 2.01026):
-                m_m_D0[0] = m_D11
-            if delta_list[0] == math.fabs(m_D12 - 2.01026):
-                m_m_D0[0] = m_D12
             if delta_list[0] == math.fabs(m_D0_cand1 - 1.86483):
                 m_m_D0[0] = m_D0_cand1
-            if delta_list[0] == math.fabs(m_D0_cand2 - 1.86483):
-                m_m_D0[0] = m_D0_cand2
             if delta_list[0] == math.fabs(m_D0_cand1 - 2.01026):
                 m_m_D0[0] = m_D0_cand1
             if delta_list[0] == math.fabs(m_D0_cand2 - 2.01026):
