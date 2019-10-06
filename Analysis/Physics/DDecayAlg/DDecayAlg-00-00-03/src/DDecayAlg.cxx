@@ -462,12 +462,6 @@ void DDecayAlg::clearVariables() {
     m_chi2_vf_sidebandup = -999;
     chi2_kf = -999;
     m_chi2_kf = -999;
-    chi2_kf_signal = -999;
-    m_chi2_kf_signal = -999;
-    chi2_kf_sidebandlow = -999;
-    m_chi2_kf_sidebandlow = -999;
-    chi2_kf_sidebandup = -999;
-    m_chi2_kf_sidebandup = -999;
     mDcand = 0;
     charge_otherMdctrk = 0;
     n_count = 0;
@@ -1186,12 +1180,18 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
             }
             HepLorentzVector ecms(0.011*cms, 0 , 0, cms);
             double rm_Dpipi = (ecms - pD - pPip - pPim).m();
+            chi2_kf_signal = -999;
+            m_chi2_kf_signal = -999;
             if (rm_Dpipi > 1.857 && rm_Dpipi < 1.882) {
                 chi2_kf_signal = fitKM_signal(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
             }
+            chi2_kf_sidebandlow = -999;
+            m_chi2_kf_sidebandlow = -999;
             if (rm_Dpipi > 1.806 && rm_Dpipi < 1.832) {
                 chi2_kf_sidebandlow = fitKM_sidebandlow(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
             }
+            chi2_kf_sidebandup = -999;
+            m_chi2_kf_sidebandup = -999;
             if (rm_Dpipi > 1.907 && rm_Dpipi < 1.932) {
                 chi2_kf_sidebandup = fitKM_sidebandup(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
             }
