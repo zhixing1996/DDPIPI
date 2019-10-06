@@ -1139,9 +1139,62 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
             RecMdcKalTrack *mdcKalTrk_minus = othertracks[j]->mdcKalTrack();
             vwtrkpara_piminus.push_back(WTrackParameter(mass[2], mdcKalTrk_minus->getZHelix(), mdcKalTrk_minus->getZError()));
             n_piminus++;
-            chi2_kf_signal = fitKM_signal(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
-            chi2_kf_sidebandlow = fitKM_sidebandlow(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
-            chi2_kf_sidebandup = fitKM_sidebandup(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
+            HepLorentzVector pD;
+            pD.setPx(0.);
+            pD.setPy(0.);
+            pD.setPz(0.);
+            pD.setE(0.);
+            SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
+            for (int k = 0; k < n_trkD; k++) {
+                RecMdcKalTrack* KalTrk = Dtrks[k]->mdcKalTrack();
+                HepLorentzVector ptrack;
+                if (k == 0) {
+                    KalTrk->setPidType(RecMdcKalTrack::kaon);
+                    ptrack.setPx(KalTrk->p4(mass[3])[0]);
+                    ptrack.setPy(KalTrk->p4(mass[3])[1]);
+                    ptrack.setPz(KalTrk->p4(mass[3])[2]);
+                    ptrack.setE(KalTrk->p4(mass[3])[3]);
+                }
+                else {
+                    KalTrk->setPidType(RecMdcKalTrack::pion);
+                    ptrack.setPx(KalTrk->p4(mass[2])[0]);
+                    ptrack.setPy(KalTrk->p4(mass[2])[1]);
+                    ptrack.setPz(KalTrk->p4(mass[2])[2]);
+                    ptrack.setE(KalTrk->p4(mass[2])[3]);
+                }
+                pD += ptrack;
+            }
+            HepLorentzVector pPip;
+            pPip.setPx(mdcKalTrk_plus->p4(mass[2])[0]);
+            pPip.setPy(mdcKalTrk_plus->p4(mass[2])[1]);
+            pPip.setPz(mdcKalTrk_plus->p4(mass[2])[2]);
+            pPip.setE(mdcKalTrk_plus->p4(mass[2])[3]);
+            HepLorentzVector pPim;
+            pPim.setPx(mdcKalTrk_minus->p4(mass[2])[0]);
+            pPim.setPy(mdcKalTrk_minus->p4(mass[2])[1]);
+            pPim.setPz(mdcKalTrk_minus->p4(mass[2])[2]);
+            pPim.setE(mdcKalTrk_minus->p4(mass[2])[3]);
+            double cms = 0;
+            if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
+                cms = 4.358;
+            }
+            if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
+                cms = 4.416;
+            }
+            if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
+                cms = 4.600;
+            }
+            HepLorentzVector ecms(0.011*cms, 0 , 0, cms);
+            double rm_Dpipi = (ecms - pD - pPip - pPim).m();
+            if (rm_Dpipi > 1.857 && rm_Dpipi < 1.882) {
+                chi2_kf_signal = fitKM_signal(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
+            }
+            if (rm_Dpipi > 1.806 && rm_Dpipi < 1.832) {
+                chi2_kf_sidebandlow = fitKM_sidebandlow(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
+            }
+            if (rm_Dpipi > 1.907 && rm_Dpipi < 1.932) {
+                chi2_kf_sidebandup = fitKM_sidebandup(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
+            }
             if (m_debug) std::cout << "Start recording region info if passed the requirement" << std::endl;
             if (fabs(chi2_kf_signal) < 999) {
                 HepLorentzVector pD;
