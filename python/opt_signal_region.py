@@ -65,7 +65,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, M_D, N, step, rat
         S1 = 0
         for j in xrange(int(entries1*ratio1)):
             t1.GetEntry(j)
-            if abs(t1.m_rm_Dpipi - M_D) < (step + i*step):
+            if abs(t1.m_rm_Dpipi - M_D) < (step + i*step) and t1.m_rawm_D > 1.859332 and t1.m_rawm_D < 1.879968:
                 S1 = S1 + 1
         S1_list.append(S1)
     print 'Start of sigMC2...'
@@ -73,7 +73,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, M_D, N, step, rat
         S2 = 0
         for j in xrange(int(entries2*ratio2)):
             t2.GetEntry(j)
-            if abs(t2.m_rm_Dpipi - M_D) < (step + i*step):
+            if abs(t2.m_rm_Dpipi - M_D) < (step + i*step) and t2.m_rawm_D > 1.859332 and t2.m_rawm_D < 1.879968:
                 S2 = S2 + 1
         S2_list.append(S2)
     for i in xrange(N):
@@ -84,7 +84,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, M_D, N, step, rat
         B = 0
         for j in xrange(entries3/5):
             t3.GetEntry(j)
-            if abs(t3.m_rm_Dpipi - M_D) < (step + i*step):
+            if abs(t3.m_rm_Dpipi - M_D) < (step + i*step) and t3.m_rawm_D > 1.859332 and t3.m_rawm_D < 1.879968:
                 B = B + 1
         B_list.append(B)
     Ratio_list = []
@@ -101,7 +101,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, M_D, N, step, rat
     xmax = N*step
     xtitle = '|RM(D^{+}#pi^{+}#pi^{-})-m_{D}|(GeV/c^{2})'
     ytitle = '#frac{S}{#sqrt{S+B}}'
-    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 30)
+    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 8)
     set_histo_style(h_FOM, xtitle, ytitle)
     for i in xrange(N):
         h_FOM.Fill(step + i*step, Ratio_list[i])
@@ -137,8 +137,8 @@ def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, Ge
     xbins = 100
     M_Dplus = 1.86965
     step = (1.9 - M_Dplus)/xbins
-    ratio1 = lum*XS1/GenNum
-    ratio2 = lum*XS2/GenNum
+    ratio1 = lum*XS1*0.0938/GenNum
+    ratio2 = lum*XS2*0.0938/GenNum
 
     h_FOM, ientry, arrow_top = cal_significance(t_sigMC1, t_sigMC2, t_incMC, entries_sigMC1, entries_sigMC2, entries_incMC, M_Dplus, xbins, step, ratio1, ratio2)
     h_FOM.Draw()

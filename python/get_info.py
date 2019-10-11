@@ -53,6 +53,8 @@ def save_missing(f_in, cms, t, MODE):
         m_m_pi0 = array('d', [999.])
         m_n_pi0 = array('i', [0])
         m_m_D0 = array('d', [999.])
+        m_matched_D = array('i', [0])
+        m_matched_pi = array('i', [0])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
         t.Branch('mode', m_mode, 'm_mode/I')
@@ -73,6 +75,8 @@ def save_missing(f_in, cms, t, MODE):
         t.Branch('m_pi0', m_m_pi0, 'm_m_pi0/D')
         t.Branch('n_pi0', m_n_pi0, 'm_n_pi0/I')
         t.Branch('m_D0', m_m_D0, 'm_m_D0/D')
+        t.Branch('matched_D', m_matched_D, 'm_matched_D/I')
+        t.Branch('matched_pi', m_matched_pi, 'm_matched_pi/I')
     if MODE == 'signal':
         t_in = f_in.Get('STD_signal')
     if MODE == 'sidebandlow':
@@ -375,6 +379,8 @@ def save_missing(f_in, cms, t, MODE):
                 m_m_D0[0] = m_D0_cand1
             if delta_list[0] == math.fabs(m_D0_cand2 - 2.01026):
                 m_m_D0[0] = m_D0_cand2
+            m_matched_D[0] = t_in.matched_D
+            m_matched_pi[0] = t_in.matched_pi
             t.Fill()
 
 def save_raw(f_in, cms, t, MODE):
@@ -475,6 +481,8 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
         m_m_pi0 = array('d', [999.])
         m_n_pi0 = array('i', [0])
         m_m_D0 = array('d', [999.])
+        m_matched_D = array('i', [0])
+        m_matched_pi = array('i', [0])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
         t.Branch('m_pipi', m_m_pipi, 'm_m_pipi/D')
@@ -491,6 +499,8 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
         t.Branch('m_pi0', m_m_pi0, 'm_m_pi0/D')
         t.Branch('n_pi0', m_n_pi0, 'm_n_pi0/I')
         t.Branch('m_D0', m_m_D0, 'm_m_D0/D')
+        t.Branch('matched_D', m_matched_D, 'm_matched_D/I')
+        t.Branch('matched_pi', m_matched_pi, 'm_matched_pi/I')
         t_in = f_in.Get('STD_signal')
         t_shw = f_in.Get('otherShw')
         nentries = t_in.GetEntries()
@@ -780,6 +790,8 @@ def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
             for i in range(t_in.indexmc):
                 m_motheridx[i] = t_in.motheridx[i]
                 m_pdgid[i] = t_in.pdgid[i]
+            m_matched_D[0] = t_in.matched_D
+            m_matched_pi[0] = t_in.matched_pi
             t.Fill()
 
 def main():

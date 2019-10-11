@@ -236,6 +236,8 @@ class DDecayAlg : public Algorithm {
         NTuple::Matrix<double> m_p4_pi0_signal;
         NTuple::Item<double> m_chi2_pi0_save_signal;
         NTuple::Array<double> m_p4_pi0_save_signal;
+        NTuple::Item<int> m_matched_D;
+        NTuple::Item<int> m_matched_pi;
 
         // Ntuple9 info
         NTuple::Tuple* m_tuple9;
@@ -328,5 +330,6 @@ class DDecayAlg : public Algorithm {
         bool fitpi0_sidebandup(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);
         bool saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth);
         bool saveOthershws();
+        int MatchMC(HepLorentzVector &p4, std::string MODE);
 };
 #endif

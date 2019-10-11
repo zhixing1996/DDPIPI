@@ -221,6 +221,8 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple8->addIndexedItem("p4_pi0", m_n_pi0_signal, 4, m_p4_pi0_signal);
             status = m_tuple8->addItem("chi2_pi0_save", m_chi2_pi0_save_signal);
             status = m_tuple8->addItem("p4_pi0_save", 4, m_p4_pi0_save_signal);
+            status = m_tuple8->addItem("matched_D", m_matched_D);
+            status = m_tuple8->addItem("matched_pi", m_matched_pi);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple8) << endmsg;
@@ -397,6 +399,8 @@ void DDecayAlg::clearVariables() {
     m_runNo_sidebandup = 0;
     m_evtNo_sidebandup = 0;
     m_flag1_sidebandup = 0;
+    m_matched_D = 0;
+    m_matched_pi = 0;
 
     // all McTruth info
     m_idxmc = 0;
@@ -729,6 +733,9 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         if (m_debug) std::cout<<" D: ntrk  nshw " << n_trkD << "  " << n_shwD << std::endl;
 
         vwtrkpara_charge.clear();
+        HepLorentzVector pK;
+        HepLorentzVector ppi;
+        m_matched_D = 0;
         for (int j = 0; j < n_trkD; j++) {
             RecMdcKalTrack* KalTrk = Dtrks[j]->mdcKalTrack();
             // to fill Kaon candidates
@@ -737,6 +744,11 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
                 if (m_debug) std::cout << " filling kaon track " << std::endl;
                 vwtrkpara_charge.push_back(WTrackParameter(mass[3], KalTrk->getZHelixK(), KalTrk->getZErrorK()));
                 for (int k = 0; k < 4; k++) m_rawp4_Dtrk[j][k] = KalTrk->p4(mass[3])[k]; // MDC gives three momentum, combined with mass, we can get energy which means four momentum
+                pK.setPx(KalTrk->p4(mass[3])[0]);
+                pK.setPy(KalTrk->p4(mass[3])[1]);
+                pK.setPz(KalTrk->p4(mass[3])[2]);
+                pK.setE(KalTrk->p4(mass[3])[3]);
+                m_matched_D = MatchMC(pK, "D_tag");
             }
             // to fill Pion candidates
             else {
@@ -744,6 +756,11 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
                 if (m_debug) std::cout << " filling pion track " << std::endl;
                 vwtrkpara_charge.push_back(WTrackParameter(mass[2], KalTrk->getZHelix(), KalTrk->getZError()));
                 for (int k = 0; k < 4; k++) m_rawp4_Dtrk[j][k] = KalTrk->p4(mass[2])[k];
+                ppi.setPx(KalTrk->p4(mass[2])[0]);
+                ppi.setPy(KalTrk->p4(mass[2])[1]);
+                ppi.setPz(KalTrk->p4(mass[2])[2]);
+                ppi.setE(KalTrk->p4(mass[2])[3]);
+                if (m_matched_D) m_matched_D = MatchMC(ppi, "D_tag");
             }
         }
 
@@ -906,7 +923,7 @@ double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, 1.86965);
+    kmfit->AddMissTrack(count++, 1.87);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
@@ -971,7 +988,7 @@ double DDecayAlg::fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, 1.819);
+    kmfit->AddMissTrack(count++, 1.81);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
@@ -1036,7 +1053,7 @@ double DDecayAlg::fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrk
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, 1.92);
+    kmfit->AddMissTrack(count++, 1.93);
     int n_res = 0;
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
@@ -1122,15 +1139,27 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
     vwtrkpara_piminus.clear();
     int n_piplus = 0;
     int n_piminus = 0;
+    HepLorentzVector ppi;
     for (int i = 0; i < othertracks.size(); i++) {
         if (!(dtagTool.isGoodTrack(othertracks[i]))) continue;
         if ((m_rawp4_otherMdcKaltrk[i][4] != 1) && (m_rawp4_otherMdcKaltrk[i][5] != 2)) continue;
         RecMdcKalTrack *mdcKalTrk_plus = othertracks[i]->mdcKalTrack();
+        ppi.setPx(mdcKalTrk_plus->p4(mass[2])[0]);
+        ppi.setPy(mdcKalTrk_plus->p4(mass[2])[1]);
+        ppi.setPz(mdcKalTrk_plus->p4(mass[2])[2]);
+        ppi.setE(mdcKalTrk_plus->p4(mass[2])[3]);
+        m_matched_pi = 0;
+        m_matched_pi = MatchMC(ppi, "pi_solo");
         vwtrkpara_piplus.push_back(WTrackParameter(mass[2], mdcKalTrk_plus->getZHelix(), mdcKalTrk_plus->getZError()));
         n_piplus++;
         for (int j = 0; j < othertracks.size(); j++) {
             if ((m_rawp4_otherMdcKaltrk[j][4] != -1) && (m_rawp4_otherMdcKaltrk[j][5] != 2)) continue;
             RecMdcKalTrack *mdcKalTrk_minus = othertracks[j]->mdcKalTrack();
+            ppi.setPx(mdcKalTrk_minus->p4(mass[2])[0]);
+            ppi.setPy(mdcKalTrk_minus->p4(mass[2])[1]);
+            ppi.setPz(mdcKalTrk_minus->p4(mass[2])[2]);
+            ppi.setE(mdcKalTrk_minus->p4(mass[2])[3]);
+            if (m_matched_pi) m_matched_pi = MatchMC(ppi, "pi_solo");
             vwtrkpara_piminus.push_back(WTrackParameter(mass[2], mdcKalTrk_minus->getZHelix(), mdcKalTrk_minus->getZError()));
             n_piminus++;
             HepLorentzVector pD;
@@ -1497,6 +1526,44 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
     if (m_debug) std::cout << " recorded " << m_n_othertrks << " other charged good tracks " << std::endl;
     if (m_n_othertrks >= 20) return false;
     else return true;
+}
+
+int DDecayAlg::MatchMC(HepLorentzVector &p4, std::string MODE) {
+    SmartDataPtr<Event::McParticleCol> mcParticleCol(eventSvc(), "/Event/MC/McParticleCol");
+    if (!mcParticleCol) {
+        return -999;
+    } else {
+        Event::McParticleCol::iterator iter_mc = mcParticleCol->begin();
+        double clst_ang = 999.;
+        Event::McParticle* clst_particle;
+        for (; iter_mc != mcParticleCol->end(); iter_mc++) {
+            if (!(*iter_mc)->decayFromGenerator())  continue;
+            double pid_cand = (*iter_mc)->particleProperty();
+            if (!(pid_cand == 211 || pid_cand == -211 || pid_cand == 321 || pid_cand == -321)) continue;
+            double ang = p4.angle((*iter_mc)->initialFourMomentum());
+            if (clst_ang > ang) {
+                clst_ang = ang;
+                clst_particle = (*iter_mc);
+            }
+        }
+        if (clst_ang < 999) {
+            Event::McParticle mom = clst_particle->mother();
+            int pid_mom = mom.particleProperty();
+            if (MODE == "D_tag" && (pid_mom == 411 || pid_mom == -411)) {
+                return 1;
+            } 
+            if (MODE == "D_tag" && (pid_mom != 411 || pid_mom != -411)) {
+                return 0;
+            }
+            if (MODE == "pi_solo" && (pid_mom == 9020443 || pid_mom == 9030443)) {
+                return 1;
+            } 
+            if (MODE == "pi_solo" && (pid_mom != 9020443 || pid_mom != 9030443)) {
+                return 0;
+            }
+        }
+    }
+    return 0;
 }
 
 bool DDecayAlg::saveOthershws() {

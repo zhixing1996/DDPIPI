@@ -27,11 +27,11 @@ def set_legend(legend, h1, h2, title):
 def chi2_KF_fill(t1, t2, entries1, entries2, h1, h2):
     for ientry1 in xrange(entries1):
         t1.GetEntry(ientry1)
-        if t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882:
+        if t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.855 and t1.m_rm_Dpipi < 1.885:
             h1.Fill(t1.m_chi2_kf)
     for ientry2 in xrange(entries2):
         t2.GetEntry(ientry2)
-        if t2.m_m_pipi > 0.28 and t2.m_rm_Dpipi > 1.857 and t2.m_rm_Dpipi < 1.882:
+        if t2.m_m_pipi > 0.28 and t2.m_rm_Dpipi > 1.855 and t2.m_rm_Dpipi < 1.885:
             h2.Fill(t2.m_chi2_kf)
 
 def set_histo_style(h1, h2, xtitle, ytitle, ymax):

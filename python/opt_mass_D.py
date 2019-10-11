@@ -101,7 +101,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, M_D, N, step, rat
     xmax = N*step
     xtitle = '|M(K^{-}#pi^{+}#pi^{+})-m_{D}|(GeV/c^{2})'
     ytitle = '#frac{S}{#sqrt{S+B}}'
-    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 30)
+    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 4)
     set_histo_style(h_FOM, xtitle, ytitle)
     for i in xrange(N):
         h_FOM.Fill(step + i*step, Ratio_list[i])
@@ -137,8 +137,8 @@ def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, Ge
     xbins = 150
     M_Dplus = 1.86965
     step = (1.94 - M_Dplus)/xbins
-    ratio1 = lum*XS1/GenNum
-    ratio2 = lum*XS2/GenNum
+    ratio1 = lum*XS1*0.0938/GenNum
+    ratio2 = lum*XS2*0.0938/GenNum
 
     h_FOM, ientry, arrow_top = cal_significance(t_sigMC1, t_sigMC2, t_incMC, entries_sigMC1, entries_sigMC2, entries_incMC, M_Dplus, xbins, step, ratio1, ratio2)
     h_FOM.Draw()
@@ -165,7 +165,7 @@ def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, Ge
     print range
 
     mbc.Update()
-    mbc.SaveAs('./figs/opt_mass_window_'+str(ecms)+'.pdf')
+    mbc.SaveAs('./figs/opt_mass_D_'+str(ecms)+'.pdf')
 
 def main():
     args = sys.argv[1:]

@@ -29,11 +29,11 @@ def set_legend(legend, h1, h2, title):
 def m_Dpi0_fill(t1, t2, h1, h2, chi2_cut):
     for ientry1 in xrange(t1.GetEntries()):
         t1.GetEntry(ientry1)
-        if t1.m_m_pipi > 0.28 and t1.m_chi2_kf < chi2_cut and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882:
+        if t1.m_m_pipi > 0.28 and t1.m_chi2_kf < chi2_cut and t1.m_rm_Dpipi > 1.855 and t1.m_rm_Dpipi < 1.885:
             h1.Fill(t1.m_m_Dpi0)
     for ientry2 in xrange(t2.GetEntries()):
         t2.GetEntry(ientry2)
-        if t2.m_m_pipi > 0.28 and t2.m_chi2_kf < chi2_cut and t2.m_rm_Dpipi > 1.857 and t2.m_rm_Dpipi < 1.882:
+        if t2.m_m_pipi > 0.28 and t2.m_chi2_kf < chi2_cut and t2.m_rm_Dpipi > 1.855 and t2.m_rm_Dpipi < 1.885:
             h2.Fill(t2.m_m_Dpi0)
 
 def set_histo_style(h1, h2, xtitle, ytitle):

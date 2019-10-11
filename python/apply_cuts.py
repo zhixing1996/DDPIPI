@@ -52,6 +52,8 @@ def save(f_in, cms, t, MODE, chi2_kf_cut):
     m_m_pi0 = array('d', [999.])
     m_n_pi0 = array('i', [0])
     m_m_D0 = array('d', [999.])
+    m_matched_D = array('i', [0])
+    m_matched_pi = array('i', [0])
     t.Branch('runNo', m_runNo, 'm_runNo/I')
     t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
     t.Branch('mode', m_mode, 'm_mode/I')
@@ -72,6 +74,8 @@ def save(f_in, cms, t, MODE, chi2_kf_cut):
     t.Branch('m_pi0', m_m_pi0, 'm_m_pi0/D')
     t.Branch('n_pi0', m_n_pi0, 'm_n_pi0/I')
     t.Branch('m_D0', m_m_D0, 'm_m_D0/D')
+    t.Branch('matched_D', m_matched_D, 'm_matched_D/I')
+    t.Branch('matched_pi', m_matched_pi, 'm_matched_pi/I')
     t_in = f_in.Get('save')
     nentries = t_in.GetEntries()
     for ientry in range(nentries):
@@ -97,6 +101,8 @@ def save(f_in, cms, t, MODE, chi2_kf_cut):
             m_m_pi0[0] = t_in.m_m_pi0
             m_n_pi0[0] = t_in.m_n_pi0
             m_m_D0[0] = t_in.m_m_D0
+            m_matched_D[0] = t_in.m_matched_D
+            m_matched_pi[0] = t_in.m_matched_pi
             t.Fill()
         if MODE == 'sideband' and t_in.m_m_pipi > 0.28 and t_in.m_chi2_kf < chi2_kf_cut and ((t_in.m_rm_Dpipi > 1.806 and t_in.m_rm_Dpipi < 1.832) or (t_in.m_rm_Dpipi > 1.906 and t_in.m_rm_Dpipi < 1.933)):
             m_runNo[0] = t_in.m_runNo
@@ -119,6 +125,8 @@ def save(f_in, cms, t, MODE, chi2_kf_cut):
             m_m_pi0[0] = t_in.m_m_pi0
             m_n_pi0[0] = t_in.m_n_pi0
             m_m_D0[0] = t_in.m_m_D0
+            m_matched_D[0] = t_in.m_matched_D
+            m_matched_pi[0] = t_in.m_matched_pi
             t.Fill()
 
 def main():

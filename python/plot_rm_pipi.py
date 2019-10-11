@@ -33,42 +33,42 @@ def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, MODE, chi2_cut):
     for ientry1 in xrange(t1.GetEntries()):
         t1.GetEntry(ientry1)
         if MODE == 'raw':
-            if t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882:
+            if t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.855 and t1.m_rm_Dpipi < 1.885:
                 h1.Fill(t1.m_rm_pipi)
         if MODE == 'cut':
-            if t1.m_m_pipi > 0.28 and t1.m_chi2_kf < chi2_cut and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882 and (t1.m_n_pi0 == 0 or (t1.m_n_pi0 != 0 and t1.m_m_Dpi0 > 2.015)) and (t1.m_m_D0 < 1.8 or t1.m_m_D0 > 2.1):
+            if t1.m_m_pipi > 0.28 and t1.m_chi2_kf < chi2_cut and t1.m_rm_Dpipi > 1.855 and t1.m_rm_Dpipi < 1.885 and (t1.m_n_pi0 == 0 or (t1.m_n_pi0 != 0 and t1.m_m_Dpi0 > 2.015)) and (t1.m_m_D0 < 1.75 or t1.m_m_D0 > 2.1):
                 h1.Fill(t1.m_rm_pipi)
     for ientry2 in xrange(t2.GetEntries()):
         t2.GetEntry(ientry2)
         if MODE == 'raw':
-            if t2.m_m_pipi > 0.28 and ((t2.m_rm_Dpipi > 1.806 and t2.m_rm_Dpipi < 1.832) or (t2.m_rm_Dpipi > 1.907 and t2.m_rm_Dpipi < 1.933)):
+            if t2.m_m_pipi > 0.28 and ((t2.m_rm_Dpipi > 1.795 and t2.m_rm_Dpipi < 1.825) or (t2.m_rm_Dpipi > 1.915 and t2.m_rm_Dpipi < 1.945)):
                 h2.Fill(t2.m_rm_pipi)
         if MODE == 'cut':
-            if t2.m_m_pipi > 0.28 and t2.m_chi2_kf < chi2_cut and ((t2.m_rm_Dpipi > 1.806 and t2.m_rm_Dpipi < 1.832) or (t2.m_rm_Dpipi > 1.907 and t2.m_rm_Dpipi < 1.933)) and (t2.m_n_pi0 == 0 or (t2.m_n_pi0 != 0 and t2.m_m_Dpi0 > 2.015)) and (t2.m_m_D0 < 1.8 or t2.m_m_D0 > 2.1):
+            if t2.m_m_pipi > 0.28 and t2.m_chi2_kf < chi2_cut and ((t2.m_rm_Dpipi > 1.795 and t2.m_rm_Dpipi < 1.825) or (t2.m_rm_Dpipi > 1.915 and t2.m_rm_Dpipi < 1.945)) and (t2.m_n_pi0 == 0 or (t2.m_n_pi0 != 0 and t2.m_m_Dpi0 > 2.015)) and (t2.m_m_D0 < 1.75 or t2.m_m_D0 > 2.1):
                 h2.Fill(t2.m_rm_pipi)
     for ientry3 in xrange(t3.GetEntries()):
         t3.GetEntry(ientry3)
         if MODE == 'raw':
-            if t3.m_m_pipi > 0.28 and t3.m_rm_Dpipi > 1.857 and t3.m_rm_Dpipi < 1.882:
+            if t3.m_m_pipi > 0.28 and t3.m_rm_Dpipi > 1.855 and t3.m_rm_Dpipi < 1.885:
                 h3.Fill(t3.m_rm_pipi)
         if MODE == 'cut':
-            if t3.m_m_pipi > 0.28 and t3.m_chi2_kf < chi2_cut and t3.m_rm_Dpipi > 1.857 and t3.m_rm_Dpipi < 1.882 and (t3.m_n_pi0 == 0 or (t3.m_n_pi0 != 0 and t3.m_m_Dpi0 > 2.015)) and (t3.m_m_D0 < 1.8 or t3.m_m_D0 > 2.1):
+            if t3.m_m_pipi > 0.28 and t3.m_chi2_kf < chi2_cut and t3.m_rm_Dpipi > 1.855 and t3.m_rm_Dpipi < 1.885 and (t3.m_n_pi0 == 0 or (t3.m_n_pi0 != 0 and t3.m_m_Dpi0 > 2.015)) and (t3.m_m_D0 < 1.75 or t3.m_m_D0 > 2.1):
                 h3.Fill(t3.m_rm_pipi)
     for ientry4 in xrange(t4.GetEntries()):
         t4.GetEntry(ientry4)
         if MODE == 'raw':
-            if t4.m_m_pipi > 0.28 and t4.m_rm_Dpipi > 1.857 and t4.m_rm_Dpipi < 1.882:
+            if t4.m_m_pipi > 0.28 and t4.m_rm_Dpipi > 1.855 and t4.m_rm_Dpipi < 1.885:
                 h4.Fill(t4.m_rm_pipi)
         if MODE == 'cut':
-            if t4.m_m_pipi > 0.28 and t4.m_chi2_kf < chi2_cut and t4.m_rm_Dpipi > 1.857 and t4.m_rm_Dpipi < 1.882 and (t4.m_n_pi0 == 0 or (t4.m_n_pi0 != 0 and t4.m_m_Dpi0 > 2.015)) and (t4.m_m_D0 < 1.8 or t4.m_m_D0 > 2.1):
+            if t4.m_m_pipi > 0.28 and t4.m_chi2_kf < chi2_cut and t4.m_rm_Dpipi > 1.855 and t4.m_rm_Dpipi < 1.885 and (t4.m_n_pi0 == 0 or (t4.m_n_pi0 != 0 and t4.m_m_Dpi0 > 2.015)) and (t4.m_m_D0 < 1.75 or t4.m_m_D0 > 2.1):
                 h4.Fill(t4.m_rm_pipi)
     for ientry5 in xrange(t5.GetEntries()):
         t5.GetEntry(ientry5)
         if MODE == 'raw':
-            if t5.m_m_pipi > 0.28 and t5.m_rm_Dpipi > 1.857 and t5.m_rm_Dpipi < 1.882:
+            if t5.m_m_pipi > 0.28 and t5.m_rm_Dpipi > 1.855 and t5.m_rm_Dpipi < 1.885:
                 h5.Fill(t5.m_rm_pipi)
         if MODE == 'cut':
-            if t5.m_m_pipi > 0.28 and t5.m_chi2_kf < chi2_cut and t5.m_rm_Dpipi > 1.857 and t5.m_rm_Dpipi < 1.882 and (t5.m_n_pi0 == 0 or (t5.m_n_pi0 != 0 and t5.m_m_Dpi0 > 2.015)) and (t5.m_m_D0 < 1.8 or t5.m_m_D0 > 2.1):
+            if t5.m_m_pipi > 0.28 and t5.m_chi2_kf < chi2_cut and t5.m_rm_Dpipi > 1.855 and t5.m_rm_Dpipi < 1.885 and (t5.m_n_pi0 == 0 or (t5.m_n_pi0 != 0 and t5.m_m_Dpi0 > 2.015)) and (t5.m_m_D0 < 1.75 or t5.m_m_D0 > 2.1):
                 h5.Fill(t5.m_rm_pipi)
 
 def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle):
@@ -169,20 +169,20 @@ if __name__ == '__main__':
         logging.error('python plot_rm_pipi.py [MODE]: MODE = raw or cut')
         sys.exit()
 
-    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
-    data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root'
-    sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root'
-    sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_signal.root'
-    sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
-    leg_title = '(a)'
-    ecms = 4360
-    scale = 0.5
-    scale1 = 0.003125
-    scale2 = 0.003125
-    scale3 = 0.00065
-    xmax = 4.1
-    chi2_cut = 46
-    plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)
+    # data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
+    # data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root'
+    # sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root'
+    # sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_signal.root'
+    # sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
+    # leg_title = '(a)'
+    # ecms = 4360
+    # scale = 0.5
+    # scale1 = 0.003125
+    # scale2 = 0.003125
+    # scale3 = 0.00065
+    # xmax = 4.1
+    # chi2_cut = 46
+    # plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)
 
     data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
     data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_sideband.root'
@@ -199,17 +199,17 @@ if __name__ == '__main__':
     chi2_cut = 42
     plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)
 
-    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
-    data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root'
-    sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root'
-    sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root'
-    sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
-    leg_title = '(c)'
-    ecms = 4600
-    scale = 0.5
-    scale1 = 0.003125
-    scale2 = 0.001625
-    scale3 = 0.0009
-    xmax = 4.35
-    chi2_cut = 25
-    plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)
+    # data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
+    # data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root'
+    # sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root'
+    # sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root'
+    # sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
+    # leg_title = '(c)'
+    # ecms = 4600
+    # scale = 0.5
+    # scale1 = 0.003125
+    # scale2 = 0.001625
+    # scale3 = 0.0009
+    # xmax = 4.35
+    # chi2_cut = 25
+    # plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut)

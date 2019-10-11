@@ -65,7 +65,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
         S1 = 0
         for j in xrange(int(entries1*ratio1)):
             t1.GetEntry(j)
-            if t1.m_chi2_kf < (step + i*step) and t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.857 and t1.m_rm_Dpipi < 1.882:
+            if t1.m_chi2_kf < (step + i*step) and t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.855 and t1.m_rm_Dpipi < 1.885:
                 S1 = S1 + 1
         S1_list.append(S1)
     print 'Start of sigMC2...'
@@ -73,7 +73,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
         S2 = 0
         for j in xrange(int(entries2*ratio2)):
             t2.GetEntry(j)
-            if t2.m_chi2_kf < (step + i*step) and t2.m_m_pipi > 0.28 and t2.m_rm_Dpipi > 1.857 and t2.m_rm_Dpipi < 1.882:
+            if t2.m_chi2_kf < (step + i*step) and t2.m_m_pipi > 0.28 and t2.m_rm_Dpipi > 1.855 and t2.m_rm_Dpipi < 1.885:
                 S2 = S2 + 1
         S2_list.append(S2)
     for i in xrange(N):
@@ -84,7 +84,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
         B = 0
         for j in xrange(entries3/5):
             t3.GetEntry(j)
-            if t3.m_chi2_kf < (step + i*step) and t3.m_m_pipi > 0.28 and t3.m_rm_Dpipi > 1.857 and t3.m_rm_Dpipi < 1.882:
+            if t3.m_chi2_kf < (step + i*step) and t3.m_m_pipi > 0.28 and t3.m_rm_Dpipi > 1.855 and t3.m_rm_Dpipi < 1.885:
                 B = B + 1
         B_list.append(B)
     Ratio_list = []
@@ -101,7 +101,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
     xmax = N*step
     xtitle = '#chi^{2}(D_{tag}D_{missing}#pi^{+}#pi^{-})'
     ytitle = '#frac{S}{#sqrt{S+B}}'
-    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 40)
+    h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 5)
     set_histo_style(h_FOM, xtitle, ytitle)
     for i in xrange(N):
         h_FOM.Fill(step + i*step, Ratio_list[i])
@@ -136,8 +136,8 @@ def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, Ge
     set_canvas_style(mbc)
     xbins = 100
     step = 100/xbins
-    ratio1 = lum*XS1/GenNum
-    ratio2 = lum*XS2/GenNum
+    ratio1 = lum*XS1*0.0938/GenNum # 0.0938: branch fraction of D+ -> K-pi+pi+
+    ratio2 = lum*XS2*0.0938/GenNum
 
     h_FOM, ientry, arrow_top = cal_significance(t_sigMC1, t_sigMC2, t_incMC, entries_sigMC1, entries_sigMC2, entries_incMC, xbins, step, ratio1, ratio2)
     h_FOM.Draw()
