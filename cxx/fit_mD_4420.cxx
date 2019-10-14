@@ -9,7 +9,7 @@
 #include "TAxis.h"
 using namespace RooFit;
 
-void fit_mD0_4420() {
+void fit_mD_4420() {
 
     gStyle->SetFrameBorderMode(0);
     gStyle->SetCanvasBorderMode(0);
@@ -47,7 +47,7 @@ void fit_mD0_4420() {
     gStyle->SetPadTickX(1);
     gStyle->SetPadTickY(1);
 
-    TFile *f = new TFile("/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_signal_sel.root", "READ");
+    TFile *f = new TFile("/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_before.root", "READ");
     TTree *t = (TTree*)f->Get("save");
 
     RooRealVar mD0("m_D0", "m_D0", 1.79, 1.95);
@@ -84,11 +84,18 @@ void fit_mD0_4420() {
     model.plotOn(xframe, Components(RooArgSet(gauss1)), LineColor(kYellow), LineWidth(2), LineStyle(1));
     model.plotOn(xframe, Components(RooArgSet(gauss2)), LineColor(kGreen), LineWidth(2), LineStyle(1));
     model.plotOn(xframe, Components(bkgpdf), LineColor(kRed), LineWidth(2), LineStyle(1));
-    xframe->GetXaxis()->SetTitle("M(D^{0} or D^{*0})(GeV/c^{2})");
+    xframe->GetXaxis()->SetTitle("M(D or D^{*})(GeV/c^{2})");
     xframe->GetXaxis()->SetNdivisions(508);
     xframe->GetXaxis()->CenterTitle();
+    xframe->GetXaxis()->SetTitleSize(0.06);
+    xframe->GetXaxis()->SetLabelSize(0.06);
+    xframe->GetXaxis()->SetTitleOffset(1.3);
+    xframe->GetXaxis()->SetLabelOffset(0.008);
     xframe->GetYaxis()->SetNdivisions(504);
-    xframe->GetYaxis()->SetTitleOffset(1.02);
+    xframe->GetYaxis()->SetTitleSize(0.06);
+    xframe->GetYaxis()->SetLabelSize(0.06);
+    xframe->GetYaxis()->SetTitleOffset(1.0);
+    xframe->GetYaxis()->SetLabelOffset(0.008);
     xframe->GetYaxis()->SetTitle("Events");
     xframe->GetYaxis()->CenterTitle();
     xframe->Draw();

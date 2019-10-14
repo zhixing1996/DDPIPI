@@ -99,7 +99,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = '#chi^{2}(D_{tag}D_{missing}#pi^{+}#pi^{-})'
+    xtitle = '#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})'
     ytitle = '#frac{S}{#sqrt{S+B}}'
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 5)
     set_histo_style(h_FOM, xtitle, ytitle)

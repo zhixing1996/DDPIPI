@@ -105,7 +105,7 @@ if __name__ == '__main__':
     x_max = 2.55
     y_min = 3.7
     y_max = 4.1
-    chi2_cut = 46
+    chi2_cut = 999
     plot(sigMC1, sigMC2, leg_title, ecms, x_min, x_max, y_min, y_max, chi2_cut)
 
     sigMC1 = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root'
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     x_max = 2.6
     y_min = 3.7
     y_max = 4.2
-    chi2_cut = 42
+    chi2_cut = 47
     plot(sigMC1, sigMC2, leg_title, ecms, x_min, x_max, y_min, y_max, chi2_cut)
 
     sigMC1 = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root'
@@ -127,5 +127,5 @@ if __name__ == '__main__':
     x_max = 2.8
     y_min = 3.7
     y_max = 4.35
-    chi2_cut = 25
+    chi2_cut = 999
     plot(sigMC1, sigMC2, leg_title, ecms, x_min, x_max, y_min, y_max, chi2_cut)

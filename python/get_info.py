@@ -53,8 +53,9 @@ def save_missing(f_in, cms, t, MODE):
         m_m_pi0 = array('d', [999.])
         m_n_pi0 = array('i', [0])
         m_m_D0 = array('d', [999.])
-        m_matched_D = array('i', [0])
-        m_matched_pi = array('i', [0])
+        if MODE == 'signal':
+            m_matched_D = array('i', [0])
+            m_matched_pi = array('i', [0])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
         t.Branch('mode', m_mode, 'm_mode/I')
@@ -75,8 +76,9 @@ def save_missing(f_in, cms, t, MODE):
         t.Branch('m_pi0', m_m_pi0, 'm_m_pi0/D')
         t.Branch('n_pi0', m_n_pi0, 'm_n_pi0/I')
         t.Branch('m_D0', m_m_D0, 'm_m_D0/D')
-        t.Branch('matched_D', m_matched_D, 'm_matched_D/I')
-        t.Branch('matched_pi', m_matched_pi, 'm_matched_pi/I')
+        if MODE == 'signal':
+            t.Branch('matched_D', m_matched_D, 'm_matched_D/I')
+            t.Branch('matched_pi', m_matched_pi, 'm_matched_pi/I')
     if MODE == 'signal':
         t_in = f_in.Get('STD_signal')
     if MODE == 'sidebandlow':
@@ -379,8 +381,9 @@ def save_missing(f_in, cms, t, MODE):
                 m_m_D0[0] = m_D0_cand1
             if delta_list[0] == math.fabs(m_D0_cand2 - 2.01026):
                 m_m_D0[0] = m_D0_cand2
-            m_matched_D[0] = t_in.matched_D
-            m_matched_pi[0] = t_in.matched_pi
+            if MODE == 'signal':
+                m_matched_D[0] = t_in.matched_D
+                m_matched_pi[0] = t_in.matched_pi
             t.Fill()
 
 def save_raw(f_in, cms, t, MODE):

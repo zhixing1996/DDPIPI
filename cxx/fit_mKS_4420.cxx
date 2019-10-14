@@ -9,7 +9,7 @@
 #include "TAxis.h"
 using namespace RooFit;
 
-void fit_mDpi0_4420() {
+void fit_mKS_4420() {
 
     gStyle->SetFrameBorderMode(0);
     gStyle->SetCanvasBorderMode(0);
@@ -50,40 +50,40 @@ void fit_mDpi0_4420() {
     TFile *f = new TFile("/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_before.root", "READ");
     TTree *t = (TTree*)f->Get("save");
 
-    RooRealVar mDpi0("m_Dpi0", "m_Dpi0", 2.006, 2.013);
-    RooDataSet* data = new RooDataSet("data", "dataset", t, mDpi0);
+    RooRealVar mKS("m_pipi", "m_pipi", 0.48, 0.52);
+    RooDataSet* data = new RooDataSet("data", "dataset", t, mKS);
 
     // signal
-    RooRealVar mean("mean", "mean of gaussian", 2.01026, 2.008, 2.012);
-    RooRealVar sigma("sigma", "width of gaussian", 0.0001, 0, 0.0012);
-    RooGaussian gauss("gauss", "gauss", mDpi0, mean, sigma);
+    RooRealVar mean("mean", "mean of gaussian", 0.497, 0.49, 0.51);
+    RooRealVar sigma("sigma", "width of gaussian", 0.001, 0, 0.2);
+    RooGaussian gauss("gauss", "gauss", mKS, mean, sigma);
 
     // background
     RooRealVar a("a" ,"a", 0, -99, 99);
     RooRealVar b("b" ,"b", 0, -99, 99);
     RooRealVar c("c" ,"c", 0, -99, 99);
     RooRealVar d("d" ,"d", 0, -99, 99);
-    RooChebychev bkgpdf("bkgpdf", "bkgpdf", mDpi0, RooArgSet(a, b));
+    RooPolynomial bkgpdf("bkgpdf", "bkgpdf", mKS, RooArgSet(a, b));
 
-    RooRealVar nsig("nsig", "nsig", 2000, 0, 100000) ;
-    RooRealVar nbkg("nbkg", "nbkg", 5000, 0, 100000) ;
+    RooRealVar nsig("nsig", "nsig", 500, 0, 100000);
+    RooRealVar nbkg("nbkg", "nbkg", 1000, 0, 100000);
 
     // build P.D.F model
     RooAddPdf model("model", "gauss+bkg", RooArgList(gauss, bkgpdf), RooArgList(nsig, nbkg));
 
     model.fitTo(*data);
-    RooPlot* xframe = mDpi0.frame(Bins(40), Range(2.006, 2.013));
+    RooPlot* xframe = mKS.frame(Bins(40), Range(0.48, 0.52));
     data->plotOn(xframe);
     model.plotOn(xframe);
     model.plotOn(xframe, Components(gauss), LineColor(kYellow), LineWidth(2), LineStyle(1));
     model.plotOn(xframe, Components(bkgpdf), LineColor(kRed), LineWidth(2), LineStyle(1));
-    xframe->GetXaxis()->SetTitle("M(D^{+}#pi^{0})(GeV/c^{2})");
-    xframe->GetXaxis()->SetTitleSize(0.06);
-    xframe->GetXaxis()->SetLabelSize(0.06);
-    xframe->GetXaxis()->SetTitleOffset(1.0);
-    xframe->GetXaxis()->SetLabelOffset(0.008);
+    xframe->GetXaxis()->SetTitle("M(#pi^{+}_{0}#pi^{-}_{0})(GeV/c^{2})");
     xframe->GetXaxis()->SetNdivisions(508);
     xframe->GetXaxis()->CenterTitle();
+    xframe->GetXaxis()->SetTitleSize(0.06);
+    xframe->GetXaxis()->SetLabelSize(0.06);
+    xframe->GetXaxis()->SetTitleOffset(1.3);
+    xframe->GetXaxis()->SetLabelOffset(0.008);
     xframe->GetYaxis()->SetNdivisions(504);
     xframe->GetYaxis()->SetTitleSize(0.06);
     xframe->GetYaxis()->SetLabelSize(0.06);

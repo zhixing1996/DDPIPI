@@ -1211,17 +1211,17 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
             double rm_Dpipi = (ecms - pD - pPip - pPim).m();
             chi2_kf_signal = -999;
             m_chi2_kf_signal = -999;
-            if (rm_Dpipi > 1.857 && rm_Dpipi < 1.882) {
+            if (rm_Dpipi > 1.855 && rm_Dpipi < 1.885) {
                 chi2_kf_signal = fitKM_signal(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
             }
             chi2_kf_sidebandlow = -999;
             m_chi2_kf_sidebandlow = -999;
-            if (rm_Dpipi > 1.806 && rm_Dpipi < 1.832) {
+            if (rm_Dpipi > 1.795 && rm_Dpipi < 1.825) {
                 chi2_kf_sidebandlow = fitKM_sidebandlow(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
             }
             chi2_kf_sidebandup = -999;
             m_chi2_kf_sidebandup = -999;
-            if (rm_Dpipi > 1.907 && rm_Dpipi < 1.932) {
+            if (rm_Dpipi > 1.915 && rm_Dpipi < 1.945) {
                 chi2_kf_sidebandup = fitKM_sidebandup(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
             }
             if (m_debug) std::cout << "Start recording region info if passed the requirement" << std::endl;
@@ -1555,10 +1555,10 @@ int DDecayAlg::MatchMC(HepLorentzVector &p4, std::string MODE) {
             if (MODE == "D_tag" && (pid_mom != 411 || pid_mom != -411)) {
                 return 0;
             }
-            if (MODE == "pi_solo" && (pid_mom == 9020443 || pid_mom == 9030443)) {
+            if (MODE == "pi_solo" && (pid_mom == 9020443 || pid_mom == 9030443 || pid_mom == 90022 || pid_mom == 80022)) {
                 return 1;
             } 
-            if (MODE == "pi_solo" && (pid_mom != 9020443 || pid_mom != 9030443)) {
+            if (MODE == "pi_solo" && (pid_mom != 9020443 || pid_mom != 9030443 || pid_mom != 90022 || pid_mom != 80022)) {
                 return 0;
             }
         }

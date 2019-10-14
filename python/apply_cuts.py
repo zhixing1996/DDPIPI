@@ -22,7 +22,7 @@ NAME
     apply_cuts.py
 
 SYNOPSIS
-    ./apply_cuts.py [infile_path] [outfile_path] [Ecms] [MODE]
+    ./apply_cuts.py [infile_path] [outfile_path] [ecms] [MODE]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -31,7 +31,7 @@ DATE
     October 2019
 \n''')
 
-def save(f_in, cms, t, MODE, chi2_kf_cut):
+def save(f_in, t, chi2_kf_cut, MODE):
     m_runNo = array('i', [0])
     m_evtNo = array('i', [0])
     m_mode = array('i', [0])
@@ -80,7 +80,7 @@ def save(f_in, cms, t, MODE, chi2_kf_cut):
     nentries = t_in.GetEntries()
     for ientry in range(nentries):
         t_in.GetEntry(ientry)
-        if MODE == 'signal' and t_in.m_m_pipi > 0.28 and t_in.m_chi2_kf < chi2_kf_cut and t_in.m_rm_Dpipi > 1.857 and t_in.m_rm_Dpipi < 1.882:
+        if MODE == 'before' and t_in.m_m_pipi > 0.28 and t_in.m_chi2_kf < chi2_kf_cut and t_in.m_rm_Dpipi > 1.855 and t_in.m_rm_Dpipi < 1.885:
             m_runNo[0] = t_in.m_runNo
             m_evtNo[0] = t_in.m_evtNo
             m_mode[0] = t_in.m_mode
@@ -104,7 +104,7 @@ def save(f_in, cms, t, MODE, chi2_kf_cut):
             m_matched_D[0] = t_in.m_matched_D
             m_matched_pi[0] = t_in.m_matched_pi
             t.Fill()
-        if MODE == 'sideband' and t_in.m_m_pipi > 0.28 and t_in.m_chi2_kf < chi2_kf_cut and ((t_in.m_rm_Dpipi > 1.806 and t_in.m_rm_Dpipi < 1.832) or (t_in.m_rm_Dpipi > 1.906 and t_in.m_rm_Dpipi < 1.933)):
+        if MODE == 'after' and t_in.m_m_pipi > 0.28 and t_in.m_chi2_kf < chi2_kf_cut and t_in.m_rm_Dpipi > 1.855 and t_in.m_rm_Dpipi < 1.885 and (t_in.m_n_pi0 == 0 or (t_in.m_n_pi0 != 0 and t_in.m_m_Dpi0 > 2.01)) and ((t_in.m_m_D0 > 0.14 and t_in.m_m_D0 < 1.8) or t_in.m_m_D0 > 2.1) and (t_in.m_m_pipi < 0.49 or t_in.m_m_pipi > 0.51) and t_in.m_chi2_vf < 25:
             m_runNo[0] = t_in.m_runNo
             m_evtNo[0] = t_in.m_evtNo
             m_mode[0] = t_in.m_mode
@@ -131,27 +131,26 @@ def save(f_in, cms, t, MODE, chi2_kf_cut):
 
 def main():
     args = sys.argv[1:]
-    if len(args)<3:
+    if len(args)<5:
         return usage()
     
     file_in = args[0]
     file_out = args[1]
-    ecms = float(args[2])
+    ecms = args[2]
     MODE = args[3]
 
     f_in = TFile(file_in)
     f_out = TFile(file_out, 'recreate')
     t_out = TTree('save', 'save')
 
-    cms = TLorentzVector(0.011*ecms, 0, 0, ecms)
     chi2_kf_cut = 999
     if ecms == 4.358:
-        chi2_kf_cut = 46
+        chi2_kf_cut = 999
     if ecms == 4.415:
-        chi2_kf_cut = 42
+        chi2_kf_cut = 47
     if ecms == 4.600:
-        chi2_kf_cut = 25
-    save(f_in, cms, t_out, MODE, chi2_kf_cut)
+        chi2_kf_cut = 999
+    save(f_in, t_out, chi2_kf_cut, MODE)
 
     f_out.cd()
     t_out.Write()

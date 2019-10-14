@@ -99,7 +99,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
             NEntry = i
     xmin = 2.0 + step
     xmax = 2.0 + step + N*step
-    xtitle = 'M(D_{tag}#pi^{0})'
+    xtitle = 'M(D^{+}#pi^{0})'
     ytitle = '#frac{S}{#sqrt{S+B}}'
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 7)
     set_histo_style(h_FOM, xtitle, ytitle)
@@ -135,7 +135,7 @@ def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, Ge
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
     xbins = 100
-    step = 0.5/xbins
+    step = 0.25/xbins
     ratio1 = lum*XS1*0.0938/GenNum
     ratio2 = lum*XS2*0.0938/GenNum
 
@@ -177,7 +177,7 @@ def main():
         XS1 = 41.8
         XS2 = 17.3
         GenNum = 500000
-        chi2_cut = 46
+        chi2_cut = 999
         plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, chi2_cut)
 
     if int(energy) == 4420:
@@ -190,7 +190,7 @@ def main():
         XS1 = 65.4
         XS2 = 23.8
         GenNum = 500000
-        chi2_cut = 42
+        chi2_cut = 47
         plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, chi2_cut)
 
     if int(energy) == 4600:
@@ -203,7 +203,7 @@ def main():
         XS1 = 27.7
         XS2 = 7.2
         GenNum = 500000
-        chi2_cut = 25
+        chi2_cut = 999
         plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, chi2_cut)
 
 if __name__ == '__main__':

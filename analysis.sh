@@ -4,7 +4,6 @@
 # Author Maoqiang Jing <jingmq@ihep.ac.cn>
 # Created [2019-09-02 Mon 21:42]
 
-
 usage() {
     printf "NAME\n\tsubmit.sh - Main driver to execute and submit analysis jobs\n"
     printf "\nSYNOPSIS\n"
@@ -16,24 +15,31 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.1.2" "Get samples -- extract useful info: raw"
 
     printf "\n\t%-9s  %-40s\n" "0.2"   "[Study cuts]"
-    printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figures -- study signal region of RM(Dpipi)"
-    printf "\n\t%-9s  %-40s\n" "0.2.2" "Draw figures -- study mass window of M(Kpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figures -- study mass window of M(Kpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.2.2" "Draw figures -- study signal region of RM(Dpipi)"
     printf "\n\t%-9s  %-40s\n" "0.2.3" "Get samples -- extract useful info: signal region and sideband region"
     printf "\n\t%-9s  %-40s\n" "0.2.4" "Get samples -- get data sideband samples"
-    printf "\n\t%-9s  %-40s\n" "0.2.5" "Draw figures -- compare data, data sideband and signal samples(RM(pipi), raw)"
-    printf "\n\t%-9s  %-40s\n" "0.2.6" "Draw figures -- compare data and X(3842) MC(chi2_kf)"
-    printf "\n\t%-9s  %-40s\n" "0.2.7" "Draw figures -- compare data, data sideband and signal samples(RM(pipi), cut)"
+    printf "\n\t%-9s  %-40s\n" "0.2.5" "Draw figures -- compare data and X(3842) MC(chi2_kf)"
+    printf "\n\t%-9s  %-40s\n" "0.2.6" "Draw figures -- study chi2 of Dtag Dmissing pi pi"
 
-    printf "\n\t%-9s  %-40s\n" "0.3"   "[Background Study]"
-    printf "\n\t%-9s  %-40s\n" "0.3.1" "Get samples -- get topology info"
-    printf "\n\t%-9s  %-40s\n" "0.3.2" "Download software -- download topology"
-    printf "\n\t%-9s  %-40s\n" "0.3.3" "Install software -- install topology"
-    printf "\n\t%-9s  %-40s\n" "0.3.4" "Topo analysis -- apply topology analysis"
-    printf "\n\t%-9s  %-40s\n" "0.3.5" "Draw figures -- compare data, and X(3842) signal samples: M(Dpi0)"
-    printf "\n\t%-9s  %-40s\n" "0.3.6" "Draw figures -- study signal region of M(Dpi0)"
-    printf "\n\t%-9s  %-40s\n" "0.3.7" "Get samples -- apply cuts before background study"
-    printf "\n\t%-9s  %-40s\n" "0.3.8" "Draw figures -- fit to M(Dpi0)"
-    printf "\n\t%-9s  %-40s\n" "0.3.9" "Draw figures -- fit to M(D0 or Dst0)"
+    printf "\n\t%-9s  %-40s\n" "0.3"    "[Background Study]"
+    printf "\n\t%-9s  %-40s\n" "0.3.1"  "Get samples -- get topology info"
+    printf "\n\t%-9s  %-40s\n" "0.3.2"  "Download software -- download topology"
+    printf "\n\t%-9s  %-40s\n" "0.3.3"  "Install software -- install topology"
+    printf "\n\t%-9s  %-40s\n" "0.3.4"  "Topo analysis -- apply topology analysis"
+    printf "\n\t%-9s  %-40s\n" "0.3.5"  "Get samples -- apply cuts before background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.6"  "Draw figures -- study status of matching before background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.7"  "Fit distributions -- fit to M(Dpi0)"
+    printf "\n\t%-9s  %-40s\n" "0.3.8"  "Draw figures -- study signal region of M(Dpi0)"
+    printf "\n\t%-9s  %-40s\n" "0.3.9"  "Draw figures -- fit to M(Dpi0)"
+    printf "\n\t%-9s  %-40s\n" "0.3.10" "Draw figures -- fit to M(D or Dst)"
+    printf "\n\t%-9s  %-40s\n" "0.3.11" "Draw figures -- compare chi2 of kinematic fit between types of matching status"
+    printf "\n\t%-9s  %-40s\n" "0.3.12" "Draw figures -- compare invariant mass of pipi between types of matching status"
+    printf "\n\t%-9s  %-40s\n" "0.3.13" "Draw figures -- fit to M(pipi)"
+    printf "\n\t%-9s  %-40s\n" "0.3.14" "Draw figures -- compare chi2 of vertex fit between types of matching status"
+    printf "\n\t%-9s  %-40s\n" "0.3.15" "Get samples -- apply cuts after background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.16" "Draw figures -- study status of matching after background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.17" "Draw figures -- study RM(pipi)"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -100,21 +106,22 @@ case $option in
          echo "--> Selection Algorithm Version: DDecayAlg-00-00-02(have applied cuts)"
          ;;
 
-    0.2.1) echo "Draw figures -- studying signal region of RM(Dpipi)..."
-           cd $HOME/bes/DDPIPI/v0.2/python
+    0.2.1) echo "Draw figures -- studying mass window of M(Kpipi)..."
+           cd python
+           python opt_mass_Kpipi.py 4360
+           python opt_mass_Kpipi.py 4420
+           python opt_mass_Kpipi.py 4600
+           ;;
+
+    0.2.2) echo "Draw figures -- studying signal region of RM(Dpipi)..."
+           cd python
            python opt_signal_region.py 4360
            python opt_signal_region.py 4420
            python opt_signal_region.py 4600
            ;;
 
-    0.2.2) echo "Draw figures -- studying mass window of M(Kpipi)..."
-           cd $HOME/bes/DDPIPI/v0.2/python
-           python opt_mass_D.py 4360
-           python opt_mass_D.py 4420
-           python opt_mass_D.py 4600
-           ;;
-
     0.2.3) echo "Get samples -- extracting useful info: signal region and sideband region..."
+           echo "Please run selection algorithm codes again with M(Kpipi) and RM(Dpipi) cuts"
            mkdir -p scripts/ana/sel
            cd scripts/ana/sel
            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana" ]; then
@@ -146,19 +153,16 @@ case $option in
            hadd data_4600_sideband.root data_4600_sideband*.root
            ;;
 
-    0.2.5) echo "Draw figures -- comparing data, data sideband and signal samples(RM(pipi), raw)..."
-           cd $HOME/bes/DDPIPI/v0.2/python
-           python plot_rm_pipi.py raw
+    0.2.5) echo "Draw figures -- comparing data and X(3842) MC(chi2_kf)..."
+           cd python
+           python plot_chi2_kf.py
            ;;
 
-    0.2.6) echo "Draw figures -- comparing data and X(3842) MC(chi2_kf)..."
-           cd $HOME/bes/DDPIPI/v0.2/python
-           python  plot_chi2_kf.py
-           ;;
-
-    0.2.7) echo "Draw figures -- comparing data, data sideband and signal samples(RM(pipi), cut)..."
-           cd $HOME/bes/DDPIPI/v0.2/python
-           python plot_rm_pipi.py cut
+    0.2.6) echo "Draw figures -- studying chi2 of Dtag Dmissing pi pi..."
+           cd python
+           python opt_chi2_kf.py 4360
+           python opt_chi2_kf.py 4420
+           python opt_chi2_kf.py 4600
            ;;
 
     # ---------------------
@@ -230,9 +234,9 @@ case $option in
            cd 4420
            rm * -rf
            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4420\/incMC_DD_4420_topo.root/g" topoana.card
+           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4420\/incMC_hadrons_4420_topo.root/g" topoana.card
            sed -i "s/NAME/TopoResult_4420/g" topoana.card
-           sed -i "s/cut_chi2_kf/46/g" topoana.card
+           sed -i "s/cut_chi2_kf/47/g" topoana.card
            topoana.exe topoana.card
            cd ..
            mkdir -p 4600
@@ -245,32 +249,72 @@ case $option in
            topoana.exe topoana.card
            ;;
 
-    0.3.5) echo "Draw figures -- comparing data, and X(3842) signal samples: M(Dpi0)..."
-           cd python
-           python plot_m_Dpi0.py
+    0.3.5) echo "Get samples -- applying cuts before background study..."
+           cd jobs
+           bash apply_cuts_before
            ;;
 
-    0.3.6) echo "Draw figures -- studying signal region of M(Dpi0)..."
+    0.3.6) echo "Draw figures -- studying status of matching before background study..."
+           cd python
+           python plot_stat_match.py raw
+           ;;
+
+    0.3.7) echo "Fit distributions -- fitting to M(Dpi0)..."
+           cd cxx
+           root -l -q fit_m_Dpi0_4420.cxx
+           ;;
+
+    0.3.8) echo "Draw figures -- studying signal region of M(Dpi0)..."
            cd python
            python opt_mass_Dpi0.py 4360
            python opt_mass_Dpi0.py 4420
            python opt_mass_Dpi0.py 4600
            ;;
 
-    0.3.7) echo "Get samples -- applying cuts before background study..."
-           cd jobs
-           bash apply_cuts
-           ;;
-
-    0.3.8) echo "Draw figures -- fitting to M(Dpi0)..."
+    0.3.9) echo "Draw figures -- fitting to M(Dpi0)..."
            cd cxx
            root -l -q fit_mDpi0_4420.cxx
            ;;
 
-    0.3.9) echo "Draw figures -- fitting to M(D0 or Dst0)..."
-           cd cxx
-           root -l -q fit_mD0_4420.cxx
-           root -l -q fit_mDst_4420.cxx
-           ;;
+    0.3.10) echo "Draw figures -- fitting to M(D or Dst)..."
+            cd cxx
+            root -l -q fit_mD_4420.cxx
+            root -l -q fit_mDst_4420.cxx
+            ;;
+
+    0.3.11) echo "Draw figures -- comparing chi2 of kinematic fit between types of matching status..."
+            cd python
+            python plot_match_chi2_kf.py
+            ;;
+
+    0.3.12) echo "Draw figures -- comparing invariant mass of pipi between types of matching status..."
+            cd python
+            python plot_match_m_pipi.py
+            ;;
+
+    0.3.13) echo "Draw figures -- fitting to M(pipi)..."
+            cd cxx
+            root -l -q fit_mKS_4420.cxx
+            ;;
+
+    0.3.14) echo "Draw figures -- comparing chi2 of vertex fit between types of matching status..."
+            cd python
+            python plot_match_chi2_kf.py
+            ;;
+
+    0.3.15) echo "Get samples -- applying cuts after background study..."
+            cd jobs
+            bash apply_cuts_after
+            ;;
+
+    0.3.16) echo "Draw figures -- studying status of matching after background study..."
+            cd python
+            python plot_stat_match.py cut
+            ;;
+
+    0.3.17) echo "Draw figures -- studying RM(pipi)..."
+            cd python
+            python plot_rm_pipi.py
+            ;;
 
 esac

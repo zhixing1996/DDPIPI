@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Optiomize mass window of signal region of M(D)
+Optiomize mass window of M(Kpipi)
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
@@ -99,7 +99,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, M_D, N, step, rat
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = '|M(K^{-}#pi^{+}#pi^{+})-m_{D}|(GeV/c^{2})'
+    xtitle = '|M(K^{-}#pi^{+}_{0}#pi^{+}_{0})-m_{D^{+}}|(GeV/c^{2})'
     ytitle = '#frac{S}{#sqrt{S+B}}'
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 4)
     set_histo_style(h_FOM, xtitle, ytitle)

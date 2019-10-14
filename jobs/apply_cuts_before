@@ -1,0 +1,23 @@
+#!/bin/bash
+
+cd $HOME/bes/DDPIPI/v0.2/python
+# data
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_before.root 4.358 before
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_before.root 4.415 before
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_before.root 4.600
+# inclusive MC: hadrons
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_before.root 4.358
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root 4.415
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_before.root 4.600

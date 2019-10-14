@@ -82,7 +82,7 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax):
     xmax = 100
     xbins = 100
     ytitle = "Events"
-    xtitle = "#chi^{2}(D_{tag}D_{missing}#pi^{+}#pi^{-})"
+    xtitle = "#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})"
     h_data = TH1F('data', 'data', xbins, xmin, xmax)
     h_sigMC = TH1F('sigMC', 'sigMC', xbins, xmin, xmax)
 
@@ -114,7 +114,7 @@ if __name__ == '__main__':
     sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_signal.root'
     leg_title = '(b)'
     ecms = 4420
-    ymax = 4000
+    ymax = 2200
     plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
     data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
