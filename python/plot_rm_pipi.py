@@ -35,7 +35,7 @@ def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, chi2_cut):
         h1.Fill(t1.m_rm_pipi)
     for ientry2 in xrange(t2.GetEntries()):
         t2.GetEntry(ientry2)
-        if t2.m_m_pipi > 0.28 and t2.m_chi2_kf < chi2_cut and ((t2.m_rm_Dpipi > 1.795 and t2.m_rm_Dpipi < 1.825) or (t2.m_rm_Dpipi > 1.915 and t2.m_rm_Dpipi < 1.945)) and (t2.m_n_pi0 == 0 or (t2.m_n_pi0 != 0 and t2.m_m_Dpi0 > 2.01)) and ((t2.m_m_D0 > 0.14 and t2.m_m_D0 < 1.8) or t2.m_m_D0 > 2.1) and (t2.m_m_pipi < 0.49 or t2.m_m_pipi > 0.51) and t2.m_chi2_vf < 25:
+        if t2.m_m_pipi > 0.28 and t2.m_chi2_kf < chi2_cut and ((t2.m_rm_Dpipi > 1.795 and t2.m_rm_Dpipi < 1.825) or (t2.m_rm_Dpipi > 1.915 and t2.m_rm_Dpipi < 1.945)) and (t2.m_n_pi0 == 0 or (t2.m_n_pi0 != 0 and (t2.m_m_Dpi0 > 2.01165 or t2.m_m_Dpi0 < 2.00871))) and (t2.m_m_D0 < 1.80397 or t2.m_m_D0 > 1.91843) and (t2.m_m_D0 < 2.00117 or t2.m_m_D0 > 2.01798) and (t2.m_m_pipi < 0.49147 or t2.m_m_pipi > 0.50364) and t2.m_chi2_vf < 25:
             h2.Fill(t2.m_rm_pipi)
     for ientry3 in xrange(t3.GetEntries()):
         t3.GetEntry(ientry3)
@@ -77,7 +77,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, MODE, chi2_cut):
+def plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, chi2_cut):
     try:
         f_data = TFile(data_path)
         f_data_sideband = TFile(data_sideband_path)
@@ -106,9 +106,10 @@ def plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, l
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
     xmin = 3.7
-    xbins = 70
-    ytitle = 'Events'
-    xtitle = 'RM(#pi^{+}#pi^{-})(GeV/c^{2})'
+    xbins = 75
+    content = (xmax - xmin)/xbins * 1000
+    ytitle = 'Events/%.1f MeV'%content
+    xtitle = 'RM(#pi^{+}_{0}#pi^{-}_{0})(GeV)'
     h_data = TH1F('data', 'data', xbins, xmin, float(xmax))
     h_data_sideband = TH1F('data_sideband', 'data sideband', xbins, xmin, float(xmax))
     h_sigMC1 = TH1F('sigMC1', 'signal MC: D1(2420)', xbins, xmin, float(xmax))
@@ -116,7 +117,7 @@ def plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, l
     h_sigMC3 = TH1F('sigMC3', 'signal MC: X(3842)', xbins, xmin, float(xmax))
 
     set_histo_style(h_data, h_data_sideband, h_sigMC1, h_sigMC2, h_sigMC3, xtitle, ytitle)
-    rm_pipi_fill(t_data, t_data_sideband, t_sigMC1, t_sigMC2, t_sigMC3, h_data, h_data_sideband, h_sigMC1, h_sigMC2, h_sigMC3, MODE, chi2_cut)
+    rm_pipi_fill(t_data, t_data_sideband, t_sigMC1, t_sigMC2, t_sigMC3, h_data, h_data_sideband, h_sigMC1, h_sigMC2, h_sigMC3, chi2_cut)
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
@@ -126,32 +127,32 @@ def plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, l
     h_sigMC2.Scale(scale2)
     h_sigMC3.Scale(scale3)
     h_data.Draw('ep')
-    h_data_sideband.Draw('samee')
-    h_sigMC1.Draw('samee')
-    h_sigMC2.Draw('samee')
-    h_sigMC3.Draw('samee')
+    h_data_sideband.Draw('same')
+    h_sigMC1.Draw('same')
+    h_sigMC2.Draw('same')
+    h_sigMC3.Draw('same')
 
     legend = TLegend(0.55, 0.6, 0.8, 0.75)
     set_legend(legend, h_data, h_data_sideband, h_sigMC1, h_sigMC2, h_sigMC3, leg_title)
     legend.Draw()
 
-    mbc.SaveAs('./figs/rm_pipi_'+str(ecms)+'_'+'.pdf')
+    mbc.SaveAs('./figs/rm_pipi_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_after.root'
-    data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root'
-    sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_after.root'
-    sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_after.root'
-    sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_after.root'
-    leg_title = '(a)'
-    ecms = 4360
-    scale = 0.5
-    scale1 = 0.003125
-    scale2 = 0.003125
-    scale3 = 0.00065
-    xmax = 4.1
-    chi2_cut = 999
-    plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, chi2_cut)
+    # data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_after.root'
+    # data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root'
+    # sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_after.root'
+    # sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_after.root'
+    # sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_after.root'
+    # leg_title = '(a)'
+    # ecms = 4360
+    # scale = 0.5
+    # scale1 = 0.003125
+    # scale2 = 0.003125
+    # scale3 = 0.00065
+    # xmax = 4.1
+    # chi2_cut = 999
+    # plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, chi2_cut)
 
     data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_after.root'
     data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_sideband.root'
@@ -161,24 +162,24 @@ if __name__ == '__main__':
     leg_title = '(b)'
     ecms = 4420
     scale = 0.5
-    scale1 = 0.0125
-    scale2 = 0.00625
+    scale1 = 1073.56*65.4*0.0938/500000
+    scale2 = 1073.56*23.8*0.0938/500000
     scale3 = 0.002
     xmax = 4.1
     chi2_cut = 20
     plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, chi2_cut)
 
-    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_after.root'
-    data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root'
-    sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_after.root'
-    sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root'
-    sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_after.root'
-    leg_title = '(c)'
-    ecms = 4600
-    scale = 0.5
-    scale1 = 0.003125
-    scale2 = 0.001625
-    scale3 = 0.0009
-    xmax = 4.35
-    chi2_cut = 999
-    plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, chi2_cut)
+    # data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_after.root'
+    # data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root'
+    # sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_after.root'
+    # sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root'
+    # sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_after.root'
+    # leg_title = '(c)'
+    # ecms = 4600
+    # scale = 0.5
+    # scale1 = 0.003125
+    # scale2 = 0.001625
+    # scale3 = 0.0009
+    # xmax = 4.35
+    # chi2_cut = 999
+    # plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, chi2_cut)

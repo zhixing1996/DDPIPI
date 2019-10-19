@@ -94,7 +94,7 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax):
     
     h_sigMC.Scale(h_data.GetEntries()/h_sigMC.GetEntries()/2)
     h_data.Draw('ep')
-    h_sigMC.Draw('samee')
+    h_sigMC.Draw('same')
 
     legend = TLegend(0.65, 0.6, 0.82, 0.8)
     set_legend(legend, h_data, h_sigMC, leg_title)

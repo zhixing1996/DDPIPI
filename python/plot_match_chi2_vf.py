@@ -34,7 +34,7 @@ def set_legend(legend, h1, h2, h3, h4, title):
 def chi2_KF_fill(t, entries, h1, h2, h3, h4):
     for ientry in xrange(entries):
         t.GetEntry(ientry)
-        if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and t.m_m_Dpi0 > 2.01)) and (t.m_m_D0 < 1.8 or t.m_m_D0 > 2.1) and t.m_chi2_kf < 20 and (t.m_m_pipi < 4.9 or t.m_m_pipi > 5.1):
+        if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871))) and (t.m_m_D0 < 1.80397 or t.m_m_D0 > 1.91843) and (t.m_m_D0 < 2.00117 or t.m_m_D0 > 2.01798) and (t.m_m_pipi < 0.49147 or t.m_m_pipi > 0.50364):
             if t.m_matched_D == 0 and t.m_matched_pi == 0:
                 h1.Fill(t.m_chi2_vf)
             if t.m_matched_D == 1 and t.m_matched_pi == 0:
@@ -107,10 +107,10 @@ def plot(incMC_path, leg_title, ecms, xmax):
     h_Dunpi.Scale(h_unDunpi.GetEntries()/h_Dunpi.GetEntries()/2)
     h_unDpi.Scale(h_unDunpi.GetEntries()/h_unDpi.GetEntries()/2)
     h_Dpi.Scale(h_unDunpi.GetEntries()/h_Dpi.GetEntries()/2)
-    h_unDunpi.Draw('ep')
-    h_Dunpi.Draw('samee')
-    h_unDpi.Draw('samee')
-    h_Dpi.Draw('samee')
+    h_unDunpi.Draw()
+    h_Dunpi.Draw('same')
+    h_unDpi.Draw('same')
+    h_Dpi.Draw('same')
 
     arrow = TArrow(25, 100, 25, 4000, 0.01, '<')
     set_arrow(arrow)
@@ -123,12 +123,12 @@ def plot(incMC_path, leg_title, ecms, xmax):
     mbc.SaveAs('./figs/matched_chi2_vf_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    # data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
-    # sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
-    # leg_title = '(a)'
-    # ecms = 4360
-    # ymax = 1200
-    # plot(data_path, sigMC_path, leg_title, ecms, ymax)
+    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
+    sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
+    leg_title = '(a)'
+    ecms = 4360
+    ymax = 1200
+    plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
     incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root'
     leg_title = '(b)'
@@ -136,9 +136,9 @@ if __name__ == '__main__':
     xmax = 100
     plot(incMC_path, leg_title, ecms, xmax)
 
-    # data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
-    # sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
-    # leg_title = '(c)'
-    # ecms = 4600
-    # ymax = 3000
-    # plot(data_path, sigMC_path, leg_title, ecms, ymax)
+    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
+    sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
+    leg_title = '(c)'
+    ecms = 4600
+    ymax = 3000
+    plot(data_path, sigMC_path, leg_title, ecms, ymax)

@@ -9,7 +9,7 @@ __created__ = "[2019-10-13 Thu 00:14]"
 
 import ROOT
 from ROOT import TCanvas, gStyle
-from ROOT import TFile, TH1F, TLegend
+from ROOT import TFile, TH1F, TLegend, TPaveText
 import sys, os
 import logging
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
@@ -17,16 +17,16 @@ gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
 
 h_match = ROOT.TH1F('hmatch', 'match', 6, 0, 6)
-h_match.GetXaxis().SetBinLabel(1, 'not D && not #pi')
-h_match.GetXaxis().SetBinLabel(2, 'D && not #pi')
-h_match.GetXaxis().SetBinLabel(3, '#pi && not D')
-h_match.GetXaxis().SetBinLabel(4, 'D && #pi')
+h_match.GetXaxis().SetBinLabel(2, 'not D && not #pi')
+h_match.GetXaxis().SetBinLabel(3, 'D && not #pi')
+h_match.GetXaxis().SetBinLabel(4, '#pi && not D')
+h_match.GetXaxis().SetBinLabel(5, 'D && #pi')
 
-def set_legend(legend, title):
-    legend.SetHeader(title)
-    legend.SetBorderSize(0)
-    legend.SetFillColor(0)
-    legend.SetLineColor(0)
+def set_pavetext(pt):
+    pt.SetFillStyle(0)
+    pt.SetBorderSize(0)
+    pt.SetTextAlign(10)
+    pt.SetTextSize(0.04)
 
 def fill(t, entries, MODE):
     for ientry in xrange(entries):
@@ -40,8 +40,48 @@ def fill(t, entries, MODE):
                 h_match.Fill(3)
             if t.m_matched_D == 1 and t.m_matched_pi == 1:
                 h_match.Fill(4)
-        if MODE == 'cut':
-            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and t.m_m_Dpi0 > 2.01)) and ((t.m_m_D0 > 0.14 and t.m_m_D0 < 1.8) or t.m_m_D0 > 2.1) and t.m_chi2_kf < 20 and (t.m_m_pipi < 0.49 or t.m_m_pipi > 0.51) and t.m_chi2_vf < 25:
+        if MODE == 'cut1':
+            if t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871)):
+                if t.m_matched_D == 0 and t.m_matched_pi == 0:
+                    h_match.Fill(1)
+                if t.m_matched_D == 1 and t.m_matched_pi == 0:
+                    h_match.Fill(2)
+                if t.m_matched_D == 0 and t.m_matched_pi == 1:
+                    h_match.Fill(3)
+                if t.m_matched_D == 1 and t.m_matched_pi == 1:
+                    h_match.Fill(4)
+        if MODE == 'cut2':
+            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871))) and (t.m_m_D0 < 1.80397 or t.m_m_D0 > 1.91843):
+                if t.m_matched_D == 0 and t.m_matched_pi == 0:
+                    h_match.Fill(1)
+                if t.m_matched_D == 1 and t.m_matched_pi == 0:
+                    h_match.Fill(2)
+                if t.m_matched_D == 0 and t.m_matched_pi == 1:
+                    h_match.Fill(3)
+                if t.m_matched_D == 1 and t.m_matched_pi == 1:
+                    h_match.Fill(4)
+        if MODE == 'cut3':
+            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871))) and (t.m_m_D0 < 1.80397 or t.m_m_D0 > 1.91843) and (t.m_m_D0 < 2.00117 or t.m_m_D0 > 2.01798):
+                if t.m_matched_D == 0 and t.m_matched_pi == 0:
+                    h_match.Fill(1)
+                if t.m_matched_D == 1 and t.m_matched_pi == 0:
+                    h_match.Fill(2)
+                if t.m_matched_D == 0 and t.m_matched_pi == 1:
+                    h_match.Fill(3)
+                if t.m_matched_D == 1 and t.m_matched_pi == 1:
+                    h_match.Fill(4)
+        if MODE == 'cut4':
+            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871))) and (t.m_m_D0 < 1.80397 or t.m_m_D0 > 1.91843) and (t.m_m_D0 < 2.00117 or t.m_m_D0 > 2.01798) and (t.m_m_pipi < 0.49147 or t.m_m_pipi > 0.50364):
+                if t.m_matched_D == 0 and t.m_matched_pi == 0:
+                    h_match.Fill(1)
+                if t.m_matched_D == 1 and t.m_matched_pi == 0:
+                    h_match.Fill(2)
+                if t.m_matched_D == 0 and t.m_matched_pi == 1:
+                    h_match.Fill(3)
+                if t.m_matched_D == 1 and t.m_matched_pi == 1:
+                    h_match.Fill(4)
+        if MODE == 'cut5':
+            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871))) and (t.m_m_D0 < 1.80397 or t.m_m_D0 > 1.91843) and (t.m_m_D0 < 2.00117 or t.m_m_D0 > 2.01798) and (t.m_m_pipi < 0.49147 or t.m_m_pipi > 0.50364) and t.m_chi2_vf < 25:
                 if t.m_matched_D == 0 and t.m_matched_pi == 0:
                     h_match.Fill(1)
                 if t.m_matched_D == 1 and t.m_matched_pi == 0:
@@ -98,9 +138,17 @@ def plot(incMC_path, leg_title, ecms, MODE):
     
     h_match.Draw()
 
-    legend = TLegend(0.65, 0.6, 0.82, 0.7)
-    set_legend(legend, leg_title)
-    legend.Draw()
+    pt = TPaveText(0.55, 0.6, 0.82, 0.8, "BRNDC")
+    set_pavetext(pt)
+    pt_1 = 'not D && not #pi: ' + str(h_match.GetBinContent(2))
+    pt_2 = 'D && not #pi: ' + str(h_match.GetBinContent(3))
+    pt_3 = '#pi && not D: ' + str(h_match.GetBinContent(4))
+    pt_4 = '#pi && D: ' + str(h_match.GetBinContent(5))
+    pt.AddText(pt_1)
+    pt.AddText(pt_2)
+    pt.AddText(pt_3)
+    pt.AddText(pt_4)
+    pt.Draw()
 
     mbc.SaveAs('./figs/stat_match_'+str(ecms)+'_'+MODE+'.pdf')
 

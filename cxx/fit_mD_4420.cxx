@@ -47,7 +47,7 @@ void fit_mD_4420() {
     gStyle->SetPadTickX(1);
     gStyle->SetPadTickY(1);
 
-    TFile *f = new TFile("/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_before.root", "READ");
+    TFile *f = new TFile("/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root", "READ");
     TTree *t = (TTree*)f->Get("save");
 
     RooRealVar mD0("m_D0", "m_D0", 1.79, 1.95);
@@ -81,10 +81,10 @@ void fit_mD_4420() {
     RooPlot* xframe = mD0.frame(Bins(40), Range(1.79, 1.95));
     data->plotOn(xframe);
     model.plotOn(xframe);
-    model.plotOn(xframe, Components(RooArgSet(gauss1)), LineColor(kYellow), LineWidth(2), LineStyle(1));
+    model.plotOn(xframe, Components(RooArgSet(gauss1)), LineColor(kGreen), LineWidth(2), LineStyle(1));
     model.plotOn(xframe, Components(RooArgSet(gauss2)), LineColor(kGreen), LineWidth(2), LineStyle(1));
     model.plotOn(xframe, Components(bkgpdf), LineColor(kRed), LineWidth(2), LineStyle(1));
-    xframe->GetXaxis()->SetTitle("M(D or D^{*})(GeV/c^{2})");
+    xframe->GetXaxis()->SetTitle("M(D or D^{*})(GeV)");
     xframe->GetXaxis()->SetNdivisions(508);
     xframe->GetXaxis()->CenterTitle();
     xframe->GetXaxis()->SetTitleSize(0.06);

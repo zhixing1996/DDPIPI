@@ -115,17 +115,17 @@ def plot(incMC_path, leg_title, ecms):
     mbc.SaveAs('./figs/matched_m_pipi_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_before.root'
-    leg_title = '(a)'
-    ecms = 4360
-    plot(incMC_path, leg_title, ecms)
+    # incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_before.root'
+    # leg_title = '(a)'
+    # ecms = 4360
+    # plot(incMC_path, leg_title, ecms)
 
     incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root'
     leg_title = '(b)'
     ecms = 4420
     plot(incMC_path, leg_title, ecms)
 
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_before.root'
-    leg_title = '(c)'
-    ecms = 4600
-    plot(incMC_path, leg_title, ecms)
+    # incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_before.root'
+    # leg_title = '(c)'
+    # ecms = 4600
+    # plot(incMC_path, leg_title, ecms)

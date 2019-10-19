@@ -466,7 +466,7 @@ def save_raw(f_in, cms, t, MODE):
                     m_chi2_kf[0] = t_std.chi2_kf
                     t.Fill()
 
-def save_truth(f_in, cms, t, MODE, chi2_kf_cut):
+def save_truth(f_in, cms, t, MODE):
     if MODE == 'truth':
         m_runNo = array('i', [0])
         m_evtNo = array('i', [0])
@@ -812,17 +812,10 @@ def main():
     t_out = TTree('save', 'save')
 
     cms = TLorentzVector(0.011*ecms, 0, 0, ecms)
-    chi2_kf_cut = 999
-    if ecms == 4.358:
-        chi2_kf_cut = 45
-    if ecms == 4.415:
-        chi2_kf_cut = 46
-    if ecms == 4.600:
-        chi2_kf_cut = 25
     if MODE == 'raw':
         save_raw(f_in, cms, t_out, MODE)
     if MODE == 'truth':
-        save_truth(f_in, cms, t_out, MODE, chi2_kf_cut)
+        save_truth(f_in, cms, t_out, MODE)
     if MODE == 'signal' or MODE == 'sidebandlow' or MODE == 'sidebandup':
         save_missing(f_in, cms, t_out, MODE)
 

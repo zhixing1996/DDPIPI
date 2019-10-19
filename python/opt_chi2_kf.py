@@ -105,7 +105,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
     set_histo_style(h_FOM, xtitle, ytitle)
     for i in xrange(N):
         h_FOM.Fill(step + i*step, Ratio_list[i])
-    return h_FOM, NEntry, ymax
+    return h_FOM, NEntry
 
 def set_canvas_style(mbc):
     mbc.SetFillColor(0)
@@ -114,7 +114,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum):
+def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, arrow_left, arrow_bottom, arrow_right, arrow_top):
     try:
         f_incMC = TFile(incMC_path)
         f_sigMC1 = TFile(sigMC1_path)
@@ -139,15 +139,12 @@ def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, Ge
     ratio1 = lum*XS1*0.0938/GenNum # 0.0938: branch fraction of D+ -> K-pi+pi+
     ratio2 = lum*XS2*0.0938/GenNum
 
-    h_FOM, ientry, arrow_top = cal_significance(t_sigMC1, t_sigMC2, t_incMC, entries_sigMC1, entries_sigMC2, entries_incMC, xbins, step, ratio1, ratio2)
+    h_FOM, ientry= cal_significance(t_sigMC1, t_sigMC2, t_incMC, entries_sigMC1, entries_sigMC2, entries_incMC, xbins, step, ratio1, ratio2)
     h_FOM.Draw()
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
 
-    arrow_left = ientry*step + step
-    arrow_right = ientry*step + step
-    arrow_bottom = 0.0
     arrow = TArrow(arrow_left, arrow_bottom, arrow_right, arrow_top, 0.01,'>')
     set_arrow(arrow)
     arrow.Draw()
@@ -177,7 +174,11 @@ def main():
         XS1 = 41.8
         XS2 = 17.3
         GenNum = 500000
-        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum)
+        arrow_left = 20
+        arrow_right = 20
+        arrow_bottom = 0
+        arrow_top = 30 
+        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
     if int(energy) == 4420:
         incMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_signal.root'
@@ -189,7 +190,11 @@ def main():
         XS1 = 65.4
         XS2 = 23.8
         GenNum = 500000
-        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum)
+        arrow_left = 20
+        arrow_right = 20
+        arrow_bottom = 0
+        arrow_top = 30 
+        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
     if int(energy) == 4600:
         incMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_signal.root'
@@ -201,7 +206,11 @@ def main():
         XS1 = 27.7
         XS2 = 7.2
         GenNum = 500000
-        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum)
+        arrow_left = 20
+        arrow_right = 20
+        arrow_bottom = 0
+        arrow_top = 30 
+        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
 if __name__ == '__main__':
     main()

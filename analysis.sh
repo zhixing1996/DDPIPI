@@ -30,16 +30,17 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.5"  "Get samples -- apply cuts before background study"
     printf "\n\t%-9s  %-40s\n" "0.3.6"  "Draw figures -- study status of matching before background study"
     printf "\n\t%-9s  %-40s\n" "0.3.7"  "Fit distributions -- fit to M(Dpi0)"
-    printf "\n\t%-9s  %-40s\n" "0.3.8"  "Draw figures -- study signal region of M(Dpi0)"
-    printf "\n\t%-9s  %-40s\n" "0.3.9"  "Draw figures -- fit to M(Dpi0)"
-    printf "\n\t%-9s  %-40s\n" "0.3.10" "Draw figures -- fit to M(D or Dst)"
-    printf "\n\t%-9s  %-40s\n" "0.3.11" "Draw figures -- compare chi2 of kinematic fit between types of matching status"
-    printf "\n\t%-9s  %-40s\n" "0.3.12" "Draw figures -- compare invariant mass of pipi between types of matching status"
-    printf "\n\t%-9s  %-40s\n" "0.3.13" "Draw figures -- fit to M(pipi)"
-    printf "\n\t%-9s  %-40s\n" "0.3.14" "Draw figures -- compare chi2 of vertex fit between types of matching status"
-    printf "\n\t%-9s  %-40s\n" "0.3.15" "Get samples -- apply cuts after background study"
-    printf "\n\t%-9s  %-40s\n" "0.3.16" "Draw figures -- study status of matching after background study"
-    printf "\n\t%-9s  %-40s\n" "0.3.17" "Draw figures -- study RM(pipi)"
+    printf "\n\t%-9s  %-40s\n" "0.3.8"  "Draw figures -- study status of matching on cut1"
+    printf "\n\t%-9s  %-40s\n" "0.3.9"  "Fit distributions -- fit to M(D)"
+    printf "\n\t%-9s  %-40s\n" "0.3.10" "Draw figures -- study status of matching on cut2"
+    printf "\n\t%-9s  %-40s\n" "0.3.11" "Fit distributions -- fit to M(Dst)"
+    printf "\n\t%-9s  %-40s\n" "0.3.12" "Draw figures -- study status of matching on cut3"
+    printf "\n\t%-9s  %-40s\n" "0.3.13" "Fit distributions -- fit to M(pipi)"
+    printf "\n\t%-9s  %-40s\n" "0.3.14" "Draw figures -- study status of matching on cut4"
+    printf "\n\t%-9s  %-40s\n" "0.3.15" "Draw figures -- compare chi2 of vertex fit between types of matching status"
+    printf "\n\t%-9s  %-40s\n" "0.3.16" "Draw figures -- study status of matching on cut5"
+    printf "\n\t%-9s  %-40s\n" "0.3.17" "Get samples -- apply cuts after background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.18" "Draw figures -- study RM(pipi)"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -264,55 +265,57 @@ case $option in
            root -l -q fit_m_Dpi0_4420.cxx
            ;;
 
-    0.3.8) echo "Draw figures -- studying signal region of M(Dpi0)..."
+    0.3.8) echo "Draw figures -- studying status of matching on cut1..."
            cd python
-           python opt_mass_Dpi0.py 4360
-           python opt_mass_Dpi0.py 4420
-           python opt_mass_Dpi0.py 4600
+           python plot_stat_match.py cut1
            ;;
 
-    0.3.9) echo "Draw figures -- fitting to M(Dpi0)..."
+    0.3.9) echo "Fit distributions -- fitting to M(D)..."
            cd cxx
-           root -l -q fit_mDpi0_4420.cxx
+           root -l -q fit_mD_4420.cxx
            ;;
 
-    0.3.10) echo "Draw figures -- fitting to M(D or Dst)..."
+    0.3.10) echo "Draw figures -- studying status of matching on cut2..."
+            cd python
+            python plot_stat_match.py cut2
+            ;;
+
+    0.3.11) echo "Fit distributions -- fitting to M(Dst)..."
             cd cxx
-            root -l -q fit_mD_4420.cxx
             root -l -q fit_mDst_4420.cxx
             ;;
 
-    0.3.11) echo "Draw figures -- comparing chi2 of kinematic fit between types of matching status..."
+    0.3.12) echo "Draw figures -- studying status of matching on cut3..."
             cd python
-            python plot_match_chi2_kf.py
+            python plot_stat_match.py cut3
             ;;
 
-    0.3.12) echo "Draw figures -- comparing invariant mass of pipi between types of matching status..."
-            cd python
-            python plot_match_m_pipi.py
-            ;;
-
-    0.3.13) echo "Draw figures -- fitting to M(pipi)..."
+    0.3.13) echo "Fit distributions -- fitting to M(pipi)..."
             cd cxx
             root -l -q fit_mKS_4420.cxx
             ;;
 
-    0.3.14) echo "Draw figures -- comparing chi2 of vertex fit between types of matching status..."
+    0.3.14) echo "Draw figures -- studying status of matching on cut4..."
             cd python
-            python plot_match_chi2_kf.py
+            python plot_stat_match.py cut4
             ;;
 
-    0.3.15) echo "Get samples -- applying cuts after background study..."
+    0.3.15) echo "Draw figures -- comparing chi2 of vertex fit between types of matching status..."
+            cd python
+            python plot_match_chi2_vf.py
+            ;;
+
+    0.3.16) echo "Draw figures -- studying status of matching on cut5..."
+            cd python
+            python plot_stat_match.py cut5
+            ;;
+
+    0.3.17) echo "Get samples -- applying cuts of background study..."
             cd jobs
             bash apply_cuts_after
             ;;
 
-    0.3.16) echo "Draw figures -- studying status of matching after background study..."
-            cd python
-            python plot_stat_match.py cut
-            ;;
-
-    0.3.17) echo "Draw figures -- studying RM(pipi)..."
+    0.3.18) echo "Draw figures -- studying RM(pipi)..."
             cd python
             python plot_rm_pipi.py
             ;;

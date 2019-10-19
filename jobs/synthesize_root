@@ -55,3 +55,13 @@ hadd incMC_hadrons_4420.root *.root
 cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/rootfile
 rm -rf incMC_hadrons_4600.root
 hadd incMC_hadrons_4600.root *.root
+# inclusive MC: DD
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile
+rm -rf incMC_DD_4360.root
+hadd incMC_DD_4360.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/rootfile
+rm -rf incMC_DD_4420.root
+hadd incMC_DD_4420.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/rootfile
+rm -rf incMC_DD_4600.root
+hadd incMC_DD_4600.root *.root

@@ -116,7 +116,7 @@ def plot(incMC_path, leg_title, ecms, xmax, arrow_left, arrow_bottom, arrow_righ
     set_arrow(arrow)
     arrow.Draw()
 
-    legend = TLegend(0.45, 0.6, 0.82, 0.8)
+    legend = TLegend(0.35, 0.6, 0.65, 0.8)
     set_legend(legend, h_unDunpi, h_Dunpi, h_unDpi, h_Dpi, leg_title)
     legend.Draw()
 
@@ -136,11 +136,11 @@ if __name__ == '__main__':
     incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root'
     leg_title = '(b)'
     ecms = 4420
-    xmax = 47
+    xmax = 31
     arrow_left = 20
-    arrow_bottom = 100
+    arrow_bottom = 250
     arrow_right = 20
-    arrow_top = 4000
+    arrow_top = 2000
     plot(incMC_path, leg_title, ecms, xmax, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
     incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_before.root'

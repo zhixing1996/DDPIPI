@@ -99,7 +99,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, M_D, N, step, rat
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = '|RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})-m_{D^{-}}|(GeV/c^{2})'
+    xtitle = '|RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})-m_{D^{-}}|(GeV)'
     ytitle = '#frac{S}{#sqrt{S+B}}'
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 8)
     set_histo_style(h_FOM, xtitle, ytitle)

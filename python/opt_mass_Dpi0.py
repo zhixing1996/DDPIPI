@@ -99,7 +99,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
             NEntry = i
     xmin = 2.0 + step
     xmax = 2.0 + step + N*step
-    xtitle = 'M(D^{+}#pi^{0})'
+    xtitle = 'M(D^{+}#pi^{0})(GeV)'
     ytitle = '#frac{S}{#sqrt{S+B}}'
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 7)
     set_histo_style(h_FOM, xtitle, ytitle)
@@ -190,7 +190,7 @@ def main():
         XS1 = 65.4
         XS2 = 23.8
         GenNum = 500000
-        chi2_cut = 47
+        chi2_cut = 31
         plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, chi2_cut)
 
     if int(energy) == 4600:
