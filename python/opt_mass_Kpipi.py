@@ -160,7 +160,7 @@ def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, Ge
 
     mass_low = str(M_Dplus - (step + step*ientry))
     mass_up = str(M_Dplus + (step + step*ientry))
-    window_width = str(step + step*ientry)
+    window_width = str(2*(step + step*ientry))
     range = 'Mass window of M(K^{-}#pi^{+}#pi^{+}): [' + mass_low + ', ' + mass_up + '] GeV/c2' + ' with mass window width: ' + window_width + ' GeV/c2'
     print range
 

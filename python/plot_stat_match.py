@@ -12,6 +12,7 @@ from ROOT import TCanvas, gStyle
 from ROOT import TFile, TH1F, TLegend, TPaveText
 import sys, os
 import logging
+import math
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
 gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
@@ -41,7 +42,7 @@ def fill(t, entries, MODE):
             if t.m_matched_D == 1 and t.m_matched_pi == 1:
                 h_match.Fill(4)
         if MODE == 'cut1':
-            if t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871)):
+            if t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and t.m_m_Dpi0 > 2.02):
                 if t.m_matched_D == 0 and t.m_matched_pi == 0:
                     h_match.Fill(1)
                 if t.m_matched_D == 1 and t.m_matched_pi == 0:
@@ -51,7 +52,7 @@ def fill(t, entries, MODE):
                 if t.m_matched_D == 1 and t.m_matched_pi == 1:
                     h_match.Fill(4)
         if MODE == 'cut2':
-            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871))) and (t.m_m_D0 < 1.80397 or t.m_m_D0 > 1.91843):
+            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and t.m_m_Dpi0 > 2.02)) and (t.m_m_pipi < 0.49164 or t.m_m_pipi > 0.50327):
                 if t.m_matched_D == 0 and t.m_matched_pi == 0:
                     h_match.Fill(1)
                 if t.m_matched_D == 1 and t.m_matched_pi == 0:
@@ -61,7 +62,7 @@ def fill(t, entries, MODE):
                 if t.m_matched_D == 1 and t.m_matched_pi == 1:
                     h_match.Fill(4)
         if MODE == 'cut3':
-            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871))) and (t.m_m_D0 < 1.80397 or t.m_m_D0 > 1.91843) and (t.m_m_D0 < 2.00117 or t.m_m_D0 > 2.01798):
+            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and t.m_m_Dpi0 > 2.02)) and (t.m_m_pipi < 0.49164 or t.m_m_pipi > 0.50327) and t.m_chi2_vf < 25:
                 if t.m_matched_D == 0 and t.m_matched_pi == 0:
                     h_match.Fill(1)
                 if t.m_matched_D == 1 and t.m_matched_pi == 0:
@@ -71,7 +72,7 @@ def fill(t, entries, MODE):
                 if t.m_matched_D == 1 and t.m_matched_pi == 1:
                     h_match.Fill(4)
         if MODE == 'cut4':
-            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871))) and (t.m_m_D0 < 1.80397 or t.m_m_D0 > 1.91843) and (t.m_m_D0 < 2.00117 or t.m_m_D0 > 2.01798) and (t.m_m_pipi < 0.49147 or t.m_m_pipi > 0.50364):
+            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and t.m_m_Dpi0 > 2.02)) and (t.m_m_pipi < 0.49164 or t.m_m_pipi > 0.50327) and t.m_chi2_vf < 25 and t.m_p_D < 0.675:
                 if t.m_matched_D == 0 and t.m_matched_pi == 0:
                     h_match.Fill(1)
                 if t.m_matched_D == 1 and t.m_matched_pi == 0:
@@ -81,7 +82,7 @@ def fill(t, entries, MODE):
                 if t.m_matched_D == 1 and t.m_matched_pi == 1:
                     h_match.Fill(4)
         if MODE == 'cut5':
-            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871))) and (t.m_m_D0 < 1.80397 or t.m_m_D0 > 1.91843) and (t.m_m_D0 < 2.00117 or t.m_m_D0 > 2.01798) and (t.m_m_pipi < 0.49147 or t.m_m_pipi > 0.50364) and t.m_chi2_vf < 25:
+            if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and t.m_m_Dpi0 > 2.02)) and (t.m_m_pipi < 0.49164 or t.m_m_pipi > 0.50327) and t.m_chi2_vf < 25 and t.m_p_D < 0.675 and t.m_m_Dpi < 2.3:
                 if t.m_matched_D == 0 and t.m_matched_pi == 0:
                     h_match.Fill(1)
                 if t.m_matched_D == 1 and t.m_matched_pi == 0:
@@ -107,6 +108,7 @@ def set_histo_style(h, ytitle):
     h.GetXaxis().CenterTitle()
     h.GetYaxis().SetTitle(ytitle)
     h.GetYaxis().CenterTitle()
+    h.GetYaxis().SetRangeUser(0, 22000)
     h.SetLineColor(1)
 
 def set_canvas_style(mbc):
@@ -149,6 +151,11 @@ def plot(incMC_path, leg_title, ecms, MODE):
     pt.AddText(pt_3)
     pt.AddText(pt_4)
     pt.Draw()
+
+    significance = h_match.GetBinContent(5)/math.sqrt(h_match.GetBinContent(2)+h_match.GetBinContent(3)+h_match.GetBinContent(4)+h_match.GetBinContent(5))
+    eff = (h_match.GetBinContent(2)+h_match.GetBinContent(3)+h_match.GetBinContent(4)+h_match.GetBinContent(5))/112500000.
+    print 'significance: ' + str(significance)
+    print 'efficiency: ' + str(eff)
 
     mbc.SaveAs('./figs/stat_match_'+str(ecms)+'_'+MODE+'.pdf')
 

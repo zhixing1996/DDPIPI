@@ -128,7 +128,7 @@ case $option in
            rm -rf sigMC_X_3842_PI_PI_PHSP_4360_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/dst sigMC X_3842_PI_PI PHSP X_3842 4360 20
+           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/dst sigMC X_3842_PI_PI PHSP X_3842 4360 10
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/rootfile/*root
@@ -175,7 +175,7 @@ case $option in
            rm -rf sigMC_X_3842_PI_PI_PHSP_4420_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/dst sigMC X_3842_PI_PI PHSP X_3842 4420 20
+           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/dst sigMC X_3842_PI_PI PHSP X_3842 4420 10
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/rootfile/*root
@@ -222,7 +222,7 @@ case $option in
            rm -rf sigMC_X_3842_PI_PI_PHSP_4600_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/dst sigMC X_3842_PI_PI PHSP X_3842 4600 20
+           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/dst sigMC X_3842_PI_PI PHSP X_3842 4600 10
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/rootfile/*root
@@ -269,7 +269,7 @@ case $option in
            rm -rf sigMC_D1_2420_D_PHSP_4360_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/dst sigMC D1_2420_D PHSP D1_2420 4360 20
+           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/dst sigMC D1_2420_D PHSP D1_2420 4360 10
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/rootfile/*root
@@ -316,7 +316,7 @@ case $option in
            rm -rf sigMC_D1_2420_D_PHSP_4420_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/dst sigMC D1_2420_D PHSP D1_2420 4420 20
+           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/dst sigMC D1_2420_D PHSP D1_2420 4420 10
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/rootfile/*root
@@ -363,7 +363,7 @@ case $option in
            rm -rf sigMC_D1_2420_D_PHSP_4600_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/dst sigMC D1_2420_D PHSP D1_2420 4600 20
+           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/dst sigMC D1_2420_D PHSP D1_2420 4600 10
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/rootfile/*root
@@ -410,7 +410,7 @@ case $option in
            rm -rf sigMC_psipp_PI_PI_PHSP_4360_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/dst sigMC psipp_PI_PI PHSP psipp 4360 20
+           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/dst sigMC psipp_PI_PI PHSP psipp 4360 10
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/rootfile/*root
@@ -457,7 +457,7 @@ case $option in
            rm -rf sigMC_psipp_PI_PI_PHSP_4420_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/dst sigMC psipp_PI_PI PHSP psipp 4420 20
+           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/dst sigMC psipp_PI_PI PHSP psipp 4420 10
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/rootfile/*root
@@ -504,7 +504,7 @@ case $option in
            rm -rf sigMC_psipp_PI_PI_PHSP_4600_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/dst sigMC psipp_PI_PI PHSP psipp 4600 20
+           ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/dst sigMC psipp_PI_PI PHSP psipp 4600 10
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/rootfile/*root
@@ -534,7 +534,7 @@ case $option in
             rm -rf incMC_inclusive_hadrons_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4360/hadrons/rec incMC inclusive hadrons hadrons 4360 50
+            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4360/hadrons/rec incMC inclusive hadrons hadrons 4360 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/rootfile/*root
@@ -564,7 +564,7 @@ case $option in
             rm -rf incMC_inclusive_hadrons_4420_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4420/hadrons/rec incMC inclusive hadrons hadrons 4420 50
+            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4420/hadrons/rec incMC inclusive hadrons hadrons 4420 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/rootfile/*root
@@ -594,7 +594,7 @@ case $option in
             rm -rf incMC_inclusive_hadrons_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4600/hadrons/rec incMC inclusive hadrons hadrons 4600 50
+            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4600/hadrons/rec incMC inclusive hadrons hadrons 4600 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/rootfile/*root

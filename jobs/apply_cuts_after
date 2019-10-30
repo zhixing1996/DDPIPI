@@ -7,7 +7,7 @@ rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_after.root 4.358 after
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/*after*.root
-python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_after.root 4.415 after
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_after.root 4.416 after
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_after.root 4.600 after
@@ -17,7 +17,7 @@ rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_after.root 4.358 after
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/*after*.root
-python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_after.root 4.415 after
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_after.root 4.416 after
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_after.root 4.600 after
@@ -27,7 +27,7 @@ rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_after.root 4.358 after
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/*after*.root
-python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_after.root 4.415 after
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_after.root 4.416 after
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_after.root 4.600 after
@@ -37,7 +37,7 @@ rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_after.root 4.358 after
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/*after*.root
-python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_after.root 4.415 after
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_after.root 4.416 after
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root 4.600 after

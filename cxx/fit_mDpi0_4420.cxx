@@ -50,7 +50,7 @@ void fit_mDpi0_4420() {
     TFile *f = new TFile("/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root", "READ");
     TTree *t = (TTree*)f->Get("save");
 
-    RooRealVar mDpi0("m_Dpi0", "m_Dpi0", 2.006, 2.013);
+    RooRealVar mDpi0("m_Dpi0", "m_Dpi0", 2.006, 2.022);
     RooDataSet* data = new RooDataSet("data", "dataset", t, mDpi0);
 
     // signal
@@ -72,7 +72,7 @@ void fit_mDpi0_4420() {
     RooAddPdf model("model", "gauss+bkg", RooArgList(gauss, bkgpdf), RooArgList(nsig, nbkg));
 
     model.fitTo(*data);
-    RooPlot* xframe = mDpi0.frame(Bins(40), Range(2.006, 2.013));
+    RooPlot* xframe = mDpi0.frame(Bins(40), Range(2.006, 2.022));
     data->plotOn(xframe);
     model.plotOn(xframe);
     model.plotOn(xframe, Components(gauss), LineColor(kGreen), LineWidth(2), LineStyle(1));

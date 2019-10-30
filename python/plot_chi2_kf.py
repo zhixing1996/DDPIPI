@@ -27,11 +27,11 @@ def set_legend(legend, h1, h2, title):
 def chi2_KF_fill(t1, t2, entries1, entries2, h1, h2):
     for ientry1 in xrange(entries1):
         t1.GetEntry(ientry1)
-        if t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.855 and t1.m_rm_Dpipi < 1.885:
+        if t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.8593 and t1.m_rm_Dpipi < 1.8800:
             h1.Fill(t1.m_chi2_kf)
     for ientry2 in xrange(entries2):
         t2.GetEntry(ientry2)
-        if t2.m_m_pipi > 0.28 and t2.m_rm_Dpipi > 1.855 and t2.m_rm_Dpipi < 1.885:
+        if t2.m_m_pipi > 0.28 and t2.m_rm_Dpipi > 1.8593 and t2.m_rm_Dpipi < 1.8800:
             h2.Fill(t2.m_chi2_kf)
 
 def set_histo_style(h1, h2, xtitle, ytitle, ymax):
@@ -51,7 +51,7 @@ def set_histo_style(h1, h2, xtitle, ytitle, ymax):
     h1.GetXaxis().CenterTitle()
     h1.GetYaxis().SetTitle(ytitle)
     h1.GetYaxis().CenterTitle()
-    h1.GetYaxis().SetRangeUser(0, int(ymax))
+    # h1.GetYaxis().SetRangeUser(0, int(ymax))
     h1.SetLineColor(1)
     h2.SetLineColor(2)
 
@@ -79,8 +79,8 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax):
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
     xmin = 0
-    xmax = 100
-    xbins = 100
+    xmax = 200
+    xbins = 200
     ytitle = "Events"
     xtitle = "#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})"
     h_data = TH1F('data', 'data', xbins, xmin, xmax)
@@ -115,6 +115,7 @@ if __name__ == '__main__':
     leg_title = '(b)'
     ecms = 4420
     ymax = 2200
+    ymax = 1500
     plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
     data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'

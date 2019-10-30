@@ -34,7 +34,7 @@ def set_legend(legend, h1, h2, h3, h4, title):
 def chi2_KF_fill(t, entries, h1, h2, h3, h4):
     for ientry in xrange(entries):
         t.GetEntry(ientry)
-        if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and (t.m_m_Dpi0 > 2.01165 or t.m_m_Dpi0 < 2.00871))) and (t.m_m_D0 < 1.80397 or t.m_m_D0 > 1.91843) and (t.m_m_D0 < 2.00117 or t.m_m_D0 > 2.01798) and (t.m_m_pipi < 0.49147 or t.m_m_pipi > 0.50364):
+        if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and t.m_m_Dpi0 > 2.02)) and (t.m_m_pipi < 0.49164 or t.m_m_pipi > 0.50327):
             if t.m_matched_D == 0 and t.m_matched_pi == 0:
                 h1.Fill(t.m_chi2_vf)
             if t.m_matched_D == 1 and t.m_matched_pi == 0:
@@ -112,7 +112,7 @@ def plot(incMC_path, leg_title, ecms, xmax):
     h_unDpi.Draw('same')
     h_Dpi.Draw('same')
 
-    arrow = TArrow(25, 100, 25, 4000, 0.01, '<')
+    arrow = TArrow(25, 0, 25, 600, 0.01, '<')
     set_arrow(arrow)
     arrow.Draw()
 
@@ -123,12 +123,11 @@ def plot(incMC_path, leg_title, ecms, xmax):
     mbc.SaveAs('./figs/matched_chi2_vf_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
-    sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
+    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_before.root'
     leg_title = '(a)'
     ecms = 4360
-    ymax = 1200
-    plot(data_path, sigMC_path, leg_title, ecms, ymax)
+    xmax = 100
+    plot(incMC_path, leg_title, ecms, xmax)
 
     incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root'
     leg_title = '(b)'
@@ -136,9 +135,8 @@ if __name__ == '__main__':
     xmax = 100
     plot(incMC_path, leg_title, ecms, xmax)
 
-    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
-    sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
+    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_before.root'
     leg_title = '(c)'
     ecms = 4600
-    ymax = 3000
-    plot(data_path, sigMC_path, leg_title, ecms, ymax)
+    xmax = 100
+    plot(incMC_path, leg_title, ecms, xmax)

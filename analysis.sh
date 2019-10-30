@@ -31,16 +31,17 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.6"  "Draw figures -- study status of matching before background study"
     printf "\n\t%-9s  %-40s\n" "0.3.7"  "Fit distributions -- fit to M(Dpi0)"
     printf "\n\t%-9s  %-40s\n" "0.3.8"  "Draw figures -- study status of matching on cut1"
-    printf "\n\t%-9s  %-40s\n" "0.3.9"  "Fit distributions -- fit to M(D)"
+    printf "\n\t%-9s  %-40s\n" "0.3.9"  "Fit distributions -- fit to M(pipi)"
     printf "\n\t%-9s  %-40s\n" "0.3.10" "Draw figures -- study status of matching on cut2"
-    printf "\n\t%-9s  %-40s\n" "0.3.11" "Fit distributions -- fit to M(Dst)"
+    printf "\n\t%-9s  %-40s\n" "0.3.11" "Draw figures -- compare chi2 of vertex fit between types of matching status"
     printf "\n\t%-9s  %-40s\n" "0.3.12" "Draw figures -- study status of matching on cut3"
-    printf "\n\t%-9s  %-40s\n" "0.3.13" "Fit distributions -- fit to M(pipi)"
+    printf "\n\t%-9s  %-40s\n" "0.3.13" "Draw figures -- cpmpare momentum of D between data and signal MC"
     printf "\n\t%-9s  %-40s\n" "0.3.14" "Draw figures -- study status of matching on cut4"
-    printf "\n\t%-9s  %-40s\n" "0.3.15" "Draw figures -- compare chi2 of vertex fit between types of matching status"
+    printf "\n\t%-9s  %-40s\n" "0.3.15" "Draw figures -- compare invariant mass of M(Dpi) between data and signal MC"
     printf "\n\t%-9s  %-40s\n" "0.3.16" "Draw figures -- study status of matching on cut5"
     printf "\n\t%-9s  %-40s\n" "0.3.17" "Get samples -- apply cuts after background study"
     printf "\n\t%-9s  %-40s\n" "0.3.18" "Draw figures -- study RM(pipi)"
+    printf "\n\t%-9s  %-40s\n" "0.3.19" "Draw figures -- study M(Dpipi)"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -228,7 +229,7 @@ case $option in
            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4360\/incMC_DD_4360_topo.root/g" topoana.card
            sed -i "s/NAME/TopoResult_4360/g" topoana.card
-           sed -i "s/cut_chi2_kf/45/g" topoana.card
+           sed -i "s/cut_chi2_kf/20/g" topoana.card
            topoana.exe topoana.card
            cd ..
            mkdir -p 4420
@@ -237,7 +238,7 @@ case $option in
            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4420\/incMC_hadrons_4420_topo.root/g" topoana.card
            sed -i "s/NAME/TopoResult_4420/g" topoana.card
-           sed -i "s/cut_chi2_kf/47/g" topoana.card
+           sed -i "s/cut_chi2_kf/10/g" topoana.card
            topoana.exe topoana.card
            cd ..
            mkdir -p 4600
@@ -270,9 +271,9 @@ case $option in
            python plot_stat_match.py cut1
            ;;
 
-    0.3.9) echo "Fit distributions -- fitting to M(D)..."
+    0.3.9) echo "Fit distributions -- fitting to M(pipi)..."
            cd cxx
-           root -l -q fit_mD_4420.cxx
+           root -l -q fit_mKS_4420.cxx
            ;;
 
     0.3.10) echo "Draw figures -- studying status of matching on cut2..."
@@ -280,9 +281,9 @@ case $option in
             python plot_stat_match.py cut2
             ;;
 
-    0.3.11) echo "Fit distributions -- fitting to M(Dst)..."
-            cd cxx
-            root -l -q fit_mDst_4420.cxx
+    0.3.11) echo "Draw figures -- comparing chi2 of vertex fit between types of matching status..."
+            cd python
+            python plot_match_chi2_vf.py
             ;;
 
     0.3.12) echo "Draw figures -- studying status of matching on cut3..."
@@ -290,9 +291,9 @@ case $option in
             python plot_stat_match.py cut3
             ;;
 
-    0.3.13) echo "Fit distributions -- fitting to M(pipi)..."
-            cd cxx
-            root -l -q fit_mKS_4420.cxx
+    0.3.13) echo "Draw figures -- cpmparing momentum of D between data and signal MC..."
+            cd python
+            python plot_p_D.py
             ;;
 
     0.3.14) echo "Draw figures -- studying status of matching on cut4..."
@@ -300,9 +301,9 @@ case $option in
             python plot_stat_match.py cut4
             ;;
 
-    0.3.15) echo "Draw figures -- comparing chi2 of vertex fit between types of matching status..."
+    0.3.15) echo "Draw figures -- comparing invariant mass of M(Dpi) between data and signal MC..."
             cd python
-            python plot_match_chi2_vf.py
+            python plot_m_Dpi.py
             ;;
 
     0.3.16) echo "Draw figures -- studying status of matching on cut5..."
@@ -318,6 +319,11 @@ case $option in
     0.3.18) echo "Draw figures -- studying RM(pipi)..."
             cd python
             python plot_rm_pipi.py
+            ;;
+
+    0.3.19) echo "Draw figures -- studying M(Dpipi)..."
+            cd python
+            python plot_m_Dpipi.py
             ;;
 
 esac
