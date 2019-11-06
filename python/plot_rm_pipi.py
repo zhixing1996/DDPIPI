@@ -114,7 +114,7 @@ def plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_titl
     xbins = 75
     content = (xmax - xmin)/xbins * 1000
     ytitle = 'Events/%.1f MeV'%content
-    xtitle = 'M(D^{+}#pi^{0})(GeV)'
+    xtitle = 'RM(#pi^{+}_{0}#pi^{-}_{0})(GeV)'
     h_data = TH1F('data', 'data', xbins, xmin, float(xmax))
     h_incMC1 = TH1F('incMC1', 'inclusive MC: open charm', xbins, xmin, float(xmax))
     h_incMC2 = TH1F('incMC2', 'inclusive MC: qqbar', xbins, xmin, float(xmax))
