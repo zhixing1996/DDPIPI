@@ -6,16 +6,24 @@ Decay  psi(4415)
 Enddecay
 
 Decay psi(3D3) 
-1.00  A_D+  D-  VSS;
-1.00  D+  A_D-  VSS;
+1.00  A_D+  D-  PHSP;
+1.00  D+  A_D-  PHSP;
 Enddecay
 
 Decay A_D+
-1.00  K-  pi+  pi+     D_DALITZ;
+0.0938  K-  pi+  pi+  D_DALITZ;
+0.00993  K-  K+  pi+  PHSP;
+0.00304  K_S0  K+  PHSP;
+0.00254  K_S0  K_S0  K+  PHSP;
+0.00174  K_S0  K+  pi+  pi-  PHSP;
 Enddecay
 
 Decay A_D-
-1.00  K+  pi-  pi-     D_DALITZ;
+0.0938  K+  pi-  pi-  D_DALITZ;
+0.00993  K+  K-  pi-  PHSP;
+0.00304  K_S0  K-  PHSP;
+0.00254  K_S0  K_S0  K-  PHSP;
+0.00174  K_S0  K-  pi+  pi-  PHSP;
 Enddecay
 
 End

@@ -47,10 +47,10 @@ void fit_mDpi0_4420() {
     gStyle->SetPadTickX(1);
     gStyle->SetPadTickY(1);
 
-    TFile *f = new TFile("/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root", "READ");
+    TFile *f = new TFile("/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_before.root", "READ");
     TTree *t = (TTree*)f->Get("save");
 
-    RooRealVar mDpi0("m_Dpi0", "m_Dpi0", 2.006, 2.022);
+    RooRealVar mDpi0("m_Dpi0", "m_Dpi0", 2.006, 2.016);
     RooDataSet* data = new RooDataSet("data", "dataset", t, mDpi0);
 
     // signal
@@ -72,7 +72,7 @@ void fit_mDpi0_4420() {
     RooAddPdf model("model", "gauss+bkg", RooArgList(gauss, bkgpdf), RooArgList(nsig, nbkg));
 
     model.fitTo(*data);
-    RooPlot* xframe = mDpi0.frame(Bins(40), Range(2.006, 2.022));
+    RooPlot* xframe = mDpi0.frame(Bins(40), Range(2.006, 2.016));
     data->plotOn(xframe);
     model.plotOn(xframe);
     model.plotOn(xframe, Components(gauss), LineColor(kGreen), LineWidth(2), LineStyle(1));
@@ -92,5 +92,6 @@ void fit_mDpi0_4420() {
     xframe->GetYaxis()->SetTitle("Events");
     xframe->GetYaxis()->CenterTitle();
     xframe->Draw();
+    std::cout << "Mass Region: [" << mean.getVal() - 3*sigma.getVal() << ", " << mean.getVal() + 3*sigma.getVal() << "]" << srd::endl;
 
 }

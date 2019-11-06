@@ -511,94 +511,103 @@ case $option in
            ./subAna.sh sigMC_psipp_PI_PI_PHSP_4600
            ;;
 
-    # ----------------------------------
-    #  0.10 run on inclusive MC @4360MeV
-    # ----------------------------------
+    # ------------------------------------------
+    #  0.10 run on inclusive MC (qqbar) @4360MeV
+    # ------------------------------------------
 
     0.10) echo "inclusive MC @4360MeV..."
           echo "--> E_{CMS}: 4358.260MeV"
-          echo "--> Mode: hadrons"
+          echo "--> Mode: qqbar"
           echo "--> Energy Spread: 1.97MeV"
-          echo "--> Times Bigger Than Data: 5"
+          echo "--> Event Number: 9,400,000"
+          echo "--> Cross Section: 17.5nb"
+          echo "--> Luminosity: 539.84pb^{-1}"
+          echo "--> RunNo: 30616~31279"
           ;;
 
     0.10.1) echo "Single D tag -- run on inclusive MC sample..."
-            mkdir -p scripts/incMC/hadrons/4360
-            cd scripts/incMC/hadrons/4360
-            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/hadrons/4360/jobs_inc" ]; then
-                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/hadrons/4360/jobs_inc
-                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/hadrons/4360/jobs_inc ./jobs_inc
+            mkdir -p scripts/incMC/qq/4360
+            cd scripts/incMC/qq/4360
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4360/jobs_inc" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4360/jobs_inc
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4360/jobs_inc ./jobs_inc
             fi
-            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/rootfile
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/rootfile
             cd jobs_inc
-            rm -rf incMC_inclusive_hadrons_4360_*txt
+            rm -rf incMC_inclusive_qq_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4360/hadrons/rec incMC inclusive hadrons hadrons 4360 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/qqbar incMC inclusive qq qq 4360 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
-            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/rootfile/*root
-            ./subAna.sh incMC_inclusive_hadrons_4360
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/rootfile/*root
+            ./subAna.sh incMC_inclusive_qq_4360
             ;;
 
-    # ----------------------------------
-    #  0.11 run on inclusive MC @4420MeV
-    # ----------------------------------
+    # ------------------------------------------
+    #  0.11 run on inclusive MC (qqbar) @4420MeV
+    # ------------------------------------------
 
     0.11) echo "inclusive MC @4420MeV..."
           echo "--> E_{CMS}: 4415.580MeV"
-          echo "--> Mode: hadrons"
+          echo "--> Mode: qqbar"
           echo "--> Energy Spread: 2.03MeV"
-          echo "--> Times Bigger Than Data: 5"
+          echo "--> Event Number: 14,000,000"
+          echo "--> Cross Section: 7.0nb"
+          echo "--> Luminosity: 1028.89pb^{-1}"
+          echo "--> RunNo: 36773~38140"
           ;;
 
     0.11.1) echo "Single D tag -- run on inclusive MC sample..."
-            mkdir -p scripts/incMC/hadrons/4420
-            cd scripts/incMC/hadrons/4420
-            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/hadrons/4420/jobs_inc" ]; then
-                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/hadrons/4420/jobs_inc
-                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/hadrons/4420/jobs_inc ./jobs_inc
+            mkdir -p scripts/incMC/qq/4420
+            cd scripts/incMC/qq/4420
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4420/jobs_inc" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4420/jobs_inc
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4420/jobs_inc ./jobs_inc
             fi
-            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/rootfile
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/rootfile
             cd jobs_inc
-            rm -rf incMC_inclusive_hadrons_4420_*txt
+            rm -rf incMC_inclusive_qq_4420_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4420/hadrons/rec incMC inclusive hadrons hadrons 4420 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/qqbar incMC inclusive qq qq 4420 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
-            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/rootfile/*root
-            ./subAna.sh incMC_inclusive_hadrons_4420
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/rootfile/*root
+            ./subAna.sh incMC_inclusive_qq_4420
             ;;
 
-    # ----------------------------------
-    #  0.12 run on inclusive MC @4600MeV
-    # ----------------------------------
+    # --------------------------------------------------
+    #  0.12 run on inclusive MC (qqbar and ISR) @4600MeV
+    # --------------------------------------------------
 
     0.12) echo "inclusive MC @4600MeV..."
           echo "--> E_{CMS}: 4599.530MeV"
-          echo "--> Mode: hadrons"
+          echo "--> Mode: qqbar and ISR"
           echo "--> Energy Spread: 2.20MeV"
-          echo "--> Times Bigger Than Data: 5"
+          echo "--> Event Number: 2,800,000"
+          echo "--> Cross Section: 6.0nb"
+          echo "--> Luminosity: 566.93pb^{-1}"
+          echo "--> RunNo: 35227~35743"
           ;;
 
     0.12.1) echo "Single D tag -- run on inclusive MC sample..."
-            mkdir -p scripts/incMC/hadrons/4600
-            cd scripts/incMC/hadrons/4600
-            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/hadrons/4600/jobs_inc" ]; then
-                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/hadrons/4600/jobs_inc
-                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/hadrons/4600/jobs_inc ./jobs_inc
+            mkdir -p scripts/incMC/qq/4600
+            cd scripts/incMC/qq/4600
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4600/jobs_inc" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4600/jobs_inc
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4600/jobs_inc ./jobs_inc
             fi
-            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/rootfile
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/rootfile
             cd jobs_inc
-            rm -rf incMC_inclusive_hadrons_4600_*txt
+            rm -rf incMC_inclusive_qq_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/703-MC/4600/hadrons/rec incMC inclusive hadrons hadrons 4600 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/qqbar incMC inclusive qq qq 4600 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
-            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/rootfile/*root
-            ./subAna.sh incMC_inclusive_hadrons_4600
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/rootfile/*root
+            ./subAna.sh incMC_inclusive_qq_4600
             ;;
 
     # --------------------------
@@ -608,7 +617,7 @@ case $option in
     0.13) echo "data @4360MeV..."
           echo "--> E_{CMS}: 4358.260MeV"
           echo "--> Energy Spread: 1.97MeV"
-          echo "--> Luminosity: 55.18pb^{-1}"
+          echo "--> Luminosity: 539.85pb^{-1}"
           echo "--> RunNo: 30616~31279"
           ;;
 
@@ -700,6 +709,10 @@ case $option in
           echo "--> E_{CMS}: 4358.260MeV"
           echo "--> Mode: DDbar"
           echo "--> Energy Spread: 1.97MeV"
+          echo "--> Event Number: 500,000"
+          echo "--> Cross Section: 1.0nb"
+          echo "--> Luminosity: 539.84pb^{-1}"
+          echo "--> RunNo: 30616~31279"
           ;;
 
     0.16.1) echo "Single D tag -- run on inclusive MC sample..."
@@ -714,7 +727,7 @@ case $option in
             rm -rf incMC_inclusive_DD_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/res/DD incMC inclusive DD DD 4360 50
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/res/DD incMC inclusive DD DD 4360 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile/*root
@@ -730,6 +743,10 @@ case $option in
           echo "--> E_{CMS}: 4415.580MeV"
           echo "--> Mode: DDbar"
           echo "--> Energy Spread: 2.03MeV"
+          echo "--> Event Number: 40,300,000"
+          echo "--> Cross Section: 10.2nb"
+          echo "--> Luminosity: 1028.89pb^{-1}"
+          echo "--> RunNo: 36773~38140"
           ;;
 
     0.17.1) echo "Single D tag -- run on inclusive MC sample..."
@@ -744,7 +761,7 @@ case $option in
             rm -rf incMC_inclusive_DD_4420_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/DD incMC inclusive DD DD 4420 50
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/DD incMC inclusive DD DD 4420 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/rootfile/*root
@@ -759,6 +776,10 @@ case $option in
           echo "--> E_{CMS}: 4599.530MeV"
           echo "--> Mode: DDbar"
           echo "--> Energy Spread: 2.20MeV"
+          echo "--> Event Number: 3,100,000"
+          echo "--> Cross Section: 7.8nb"
+          echo "--> Luminosity: 566.93pb^{-1}"
+          echo "--> RunNo: 35227~35743"
           ;;
 
     0.18.1) echo "Single D tag -- run on inclusive MC sample..."
@@ -773,7 +794,7 @@ case $option in
             rm -rf incMC_inclusive_DD_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/DD incMC inclusive DD DD 4600 50
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/DD incMC inclusive DD DD 4600 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/rootfile/*root

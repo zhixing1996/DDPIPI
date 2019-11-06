@@ -41,13 +41,23 @@ python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_p
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/*before*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root 4.600 before
-# inclusive MC: hadrons
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/*before*.root
-python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_before.root 4.358 before
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/*before*.root
-python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root 4.416 before
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600
-rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/*before*.root
-python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_before.root 4.600 before
+# inclusive MC: DD
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root 4.358 before
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root 4.416 before
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root 4.600 before
+# inclusive MC: qq
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root 4.358 before
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root 4.416 before
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/*before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_before.root 4.600 before

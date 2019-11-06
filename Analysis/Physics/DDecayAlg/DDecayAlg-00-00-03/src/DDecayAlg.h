@@ -147,8 +147,6 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<double> m_chi2_vf;
         NTuple::Item<double> m_chi2_kf;
         NTuple::Item<int> m_n_count;
-        NTuple::Item<int> m_n_combination;
-        NTuple::Array<double> m_chi2_2C;
 
         // Ntuple2 info
         NTuple::Tuple* m_tuple2;
@@ -334,8 +332,6 @@ class DDecayAlg : public Algorithm {
         bool tagSingleD();
         bool saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon);
         double fitVertex(VWTrkPara &vwtrkpara, VertexParameter &birth_photon);
-        double fitKM_one_gamma(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, VWTrkPara &vwtrkpara_othershws, double kf_chi2);
-        double fitKM_two_gamma(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, VWTrkPara &vwtrkpara_othershws, double kf_chi2);
         double fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth);
         double fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth);
         double fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double sidebandlow_mean);
@@ -345,8 +341,6 @@ class DDecayAlg : public Algorithm {
         bool fitpi0_sidebandlow(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);
         bool fitpi0_sidebandup(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);
         bool saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth);
-        void chi2_2C(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth);
-        double fitKM_2C(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth);
         bool saveOthershws();
         int MatchMC(HepLorentzVector &p4, std::string MODE);
 };

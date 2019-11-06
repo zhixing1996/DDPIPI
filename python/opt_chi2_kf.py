@@ -12,7 +12,7 @@ from ROOT import TCanvas, gStyle
 from ROOT import TFile, TH2F, TPaveText, TArrow
 import sys, os
 import logging
-import math
+from math import *
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
 gStyle.SetPaperSize(20,30)
 gStyle.SetPadTopMargin(0.05)
@@ -44,7 +44,7 @@ def set_histo_style(h, xtitle, ytitle):
     h.GetXaxis().SetTitleOffset(1.4)
     h.GetXaxis().SetLabelOffset(0.01)
     h.GetYaxis().SetTitleSize(0.04)
-    h.GetYaxis().SetTitleOffset(1.6)
+    h.GetYaxis().SetTitleOffset(1.5)
     h.GetYaxis().SetLabelOffset(0.01)
     h.GetXaxis().SetTitle(xtitle)
     h.GetXaxis().CenterTitle()
@@ -54,7 +54,7 @@ def set_histo_style(h, xtitle, ytitle):
     h.SetMarkerSize(0.65)
     h.SetLineColor(1)
 
-def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, ratio2):
+def cal_significance(t1, t2, t3, t4, entries1, entries2, entries3, entries4, N, step, ratio1, ratio2, ratio3, ratio4, runNolow, runNoup):
     ymax = 0
     NEntry = 0
     S1_list = []
@@ -65,7 +65,7 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
         S1 = 0
         for j in xrange(int(entries1*ratio1)):
             t1.GetEntry(j)
-            if t1.m_chi2_kf < (step + i*step) and t1.m_m_pipi > 0.28 and t1.m_rm_Dpipi > 1.8593 and t1.m_rm_Dpipi < 1.8800:
+            if t1.m_chi2_kf < (step + i*step) and t1.m_mode == 200 and fabs(t1.m_runNo) > runNolow and fabs(t1.m_runNo) < runNoup:
                 S1 = S1 + 1
         S1_list.append(S1)
     print 'Start of sigMC2...'
@@ -73,26 +73,38 @@ def cal_significance(t1, t2, t3, entries1, entries2, entries3, N, step, ratio1, 
         S2 = 0
         for j in xrange(int(entries2*ratio2)):
             t2.GetEntry(j)
-            if t2.m_chi2_kf < (step + i*step) and t2.m_m_pipi > 0.28 and t2.m_rm_Dpipi > 1.8593 and t2.m_rm_Dpipi < 1.8800:
+            if t2.m_chi2_kf < (step + i*step) and t2.m_mode == 200 and fabs(t2.m_runNo) > runNolow and fabs(t2.m_runNo) < runNoup:
                 S2 = S2 + 1
         S2_list.append(S2)
     for i in xrange(N):
         S_list.append(S1_list[i]+S2_list[i])
+    B1_list = []
+    B2_list = []
     B_list = []
-    print 'Start of incMC...'
+    print 'Start of incMC1...'
     for i in xrange(N):
-        B = 0
-        for j in xrange(entries3/5):
+        B1 = 0
+        for j in xrange(int(entries3*ratio3)):
             t3.GetEntry(j)
-            if t3.m_chi2_kf < (step + i*step) and t3.m_m_pipi > 0.28 and t3.m_rm_Dpipi > 1.8593 and t3.m_rm_Dpipi < 1.8800:
-                B = B + 1
-        B_list.append(B)
+            if t3.m_chi2_kf < (step + i*step) and t3.m_mode == 200 and fabs(t3.m_runNo) > runNolow and fabs(t3.m_runNo) < runNoup:
+                B1 = B1 + 1
+        B1_list.append(B1)
+    print 'Start of incMC2...'
+    for i in xrange(N):
+        B2 = 0
+        for j in xrange(int(entries4*ratio4)):
+            t4.GetEntry(j)
+            if t4.m_chi2_kf < (step + i*step) and t4.m_mode == 200 and fabs(t4.m_runNo) > runNolow and fabs(t4.m_runNo) < runNoup:
+                B2 = B2 + 1
+        B2_list.append(B2)
+    for i in xrange(N):
+        B_list.append(B1_list[i]+B2_list[i])
     Ratio_list = []
     for i in xrange(N):
         if B_list[i] == 0:
             significance = 0
         else:
-            significance = S_list[i]/math.sqrt(B_list[i])
+            significance = S_list[i]/sqrt(S_list[i] + B_list[i])
         Ratio_list.append(significance)
         if significance > ymax:
             ymax = significance
@@ -114,18 +126,22 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, arrow_left, arrow_bottom, arrow_right, arrow_top):
+def plot(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, pt_title, ecms, ratio1, ratio2, ratio3, ratio4, runNolow, runNoup, arrow_left, arrow_bottom, arrow_right, arrow_top):
     try:
-        f_incMC = TFile(incMC_path)
+        f_incMC1 = TFile(incMC1_path)
+        f_incMC2 = TFile(incMC2_path)
         f_sigMC1 = TFile(sigMC1_path)
         f_sigMC2 = TFile(sigMC2_path)
-        t_incMC = f_incMC.Get('save')
+        t_incMC1 = f_incMC1.Get('save')
+        t_incMC2 = f_incMC2.Get('save')
         t_sigMC1 = f_sigMC1.Get('save')
         t_sigMC2 = f_sigMC2.Get('save')
-        entries_incMC = t_incMC.GetEntries()
+        entries_incMC1 = t_incMC1.GetEntries()
+        entries_incMC2 = t_incMC2.GetEntries()
         entries_sigMC1 = t_sigMC1.GetEntries()
         entries_sigMC2 = t_sigMC2.GetEntries()
-        logging.info('inclusive MC entries :'+str(entries_incMC))
+        logging.info('inclusive MC (open charm) entries :'+str(entries_incMC1))
+        logging.info('inclusive MC (qqbar) entries :'+str(entries_incMC2))
         logging.info('D1(2420) signal MC entries :'+str(entries_sigMC1))
         logging.info('psi(3770) signal MC entries :'+str(entries_sigMC2))
     except:
@@ -136,10 +152,8 @@ def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, Ge
     set_canvas_style(mbc)
     xbins = 100
     step = 100/xbins
-    ratio1 = lum*XS1*0.0938/GenNum # 0.0938: branch fraction of D+ -> K-pi+pi+
-    ratio2 = lum*XS2*0.0938/GenNum
 
-    h_FOM, ientry= cal_significance(t_sigMC1, t_sigMC2, t_incMC, entries_sigMC1, entries_sigMC2, entries_incMC, xbins, step, ratio1, ratio2)
+    h_FOM, ientry= cal_significance(t_sigMC1, t_sigMC2, t_incMC1, t_incMC2, entries_sigMC1, entries_sigMC2, entries_incMC1, entries_incMC2, xbins, step, ratio1, ratio2, ratio3, ratio4, runNolow, runNoup)
     h_FOM.Draw()
     
     if not os.path.exists('./figs/'):
@@ -165,7 +179,8 @@ def main():
     energy = args[0]
 
     if int(energy) == 4360:
-        incMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_signal.root'
+        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_signal.root'
+        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_signal.root'
         sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root'
         sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_signal.root'
         pt_title = '(a)'
@@ -173,15 +188,26 @@ def main():
         lum = 539.84
         XS1 = 41.8
         XS2 = 17.3
+        XS3 = 17500.0
+        XS4 = 1000.0
+        runNolow = 30616
+        runNoup = 31279
         GenNum = 500000
-        arrow_left = 20
-        arrow_right = 20
+        GenNum1 = 9400000
+        GenNum2 = 500000
+        ratio1 = lum*XS1*(0.0938+0.00993+0.00304+0.00254+0.00174)/GenNum
+        ratio2 = lum*XS2*(0.0938+0.00993+0.00304+0.00254+0.00174)/GenNum
+        ratio3 = lum*XS3/GenNum1
+        ratio4 = lum*XS4/GenNum2
+        arrow_left = 15
+        arrow_right = 15
         arrow_bottom = 0
-        arrow_top = 30 
-        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, arrow_left, arrow_bottom, arrow_right, arrow_top)
+        arrow_top = 22
+        plot(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, pt_title, ecms, ratio1, ratio2, ratio3, ratio4, runNolow, runNoup, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
     if int(energy) == 4420:
-        incMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_signal.root'
+        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_signal.root'
+        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_signal.root'
         sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root'
         sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_signal.root'
         pt_title = '(b)'
@@ -189,15 +215,26 @@ def main():
         lum = 1073.56
         XS1 = 65.4
         XS2 = 23.8
+        XS3 = 7000.0
+        XS4 = 10200.0
+        runNolow = 36773
+        runNoup = 38140
         GenNum = 500000
-        arrow_left = 20
-        arrow_right = 20
+        GenNum1 = 14000000
+        GenNum2 = 40300000
+        ratio1 = lum*XS1*(0.0938+0.00993+0.00304+0.00254+0.00174)/GenNum
+        ratio2 = lum*XS2*(0.0938+0.00993+0.00304+0.00254+0.00174)/GenNum
+        ratio3 = lum*XS3/GenNum1
+        ratio4 = lum*XS4/GenNum2
+        arrow_left = 15
+        arrow_right = 15
         arrow_bottom = 0
-        arrow_top = 24
-        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, arrow_left, arrow_bottom, arrow_right, arrow_top)
+        arrow_top = 25
+        plot(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, pt_title, ecms, ratio1, ratio2, ratio3, ratio4, runNolow, runNoup, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
     if int(energy) == 4600:
-        incMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_signal.root'
+        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_signal.root'
+        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_signal.root'
         sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root'
         sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root'
         pt_title = '(c)'
@@ -205,12 +242,22 @@ def main():
         lum = 566.93
         XS1 = 27.7
         XS2 = 7.2
+        XS3 = 6000.0
+        XS4 = 7800.0
+        runNolow = 35227
+        runNoup = 35743
         GenNum = 500000
-        arrow_left = 20
-        arrow_right = 20
+        GenNum1 = 2800000
+        GenNum2 = 3100000
+        ratio1 = lum*XS1*(0.0938+0.00993+0.00304+0.00254+0.00174)/GenNum
+        ratio2 = lum*XS2*(0.0938+0.00993+0.00304+0.00254+0.00174)/GenNum
+        ratio3 = lum*XS3/GenNum1
+        ratio4 = lum*XS4/GenNum2
+        arrow_left = 15
+        arrow_right = 15
         arrow_bottom = 0
-        arrow_top = 30 
-        plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, GenNum, arrow_left, arrow_bottom, arrow_right, arrow_top)
+        arrow_top = 22
+        plot(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, pt_title, ecms, ratio1, ratio2, ratio3, ratio4, runNolow, runNoup, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
 if __name__ == '__main__':
     main()

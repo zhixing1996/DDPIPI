@@ -44,8 +44,11 @@ def save_before(f_in, t, chi2_kf_cut_before):
     m_rm_pipi = array('d', [999.])
     m_m_pipi = array('d', [999.])
     m_p_pipi = array('d', [999.])
+    m_rm_Dpi = array('d', [999.])
     m_m_Dpi = array('d', [999.])
     m_m_Dpipi = array('d', [999.])
+    m_m2_Kpip = array('d', [999.])
+    m_m2_Kpim = array('d', [999.])
     m_rm_Dpipi = array('d', [999.])
     m_chi2_vf = array('d', [999.])
     m_chi2_kf = array('d', [999.])
@@ -74,9 +77,12 @@ def save_before(f_in, t, chi2_kf_cut_before):
     t.Branch('rm_pipi', m_rm_pipi, 'm_rm_pipi/D')
     t.Branch('m_pipi', m_m_pipi, 'm_m_pipi/D')
     t.Branch('p_pipi', m_p_pipi, 'm_p_pipi/D')
+    t.Branch('rm_Dpi', m_rm_Dpi, 'm_rm_Dpi/D')
     t.Branch('m_Dpi', m_m_Dpi, 'm_m_Dpi/D')
     t.Branch('m_Dpipi', m_m_Dpipi, 'm_m_Dpipi/D')
     t.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
+    t.Branch('m2_Kpip', m_m2_Kpip, 'm_m2_Kpip/D')
+    t.Branch('m2_Kpim', m_m2_Kpim, 'm_m2_Kpim/D')
     t.Branch('chi2_vf', m_chi2_vf, 'm_chi2_vf/D')
     t.Branch('chi2_kf', m_chi2_kf, 'm_chi2_kf/D')
     t.Branch('n_othertrks', m_n_othertrks, 'm_n_othertrks/I')
@@ -96,7 +102,7 @@ def save_before(f_in, t, chi2_kf_cut_before):
     nentries = t_in.GetEntries()
     for ientry in range(nentries):
         t_in.GetEntry(ientry)
-        if t_in.m_m_pipi > 0.28 and t_in.m_chi2_kf < chi2_kf_cut_before and t_in.m_rm_Dpipi > 1.8593 and t_in.m_rm_Dpipi < 1.8800:
+        if t_in.m_chi2_kf < chi2_kf_cut_before and t_in.m_mode == 200:
             m_runNo[0] = t_in.m_runNo
             m_evtNo[0] = t_in.m_evtNo
             m_mode[0] = t_in.m_mode
@@ -109,9 +115,12 @@ def save_before(f_in, t, chi2_kf_cut_before):
             m_rm_pipi[0] = t_in.m_rm_pipi
             m_m_pipi[0] = t_in.m_m_pipi
             m_p_pipi[0] = t_in.m_p_pipi
+            m_rm_Dpi[0] = t_in.m_rm_Dpi
             m_m_Dpi[0] = t_in.m_m_Dpi
             m_m_Dpipi[0] = t_in.m_m_Dpipi
             m_rm_Dpipi[0] = t_in.m_rm_Dpipi
+            m_m2_Kpip[0] = t_in.m_m2_Kpip
+            m_m2_Kpim[0] = t_in.m_m2_Kpim
             m_chi2_vf[0] = t_in.m_chi2_vf
             m_chi2_kf[0] = t_in.m_chi2_kf
             m_n_othertrks[0] = t_in.m_n_othertrks
@@ -142,9 +151,12 @@ def save_after(f_in, t, chi2_kf_cut_after):
     m_rm_pipi = array('d', [999.])
     m_m_pipi = array('d', [999.])
     m_p_pipi = array('d', [999.])
+    m_rm_Dpi = array('d', [999.])
     m_m_Dpi = array('d', [999.])
     m_m_Dpipi = array('d', [999.])
     m_rm_Dpipi = array('d', [999.])
+    m_m2_Kpip = array('d', [999.])
+    m_m2_Kpim = array('d', [999.])
     m_chi2_vf = array('d', [999.])
     m_chi2_kf = array('d', [999.])
     m_n_othertrks = array('i', [0])
@@ -172,9 +184,12 @@ def save_after(f_in, t, chi2_kf_cut_after):
     t.Branch('rm_pipi', m_rm_pipi, 'm_rm_pipi/D')
     t.Branch('m_pipi', m_m_pipi, 'm_m_pipi/D')
     t.Branch('p_pipi', m_p_pipi, 'm_p_pipi/D')
+    t.Branch('rm_Dpi', m_rm_Dpi, 'm_rm_Dpi/D')
     t.Branch('m_Dpi', m_m_Dpi, 'm_m_Dpi/D')
     t.Branch('m_Dpipi', m_m_Dpipi, 'm_m_Dpipi/D')
     t.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
+    t.Branch('m2_Kpip', m_m2_Kpip, 'm_m2_Kpip/D')
+    t.Branch('m2_Kpim', m_m2_Kpim, 'm_m2_Kpim/D')
     t.Branch('chi2_vf', m_chi2_vf, 'm_chi2_vf/D')
     t.Branch('chi2_kf', m_chi2_kf, 'm_chi2_kf/D')
     t.Branch('n_othertrks', m_n_othertrks, 'm_n_othertrks/I')
@@ -194,7 +209,7 @@ def save_after(f_in, t, chi2_kf_cut_after):
     nentries = t_in.GetEntries()
     for ientry in range(nentries):
         t_in.GetEntry(ientry)
-        if t_in.m_m_pipi > 0.28 and t_in.m_chi2_kf < chi2_kf_cut_after and (t_in.m_n_pi0 == 0 or (t_in.m_n_pi0 != 0 and t_in.m_m_Dpi0 > 2.02)) and (t_in.m_m_pipi < 0.49147 or t_in.m_m_pipi > 0.50364) and t_in.m_p_D < 0.675 and t_in.m_m_Dpi < 2.3 and t_in.m_chi2_vf < 25:
+        if t_in.m_chi2_kf < chi2_kf_cut_after and (t_in.m_m_Dpi0 < 2.0082 or t_in.m_m_Dpi0 > 2.01269) and (t_in.m_m_pipi < 0.49104 or t_in.m_m_pipi > 0.50347) and t_in.m_chi2_vf < 20 and t_in.m_mode == 200:
             m_runNo[0] = t_in.m_runNo
             m_evtNo[0] = t_in.m_evtNo
             m_mode[0] = t_in.m_mode
@@ -207,9 +222,12 @@ def save_after(f_in, t, chi2_kf_cut_after):
             m_rm_pipi[0] = t_in.m_rm_pipi
             m_m_pipi[0] = t_in.m_m_pipi
             m_p_pipi[0] = t_in.m_p_pipi
+            m_rm_Dpi[0] = t_in.m_rm_Dpi
             m_m_Dpi[0] = t_in.m_m_Dpi
             m_m_Dpipi[0] = t_in.m_m_Dpipi
             m_rm_Dpipi[0] = t_in.m_rm_Dpipi
+            m_m2_Kpip[0] = t_in.m_m2_Kpip
+            m_m2_Kpim[0] = t_in.m_m2_Kpim
             m_chi2_vf[0] = t_in.m_chi2_vf
             m_chi2_kf[0] = t_in.m_chi2_kf
             m_n_othertrks[0] = t_in.m_n_othertrks
@@ -246,9 +264,9 @@ def main():
     if ecms == 4.358:
         chi2_kf_cut_before = 999
         chi2_kf_cut_after = 999
-    if ecms == 4.415:
-        chi2_kf_cut_before = 20
-        chi2_kf_cut_after = 20
+    if ecms == 4.416:
+        chi2_kf_cut_before = 15
+        chi2_kf_cut_after = 15
     if ecms == 4.600:
         chi2_kf_cut_before = 999
         chi2_kf_cut_after = 999

@@ -47,6 +47,7 @@ def save_missing(f_in, cms, t, MODE):
         m_p_pipi = array('d', [999.])
         m_E_pipi = array('d', [999.])
         m_m_Dpi = array('d', [999.])
+        m_rm_Dpi = array('d', [999.])
         m_m_Dpip = array('d', [999.])
         m_m_Dpim = array('d', [999.])
         m_m2_Kpip = array('d', [999.])
@@ -87,6 +88,7 @@ def save_missing(f_in, cms, t, MODE):
         t.Branch('p_pipi', m_p_pipi, 'm_p_pipi/D')
         t.Branch('E_pipi', m_E_pipi, 'm_E_pipi/D')
         t.Branch('m_Dpi', m_m_Dpi, 'm_m_Dpi/D')
+        t.Branch('rm_Dpi', m_rm_Dpi, 'm_rm_Dpi/D')
         t.Branch('m_Dpip', m_m_Dpip, 'm_m_Dpip/D')
         t.Branch('m_Dpim', m_m_Dpim, 'm_m_Dpim/D')
         t.Branch('m2_Kpip', m_m2_Kpip, 'm_m2_Kpip/D')
@@ -123,7 +125,7 @@ def save_missing(f_in, cms, t, MODE):
         nentries = t_in.GetEntries()
         for ientry in range(nentries):
             t_in.GetEntry(ientry)
-            if t_in.mode != 200:
+            if t_in.mode != 200 and t_in.mode != 205 and t_in.mode != 208 and t_in.mode != 213 and t_in.mode != 216:
                 continue
             pD_raw = TLorentzVector(0, 0, 0, 0)
             pD_old = TLorentzVector(0, 0, 0, 0)
@@ -179,9 +181,11 @@ def save_missing(f_in, cms, t, MODE):
             m_m_Dpim[0] = (pD_old+rawpPim).M()
             m_m_Dpip[0] = (pD_old+rawpPip).M()
             if t_in.charm > 0:
-                m_m_Dpi[0] = (pD_old+rawpPim).M()
+                m_m_Dpi[0] = (pD+pPim).M()
+                m_rm_Dpi[0] = (cms-pD-pPim).M()
             elif t_in.charm < 0:
-                m_m_Dpi[0] = (pD_old+rawpPip).M()
+                m_m_Dpi[0] = (pD+pPip).M()
+                m_rm_Dpi[0] = (cms-pD-pPip).M()
             m_m2_Kpip[0] = pKpip.M2()
             m_m2_Kpim[0] = pKpim.M2()
             m_m_Dpipi[0] = (pD+pPip+pPim).M()
@@ -227,6 +231,7 @@ def save_raw(f_in, cms, t, MODE):
         m_p_pipi = array('d', [999.])
         m_E_pipi = array('d', [999.])
         m_m_Dpi = array('d', [999.])
+        m_rm_Dpi = array('d', [999.])
         m_m_Dpip = array('d', [999.])
         m_m_Dpim = array('d', [999.])
         m_m2_Kpip = array('d', [999.])
@@ -235,8 +240,6 @@ def save_raw(f_in, cms, t, MODE):
         m_rm_Dpipi = array('d', [999.])
         m_chi2_vf = array('d', [999.])
         m_chi2_kf = array('d', [999.])
-        m_chi2_2C = array('d', [999.])
-        m_n_combination = array('i', [0])
         m_n_othershws = array('i', [0])
         m_n_othertrks = array('i', [0])
         m_charge_left = array('i', [0])
@@ -268,6 +271,7 @@ def save_raw(f_in, cms, t, MODE):
         t.Branch('p_pipi', m_p_pipi, 'm_p_pipi/D')
         t.Branch('E_pipi', m_E_pipi, 'm_E_pipi/D')
         t.Branch('m_Dpi', m_m_Dpi, 'm_m_Dpi/D')
+        t.Branch('rm_Dpi', m_rm_Dpi, 'm_rm_Dpi/D')
         t.Branch('m_Dpip', m_m_Dpip, 'm_m_Dpip/D')
         t.Branch('m_Dpim', m_m_Dpim, 'm_m_Dpim/D')
         t.Branch('m2_Kpip', m_m2_Kpip, 'm_m2_Kpip/D')
@@ -276,8 +280,6 @@ def save_raw(f_in, cms, t, MODE):
         t.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
         t.Branch('chi2_vf', m_chi2_vf, 'm_chi2_vf/D')
         t.Branch('chi2_kf', m_chi2_kf, 'm_chi2_kf/D')
-        t.Branch('chi2_2C', m_chi2_2C, 'm_chi2_2C/D')
-        t.Branch('n_combination', m_n_combination, 'm_n_combination/I')
         t.Branch('n_othertrks', m_n_othertrks, 'm_n_othertrks/I')
         t.Branch('n_othershws', m_n_othershws, 'm_n_othershws/I')
         t.Branch('charge_left', m_charge_left, 'm_charge_left/I')
@@ -301,7 +303,7 @@ def save_raw(f_in, cms, t, MODE):
         nentries = t_std.GetEntries()
         for ientry in range(nentries):
             t_std.GetEntry(ientry)
-            if t_std.mode != 200:
+            if t_std.mode != 200 and t_std.mode != 205 and t_std.mode != 208 and t_std.mode != 213 and t_std.mode != 216:
                 continue
             pD_raw = TLorentzVector(0, 0, 0, 0)
             pD = TLorentzVector(0, 0, 0, 0)
@@ -361,17 +363,16 @@ def save_raw(f_in, cms, t, MODE):
                     m_m_Dpip[0] = (pD+pPip).M()
                     if t_std.charm > 0 and t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+4] == -1:
                         m_m_Dpi[0] = (pD+pPim).M()
+                        m_rm_Dpi[0] = (cms-pD-pPim).M()
                     elif t_std.charm < 0 and t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+4] == 1:
                         m_m_Dpi[0] = (pD+pPip).M()
+                        m_rm_Dpi[0] = (cms-pD-pPip).M()
                     m_m2_Kpip[0] = pKpip.M2()
                     m_m2_Kpim[0] = pKpim.M2()
                     m_m_Dpipi[0] = (pD+pPip+pPim).M()
                     m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
                     m_chi2_vf[0] = t_std.chi2_vf
                     m_chi2_kf[0] = t_std.chi2_kf
-                    m_chi2_2C[0] = t_std.chi2_2C[count]
-                    count += 1
-                    m_n_combination[0] = t_std.n_combination
                     m_n_othershws[0] = t_otherShw.n_othershws
                     m_n_othertrks[0] = t_otherTrk.n_othertrks
                     charge_left = 0
@@ -407,6 +408,9 @@ def save_truth(f_in, cms, t, MODE):
     if MODE == 'truth':
         m_runNo = array('i', [0])
         m_evtNo = array('i', [0])
+        m_mode = array('i', [0])
+        m_charm = array('i', [0])
+        m_rawm_D = array('d', [999.])
         m_m_D = array('d', [999.])
         m_p_D = array('d', [999.])
         m_E_D = array('d', [999.])
@@ -417,6 +421,7 @@ def save_truth(f_in, cms, t, MODE):
         m_chi2_vf = array('d', [999.])
         m_chi2_kf = array('d', [999.])
         m_m_Dpi = array('d', [999.])
+        m_rm_Dpi = array('d', [999.])
         m_m_Dpip = array('d', [999.])
         m_m_Dpim = array('d', [999.])
         m_m2_Kpip = array('d', [999.])
@@ -445,6 +450,9 @@ def save_truth(f_in, cms, t, MODE):
         m_matched_pi = array('i', [0])
         t.Branch('runNo', m_runNo, 'm_runNo/I')
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
+        t.Branch('mode', m_mode, 'm_mode/I')
+        t.Branch('charm', m_charm, 'm_charm/I')
+        t.Branch('rawm_D', m_rawm_D, 'm_rawm_D/D')
         t.Branch('m_D', m_m_D, 'm_m_D/D')
         t.Branch('p_D', m_p_D, 'm_p_D/D')
         t.Branch('E_D', m_E_D, 'm_E_D/D')
@@ -455,6 +463,7 @@ def save_truth(f_in, cms, t, MODE):
         t.Branch('chi2_vf', m_chi2_vf, 'm_chi2_vf/D')
         t.Branch('chi2_kf', m_chi2_kf, 'm_chi2_kf/D')
         t.Branch('m_Dpi', m_m_Dpi, 'm_m_Dpi/D')
+        t.Branch('rm_Dpi', m_rm_Dpi, 'm_rm_Dpi/D')
         t.Branch('m_Dpip', m_m_Dpip, 'm_m_Dpip/D')
         t.Branch('m_Dpim', m_m_Dpim, 'm_m_Dpim/D')
         t.Branch('m2_Kpip', m_m2_Kpip, 'm_m2_Kpip/D')
@@ -485,7 +494,7 @@ def save_truth(f_in, cms, t, MODE):
         nentries = t_in.GetEntries()
         for ientry in range(nentries):
             t_in.GetEntry(ientry)
-            if t_in.mode != 200:
+            if t_in.mode != 200 and t_in.mode != 205 and t_in.mode != 208 and t_in.mode != 213 and t_in.mode != 216:
                 continue
             pD_raw = TLorentzVector(0, 0, 0, 0)
             pD_old = TLorentzVector(0, 0, 0, 0)
@@ -527,6 +536,8 @@ def save_truth(f_in, cms, t, MODE):
             pPi0.SetPxPyPzE(t_in.p4_pi0_save[0], t_in.p4_pi0_save[1], t_in.p4_pi0_save[2], t_in.p4_pi0_save[3])
             m_runNo[0] = t_in.runNo
             m_evtNo[0] = t_in.evtNo
+            m_mode[0] = t_in.mode
+            m_charm[0] = t_in.charm
             m_p_D = pD.P()
             m_m_D = pD.M()
             m_E_D = pD.E()
@@ -543,9 +554,11 @@ def save_truth(f_in, cms, t, MODE):
             m_m_Dpim[0] = (pD_old+rawpPim).M()
             m_m_Dpip[0] = (pD_old+rawpPim).M()
             if t_in.charm > 0:
-                m_m_Dpi[0] = (pD_old+rawpPim).M()
+                m_m_Dpi[0] = (pD+pPim).M()
+                m_rm_Dpi[0] = (cms-pD-pPim).M()
             elif t_in.charm < 0:
-                m_m_Dpi[0] = (pD_old+rawpPip).M()
+                m_m_Dpi[0] = (pD+pPip).M()
+                m_rm_Dpi[0] = (cms-pD-pPip).M()
             m_indexmc[0] = t_in.indexmc
             m_n_othershws[0] = t_in.n_othershws
             m_n_othertrks[0] = t_in.n_othertrks

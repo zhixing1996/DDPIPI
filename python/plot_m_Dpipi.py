@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-Plot invariant mass of tagged D and selected pi0
+Plot invariant mass of tagged D and selected piplu piminus
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
 __copyright__ = "Copyright (c) Maoqiang JING"
-__created__ = "[2019-11-05 Tue 16:27]"
+__created__ = "[2019-11-06 Wed 00:11]"
 
 import ROOT
 from ROOT import TCanvas, gStyle, TTree, THStack
@@ -33,23 +33,23 @@ def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, runNolow, runNoup):
     for ientry1 in xrange(t1.GetEntries()):
         t1.GetEntry(ientry1)
         if fabs(t1.m_runNo) > runNolow and fabs(t1.m_runNo) < runNoup:
-            h1.Fill(t1.m_rm_pipi)
+            h1.Fill(t1.m_m_Dpipi)
     for ientry2 in xrange(t2.GetEntries()):
         t2.GetEntry(ientry2)
         if fabs(t2.m_runNo) > runNolow and fabs(t2.m_runNo) < runNoup:
-            h2.Fill(t2.m_rm_pipi)
+            h2.Fill(t2.m_m_Dpipi)
     for ientry3 in xrange(t3.GetEntries()):
         t3.GetEntry(ientry3)
         if fabs(t3.m_runNo) > runNolow and fabs(t3.m_runNo) < runNoup:
-            h3.Fill(t3.m_rm_pipi)
+            h3.Fill(t3.m_m_Dpipi)
     for ientry4 in xrange(t4.GetEntries()):
         t4.GetEntry(ientry4)
         if fabs(t4.m_runNo) > runNolow and fabs(t4.m_runNo) < runNoup:
-            h4.Fill(t4.m_rm_pipi)
+            h4.Fill(t4.m_m_Dpipi)
     for ientry5 in xrange(t5.GetEntries()):
         t5.GetEntry(ientry5)
         if fabs(t5.m_runNo) > runNolow and fabs(t5.m_runNo) < runNoup:
-            h5.Fill(t5.m_rm_pipi)
+            h5.Fill(t5.m_m_Dpipi)
 
 def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle, ymax):
     h1.GetXaxis().SetNdivisions(509)
@@ -68,7 +68,7 @@ def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle, ymax):
     h1.GetXaxis().CenterTitle()
     h1.GetYaxis().SetTitle(ytitle)
     h1.GetYaxis().CenterTitle()
-    h1.GetYaxis().SetRangeUser(0, ymax)
+    # h1.GetYaxis().SetRangeUser(0, ymax)
     h1.SetFillColor(1)
     h2.SetFillColor(2)
     h3.SetFillColor(3)
@@ -82,7 +82,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_title, ecms, scale1, scale2, scale3, scale4, xmax, runNolow, runNoup, ymax, mode):
+def plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_title, ecms, scale1, scale2, scale3, scale4, xmax, runNolow, runNoup, ymax):
     try:
         f_data = TFile(data_path)
         f_incMC1 = TFile(incMC1_path)
@@ -110,11 +110,11 @@ def plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_titl
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
-    xmin = 3.7
+    xmin = 2.15
     xbins = 75
     content = (xmax - xmin)/xbins * 1000
     ytitle = 'Events/%.1f MeV'%content
-    xtitle = 'M(D^{+}#pi^{0})(GeV)'
+    xtitle = 'M(D^{+}#pi^{+}_{0}#pi^{-}_{0})(GeV)'
     h_data = TH1F('data', 'data', xbins, xmin, float(xmax))
     h_incMC1 = TH1F('incMC1', 'inclusive MC: open charm', xbins, xmin, float(xmax))
     h_incMC2 = TH1F('incMC2', 'inclusive MC: qqbar', xbins, xmin, float(xmax))
@@ -144,16 +144,13 @@ def plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_titl
     hs.Draw('same')
     h_data.Draw('sameE1')
 
-    legend = TLegend(0.55, 0.6, 0.8, 0.75)
+    legend = TLegend(0.25, 0.6, 0.5, 0.75)
     set_legend(legend, h_data, h_incMC1, h_incMC2, h_sigMC1, h_sigMC2, leg_title)
     legend.Draw()
 
-    mbc.SaveAs('./figs/rm_pipi_'+str(ecms)+'_'+mode+'.pdf')
+    mbc.SaveAs('./figs/m_Dpipi_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    args = sys.argv[1:]
-    mode = args[0]
-
     # data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_after.root'
     # data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root'
     # sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_after.root'
@@ -169,30 +166,22 @@ if __name__ == '__main__':
     # chi2_cut = 999
     # plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, chi2_cut)
 
-    if mode == 'before':
-        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_before.root'
-        incMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root'
-        incMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root'
-        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root'
-        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root'
-        ymax = 250
-    if mode == 'after':
-        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_after.root'
-        incMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_after.root'
-        incMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_after.root'
-        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_after.root'
-        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_after.root'
-        ymax = 180
+    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_after.root'
+    incMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_after.root'
+    incMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_after.root'
+    sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_after.root'
+    sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_after.root'
+    ymax = 180
     leg_title = '(b)'
     ecms = 4420
     scale1 = 1073.56*65.4*(0.0938+0.00993+0.00304+0.00254+0.00174)/500000
     scale2 = 1073.56*23.8*(0.0938+0.00993+0.00304+0.00254+0.00174)/500000
     scale3 = 10494678.0/40300000.0
     scale4 = 7202230.0/14000000.0
-    xmax = 4.1
+    xmax = 2.55
     runNolow = 36773
     runNoup = 38140
-    plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_title, ecms, scale1, scale2, scale3, scale4, xmax, runNolow, runNoup, ymax, mode)
+    plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_title, ecms, scale1, scale2, scale3, scale4, xmax, runNolow, runNoup, ymax)
 
     # data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_after.root'
     # data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root'

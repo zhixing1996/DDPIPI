@@ -15,12 +15,14 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.1.2" "Get samples -- extract useful info: raw"
 
     printf "\n\t%-9s  %-40s\n" "0.2"   "[Study cuts]"
-    printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figures -- study mass window of M(Kpipi)"
-    printf "\n\t%-9s  %-40s\n" "0.2.2" "Draw figures -- study signal region of RM(Dpipi)"
-    printf "\n\t%-9s  %-40s\n" "0.2.3" "Get samples -- extract useful info: signal region and sideband region"
-    printf "\n\t%-9s  %-40s\n" "0.2.4" "Get samples -- get data sideband samples"
-    printf "\n\t%-9s  %-40s\n" "0.2.5" "Draw figures -- compare data and X(3842) MC(chi2_kf)"
-    printf "\n\t%-9s  %-40s\n" "0.2.6" "Draw figures -- study chi2 of Dtag Dmissing pi pi"
+    printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figures -- draw invariant mass of Kpipi"
+    printf "\n\t%-9s  %-40s\n" "0.2.2" "Draw figures -- study mass window of M(Kpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.2.3" "Draw figures -- draw recoiling mass of Dpipi"
+    printf "\n\t%-9s  %-40s\n" "0.2.4" "Draw figures -- study signal region of RM(Dpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.2.5" "Get samples -- extract useful info: signal region and sideband region"
+    printf "\n\t%-9s  %-40s\n" "0.2.6" "Get samples -- get data sideband samples"
+    printf "\n\t%-9s  %-40s\n" "0.2.7" "Draw figures -- compare data and X(3842) MC(chi2_kf)"
+    printf "\n\t%-9s  %-40s\n" "0.2.8" "Draw figures -- study chi2 of Dtag Dmissing pi pi"
 
     printf "\n\t%-9s  %-40s\n" "0.3"    "[Background Study]"
     printf "\n\t%-9s  %-40s\n" "0.3.1"  "Get samples -- get topology info"
@@ -108,21 +110,31 @@ case $option in
          echo "--> Selection Algorithm Version: DDecayAlg-00-00-02(have applied cuts)"
          ;;
 
-    0.2.1) echo "Draw figures -- studying mass window of M(Kpipi)..."
+    0.2.1) echo "Draw figures -- drawing invariant mass of Kpipi..."
+           cd python
+           python plot_rawm_D.py
+           ;;
+
+    0.2.2) echo "Draw figures -- studying mass window of M(Kpipi)..."
            cd python
            python opt_mass_Kpipi.py 4360
            python opt_mass_Kpipi.py 4420
            python opt_mass_Kpipi.py 4600
            ;;
 
-    0.2.2) echo "Draw figures -- studying signal region of RM(Dpipi)..."
+    0.2.3) echo "Draw figures -- drawing recoiling mass of Dpipi..."
+           cd python
+           python plot_rm_Dpipi.py
+           ;;
+
+    0.2.4) echo "Draw figures -- studying signal region of RM(Dpipi)..."
            cd python
            python opt_signal_region.py 4360
            python opt_signal_region.py 4420
            python opt_signal_region.py 4600
            ;;
 
-    0.2.3) echo "Get samples -- extracting useful info: signal region and sideband region..."
+    0.2.5) echo "Get samples -- extracting useful info: signal region and sideband region..."
            echo "Please run selection algorithm codes again with M(Kpipi) and RM(Dpipi) cuts"
            mkdir -p scripts/ana/sel
            cd scripts/ana/sel
@@ -143,7 +155,7 @@ case $option in
            hep_sub -g physics get_info_sidebandup -o jobs.out -e jobs.err
            ;;
 
-    0.2.4) echo "Get samples -- getting data sideband samples..."
+    0.2.6) echo "Get samples -- getting data sideband samples..."
            cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
            rm -rf data_4360_sideband.root
            hadd data_4360_sideband.root data_4360_sideband*.root
@@ -155,12 +167,12 @@ case $option in
            hadd data_4600_sideband.root data_4600_sideband*.root
            ;;
 
-    0.2.5) echo "Draw figures -- comparing data and X(3842) MC(chi2_kf)..."
+    0.2.7) echo "Draw figures -- comparing data and X(3842) MC(chi2_kf)..."
            cd python
            python plot_chi2_kf.py
            ;;
 
-    0.2.6) echo "Draw figures -- studying chi2 of Dtag Dmissing pi pi..."
+    0.2.8) echo "Draw figures -- studying chi2 of Dtag Dmissing pi pi..."
            cd python
            python opt_chi2_kf.py 4360
            python opt_chi2_kf.py 4420
@@ -198,132 +210,151 @@ case $option in
            hep_sub -g physics get_info_topo -o jobs.out -e jobs.err
            ;;
 
-    0.3.2) echo "Download software -- downloading topology..."
-           echo "Logout the SL5 environment to download topology v1.9.5!"
-           mkdir -p topology
-           cd topology
-           rm -rf v1.9.5
-           git clone https://github.com/zhixing1996/topology.git v1.9.5
-           echo "Please login SL5 and set up BOSS6.6.4.p01 environment!"
-           ;;
-
-    0.3.3) echo "Install software -- installinging topology..."
-           echo "Login SL5 and set up BOSS6.6.4.p01 environment!"
-           cd topology/v1.9.5
-           ./compile.sh
-           echo "Please check how to set up topoana variable environment in its README.md file!"
-           ;;
-
-    0.3.4) echo "Topo analysis -- applying topology analysis..."
-           echo "Must be executed in bash shell mode and set up topoana environment!"
-           mkdir -p scripts/ana/topo
-           cd scripts/ana/topo
-           if [ ! -d "/besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo" ]; then
-               mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo
-               ln -s /besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo ./ana_topo
-           fi
-           cd ana_topo
-           mkdir -p 4360
-           cd 4360
-           rm * -rf
-           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4360\/incMC_DD_4360_topo.root/g" topoana.card
-           sed -i "s/NAME/TopoResult_4360/g" topoana.card
-           sed -i "s/cut_chi2_kf/20/g" topoana.card
-           topoana.exe topoana.card
-           cd ..
-           mkdir -p 4420
-           cd 4420
-           rm * -rf
-           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/hadrons\/4420\/incMC_hadrons_4420_topo.root/g" topoana.card
-           sed -i "s/NAME/TopoResult_4420/g" topoana.card
-           sed -i "s/cut_chi2_kf/10/g" topoana.card
-           topoana.exe topoana.card
-           cd ..
-           mkdir -p 4600
-           cd 4600
-           rm * -rf
-           cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
-           sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4600\/incMC_DD_4600_topo.root/g" topoana.card
-           sed -i "s/NAME/TopoResult_4600/g" topoana.card
-           sed -i "s/cut_chi2_kf/25/g" topoana.card
-           topoana.exe topoana.card
-           ;;
-
-    0.3.5) echo "Get samples -- applying cuts before background study..."
+    0.3.2) echo "Get samples -- applying cuts before background study..."
            cd jobs
            bash apply_cuts_before
            ;;
 
-    0.3.6) echo "Draw figures -- studying status of matching before background study..."
+    0.3.3) echo "Draw figures -- studying RM(pipi) of before background study..."
            cd python
-           python plot_stat_match.py raw
+           python plot_rm_pipi.py before
            ;;
 
-    0.3.7) echo "Fit distributions -- fitting to M(Dpi0)..."
+    0.3.4) echo "Calculate numbers -- calculating efficiency and significance before background study..."
+           cd python
+           python cal.py raw
+           ;;
+
+    0.3.5) echo "Fit distributions -- fitting to M(Dpi0)..."
            cd cxx
            root -l -q fit_m_Dpi0_4420.cxx
            ;;
 
-    0.3.8) echo "Draw figures -- studying status of matching on cut1..."
+    0.3.6) echo "Calculate numbers -- calculating efficiency and significance of cut1..."
            cd python
-           python plot_stat_match.py cut1
+           python cal.py cut1
            ;;
 
-    0.3.9) echo "Fit distributions -- fitting to M(pipi)..."
+    0.3.7) echo "Fit distributions -- fitting to M(pipi)..."
            cd cxx
            root -l -q fit_mKS_4420.cxx
            ;;
 
-    0.3.10) echo "Draw figures -- studying status of matching on cut2..."
+    0.3.8) echo "Calculate numbers -- calculating efficiency and significance of cut2..."
             cd python
-            python plot_stat_match.py cut2
+            python cal.py cut2
             ;;
 
-    0.3.11) echo "Draw figures -- comparing chi2 of vertex fit between types of matching status..."
+    0.3.9) echo "Draw figures -- comparing chi2 of vertex fit between types of matching status..."
+           cd python
+           python plot_match_chi2_vf.py
+           ;;
+
+    0.3.10) echo "Calculate numbers -- calculating efficiency and significance of cut3..."
             cd python
-            python plot_match_chi2_vf.py
+            python cal.py cut3
             ;;
 
-    0.3.12) echo "Draw figures -- studying status of matching on cut3..."
-            cd python
-            python plot_stat_match.py cut3
-            ;;
-
-    0.3.13) echo "Draw figures -- cpmparing momentum of D between data and signal MC..."
-            cd python
-            python plot_p_D.py
-            ;;
-
-    0.3.14) echo "Draw figures -- studying status of matching on cut4..."
-            cd python
-            python plot_stat_match.py cut4
-            ;;
-
-    0.3.15) echo "Draw figures -- comparing invariant mass of M(Dpi) between data and signal MC..."
-            cd python
-            python plot_m_Dpi.py
-            ;;
-
-    0.3.16) echo "Draw figures -- studying status of matching on cut5..."
-            cd python
-            python plot_stat_match.py cut5
-            ;;
-
-    0.3.17) echo "Get samples -- applying cuts of background study..."
+    0.3.11) echo "Get samples -- applying cuts of background study..."
             cd jobs
             bash apply_cuts_after
             ;;
 
-    0.3.18) echo "Draw figures -- studying RM(pipi)..."
+    0.3.12) echo "Draw figures -- studying RM(pipi) after background study..."
             cd python
-            python plot_rm_pipi.py
+            python plot_rm_pipi.py after
             ;;
 
-    0.3.19) echo "Draw figures -- studying M(Dpipi)..."
+    0.3.13) echo "Draw figures -- studying M(Dpipi)..."
             cd python
             python plot_m_Dpipi.py
+            ;;
+
+    0.3.14) echo "Download software -- downloading topology..."
+            echo "Logout the SL5 environment to download topology v1.9.5!"
+            mkdir -p topology
+            cd topology
+            rm -rf v1.9.5
+            git clone https://github.com/zhixing1996/topology.git v1.9.5
+            echo "Please login SL5 and set up BOSS6.6.4.p01 environment!"
+            ;;
+
+    0.3.15) echo "Install software -- installinging topology..."
+            echo "Login SL5 and set up BOSS6.6.4.p01 environment!"
+            cd topology/v1.9.5
+            ./compile.sh
+            echo "Please check how to set up topoana variable environment in its README.md file!"
+            ;;
+
+    0.3.16) echo "Topo analysis -- applying topology analysis..."
+            echo "Must be executed in bash shell mode and set up topoana environment!"
+            mkdir -p scripts/ana/topo
+            cd scripts/ana/topo
+            if [ ! -d "/besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo" ]; then
+                mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo
+                ln -s /besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo ./ana_topo
+            fi
+            cd ana_topo
+            mkdir -p 4360
+            cd 4360
+            mkdir -p DD
+            cd DD
+            rm * -rf
+            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
+            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4360\/incMC_DD_4360_topo.root/g" topoana.card
+            sed -i "s/NAME/TopoResult_4360_DD/g" topoana.card
+            sed -i "s/cut_chi2_kf/15/g" topoana.card
+            topoana.exe topoana.card
+            cd ..
+            mkdir -p qq
+            cd qq
+            rm * -rf
+            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
+            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/qq\/4360\/incMC_qq_4360_topo.root/g" topoana.card
+            sed -i "s/NAME/TopoResult_4360_qq/g" topoana.card
+            sed -i "s/cut_chi2_kf/15/g" topoana.card
+            topoana.exe topoana.card
+            cd ../..
+            mkdir -p 4420
+            cd 4420
+            mkdir -p DD
+            cd DD
+            rm * -rf
+            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
+            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4420\/incMC_DD_4420_topo.root/g" topoana.card
+            sed -i "s/NAME/TopoResult_4420_DD/g" topoana.card
+            sed -i "s/cut_chi2_kf/15/g" topoana.card
+            topoana.exe topoana.card
+            cd ..
+            mkdir -p qq
+            cd qq
+            rm * -rf
+            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
+            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/qq\/4420\/incMC_qq_4420_topo.root/g" topoana.card
+            sed -i "s/NAME/TopoResult_4420_qq/g" topoana.card
+            sed -i "s/cut_chi2_kf/15/g" topoana.card
+            topoana.exe topoana.card
+            cd ../..
+            mkdir -p 4600
+            cd 4600
+            mkdir -p DD
+            cd DD
+            rm * -rf
+            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
+            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4600\/incMC_DD_4600_topo.root/g" topoana.card
+            sed -i "s/NAME/TopoResult_4600_DD/g" topoana.card
+            sed -i "s/cut_chi2_kf/15/g" topoana.card
+            topoana.exe topoana.card
+            cd ..
+            mkdir -p qq
+            cd qq
+            rm * -rf
+            cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
+            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/qq\/4600\/incMC_qq_4600_topo.root/g" topoana.card
+            sed -i "s/NAME/TopoResult_4600_qq/g" topoana.card
+            sed -i "s/cut_chi2_kf/15/g" topoana.card
+            topoana.exe topoana.card
+            cd ../..
             ;;
 
 esac

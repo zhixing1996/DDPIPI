@@ -41,3 +41,23 @@ python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_p
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root 4.600 after
+# inclusive MC: DD
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_after.root 4.358 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_after.root 4.416 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_after.root 4.600 after
+# inclusive MC: qq
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_after.root 4.358 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_after.root 4.416 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_after.root 4.600 after

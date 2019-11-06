@@ -47,7 +47,7 @@ void fit_mKS_4420() {
     gStyle->SetPadTickX(1);
     gStyle->SetPadTickY(1);
 
-    TFile *f = new TFile("/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root", "READ");
+    TFile *f = new TFile("/besfs/users/jingmq/bes/DDPIPI/v0.2/data/4420/data_4420_before.root", "READ");
     TTree *t = (TTree*)f->Get("save");
 
     RooRealVar mKS("m_pipi", "m_pipi", 0.48, 0.52);
@@ -92,5 +92,6 @@ void fit_mKS_4420() {
     xframe->GetYaxis()->SetTitle("Events");
     xframe->GetYaxis()->CenterTitle();
     xframe->Draw();
+    std::cout << "Mass Region: [" << mean.getVal() - 3*sigma.getVal() << ", " << mean.getVal() + 3*sigma.getVal() << "]" << srd::endl;
 
 }

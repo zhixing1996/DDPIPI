@@ -137,8 +137,9 @@ def plot(incMC_path, sigMC1_path, sigMC2_path, pt_title, ecms, lum, XS1, XS2, Ge
     xbins = 150
     M_Dplus = 1.86965
     step = (1.94 - M_Dplus)/xbins
-    ratio1 = lum*XS1*0.0938/GenNum
-    ratio2 = lum*XS2*0.0938/GenNum
+    # ratio1 = lum*XS1*(0.0938+0.00993+0.00304+0.00254+0.00174)/GenNum
+    ratio1 = lum*XS1*(0.0938+0.00993+0.00304+0.00254+0.00174)/495000
+    ratio2 = lum*XS2*(0.0938+0.00993+0.00304+0.00254+0.00174)/GenNum
 
     h_FOM, ientry, arrow_top = cal_significance(t_sigMC1, t_sigMC2, t_incMC, entries_sigMC1, entries_sigMC2, entries_incMC, M_Dplus, xbins, step, ratio1, ratio2)
     h_FOM.Draw()

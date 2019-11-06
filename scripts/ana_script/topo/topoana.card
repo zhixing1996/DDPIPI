@@ -40,6 +40,24 @@
   mu-
   e+
   e-
+  D+
+  D-
+  D0
+  anti-D0
+  D*+
+  D*-
+  D*0
+  anti-D*0
+  pi0
+  J/psi
+  psi(2S)
+  psi(3770)
+  D_s+
+  D_s-
+  D_s*+
+  D_s*-
+  K_S0
+  K_L0
 }
 
 % Ignore the decay of the daughters of the following particles
@@ -57,12 +75,15 @@
     
 }
 
+% Ignore gISR photons (Two options: Y and N. Default: N)
+{
+    N
+}
+
 % Signal identification --- cascade decay branches
 {
   0 	& 	e+e- --> gammaI pi+ pi- D+ D- 	        & -1 
-  1	&	D- --> K+ pi- pi-		&  0 
   0 	& 	e+e- --> gammaI pi+ pi- D+ D- 	        & -1 
-  1	&	D+ --> K- pi+ pi+		&  0 
 }
 
 # Four files with the same name but in different (root/txt/tex/pdf) formats will be outputed. The filename extensions are appended automatically by the program as suffixes. Thus, to avoid repetition, any filename extension is not recommended to be used in the name as a suffix.
@@ -78,5 +99,5 @@
 
 % Cut to select entries
 {
-    m_pipi>0.28&&m_rm_Dpipi>1.857&&m_rm_Dpipi<1.882&&m_chi2_kf<cut_chi2_kf&&(n_pi0==0||(m_chi2_pi0<100&&m_Dpi0>2.02&&n_pi0!=0))
+    m_chi2_kf<cut_chi2_kf&&mode==200&&(m_pipi>0.50347||m_m_pipi<0.49104)&&(m_Dpi0<2.0082||m_Dpi0>2.01269)&&chi2_vf<20
 }

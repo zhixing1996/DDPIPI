@@ -45,16 +45,6 @@ hadd sigMC_psipp_4420.root *.root
 cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/rootfile
 rm -rf sigMC_psipp_4600.root
 hadd sigMC_psipp_4600.root *.root
-# inclusive MC: hadrons
-cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/rootfile
-rm -rf incMC_hadrons_4360.root
-hadd incMC_hadrons_4360.root *.root
-cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4420/rootfile
-rm -rf incMC_hadrons_4420.root
-hadd incMC_hadrons_4420.root *.root
-cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4600/rootfile
-rm -rf incMC_hadrons_4600.root
-hadd incMC_hadrons_4600.root *.root
 # inclusive MC: DD
 cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile
 rm -rf incMC_DD_4360.root
@@ -65,3 +55,13 @@ hadd incMC_DD_4420.root *.root
 cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/rootfile
 rm -rf incMC_DD_4600.root
 hadd incMC_DD_4600.root *.root
+# inclusive MC: qq
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/rootfile
+rm -rf incMC_qq_4360.root
+hadd incMC_qq_4360.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/rootfile
+rm -rf incMC_qq_4420.root
+hadd incMC_qq_4420.root *.root
+cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/rootfile
+rm -rf incMC_qq_4600.root
+hadd incMC_qq_4600.root *.root

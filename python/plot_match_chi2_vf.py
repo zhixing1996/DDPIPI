@@ -12,6 +12,7 @@ from ROOT import TCanvas, gStyle
 from ROOT import TFile, TH1F, TLegend, TArrow
 import sys, os
 import logging
+from math import *
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
 gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
@@ -22,27 +23,34 @@ def set_arrow(arrow):
     arrow.SetFillColor(2)
 
 def set_legend(legend, h1, h2, h3, h4, title):
-    legend.AddEntry(h1, 'not D && not #pi')
-    legend.AddEntry(h2, 'D && not #pi')
-    legend.AddEntry(h3, 'not D && #pi')
-    legend.AddEntry(h4, 'D && #pi')
+    legend.AddEntry(h1, 'open charm: not D')
+    legend.AddEntry(h2, 'open charm: D')
+    legend.AddEntry(h3, '#psi(3770)#pi^{+}#pi^{-}: not D')
+    legend.AddEntry(h4, '#psi(3770)#pi^{+}#pi^{-}: D')
     legend.SetHeader(title)
     legend.SetBorderSize(0)
     legend.SetFillColor(0)
     legend.SetLineColor(0)
 
-def chi2_KF_fill(t, entries, h1, h2, h3, h4):
-    for ientry in xrange(entries):
-        t.GetEntry(ientry)
-        if (t.m_n_pi0 == 0 or (t.m_n_pi0 != 0 and t.m_m_Dpi0 > 2.02)) and (t.m_m_pipi < 0.49164 or t.m_m_pipi > 0.50327):
-            if t.m_matched_D == 0 and t.m_matched_pi == 0:
-                h1.Fill(t.m_chi2_vf)
-            if t.m_matched_D == 1 and t.m_matched_pi == 0:
-                h2.Fill(t.m_chi2_vf)
-            if t.m_matched_D == 0 and t.m_matched_pi == 1:
-                h3.Fill(t.m_chi2_vf)
-            if t.m_matched_D == 1 and t.m_matched_pi == 1:
-                h4.Fill(t.m_chi2_vf)
+def chi2_KF_fill(t1, t2, h1, h2, h3, h4, runNolow, runNoup):
+    for ientry1 in xrange(t1.GetEntries()):
+        t1.GetEntry(ientry1)
+        if fabs(t1.m_runNo) < runNolow or fabs(t1.m_runNo) > runNoup:
+            continue
+        if (t1.m_m_Dpi0 < 2.0082 or t1.m_m_Dpi0 > 2.01269) and (t1.m_m_pipi < 0.491036 or t1.m_m_pipi > 0.503471):
+            if t1.m_matched_D == 0:
+                h1.Fill(t1.m_chi2_vf)
+            if t1.m_matched_D == 1:
+                h2.Fill(t1.m_chi2_vf)
+    for ientry2 in xrange(t2.GetEntries()):
+        t2.GetEntry(ientry2)
+        if fabs(t2.m_runNo) < runNolow or fabs(t2.m_runNo) > runNoup:
+            continue
+        if (t2.m_m_Dpi0 < 2.0082 or t2.m_m_Dpi0 > 2.01269) and (t2.m_m_pipi < 0.491036 or t2.m_m_pipi > 0.503471):
+            if t2.m_matched_D == 0:
+                h3.Fill(t2.m_chi2_vf)
+            if t2.m_matched_D == 1:
+                h4.Fill(t2.m_chi2_vf)
 
 def set_histo_style(h1, h2, h3, h4, xtitle, ytitle):
     h1.GetXaxis().SetNdivisions(509)
@@ -77,14 +85,18 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(incMC_path, leg_title, ecms, xmax):
+def plot(incMC_path, sigMC_path, leg_title, ecms, xmax, runNolow, runNoup):
     try:
         f_incMC = TFile(incMC_path)
+        f_sigMC = TFile(sigMC_path)
         t_incMC = f_incMC.Get('save')
+        t_sigMC = f_sigMC.Get('save')
         entries_incMC = t_incMC.GetEntries()
-        logging.info('inclusive MC(hadrons) entries :'+str(entries_incMC))
+        entries_sigMC = t_sigMC.GetEntries()
+        logging.info('inclusive MC(open charm) entries :'+str(entries_incMC))
+        logging.info('inclusive MC(psi(3770)) entries :'+str(entries_sigMC))
     except:
-        logging.error(incMC_path+' is invalid!')
+        logging.error('File is invalid!')
         sys.exit()
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
@@ -93,50 +105,59 @@ def plot(incMC_path, leg_title, ecms, xmax):
     xbins = xmax
     ytitle = "Events"
     xtitle = "#chi^{2}_{vertex}"
-    h_unDunpi = TH1F('unDunpi', 'unDunpi', xbins, xmin, xmax)
-    h_Dunpi = TH1F('Dunpi', 'Dunpi', xbins, xmin, xmax)
-    h_unDpi = TH1F('unDpi', 'unDpi', xbins, xmin, xmax)
-    h_Dpi = TH1F('Dpi', 'Dpi', xbins, xmin, xmax)
+    h_unDincMC = TH1F('unDincMC', 'unDincMC', xbins, xmin, xmax)
+    h_DincMC = TH1F('DincMC', 'DincMC', xbins, xmin, xmax)
+    h_unDsigMC = TH1F('unDsigMC', 'unDsigMC', xbins, xmin, xmax)
+    h_DsigMC = TH1F('DsigMC', 'DsigMC', xbins, xmin, xmax)
 
-    set_histo_style(h_unDunpi, h_Dunpi, h_unDpi, h_Dpi, xtitle, ytitle)
-    chi2_KF_fill(t_incMC, entries_incMC, h_unDunpi, h_Dunpi, h_unDpi, h_Dpi)
+    set_histo_style(h_unDincMC, h_DincMC, h_unDsigMC, h_DsigMC, xtitle, ytitle)
+    chi2_KF_fill(t_incMC, t_sigMC, h_unDincMC, h_DincMC, h_unDsigMC, h_DsigMC, runNolow, runNoup)
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
     
-    h_Dunpi.Scale(h_unDunpi.GetEntries()/h_Dunpi.GetEntries()/2)
-    h_unDpi.Scale(h_unDunpi.GetEntries()/h_unDpi.GetEntries()/2)
-    h_Dpi.Scale(h_unDunpi.GetEntries()/h_Dpi.GetEntries()/2)
-    h_unDunpi.Draw()
-    h_Dunpi.Draw('same')
-    h_unDpi.Draw('same')
-    h_Dpi.Draw('same')
+    h_DincMC.Scale(h_unDincMC.GetEntries()/h_DincMC.GetEntries()/2)
+    h_unDsigMC.Scale(h_unDincMC.GetEntries()/h_unDsigMC.GetEntries()/2)
+    h_DsigMC.Scale(h_unDincMC.GetEntries()/h_DsigMC.GetEntries()/2)
+    h_unDincMC.Draw()
+    h_DincMC.Draw('same')
+    h_unDsigMC.Draw('same')
+    h_DsigMC.Draw('same')
 
-    arrow = TArrow(25, 0, 25, 600, 0.01, '<')
+    arrow = TArrow(20, 0, 20, 300, 0.01, '<')
     set_arrow(arrow)
     arrow.Draw()
 
     legend = TLegend(0.45, 0.6, 0.82, 0.8)
-    set_legend(legend, h_unDunpi, h_Dunpi, h_unDpi, h_Dpi, leg_title)
+    set_legend(legend, h_unDincMC, h_DincMC, h_unDsigMC, h_DsigMC, leg_title)
     legend.Draw()
 
     mbc.SaveAs('./figs/matched_chi2_vf_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_before.root'
-    leg_title = '(a)'
+    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root'
+    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root'
+    leg_title = '(b)'
     ecms = 4360
     xmax = 100
-    plot(incMC_path, leg_title, ecms, xmax)
+    runNolow = 30616
+    runNoup = 31279
+    plot(incMC_path, sigMC_path, leg_title, ecms, xmax, runNolow, runNoup)
 
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4420/incMC_hadrons_4420_before.root'
+    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root'
+    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root'
     leg_title = '(b)'
     ecms = 4420
     xmax = 100
-    plot(incMC_path, leg_title, ecms, xmax)
+    runNolow = 36773
+    runNoup = 38140
+    plot(incMC_path, sigMC_path, leg_title, ecms, xmax, runNolow, runNoup)
 
-    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/hadrons/4600/incMC_hadrons_4600_before.root'
-    leg_title = '(c)'
+    incMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root'
+    sigMC_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root'
+    leg_title = '(b)'
     ecms = 4600
     xmax = 100
-    plot(incMC_path, leg_title, ecms, xmax)
+    runNolow = 35227
+    runNoup = 36213
+    plot(incMC_path, sigMC_path, leg_title, ecms, xmax, runNolow, runNoup)

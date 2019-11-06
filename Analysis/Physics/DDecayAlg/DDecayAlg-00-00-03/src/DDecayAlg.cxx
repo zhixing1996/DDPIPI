@@ -36,6 +36,10 @@ LOAD_FACTORY_ENTRIES( DDecayAlg )
 DDecayAlg::DDecayAlg(const std::string& name, ISvcLocator* pSvcLocator) :
 	Algorithm(name, pSvcLocator) {
         m_DModes.push_back(200);
+        m_DModes.push_back(205);
+        m_DModes.push_back(208);
+        m_DModes.push_back(213);
+        m_DModes.push_back(216);
         declareProperty("DMode", m_DModes);
         declareProperty("IsMonteCarlo", m_isMonteCarlo = true);
         declareProperty("UsePID", m_pid = true);
@@ -68,8 +72,6 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple1->addItem("chi2_kf", m_chi2_kf);
             status = m_tuple1->addItem("n_count", m_n_count); // multi-counting D in one event
             status = m_tuple1->addItem("matched_D", m_matched_D);
-            status = m_tuple1->addItem("n_combination", m_n_combination, 0, 200);
-            status = m_tuple1->addIndexedItem("chi2_2C", m_n_combination, m_chi2_2C);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple1) << endmsg;
@@ -686,7 +688,16 @@ bool DDecayAlg::tagSingleD() {
     VWTrkPara vwtrkpara_charge, vwtrkpara_photon;
     for (int i = 0; i < m_DModes.size(); i++) {
         mode = m_DModes[i];
-        if (mode!=200) continue; // mode = 200 includes: D+->K-pi+pi+ or D-->K+pi-pi-
+        if (mode != 200 && mode != 205 && mode != 208 && mode != 213 && mode != 216) continue; 
+        // mode = 200 includes: D+->K-pi+pi+ or D-->K+pi-pi-
+        // mode = 201 includes: D+->K-pi+pi+pi0
+        // mode = 202 includes: D+->Kspi+
+        // mode = 203 includes: D+->Kspi+pi0
+        // mode = 204 includes: D+->Kspi+pi-pi+
+        // mode = 205 includes: D+->K-K+pi+
+        // mode = 208 includes: D+->KsK+
+        // mode = 213 includes: D+->KsKsK+
+        // mode = 216 includes: D+->KsK+pi+pi-
 
         // define D candidate mass
         if ((int)mode < 200) mDcand = M_D0;
@@ -760,10 +771,13 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         HepLorentzVector ppi;
         m_matched_D = 0;
         m_matched_D_signal = 0;
+        int tag_K_Match = 1;
+        DTagTool dtagTool;
         for (int j = 0; j < n_trkD; j++) {
             RecMdcKalTrack* KalTrk = Dtrks[j]->mdcKalTrack();
             // to fill Kaon candidates
-            if (j == 0) { // default arrangement: (K,pi), number of K depend on the mode you choose
+            // if (j == 0) { // default arrangement: (K,pi), number of K depend on the mode you choose
+            if (dtagTool.isKaon(Dtrks[j])) {
                 KalTrk->setPidType(RecMdcKalTrack::kaon);
                 if (m_debug) std::cout << " filling kaon track " << std::endl;
                 vwtrkpara_charge.push_back(WTrackParameter(mass[3], KalTrk->getZHelixK(), KalTrk->getZErrorK()));
@@ -776,6 +790,7 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
                 pK.setE(KalTrk->p4(mass[3])[3]);
                 m_matched_D = MatchMC(pK, "D_tag");
                 m_matched_D_signal = MatchMC(pK, "D_tag");
+                tag_K_Match = 0;
             }
             // to fill Pion candidates
             else {
@@ -789,14 +804,14 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
                 ppi.setPy(KalTrk->p4(mass[2])[1]);
                 ppi.setPz(KalTrk->p4(mass[2])[2]);
                 ppi.setE(KalTrk->p4(mass[2])[3]);
-                if (m_matched_D) m_matched_D = MatchMC(ppi, "D_tag");
-                if (m_matched_D_signal) m_matched_D_signal = MatchMC(ppi, "D_tag");
+                if (m_matched_D || tag_K_Match == 1) m_matched_D = MatchMC(ppi, "D_tag");
+                if (m_matched_D_signal || tag_K_Match == 1) m_matched_D_signal = MatchMC(ppi, "D_tag");
             }
         }
 
         // to check the vector in each dtag item
         if (m_debug) {
-            double index_vector=0;
+            double index_vector = 0;
             std::cout << "total cahrged: " << vwtrkpara_charge.size() << std::endl;
             while(index_vector < vwtrkpara_charge.size()) {
                 std::cout << " Add charged tracks: " << index_vector 
@@ -820,6 +835,7 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         if (m_debug) std::cout << " vertex fitting chisq: " << chi2_vf << std::endl;
         if (m_debug) std::cout << " vertex fitting vertex: " << birth.vx() << std::endl;
 
+        HepLorentzVector pgam;
         vwtrkpara_photon.clear(); // for mode ee->DDpipi, there is no pi0, so the vector will be empty
         for(int j = 0; j < Dshws.size(); j++) {
             RecEmcShower *gTrk = Dshws[j]->emcShower();
@@ -829,6 +845,11 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
             HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
             vwtrkpara_photon.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE())); // dE, error of the gamma energy
             for (int k = 0; k < 4; k++) m_rawp4_Dshw[j][k] = Gm_p4[k];
+            pgam.setPx(Gm_p4[0]);
+            pgam.setPy(Gm_p4[1]);
+            pgam.setPz(Gm_p4[2]);
+            pgam.setE(Gm_p4[3]);
+            if (m_matched_D_signal) m_matched_D_signal = MatchMC(pgam, "D_tag");
         }
         
         if (m_debug) {
@@ -849,9 +870,6 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
 
         // to store the other track information
         stat_saveOthertrks = saveOthertrks(vwtrkpara_charge, vwtrkpara_photon, birth);
-
-        // KM fit on D Dmissing pip and pim
-        chi2_2C(vwtrkpara_charge, vwtrkpara_photon, birth);
 
         // record variables
         if (fabs(chi2_vf) < 100 && fabs(chi2_kf) < 999 && stat_saveOthertrks && stat_saveOthershws) {
@@ -908,7 +926,9 @@ double DDecayAlg::fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon
         D1list.push_back(count);
         count++;
     }
-    kmfit->AddResonance(0, mDcand, D1list);
+    int n_res = 0;
+    for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
+    kmfit->AddResonance(n_res, mDcand, D1list);
 
     if (m_debug) std::cout << " finished KF add Tracks ... " << std::endl;
 
@@ -916,7 +936,8 @@ double DDecayAlg::fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon
     if (!kmfit->Fit(0)) return 999;
     if (!kmfit->Fit()) return 999;
     else {
-        kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
+        // kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
+        kf_chi2 = kmfit->chisq();
         if (m_debug) std::cout << "  " << mode << "  fit chisq:   " << kf_chi2 << std::endl;
         for (int i = 0; i < n_trkD; i++) {
             for (int j = 0; j < 4; j++) m_p4_Dtrk[i][j] = kmfit->pfit(i)[j];
@@ -929,103 +950,6 @@ double DDecayAlg::fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon
     }
     return kf_chi2;
 }
-
-/////////////////////////////////////////////////////////////////////
-void DDecayAlg::chi2_2C(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth) {
-    SmartRefVector<EvtRecTrack> othertracks = (*dtag_iter)->otherTracks();
-    SmartDataPtr<EvtRecEvent> evtRecEvent(eventSvc(), "/Event/EvtRec/EvtRecEvent");
-    DTagTool dtagTool;
-
-    VWTrkPara vwtrkpara_piplus, vwtrkpara_piminus;
-    vwtrkpara_piplus.clear();
-    vwtrkpara_piminus.clear();
-    int n_piplus = 0;
-    int n_piminus = 0;
-    m_n_combination = 0;
-    for (int i = 0; i < othertracks.size(); i++) {
-        if (m_rawp4_otherMdcKaltrk[i][4] != 1) continue;
-        if (m_rawp4_otherMdcKaltrk[i][5] != 2) continue;
-        RecMdcKalTrack *mdcKalTrk_plus = othertracks[i]->mdcKalTrack();
-        vwtrkpara_piplus.push_back(WTrackParameter(mass[2], mdcKalTrk_plus->getZHelix(), mdcKalTrk_plus->getZError()));
-        n_piplus++;
-        for (int j = 0; j < othertracks.size(); j++) {
-            if (m_rawp4_otherMdcKaltrk[j][4] != -1) continue;
-            if (m_rawp4_otherMdcKaltrk[j][5] != 2) continue;
-            RecMdcKalTrack *mdcKalTrk_minus = othertracks[j]->mdcKalTrack();
-            vwtrkpara_piminus.push_back(WTrackParameter(mass[2], mdcKalTrk_minus->getZHelix(), mdcKalTrk_minus->getZError()));
-            n_piminus++;
-            double cms = 0;
-            if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
-                cms = 4.358;
-            }
-            if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
-                cms = 4.416;
-            }
-            if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
-                cms = 4.600;
-            }
-            HepLorentzVector ecms(0.011*cms, 0 , 0, cms);
-            double chi2_kf_2C = -999;
-            chi2_kf_2C = fitKM_2C(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
-            chi2_kf_2C = fitKM_two_gamma(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, vwtrkpara_othershws, chi2_kf_2C);
-            m_chi2_2C[m_n_combination] = chi2_kf_2C;
-            m_n_combination++;
-        }
-    }
-}
-
-double DDecayAlg::fitKM_2C(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth) {
-    kmfit->init();
-    // kmfit->setEspread(0.0011);
-    kmfit->setBeamPosition(birth.vx());
-    kmfit->setVBeamPosition(birth.Evx()); // error matrix of vertex
-
-    if (m_debug) std::cout << " to start add tracks to KF fit " << std::endl;
-
-    int count = 0;
-    Vint D1list;
-    Vint Pi0list;
-    D1list.clear();
-    Pi0list.clear();
-    while (count < vwtrkpara_charge.size()) {
-        kmfit->AddTrack(count, vwtrkpara_charge[count]);
-        D1list.push_back(count);
-        count++;
-    }
-    while (count < vwtrkpara_charge.size() + vwtrkpara_photon.size()) {
-        kmfit->AddTrack(count, vwtrkpara_photon[count - vwtrkpara_charge.size()]);
-        Pi0list.push_back(count);
-        D1list.push_back(count);
-        count++;
-    }
-    kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
-    kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, M_Dplus);
-    int n_res = 0;
-    kmfit->AddResonance(n_res++, mDcand, D1list);
-    double cms = 0;
-    for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
-    if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
-        cms = 4.358;
-    }
-    if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
-        cms = 4.416;
-    }
-    if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
-        cms = 4.600;
-    }
-    HepLorentzVector ecms(0.011*cms, 0 , 0, cms);
-    kmfit->AddFourMomentum(n_res, ecms);
-
-    double kf_chi2 = 999;
-    if (!kmfit->Fit(0)) return 999;
-    if (!kmfit->Fit()) return 999;
-    else {
-        kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
-    }
-    return kf_chi2;
-}
-////////////////////////////////////////////////////////////
 
 double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth) {
     kmfit->init();
@@ -1051,13 +975,10 @@ double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara
         D1list.push_back(count);
         count++;
     }
-    kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
-    kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, M_Dplus);
     int n_res = 0;
+    for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
-    for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
     if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
         cms = 4.358;
     }
@@ -1067,7 +988,10 @@ double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara
     if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
         cms = 4.600;
     }
-    HepLorentzVector ecms(0.011*cms, 0 , 0, cms);
+    kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
+    kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
+    kmfit->AddMissTrack(count++, M_Dplus);
+    HepLorentzVector ecms(0.011*cms, 0, 0, cms);
     kmfit->AddFourMomentum(n_res, ecms);
 
     if (m_debug) std::cout << " finished KF add Tracks ... " << std::endl;
@@ -1076,7 +1000,8 @@ double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara
     if (!kmfit->Fit(0)) return 999;
     if (!kmfit->Fit()) return 999;
     else {
-        kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
+        // kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
+        kf_chi2 = kmfit->chisq();
         if (m_debug) std::cout << "  " << mode << "  fit chisq:   " << kf_chi2 << std::endl;
         for (int i = 0; i < n_trkD; i++) {
             for (int j = 0; j < 4; j++) m_p4_Dtrk_signal[i][j] = kmfit->pfit(i)[j];
@@ -1089,132 +1014,6 @@ double DDecayAlg::fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara
         for (int i = 0; i < 4; i++) m_p4_piminus_signal[i] = kmfit->pfit(n_trkD + n_shwD + 1)[i];
         if (m_debug) std::cout << " recorded the four momentum of showers and tracks in tagged D " << std::endl;
     }
-    return kf_chi2;
-}
-
-double DDecayAlg::fitKM_one_gamma(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, VWTrkPara &vwtrkpara_othershws, double kf_chi2) {
-    if (vwtrkpara_othershws.size() <= 1) return kf_chi2;
-    for (int i = 0; i < vwtrkpara_othershws.size(); i++) {
-        kmfit->init();
-        // kmfit->setEspread(0.0011);
-        kmfit->setBeamPosition(birth.vx());
-        kmfit->setVBeamPosition(birth.Evx()); // error matrix of vertex
-        
-        if (m_debug) std::cout << " to start add tracks to KF fit " << std::endl;
-        
-        int count = 0;
-        Vint D1list;
-        Vint Pi0list;
-        D1list.clear();
-        Pi0list.clear();
-        while (count < vwtrkpara_charge.size()) {
-            kmfit->AddTrack(count, vwtrkpara_charge[count]);
-            D1list.push_back(count);
-            count++;
-        }
-        while (count < vwtrkpara_charge.size() + vwtrkpara_photon.size()) {
-            kmfit->AddTrack(count, vwtrkpara_photon[count - vwtrkpara_charge.size()]);
-            Pi0list.push_back(count);
-            D1list.push_back(count);
-            count++;
-        }
-        kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
-        kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-        kmfit->AddMissTrack(count++, M_Dplus);
-        kmfit->AddTrack(count++, vwtrkpara_othershws[i]);
-        int n_res = 0;
-        kmfit->AddResonance(n_res++, mDcand, D1list);
-        double cms = 0;
-        for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
-        if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
-            cms = 4.358;
-        }
-        if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
-            cms = 4.416;
-        }
-        if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
-            cms = 4.600;
-        }
-        HepLorentzVector ecms(0.011*cms, 0 , 0, cms);
-        kmfit->AddFourMomentum(n_res, ecms);
-        bool oksq = kmfit->Fit();
-        double kf_chi2_1 = 999.;
-        if (oksq) {
-            kf_chi2_1 = kmfit->chisq()/(1 + Pi0list.size()/2 + 1); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
-            if (kf_chi2_1 < kf_chi2) return 999.;
-        }
-        else {
-            return kf_chi2;
-        }
-    }
-
-    if (m_debug) std::cout << " finished KF add Tracks ... " << std::endl;
-
-    return kf_chi2;
-}
-
-double DDecayAlg::fitKM_two_gamma(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, VWTrkPara &vwtrkpara_othershws, double kf_chi2) {
-    if (vwtrkpara_othershws.size() <= 1) return kf_chi2;
-    for (int i = 0; i < vwtrkpara_othershws.size() - 1; i++) {
-        for (int j = i + 1; j < vwtrkpara_othershws.size(); j++) {
-            kmfit->init();
-            // kmfit->setEspread(0.0011);
-            kmfit->setBeamPosition(birth.vx());
-            kmfit->setVBeamPosition(birth.Evx()); // error matrix of vertex
-        
-            if (m_debug) std::cout << " to start add tracks to KF fit " << std::endl;
-        
-            int count = 0;
-            Vint D1list;
-            Vint Pi0list;
-            D1list.clear();
-            Pi0list.clear();
-            while (count < vwtrkpara_charge.size()) {
-                kmfit->AddTrack(count, vwtrkpara_charge[count]);
-                D1list.push_back(count);
-                count++;
-            }
-            while (count < vwtrkpara_charge.size() + vwtrkpara_photon.size()) {
-                kmfit->AddTrack(count, vwtrkpara_photon[count - vwtrkpara_charge.size()]);
-                Pi0list.push_back(count);
-                D1list.push_back(count);
-                count++;
-            }
-            kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
-            kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-            kmfit->AddMissTrack(count++, M_Dplus);
-            kmfit->AddTrack(count++, vwtrkpara_othershws[i]);
-            kmfit->AddTrack(count++, vwtrkpara_othershws[j]);
-            int n_res = 0;
-            kmfit->AddResonance(n_res++, mDcand, D1list);
-            kmfit->AddResonance(n_res++, M_Pi0, count - 1, count - 2);
-            double cms = 0;
-            for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
-            if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
-                cms = 4.358;
-            }
-            if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
-                cms = 4.416;
-            }
-            if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
-                cms = 4.600;
-            }
-            HepLorentzVector ecms(0.011*cms, 0 , 0, cms);
-            kmfit->AddFourMomentum(n_res, ecms);
-            bool oksq = kmfit->Fit();
-            double kf_chi2_2 = 999.;
-            if (oksq) {
-                kf_chi2_2 = kmfit->chisq()/(1 + Pi0list.size()/2 + 1); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0, 1: add pi0
-                if (kf_chi2_2 < kf_chi2) return 999.;
-            }
-            else {
-                return kf_chi2;
-            }
-        }
-    }
-
-    if (m_debug) std::cout << " finished KF add Tracks ... " << std::endl;
-
     return kf_chi2;
 }
 
@@ -1242,13 +1041,10 @@ double DDecayAlg::fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
         D1list.push_back(count);
         count++;
     }
-    kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
-    kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, sidebandlow_mean);
     int n_res = 0;
+    for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
-    for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
     if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
         cms = 4.358;
     }
@@ -1258,6 +1054,9 @@ double DDecayAlg::fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
     if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
         cms = 4.600;
     }
+    kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
+    kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
+    kmfit->AddMissTrack(count++, sidebandlow_mean);
     HepLorentzVector ecms(0.011*cms, 0 , 0, cms);
     kmfit->AddFourMomentum(n_res, ecms);
 
@@ -1267,7 +1066,8 @@ double DDecayAlg::fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
     if (!kmfit->Fit(0)) return 999;
     if (!kmfit->Fit()) return 999;
     else {
-        kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
+        // kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
+        kf_chi2 = kmfit->chisq();
         if (m_debug) std::cout << "  " << mode << "  fit chisq:   " << kf_chi2 << std::endl;
         for (int i = 0; i < n_trkD; i++) {
             for (int j = 0; j < 4; j++) m_p4_Dtrk_sidebandlow[i][j] = kmfit->pfit(i)[j];
@@ -1307,13 +1107,10 @@ double DDecayAlg::fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrk
         D1list.push_back(count);
         count++;
     }
-    kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
-    kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
-    kmfit->AddMissTrack(count++, sidebandup_mean);
     int n_res = 0;
+    for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
-    for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
     if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
         cms = 4.358;
     }
@@ -1323,6 +1120,9 @@ double DDecayAlg::fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrk
     if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
         cms = 4.600;
     }
+    kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
+    kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
+    kmfit->AddMissTrack(count++, sidebandup_mean);
     HepLorentzVector ecms(0.011*cms, 0 , 0, cms);
     kmfit->AddFourMomentum(n_res, ecms);
 
@@ -1332,7 +1132,8 @@ double DDecayAlg::fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrk
     if (!kmfit->Fit(0)) return 999;
     if (!kmfit->Fit()) return 999;
     else {
-        kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
+        // kf_chi2 = kmfit->chisq()/(1 + Pi0list.size()/2); // chi2/ndf, 1: constration of mD, Pi0list.size()/2: constration of Pi0
+        kf_chi2 = kmfit->chisq();
         if (m_debug) std::cout << "  " << mode << "  fit chisq:   " << kf_chi2 << std::endl;
         for (int i = 0; i < n_trkD; i++) {
             for (int j = 0; j < 4; j++) m_p4_Dtrk_sidebandup[i][j] = kmfit->pfit(i)[j];
@@ -1443,6 +1244,14 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 ptrack.setE(m_p4_Dtrk[k][3]);
                 pD += ptrack;
             }
+            for(int k = 0; k < n_shwD; k++) {
+                HepLorentzVector pshower;
+                pshower.setPx(m_p4_Dshw[k][0]);
+                pshower.setPy(m_p4_Dshw[k][1]);
+                pshower.setPz(m_p4_Dshw[k][2]);
+                pshower.setE(m_p4_Dshw[k][3]);
+                pD += pshower;
+            }
             HepLorentzVector pPip;
             pPip.setPx(mdcKalTrk_plus->p4(mass[2])[0]);
             pPip.setPy(mdcKalTrk_plus->p4(mass[2])[1]);
@@ -1491,39 +1300,32 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 std::cout << "Signal region, Sidebandup region, Sidebandlow_region..." << std::endl;
                 std::cout << "[" << signal_low << "," << signal_up << "], " << "[" << sidebandup_low << ", " << sidebandup_up << "], " << "[" << sidebandlow_low << ", " << sidebandlow_up << "]" << std::endl;
             }
-            HepLorentzVector ecms(0.011*cms, 0 , 0, cms);
+            HepLorentzVector ecms(0.011*cms, 0, 0, cms);
             double rm_Dpipi = (ecms - pD - pPip - pPim).m();
             chi2_kf_signal = -999;
             m_chi2_kf_signal = -999;
             if (rm_Dpipi > signal_low && rm_Dpipi < signal_up) {
                 chi2_kf_signal = fitKM_signal(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
-                chi2_kf_signal = fitKM_two_gamma(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, vwtrkpara_othershws, chi2_kf_signal);
             }
             chi2_kf_sidebandlow = -999;
             m_chi2_kf_sidebandlow = -999;
             if (rm_Dpipi > sidebandlow_low && rm_Dpipi < sidebandlow_up) {
                 double sidebandlow_mean = (sidebandlow_low + sidebandlow_up)/2;
                 chi2_kf_sidebandlow = fitKM_sidebandlow(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth , sidebandlow_mean);
-                chi2_kf_sidebandlow = fitKM_two_gamma(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, vwtrkpara_othershws, chi2_kf_sidebandlow);
             }
             chi2_kf_sidebandup = -999;
             m_chi2_kf_sidebandup = -999;
             if (rm_Dpipi > sidebandup_low && rm_Dpipi < sidebandup_up) {
                 double sidebandup_mean = (sidebandup_low + sidebandup_up)/2;
                 chi2_kf_sidebandup = fitKM_sidebandup(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, sidebandup_mean);
-                chi2_kf_sidebandup = fitKM_two_gamma(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, vwtrkpara_othershws, chi2_kf_sidebandup);
             }
             if (m_debug) std::cout << "Start recording region info if passed the requirement" << std::endl;
             if (fabs(chi2_kf_signal) < 999.) {
-                HepLorentzVector pD;
-                pD.setPx(0.);
-                pD.setPy(0.);
-                pD.setPz(0.);
-                pD.setE(0.);
                 SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
                 for (int k = 0; k < n_trkD; k++) {
                     RecMdcKalTrack* KalTrk = Dtrks[k]->mdcKalTrack();
-                    if (k == 0) {
+                    // if (k == 0) {
+                    if (dtagTool.isKaon(Dtrks[k])) {
                         KalTrk->setPidType(RecMdcKalTrack::kaon);
                         for (int l = 0; l < 4; l++) m_rawp4_Dtrk_signal[k][l] = KalTrk->p4(mass[3])[l];
                         m_rawp4_Dtrk_signal[k][4] = KalTrk->charge();
@@ -1535,12 +1337,6 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                         m_rawp4_Dtrk_signal[k][4] = KalTrk->charge();
                         m_rawp4_Dtrk_signal[k][5] = 2;
                     }
-                    HepLorentzVector ptrack;
-                    ptrack.setPx(m_p4_Dtrk[k][0]);
-                    ptrack.setPy(m_p4_Dtrk[k][1]);
-                    ptrack.setPz(m_p4_Dtrk[k][2]);
-                    ptrack.setE(m_p4_Dtrk[k][3]);
-                    pD += ptrack;
                     for (int l = 0; l < 4; l++) m_p4_Dtrkold_signal[k][l] = m_p4_Dtrk[k][l];
                 }
                 SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
@@ -1618,15 +1414,11 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 recordVariables_signal();
             }
             if (fabs(chi2_kf_sidebandlow) < 999.) {
-                HepLorentzVector pD;
-                pD.setPx(0.);
-                pD.setPy(0.);
-                pD.setPz(0.);
-                pD.setE(0.);
                 SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
                 for (int k = 0; k < n_trkD; k++) {
                     RecMdcKalTrack* KalTrk = Dtrks[k]->mdcKalTrack();
-                    if (k == 0) {
+                    // if (k == 0) {
+                    if (dtagTool.isKaon(Dtrks[k])) {
                         KalTrk->setPidType(RecMdcKalTrack::kaon);
                         for (int l = 0; l < 4; l++) m_rawp4_Dtrk_sidebandlow[k][l] = KalTrk->p4(mass[3])[l];
                         m_rawp4_Dtrk_sidebandlow[k][4] = KalTrk->charge();
@@ -1638,12 +1430,6 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                         m_rawp4_Dtrk_sidebandlow[k][4] = KalTrk->charge();
                         m_rawp4_Dtrk_sidebandlow[k][5] = 2;
                     }
-                    HepLorentzVector ptrack;
-                    ptrack.setPx(m_p4_Dtrk[k][0]);
-                    ptrack.setPy(m_p4_Dtrk[k][1]);
-                    ptrack.setPz(m_p4_Dtrk[k][2]);
-                    ptrack.setE(m_p4_Dtrk[k][3]);
-                    pD += ptrack;
                     for (int l = 0; l < 4; l++) m_p4_Dtrkold_sidebandlow[k][l] = m_p4_Dtrk[k][l];
                 }
                 SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
@@ -1721,15 +1507,11 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 recordVariables_sidebandlow();
             }
             if (fabs(chi2_kf_sidebandup) < 999.) {
-                HepLorentzVector pD;
-                pD.setPx(0.);
-                pD.setPy(0.);
-                pD.setPz(0.);
-                pD.setE(0.);
                 SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
                 for (int k = 0; k < n_trkD; k++) {
                     RecMdcKalTrack* KalTrk = Dtrks[k]->mdcKalTrack();
-                    if (k == 0) {
+                    // if (k == 0) {
+                    if (dtagTool.isKaon(Dtrks[k])) {
                         KalTrk->setPidType(RecMdcKalTrack::kaon);
                         for (int l = 0; l < 4; l++) m_rawp4_Dtrk_sidebandup[k][l] = KalTrk->p4(mass[3])[l];
                         m_rawp4_Dtrk_sidebandup[k][4] = KalTrk->charge();
@@ -1741,12 +1523,6 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                         m_rawp4_Dtrk_sidebandup[k][4] = KalTrk->charge();
                         m_rawp4_Dtrk_sidebandup[k][5] = 2;
                     }
-                    HepLorentzVector ptrack;
-                    ptrack.setPx(m_p4_Dtrk[k][0]);
-                    ptrack.setPy(m_p4_Dtrk[k][1]);
-                    ptrack.setPz(m_p4_Dtrk[k][2]);
-                    ptrack.setE(m_p4_Dtrk[k][3]);
-                    pD += ptrack;
                     for (int l = 0; l < 4; l++) m_p4_Dtrkold_sidebandup[k][l] = m_p4_Dtrk[k][l];
                 }
                 SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
@@ -1852,10 +1628,12 @@ int DDecayAlg::MatchMC(HepLorentzVector &p4, std::string MODE) {
         if (clst_ang < 999) {
             Event::McParticle mom = clst_particle->mother();
             int pid_mom = mom.particleProperty();
-            if (MODE == "D_tag" && (pid_mom == 411 || pid_mom == -411)) {
+            Event::McParticle grandmom = mom.mother();
+            int pid_grandmom = grandmom.particleProperty();
+            if (MODE == "D_tag" && (fabs(pid_mom) == 411 || (pid_mom == 310 && fabs(pid_grandmom) == 411)) || (pid_mom == 111 && fabs(pid_grandmom) == 411)) {
                 return 1;
             } 
-            if (MODE == "D_tag" && (pid_mom != 411 || pid_mom != -411)) {
+            if (MODE == "D_tag" && (fabs(pid_mom) != 411 && (pid_mom != 310 && fabs(pid_grandmom) != 411)) && (pid_mom != 111 && fabs(pid_grandmom) != 411)) {
                 return 0;
             }
             if (MODE == "pi_solo" && (pid_mom == 9020443 || pid_mom == 9030443 || pid_mom == 90022 || pid_mom == 80022)) {
@@ -1883,6 +1661,14 @@ bool DDecayAlg::saveOthershws() {
         ptrack.setE(m_p4_Dtrk[k][3]);
         pD += ptrack;
     }
+    for(int k = 0; k < n_shwD; k++) {
+        HepLorentzVector pshower;
+        pshower.setPx(m_p4_Dshw[k][0]);
+        pshower.setPy(m_p4_Dshw[k][1]);
+        pshower.setPz(m_p4_Dshw[k][2]);
+        pshower.setE(m_p4_Dshw[k][3]);
+        pD += pshower;
+    }
     SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
     SmartDataPtr<EvtRecEvent> evtRecEvent(eventSvc(), "/Event/EvtRec/EvtRecEvent");
     if (m_debug) std::cout << " total showers : " << evtRecEvent->totalNeutral() <<endl;
@@ -1890,7 +1676,6 @@ bool DDecayAlg::saveOthershws() {
     DTagTool dtagTool;
     m_n_othershws = 0;
     // to find the good photons in the othershowers list
-    // VWTrkPara vwtrkpara_othershws;
     vwtrkpara_othershws.clear();
     for (int i = 0; i < othershowers.size(); i++) {
         if (!(dtagTool.isGoodShower(othershowers[i]))) continue;
