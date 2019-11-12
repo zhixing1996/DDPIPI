@@ -24,26 +24,22 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.2.7" "Draw figures -- compare data and X(3842) MC(chi2_kf)"
     printf "\n\t%-9s  %-40s\n" "0.2.8" "Draw figures -- study chi2 of Dtag Dmissing pi pi"
 
-    printf "\n\t%-9s  %-40s\n" "0.3"    "[Background Study]"
-    printf "\n\t%-9s  %-40s\n" "0.3.1"  "Get samples -- get topology info"
-    printf "\n\t%-9s  %-40s\n" "0.3.2"  "Download software -- download topology"
-    printf "\n\t%-9s  %-40s\n" "0.3.3"  "Install software -- install topology"
-    printf "\n\t%-9s  %-40s\n" "0.3.4"  "Topo analysis -- apply topology analysis"
-    printf "\n\t%-9s  %-40s\n" "0.3.5"  "Get samples -- apply cuts before background study"
-    printf "\n\t%-9s  %-40s\n" "0.3.6"  "Draw figures -- study status of matching before background study"
-    printf "\n\t%-9s  %-40s\n" "0.3.7"  "Fit distributions -- fit to M(Dpi0)"
-    printf "\n\t%-9s  %-40s\n" "0.3.8"  "Draw figures -- study status of matching on cut1"
-    printf "\n\t%-9s  %-40s\n" "0.3.9"  "Fit distributions -- fit to M(pipi)"
-    printf "\n\t%-9s  %-40s\n" "0.3.10" "Draw figures -- study status of matching on cut2"
-    printf "\n\t%-9s  %-40s\n" "0.3.11" "Draw figures -- compare chi2 of vertex fit between types of matching status"
-    printf "\n\t%-9s  %-40s\n" "0.3.12" "Draw figures -- study status of matching on cut3"
-    printf "\n\t%-9s  %-40s\n" "0.3.13" "Draw figures -- cpmpare momentum of D between data and signal MC"
-    printf "\n\t%-9s  %-40s\n" "0.3.14" "Draw figures -- study status of matching on cut4"
-    printf "\n\t%-9s  %-40s\n" "0.3.15" "Draw figures -- compare invariant mass of M(Dpi) between data and signal MC"
-    printf "\n\t%-9s  %-40s\n" "0.3.16" "Draw figures -- study status of matching on cut5"
-    printf "\n\t%-9s  %-40s\n" "0.3.17" "Get samples -- apply cuts after background study"
-    printf "\n\t%-9s  %-40s\n" "0.3.18" "Draw figures -- study RM(pipi)"
-    printf "\n\t%-9s  %-40s\n" "0.3.19" "Draw figures -- study M(Dpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.3"     "[Background Study]"
+    printf "\n\t%-9s  %-40s\n" "0.3.1"   "Get samples -- get topology info"
+    printf "\n\t%-9s  %-40s\n" "0.3.2"   "Get samples -- apply cuts before background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.3"   "Draw figures -- study RM(pipi) before background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.4"   "Calculate numbers -- calculate efficiency and significance before background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.5"   "Draw figures -- study M(pipi) before background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.6"   "Fit distributions -- fit to M(pipi)"
+    printf "\n\t%-9s  %-40s\n" "0.3.7"   "Draw figures -- study ctau of pipi before background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.8"   "Calculate numbers -- calculate efficiency and significance of cut1"
+    printf "\n\t%-9s  %-40s\n" "0.3.9"   "Fit distributions -- fit to M(Dpi0)"
+    printf "\n\t%-9s  %-40s\n" "0.3.10"  "Calculate numbers -- calculate efficiency and significance of cut2"
+    printf "\n\t%-9s  %-40s\n" "0.3.11"  "Get samples -- apply cuts after background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.12"  "Draw figures -- study RM(pipi) after background study"
+    printf "\n\t%-9s  %-40s\n" "0.3.13"  "Download software -- download topology"
+    printf "\n\t%-9s  %-40s\n" "0.3.14"  "Install software -- install topology"
+    printf "\n\t%-9s  %-40s\n" "0.3.15"  "Topo analysis -- apply topology analysis"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -112,26 +108,30 @@ case $option in
 
     0.2.1) echo "Draw figures -- drawing invariant mass of Kpipi..."
            cd python
-           python plot_rawm_D.py
+           python plot_m_Kpipi.py 4360
+           python plot_m_Kpipi.py 4420
+           python plot_m_Kpipi.py 4600
            ;;
 
     0.2.2) echo "Draw figures -- studying mass window of M(Kpipi)..."
            cd python
-           python opt_mass_Kpipi.py 4360
-           python opt_mass_Kpipi.py 4420
-           python opt_mass_Kpipi.py 4600
+           python opt_m_Kpipi.py 4360
+           python opt_m_Kpipi.py 4420
+           python opt_m_Kpipi.py 4600
            ;;
 
     0.2.3) echo "Draw figures -- drawing recoiling mass of Dpipi..."
            cd python
-           python plot_rm_Dpipi.py
+           python plot_rm_Dpipi.py 4360
+           python plot_rm_Dpipi.py 4420
+           python plot_rm_Dpipi.py 4600
            ;;
 
     0.2.4) echo "Draw figures -- studying signal region of RM(Dpipi)..."
            cd python
-           python opt_signal_region.py 4360
-           python opt_signal_region.py 4420
-           python opt_signal_region.py 4600
+           python opt_rm_Dpipi.py 4360
+           python opt_rm_Dpipi.py 4420
+           python opt_rm_Dpipi.py 4600
            ;;
 
     0.2.5) echo "Get samples -- extracting useful info: signal region and sideband region..."
@@ -169,7 +169,9 @@ case $option in
 
     0.2.7) echo "Draw figures -- comparing data and X(3842) MC(chi2_kf)..."
            cd python
-           python plot_chi2_kf.py
+           python plot_chi2_kf.py 4360
+           python plot_chi2_kf.py 4420
+           python plot_chi2_kf.py 4600
            ;;
 
     0.2.8) echo "Draw figures -- studying chi2 of Dtag Dmissing pi pi..."
@@ -215,44 +217,56 @@ case $option in
            bash apply_cuts_before
            ;;
 
-    0.3.3) echo "Draw figures -- studying RM(pipi) of before background study..."
+    0.3.3) echo "Draw figures -- studying RM(pipi) before background study..."
            cd python
-           python plot_rm_pipi.py before
+           python plot_rm_pipi.py 4360 before
+           python plot_rm_pipi.py 4420 before
+           python plot_rm_pipi.py 4600 before
            ;;
 
     0.3.4) echo "Calculate numbers -- calculating efficiency and significance before background study..."
            cd python
-           python cal.py raw
+           python cal.py 4360 raw
+           python cal.py 4420 raw
+           python cal.py 4600 raw
            ;;
 
-    0.3.5) echo "Fit distributions -- fitting to M(Dpi0)..."
-           cd cxx
-           root -l -q fit_m_Dpi0_4420.cxx
-           ;;
-
-    0.3.6) echo "Calculate numbers -- calculating efficiency and significance of cut1..."
+    0.3.5) echo "Draw figures -- studying M(pipi) before background study..."
            cd python
-           python cal.py cut1
+           python plot_m_pipi.py 4360
+           python plot_m_pipi.py 4420
+           python plot_m_pipi.py 4600
            ;;
 
-    0.3.7) echo "Fit distributions -- fitting to M(pipi)..."
+    0.3.6) echo "Fit distributions -- fitting to M(pipi)..."
            cd cxx
            root -l -q fit_mKS_4420.cxx
            ;;
 
-    0.3.8) echo "Calculate numbers -- calculating efficiency and significance of cut2..."
-            cd python
-            python cal.py cut2
-            ;;
-
-    0.3.9) echo "Draw figures -- comparing chi2 of vertex fit between types of matching status..."
+    0.3.7) echo "Draw figures -- studying ctau of pipi before background study..."
            cd python
-           python plot_match_chi2_vf.py
+           python plot_ctau_pipi.py 4360
+           python plot_ctau_pipi.py 4420
+           python plot_ctau_pipi.py 4600
            ;;
 
-    0.3.10) echo "Calculate numbers -- calculating efficiency and significance of cut3..."
+    0.3.8) echo "Calculate numbers -- calculating efficiency and significance of cut1..."
             cd python
-            python cal.py cut3
+            python cal.py 4360 cut1
+            python cal.py 4420 cut1
+            python cal.py 4600 cut1
+            ;;
+
+    0.3.9) echo "Fit distributions -- fitting to M(Dpi0)..."
+           cd cxx
+           root -l -q fit_m_Dpi0_4420.cxx
+           ;;
+
+    0.3.10) echo "Calculate numbers -- calculating efficiency and significance of cut2..."
+            cd python
+            python cal.py 4360 cut2
+            python cal.py 4420 cut2
+            python cal.py 4600 cut2
             ;;
 
     0.3.11) echo "Get samples -- applying cuts of background study..."
@@ -262,15 +276,12 @@ case $option in
 
     0.3.12) echo "Draw figures -- studying RM(pipi) after background study..."
             cd python
-            python plot_rm_pipi.py after
+            python plot_rm_pipi.py 4360 after
+            python plot_rm_pipi.py 4420 after
+            python plot_rm_pipi.py 4600 after
             ;;
 
-    0.3.13) echo "Draw figures -- studying M(Dpipi)..."
-            cd python
-            python plot_m_Dpipi.py
-            ;;
-
-    0.3.14) echo "Download software -- downloading topology..."
+    0.3.13) echo "Download software -- downloading topology..."
             echo "Logout the SL5 environment to download topology v1.9.5!"
             mkdir -p topology
             cd topology
@@ -279,14 +290,14 @@ case $option in
             echo "Please login SL5 and set up BOSS6.6.4.p01 environment!"
             ;;
 
-    0.3.15) echo "Install software -- installinging topology..."
+    0.3.14) echo "Install software -- installinging topology..."
             echo "Login SL5 and set up BOSS6.6.4.p01 environment!"
             cd topology/v1.9.5
             ./compile.sh
             echo "Please check how to set up topoana variable environment in its README.md file!"
             ;;
 
-    0.3.16) echo "Topo analysis -- applying topology analysis..."
+    0.3.15) echo "Topo analysis -- applying topology analysis..."
             echo "Must be executed in bash shell mode and set up topoana environment!"
             mkdir -p scripts/ana/topo
             cd scripts/ana/topo

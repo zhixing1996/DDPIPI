@@ -4,10 +4,10 @@ Alias A_D_1+ D_1+
 Alias A_D_1- D_1-
 
 Decay  psi(4415)
-1    A_D_1-   D+   PHSP;
-1    D_1-   A_D+   PHSP;
-1    A_D_1+   D-   PHSP;
-1    D_1+   A_D-   PHSP;
+1    A_D_1-   D+   HELAMP 0 0 1 0 0 0;
+1    D_1-   A_D+   HELAMP 0 0 1 0 0 0;
+1    A_D_1+   D-   HELAMP 0 0 1 0 0 0;
+1    D_1+   A_D-   HELAMP 0 0 1 0 0 0;
 Enddecay
 
 Decay A_D_1+
@@ -27,19 +27,11 @@ Decay D_1-
 Enddecay
 
 Decay A_D+
-0.0938  K-  pi+  pi+  D_DALITZ;
-0.00993  K-  K+  pi+  PHSP;
-0.00304  K_S0  K+  PHSP;
-0.00254  K_S0  K_S0  K+  PHSP;
-0.00174  K_S0  K+  pi+  pi-  PHSP;
+1.00  K-  pi+  pi+  D_DALITZ;
 Enddecay
 
 Decay A_D-
-0.0938  K+  pi-  pi-  D_DALITZ;
-0.00993  K+  K-  pi-  PHSP;
-0.00304  K_S0  K-  PHSP;
-0.00254  K_S0  K_S0  K-  PHSP;
-0.00174  K_S0  K-  pi+  pi-  PHSP;
+1.00  K+  pi-  pi-  D_DALITZ;
 Enddecay
 
 End

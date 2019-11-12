@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-Optiomize chi2 of Kiniematic fit
+Optiomize recoiling mass of Dpipi
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
 __copyright__ = "Copyright (c) Maoqiang JING"
-__created__ = "[2019-09-04 Tue 06:13]"
+__created__ = "[2019-11-12 Tue 21:37]"
 
 import ROOT
 from ROOT import TCanvas, gStyle
@@ -65,7 +65,7 @@ def cal_significance(t1, t2, t3, t4, entries1, entries2, entries3, entries4, N, 
         B1 = 0
         for j in xrange(int(entries1*ratio1)):
             t1.GetEntry(j)
-            if t1.m_chi2_kf < (step + i*step) and fabs(t1.m_rawm_D - 1.86965) < width/2.:
+            if fabs(t1.m_rm_Dpipi - 1.86965) < (step + i*step) and fabs(t1.m_rawm_D - 1.86965) < width/2.:
                 B1 = B1 + 1
         print 'processing: ' + str(i)
         B1_list.append(B1)
@@ -74,7 +74,7 @@ def cal_significance(t1, t2, t3, t4, entries1, entries2, entries3, entries4, N, 
         B2 = 0
         for j in xrange(int(entries2*ratio2)):
             t2.GetEntry(j)
-            if t2.m_chi2_kf < (step + i*step) and fabs(t2.m_rawm_D - 1.86965) < width/2.:
+            if fabs(t2.m_rm_Dpipi - 1.86965) < (step + i*step) and fabs(t2.m_rawm_D - 1.86965) < width/2.:
                 B2 = B2 + 1
         print 'processing: ' + str(i)
         B2_list.append(B2)
@@ -88,7 +88,7 @@ def cal_significance(t1, t2, t3, t4, entries1, entries2, entries3, entries4, N, 
         S1 = 0
         for j in xrange(int(entries3*ratio3)):
             t3.GetEntry(j)
-            if t3.m_chi2_kf < (step + i*step) and fabs(t3.m_rawm_D - 1.86965) < width/2.:
+            if fabs(t3.m_rm_Dpipi - 1.86965) < (step + i*step) and fabs(t3.m_rawm_D - 1.86965) < width/2.:
                 S1 = S1 + 1
         print 'processing: ' + str(i)
         S1_list.append(S1)
@@ -97,7 +97,7 @@ def cal_significance(t1, t2, t3, t4, entries1, entries2, entries3, entries4, N, 
         S2 = 0
         for j in xrange(int(entries4*ratio4)):
             t4.GetEntry(j)
-            if t4.m_chi2_kf < (step + i*step) and fabs(t4.m_rawm_D - 1.86965) < width/2.:
+            if fabs(t4.m_rm_Dpipi - 1.86965) < (step + i*step) and fabs(t4.m_rawm_D - 1.86965) < width/2.:
                 S2 = S2 + 1
         print 'processing: ' + str(i)
         S2_list.append(S2)
@@ -115,13 +115,13 @@ def cal_significance(t1, t2, t3, t4, entries1, entries2, entries3, entries4, N, 
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = '#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})'
+    xtitle = 'RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})'
     ytitle = '#frac{S}{#sqrt{S+B}}'
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 5)
     set_histo_style(h_FOM, xtitle, ytitle)
     for i in xrange(N):
         h_FOM.Fill(step + i*step, Ratio_list[i])
-    return h_FOM, NEntry
+    return h_FOM, NEntry, ymax
 
 def set_canvas_style(mbc):
     mbc.SetFillColor(0)
@@ -154,15 +154,19 @@ def plot(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, pt_title, ecms, rat
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
-    xbins = 100
-    step = 100/xbins
+    xbins = 150
+    M_Dplus = 1.86965
+    step = (1.94 - M_Dplus)/xbins
 
-    h_FOM, ientry = cal_significance(t_incMC1, t_incMC2, t_sigMC1, t_sigMC2, entries_incMC1, entries_incMC2, entries_sigMC1, entries_sigMC2, xbins, step, ratio1, ratio2, ratio3, ratio4, width)
+    h_FOM, ientry, arrow_top = cal_significance(t_incMC1, t_incMC2, t_sigMC1, t_sigMC2, entries_incMC1, entries_incMC2, entries_sigMC1, entries_sigMC2, xbins, step, ratio1, ratio2, ratio3, ratio4, width)
     h_FOM.Draw()
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
 
+    arrow_left = ientry*step + step
+    arrow_right = ientry*step + step
+    arrow_bottom = 0.
     arrow = TArrow(arrow_left, arrow_bottom, arrow_right, arrow_top, 0.01,'>')
     set_arrow(arrow)
     arrow.Draw()
@@ -172,21 +176,24 @@ def plot(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, pt_title, ecms, rat
     pt.Draw()
     pt.AddText(pt_title)
 
-    range = 'chi2 of kinematic fit of D^{+}D_{miss}#pi^{+}#pi^{+}: ' + str(arrow_right)
+    mass_low = str(M_Dplus - (step + step*ientry))
+    mass_up = str(M_Dplus + (step + step*ientry))
+    window_width = str(2*(step + step*ientry))
+    range = 'Recoiling mass window of D^{+}#pi^{+}#pi^{-}: : [' + mass_low + ', ' + mass_up + '] GeV/c2' + ' with mass window width: ' + window_width + ' GeV/c2'
     print range
 
     mbc.Update()
-    mbc.SaveAs('./figs/opt_chi2_kf_'+str(ecms)+'.pdf')
+    mbc.SaveAs('./figs/opt_rm_Dpipi_'+str(ecms)+'.pdf')
 
 def main():
     args = sys.argv[1:]
     energy = args[0]
 
     if int(energy) == 4360:
-        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_signal.root'
-        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_signal.root'
-        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root'
-        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_signal.root'
+        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_raw.root'
+        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_raw.root'
+        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw.root'
+        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw.root'
         pt_title = '(a)'
         ecms = 4360
         lum = 539.84
@@ -197,10 +204,10 @@ def main():
         GenNum = 500000
         GenNum1 = 9400000
         GenNum2 = 500000
-        ratio1 = lum*XS3/GenNum1
-        ratio2 = lum*XS4/GenNum2
-        ratio3 = lum*XS1*0.0938/GenNum
-        ratio4 = lum*XS2*0.0938/GenNum
+        ratio1 = lum*XS1/GenNum1
+        ratio2 = lum*XS2/GenNum2
+        ratio3 = lum*XS3*0.0938/GenNum
+        ratio4 = lum*XS4*0.0938/GenNum
         arrow_left = 15
         arrow_right = 15
         arrow_bottom = 0
@@ -209,10 +216,10 @@ def main():
         plot(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, pt_title, ecms, ratio1, ratio2, ratio3, ratio4, arrow_left, arrow_bottom, arrow_right, arrow_top, width)
 
     if int(energy) == 4420:
-        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_signal.root'
-        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_signal.root'
-        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root'
-        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_signal.root'
+        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_raw.root'
+        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_raw.root'
+        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw.root'
+        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw.root'
         pt_title = '(b)'
         ecms = 4420
         lum1 = 1028.89
@@ -231,15 +238,15 @@ def main():
         arrow_left = 15
         arrow_right = 15
         arrow_bottom = 0
-        arrow_top = 25
+        arrow_top = 29
         width = 0.02063
         plot(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, pt_title, ecms, ratio1, ratio2, ratio3, ratio4, arrow_left, arrow_bottom, arrow_right, arrow_top, width)
 
     if int(energy) == 4600:
-        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_signal.root'
-        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_signal.root'
-        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root'
-        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root'
+        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_raw.root'
+        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_raw.root'
+        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw.root'
+        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw.root'
         pt_title = '(c)'
         ecms = 4600
         lum = 566.93

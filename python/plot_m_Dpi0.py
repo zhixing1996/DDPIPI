@@ -51,7 +51,7 @@ def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, runNolow, runNoup):
         if fabs(t5.m_runNo) > runNolow and fabs(t5.m_runNo) < runNoup:
             h5.Fill(t5.m_m_Dpi0)
 
-def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle):
+def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle, ymax):
     h1.GetXaxis().SetNdivisions(509)
     h1.GetYaxis().SetNdivisions(504)
     h1.SetLineWidth(2)
@@ -68,7 +68,7 @@ def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle):
     h1.GetXaxis().CenterTitle()
     h1.GetYaxis().SetTitle(ytitle)
     h1.GetYaxis().CenterTitle()
-    h1.GetYaxis().SetRangeUser(0, 70)
+    h1.GetYaxis().SetRangeUser(0, ymax)
     h1.SetFillColor(1)
     h2.SetFillColor(2)
     h3.SetFillColor(3)
@@ -82,7 +82,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_title, ecms, scale1, scale2, scale3, scale4, xmax, runNolow, runNoup):
+def plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_title, ecms, scale1, scale2, scale3, scale4, xmin, xmax, xbins, runNolow, runNoup, ymax):
     try:
         f_data = TFile(data_path)
         f_incMC1 = TFile(incMC1_path)
@@ -110,8 +110,6 @@ def plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_titl
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
-    xmin = 2.004
-    xbins = 75
     content = (xmax - xmin)/xbins * 1000
     ytitle = 'Events/%.1f MeV'%content
     xtitle = 'M(D^{+}#pi^{0})(GeV)'
@@ -121,7 +119,7 @@ def plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_titl
     h_sigMC1 = TH1F('sigMC1', 'signal MC: D1(2420)', xbins, xmin, float(xmax))
     h_sigMC2 = TH1F('sigMC2', 'signal MC: psi(3770)', xbins, xmin, float(xmax))
     
-    set_histo_style(h_data, h_incMC1, h_incMC2, h_sigMC1, h_sigMC2, xtitle, ytitle)
+    set_histo_style(h_data, h_incMC1, h_incMC2, h_sigMC1, h_sigMC2, xtitle, ytitle, ymax)
     rm_pipi_fill(t_data, t_incMC1, t_incMC2, t_sigMC1, t_sigMC2, h_data, h_incMC1, h_incMC2, h_sigMC1, h_sigMC2, runNolow, runNoup)
     
     if not os.path.exists('./figs/'):
@@ -151,48 +149,65 @@ def plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_titl
     mbc.SaveAs('./figs/m_Dpi0_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    # data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_after.root'
-    # data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root'
-    # sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_after.root'
-    # sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_after.root'
-    # sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_after.root'
-    # leg_title = '(a)'
-    # ecms = 4360
-    # scale = 0.5
-    # scale1 = 0.003125
-    # scale2 = 0.003125
-    # scale3 = 0.00065
-    # xmax = 4.1
-    # chi2_cut = 999
-    # plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, chi2_cut)
+    args = sys.argv[1:]
+    energy = args[0]
 
-    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_before.root'
-    incMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root'
-    incMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root'
-    sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root'
-    sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root'
-    leg_title = '(b)'
-    ecms = 4420
-    scale1 = 1073.56*65.4*(0.0938+0.00993+0.00304+0.00254+0.00174)/500000
-    scale2 = 1073.56*23.8*(0.0938+0.00993+0.00304+0.00254+0.00174)/500000
-    scale3 = 10494678.0/40300000.0
-    scale4 = 7202230.0/14000000.0
-    xmax = 2.018
-    runNolow = 36773
-    runNoup = 38140
-    plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_title, ecms, scale1, scale2, scale3, scale4, xmax, runNolow, runNoup)
+    if int(energy) == 4360:
+        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_before.root'
+        incMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root'
+        incMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root'
+        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_before.root'
+        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root'
+        leg_title = '(b)'
+        ecms = 4360
+        scale1 = 1073.56*65.4*(0.0938+0.00993+0.00304+0.00254+0.00174)/500000
+        scale2 = 1073.56*23.8*(0.0938+0.00993+0.00304+0.00254+0.00174)/500000
+        scale3 = 10494678.0/40300000.0
+        scale4 = 7202230.0/14000000.0
+        xmin = 2.004
+        xmax = 2.018
+        xbins = 75
+        runNolow = 36773
+        runNoup = 38140
+        ymax = 70
+        plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_title, ecms, scale1, scale2, scale3, scale4, xmin, xmax, xbins, runNolow, runNoup, ymax)
 
-    # data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_after.root'
-    # data_sideband_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root'
-    # sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_after.root'
-    # sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root'
-    # sigMC3_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_after.root'
-    # leg_title = '(c)'
-    # ecms = 4600
-    # scale = 0.5
-    # scale1 = 0.003125
-    # scale2 = 0.001625
-    # scale3 = 0.0009
-    # xmax = 4.35
-    # chi2_cut = 999
-    # plot(data_path, data_sideband_path, sigMC1_path, sigMC2_path, sigMC3_path, leg_title, ecms, scale, scale1, scale2, scale3, xmax, chi2_cut)
+    if int(energy) == 4420:
+        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_before.root'
+        incMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root'
+        incMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root'
+        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root'
+        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root'
+        leg_title = '(b)'
+        ecms = 4420
+        scale1 = 1073.56*65.4*(0.0938+0.00993+0.00304+0.00254+0.00174)/500000
+        scale2 = 1073.56*23.8*(0.0938+0.00993+0.00304+0.00254+0.00174)/500000
+        scale3 = 10494678.0/40300000.0
+        scale4 = 7202230.0/14000000.0
+        xmin = 2.004
+        xmax = 2.018
+        xbins = 75
+        runNolow = 36773
+        runNoup = 38140
+        ymax = 70
+        plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_title, ecms, scale1, scale2, scale3, scale4, xmin, xmax, xbins, runNolow, runNoup, ymax)
+
+    if int(energy) == 4600:
+        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_before.root'
+        incMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root'
+        incMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_before.root'
+        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_before.root'
+        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root'
+        leg_title = '(b)'
+        ecms = 4600
+        scale1 = 1073.56*65.4*(0.0938+0.00993+0.00304+0.00254+0.00174)/500000
+        scale2 = 1073.56*23.8*(0.0938+0.00993+0.00304+0.00254+0.00174)/500000
+        scale3 = 10494678.0/40300000.0
+        scale4 = 7202230.0/14000000.0
+        xmin = 2.004
+        xmax = 2.018
+        xbins = 75
+        runNolow = 36773
+        runNoup = 38140
+        ymax = 70
+        plot(data_path, incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, leg_title, ecms, scale1, scale2, scale3, scale4, xmin, xmax, xbins, runNolow, runNoup, ymax)

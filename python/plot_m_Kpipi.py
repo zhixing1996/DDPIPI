@@ -21,8 +21,7 @@ gStyle.SetPadTickY(1) # dicide on boxing on or not of x and y axis
 def rawm_D_fill(t, h):
     for ientry in xrange(t.GetEntries()):
         t.GetEntry(ientry)
-        if t.m_mode == 200:
-            h.Fill(t.m_rawm_D)
+        h.Fill(t.m_rawm_D)
 
 def set_histo_style(h, xtitle, ytitle):
     h.GetXaxis().SetNdivisions(509)
@@ -50,7 +49,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, leg_title, ecms):
+def plot(data_path, leg_title, ecms, xmin, xmax, xbins):
     try:
         f_data = TFile(data_path)
         t_data = f_data.Get('save')
@@ -62,12 +61,9 @@ def plot(data_path, leg_title, ecms):
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
-    xmin = 1.8593
-    xmax = 1.88
-    xbins = 75
     content = (xmax - xmin)/xbins * 1000
     ytitle = 'Events/%.1f MeV'%content
-    xtitle = 'M(D^{+})(GeV)'
+    xtitle = 'M(K^{+}#pi^{+}#pi^{-})(GeV)'
     h_data = TH1F('data', 'data', xbins, xmin, float(xmax))
     
     set_histo_style(h_data, xtitle, ytitle)
@@ -78,20 +74,35 @@ def plot(data_path, leg_title, ecms):
     
     h_data.Draw('E1')
 
-    mbc.SaveAs('./figs/rawm_D_'+str(ecms)+'.pdf')
+    mbc.SaveAs('./figs/m_Kpipi_'+str(ecms)+'.pdf')
 
 if __name__ == '__main__':
-    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw.root'
-    leg_title = '(b)'
-    ecms = 4360
-    plot(data_path, leg_title, ecms)
+    args = sys.argv[1:]
+    energy = args[0]
 
-    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw.root'
-    leg_title = '(b)'
-    ecms = 4420
-    plot(data_path, leg_title, ecms)
+    if int(energy) == 4360:
+        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw.root'
+        leg_title = '(b)'
+        ecms = 4360
+        ecms = 4420
+        xmin = 1.85
+        xmax = 1.89
+        xbins = 75
+        plot(data_path, leg_title, ecms, xmin, xmax, xbins)
 
-    data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw.root'
-    leg_title = '(b)'
-    ecms = 4600
-    plot(data_path, leg_title, ecms)
+    if int(energy) == 4420:
+        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw.root'
+        leg_title = '(b)'
+        ecms = 4420
+        xmin = 1.85
+        xmax = 1.89
+        xbins = 75
+        plot(data_path, leg_title, ecms, xmin, xmax, xbins)
+
+    if int(energy) == 4600:
+        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw.root'
+        leg_title = '(b)'
+        xmin = 1.85
+        xmax = 1.89
+        xbins = 75
+        plot(data_path, leg_title, ecms, xmin, xmax, xbins)

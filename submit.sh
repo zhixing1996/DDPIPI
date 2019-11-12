@@ -47,13 +47,13 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.9.1" "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.9.2" "Single D tag -- run on signal MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.10"   "[run on inclusive MC @4360MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.10"   "[run on inclusive MC (qqbar) @4360MeV]"
     printf "\n\t%-9s  %-40s\n" "0.10.1" "Single D tag -- inclusive MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.11"   "[run on inclusive MC @4420MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.11"   "[run on inclusive MC (qqbar) @4420MeV]"
     printf "\n\t%-9s  %-40s\n" "0.11.1" "Single D tag -- inclusive MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.12"   "[run on inclusive MC @4600MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.12"   "[run on inclusive MC (qqbar) @4600MeV]"
     printf "\n\t%-9s  %-40s\n" "0.12.1" "Single D tag -- inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.13"   "[run on data @4360MeV]"
@@ -65,13 +65,13 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.15"   "[run on data @4600MeV]"
     printf "\n\t%-9s  %-40s\n" "0.15.1" "Single D tag -- data sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.16"   "[run on inclusive MC (DDbar) @4360MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.16"   "[run on inclusive MC (open harm) @4360MeV]"
     printf "\n\t%-9s  %-40s\n" "0.16.1" "Single D tag -- inclusive MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.17"   "[run on inclusive MC (DDbar) @4420MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.17"   "[run on inclusive MC (open harm) @4420MeV]"
     printf "\n\t%-9s  %-40s\n" "0.17.1" "Single D tag -- inclusive MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.18"   "[run on inclusive MC (DDbar) @4600MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.18"   "[run on inclusive MC (open harm) @4600MeV]"
     printf "\n\t%-9s  %-40s\n" "0.18.1" "Single D tag -- inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
@@ -702,12 +702,12 @@ case $option in
             ;;
 
     # ------------------------------------------
-    #  0.16 run on inclusive MC (DDbar) @4360MeV
+    #  0.16 run on inclusive MC (open charm) @4360MeV
     # ------------------------------------------
 
     0.16) echo "inclusive MC @4360MeV..."
           echo "--> E_{CMS}: 4358.260MeV"
-          echo "--> Mode: DDbar"
+          echo "--> Mode: open charm"
           echo "--> Energy Spread: 1.97MeV"
           echo "--> Event Number: 500,000"
           echo "--> Cross Section: 1.0nb"
@@ -736,12 +736,12 @@ case $option in
             ;;
 
     # ------------------------------------------
-    #  0.17 run on inclusive MC (DDbar) @4420MeV
+    #  0.17 run on inclusive MC (open charm) @4420MeV
     # ------------------------------------------
 
     0.17) echo "inclusive MC @4420MeV..."
           echo "--> E_{CMS}: 4415.580MeV"
-          echo "--> Mode: DDbar"
+          echo "--> Mode: open charm"
           echo "--> Energy Spread: 2.03MeV"
           echo "--> Event Number: 40,300,000"
           echo "--> Cross Section: 10.2nb"
@@ -769,12 +769,12 @@ case $option in
             ;;
 
     # ------------------------------------------
-    #  0.18 run on inclusive MC (DDbar) @4600MeV
+    #  0.18 run on inclusive MC (open charm) @4600MeV
     # ------------------------------------------
 
     0.18) echo "inclusive MC @4600MeV..."
           echo "--> E_{CMS}: 4599.530MeV"
-          echo "--> Mode: DDbar"
+          echo "--> Mode: open charm"
           echo "--> Energy Spread: 2.20MeV"
           echo "--> Event Number: 3,100,000"
           echo "--> Cross Section: 7.8nb"

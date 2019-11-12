@@ -19,6 +19,8 @@ import ROOT
 def search(allfile, root, target):
     items = os.listdir(root)
     for item in items:
+        if item[0] == '.':
+            continue
         path = os.path.join(root, item)
         if os.path.isdir(path):
             search(allfile, path, target)
