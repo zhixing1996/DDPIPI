@@ -6,16 +6,16 @@ UPLIMIT=$2
 SEED=3020023
 ENERGYPOINT="4420"
 
-DIR_NAME="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/rtraw/"
+DIR_NAME="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/rtraw/"
 EVENT_NO=$3
 
-echo "./jobOptions_sim_sig_D1_2420_D_PHSP_4420.sh [NUM1] [NUM2] [NUM3]"
+echo "./jobOptions_sim_sig_psipp_PI_PI_VSS_4420.sh [NUM1] [NUM2] [NUM3]"
 echo "[NUM1]: the minimum number range of job generated"
 echo "[NUM2]: the maximum number range of job generated"
 echo "[NUM3]: the number of events in one job"
 
-JOB_NAME="jobOptions_sim_sig_D1_2420_D_PHSP"
-FILE_NAME="Sig_D1_2420_D_PHSP"
+JOB_NAME="jobOptions_sim_sig_psipp_PI_PI_VSS"
+FILE_NAME="Sig_psipp_PI_PI_VSS"
 
 # steer file for simulation
 echo "steer file for simulation"
@@ -44,7 +44,7 @@ do
     echo "" >> $SIM_NAME
     echo "//**************job options for EvtGen************************" >> $SIM_NAME
     echo "#include \"\$BESEVTGENROOT/share/BesEvtGen.txt\"" >> $SIM_NAME
-    echo "EvtDecay.userDecayTableName = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/psi4415_D1_2420_D_PHSP.dec\";" >> $SIM_NAME
+    echo "EvtDecay.userDecayTableName = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/psi4415_psipp_PI_PI_VSS.dec\";" >> $SIM_NAME
     echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/mypdt.table\";" >> $SIM_NAME
     echo "EvtDecay.statDecays = true;" >> $SIM_NAME
     echo "" >> $SIM_NAME

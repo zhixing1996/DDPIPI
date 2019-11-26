@@ -119,3 +119,123 @@ def set_root_style(stat=0, grid=0, PadTopMargin=0.08, PadBottomMargin=0.08,
     ROOT.gStyle.SetStatColor(0)
     ROOT.gStyle.SetStatBorderSize(1)
     
+def scale_factor(energy, mode):
+    BR = 0.0938
+    if int(energy) == 4360:
+        lum = 539.84
+        if mode == 'D1_2420':
+            XS = 41.8*BR
+            Evt = 500000.0
+        if mode == 'psipp':
+            XS = 17.3*BR
+            Evt = 500000.0
+        if mode == 'DD':
+            XS = 10600.0
+            Evt = 17200000.0
+        if mode == 'qq':
+            XS = 17500.0
+            Evt = 9400000.0
+        if mode == 'bhabha':
+            XS = 389000.0
+            Evt = 10000000.0
+        if mode == 'dimu':
+            XS = 4800.0
+            Evt = 2600000.0
+        if mode == 'ditau':
+            XS = 9200.0
+            Evt = 5000000.0
+        if mode == 'digamma':
+            XS = 18500.0
+            Evt = 10000000.0
+        if mode == 'twogamma':
+            XS = 1900.0
+            Evt = 1000000.0
+        if mode == 'ISR':
+            XS = 1110.0
+            Evt = 600000.0
+        if mode == 'gammaXYZ':
+            XS = 41.6
+            Evt = 33000.0
+        if mode == 'hadrons':
+            XS = 249.9
+            Evt = 190000.0
+    if int(energy) == 4420:
+        lum = 44.67 + 1028.89
+        if mode == 'D1_2420':
+            XS = 65.4*BR
+            Evt = 500000.0
+        if mode == 'psipp':
+            XS = 23.8*BR
+            Evt = 500000.0
+        if mode == 'DD':
+            XS = 10200.0
+            Evt = 40300000.0
+        if mode == 'qq':
+            XS = 7000.0
+            Evt = 14000000.0
+        if mode == 'bhabha':
+            XS = 379300.0
+            Evt = 38000000.0
+        if mode == 'dimu':
+            XS = 5828.6
+            Evt = 6000000.0
+        if mode == 'ditau':
+            XS = 3472.6
+            Evt = 7000000.0
+        if mode == 'digamma':
+            XS = 18600.0
+            Evt = 18000000.0
+    if int(energy) == 4600:
+        lum = 566.93
+        if mode == 'D1_2420':
+            XS = 27.7*BR
+            Evt = 500000.0
+        if mode == 'psipp':
+            XS = 7.2*BR
+            Evt = 500000.0
+        if mode == 'DD':
+            XS = 7800.0
+            Evt = 12000000.0*1.5
+        if mode == 'qq':
+            XS = 6000.0
+            Evt = 10000000.0
+        if mode == 'bhabha':
+            XS = 350000.0
+            Evt = 60000000.0
+        if mode == 'dimu':
+            XS = 4200.0
+            Evt = 6600000.0
+        if mode == 'ditau':
+            XS = 3400.0
+            Evt = 15000000.0
+        if mode == 'digamma':
+            XS = 16600.0
+            Evt = 30000000.0
+        if mode == 'twogamma':
+            XS = 774100.0
+            Evt = 11000000.0
+        if mode == 'LL':
+            XS = 350.0
+            Evt = 500000.0
+    ratio = XS*lum/Evt
+    return ratio
+
+# width for M(Kpipi)
+def width(ecms):
+    if int(ecms) == 4360:
+        WIDTH = 0.018648
+    if int(ecms) == 4420:
+        WIDTH = 0.019166
+    if int(ecms) == 4600:
+        WIDTH = 0.021238
+    return WIDTH
+
+# signal window for RM(Dpipi)
+def window(ecms):
+    if int(ecms) == 4360:
+        WINDOW = 0.0146666666667
+    if int(ecms) == 4420:
+        WINDOW = 0.0146666666667
+    if int(ecms) == 4600:
+        WINDOW = 0.018
+    return WINDOW

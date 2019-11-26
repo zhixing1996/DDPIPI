@@ -84,25 +84,25 @@ if __name__ == '__main__':
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw.root'
         leg_title = '(b)'
         ecms = 4360
-        ecms = 4420
-        xmin = 1.85
+        xmin = 1.84
         xmax = 1.89
-        xbins = 75
+        xbins = 20
         plot(data_path, leg_title, ecms, xmin, xmax, xbins)
 
     if int(energy) == 4420:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw.root'
         leg_title = '(b)'
         ecms = 4420
-        xmin = 1.85
+        xmin = 1.84
         xmax = 1.89
-        xbins = 75
+        xbins = 20
         plot(data_path, leg_title, ecms, xmin, xmax, xbins)
 
     if int(energy) == 4600:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw.root'
         leg_title = '(b)'
-        xmin = 1.85
+        ecms = 4600
+        xmin = 1.84
         xmax = 1.89
-        xbins = 75
+        xbins = 20
         plot(data_path, leg_title, ecms, xmin, xmax, xbins)

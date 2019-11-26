@@ -13,6 +13,7 @@ from ROOT import TFile, TH1F, TLegend, TPaveText
 import sys, os
 import logging
 from math import *
+from tools import *
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
 gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
@@ -21,7 +22,7 @@ def cal(t1, t2, t3, t4, ecms, MODE, runNolow, runNoup):
     N1 = 0
     for ientry in xrange(t1.GetEntries()):
         t1.GetEntry(ientry)
-        if fabs(t1.m_runNo) < runNolow or fabs(t1.m_runNo) > runNoup:
+        if fabs(t1.m_runNo) <= runNolow or fabs(t1.m_runNo) >= runNoup:
             continue
         if MODE == 'raw':
             N1 += 1
@@ -35,7 +36,7 @@ def cal(t1, t2, t3, t4, ecms, MODE, runNolow, runNoup):
     N2 = 0
     for ientry in xrange(t2.GetEntries()):
         t2.GetEntry(ientry)
-        if fabs(t2.m_runNo) < runNolow or fabs(t2.m_runNo) > runNoup:
+        if fabs(t2.m_runNo) <= runNolow or fabs(t2.m_runNo) >= runNoup:
             continue
         if MODE == 'raw':
             N2 += 1
@@ -49,7 +50,7 @@ def cal(t1, t2, t3, t4, ecms, MODE, runNolow, runNoup):
     N3 = 0
     for ientry in xrange(t3.GetEntries()):
         t3.GetEntry(ientry)
-        if fabs(t3.m_runNo) < runNolow or fabs(t3.m_runNo) > runNoup:
+        if fabs(t3.m_runNo) <= runNolow or fabs(t3.m_runNo) >= runNoup:
             continue
         if MODE == 'raw':
             N3 += 1
@@ -63,7 +64,7 @@ def cal(t1, t2, t3, t4, ecms, MODE, runNolow, runNoup):
     N4 = 0
     for ientry in xrange(t4.GetEntries()):
         t4.GetEntry(ientry)
-        if fabs(t4.m_runNo) < runNolow or fabs(t4.m_runNo) > runNoup:
+        if fabs(t4.m_runNo) <= runNolow or fabs(t4.m_runNo) >= runNoup:
             continue
         if MODE == 'raw':
             N4 += 1
@@ -74,20 +75,35 @@ def cal(t1, t2, t3, t4, ecms, MODE, runNolow, runNoup):
             if not ((t4.m_m_pipi > 0.491036 and t4.m_m_pipi < 0.503471) and t4.m_ctau_svf > 0.5):
                 if (t4.m_m_Dpi0 < 2.0082 or t4.m_m_Dpi0 > 2.01269):
                     N4 += 1
+
+    if int(ecms) == 4360:
+        NDD = 17200000.
+        Nqq = 9400000.
+        scale1 = scale_factor(ecms, 'D1_2420')
+        scale2 = scale_factor(ecms, 'psipp')
+        scale3 = scale_factor(ecms, 'DD')
+        scale4 = scale_factor(ecms, 'qq')
     if int(ecms) == 4420:
         NDD = 40300000.
         Nqq = 14000000.
-        scale1 = 1073.56*65.4*0.0938/500000
-        scale2 = 1073.56*23.8*0.0938/500000
-        scale3 = 10494678.0/40300000.0
-        scale4 = 7202230.0/14000000.0
+        scale1 = scale_factor(ecms, 'D1_2420')
+        scale2 = scale_factor(ecms, 'psipp')
+        scale3 = scale_factor(ecms, 'DD')
+        scale4 = scale_factor(ecms, 'qq')
+    if int(ecms) == 4600:
+        NDD = 12000000.0*1.5
+        Nqq = 10000000.
+        scale1 = scale_factor(ecms, 'D1_2420')
+        scale2 = scale_factor(ecms, 'psipp')
+        scale3 = scale_factor(ecms, 'DD')
+        scale4 = scale_factor(ecms, 'qq')
+
     significance = (N1*scale1 + N2*scale2)/sqrt(N1*scale1+ N2*scale2 + N3*scale3 + N4*scale4)
     print 'sigificance of ' + MODE + ': ' + str(significance)
     eff1 = N1/500000.
     eff2 = N2/500000.
     eff3 = N3/NDD/0.0938
     eff4 = N4/Nqq/0.0938
-    print N1, N2, N3, N4
     print 'efficiency of D1(2420): ' + '(' + MODE + ')' + ': ' + str(eff1)
     print 'efficiency of psipp: ' + '(' + MODE + ')' + ': ' + str(eff2)
     print 'efficiency of open charm' + '(' + MODE + ')' + ': ' + str(eff3)
@@ -127,30 +143,30 @@ if __name__ == '__main__':
         sys.exit()
 
     if int(energy) == 4360:
-        incMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root'
-        incMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root'
-        sigMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_before.root'
-        sigMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root'
+        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root'
+        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root'
+        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_before.root'
+        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root'
         ecms = 4360
         runNolow = 30616
-        runNoup = 30279
+        runNoup = 31279
         content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, MODE, runNolow, runNoup)
 
     if int(energy) == 4420:
-        incMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root'
-        incMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root'
-        sigMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root'
-        sigMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root'
+        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root'
+        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root'
+        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root'
+        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root'
         ecms = 4420
         runNolow = 36773
         runNoup = 38140
         content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, MODE, runNolow, runNoup)
 
     if int(energy) == 4600:
-        incMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root'
-        incMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_before.root'
-        sigMC1_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_before.root'
-        sigMC2_path = '/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root'
+        incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root'
+        incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_before.root'
+        sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_before.root'
+        sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root'
         ecms = 4600
         runNolow = 35227
         runNoup = 36213

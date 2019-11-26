@@ -79,7 +79,9 @@ class DDecayAlg : public Algorithm {
         bool stat_fitpi0_signal;
         bool stat_fitpi0_sidebandlow;
         bool stat_fitpi0_sidebandup;
-        bool stat_fitSecondVertex;
+        bool stat_fitSecondVertex_signal;
+        bool stat_fitSecondVertex_sidebandlow;
+        bool stat_fitSecondVertex_sidebandup;
         
         // common info
         int runNo;
@@ -219,10 +221,11 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_flag1_signal;
         NTuple::Item<int> m_n_trkD_signal;
         NTuple::Matrix<double> m_rawp4_Dtrk_signal;
-        NTuple::Matrix<double> m_p4_Dtrk_signal;
         NTuple::Matrix<double> m_p4_Dtrkold_signal;
+        NTuple::Matrix<double> m_p4_Dtrk_signal;
         NTuple::Item<int> m_n_shwD_signal;
         NTuple::Matrix<double> m_rawp4_Dshw_signal;
+        NTuple::Matrix<double> m_p4_Dshwold_signal;
         NTuple::Matrix<double> m_p4_Dshw_signal;
         NTuple::Array<double> m_p4_piplus_signal;
         NTuple::Array<double> m_p4_piminus_signal;
@@ -231,10 +234,10 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_charm_signal;
         NTuple::Item<double> m_chi2_vf_signal;
         NTuple::Item<double> m_chi2_kf_signal;
-        NTuple::Item<double> m_chi2_svf;
-        NTuple::Item<double> m_ctau_svf;
-        NTuple::Item<double> m_L_svf;
-        NTuple::Item<double> m_Lerr_svf;
+        NTuple::Item<double> m_chi2_svf_signal;
+        NTuple::Item<double> m_ctau_svf_signal;
+        NTuple::Item<double> m_L_svf_signal;
+        NTuple::Item<double> m_Lerr_svf_signal;
         NTuple::Item<int> m_idxmc_signal;
         NTuple::Array<int> m_pdgid_signal;
         NTuple::Array<int> m_motheridx_signal;
@@ -256,6 +259,7 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_matched_pi;
         NTuple::Item<int> m_matched_piplus;
         NTuple::Item<int> m_matched_piminus;
+        NTuple::Item<double> m_rm_Dpipi_signal;
 
         // Ntuple9 info
         NTuple::Tuple* m_tuple9;
@@ -264,10 +268,11 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_flag1_sidebandlow;
         NTuple::Item<int> m_n_trkD_sidebandlow;
         NTuple::Matrix<double> m_rawp4_Dtrk_sidebandlow;
-        NTuple::Matrix<double> m_p4_Dtrk_sidebandlow;
         NTuple::Matrix<double> m_p4_Dtrkold_sidebandlow;
+        NTuple::Matrix<double> m_p4_Dtrk_sidebandlow;
         NTuple::Item<int> m_n_shwD_sidebandlow;
         NTuple::Matrix<double> m_rawp4_Dshw_sidebandlow;
+        NTuple::Matrix<double> m_p4_Dshwold_sidebandlow;
         NTuple::Matrix<double> m_p4_Dshw_sidebandlow;
         NTuple::Array<double> m_p4_piplus_sidebandlow;
         NTuple::Array<double> m_p4_piminus_sidebandlow;
@@ -276,6 +281,10 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_charm_sidebandlow;
         NTuple::Item<double> m_chi2_vf_sidebandlow;
         NTuple::Item<double> m_chi2_kf_sidebandlow;
+        NTuple::Item<double> m_chi2_svf_sidebandlow;
+        NTuple::Item<double> m_ctau_svf_sidebandlow;
+        NTuple::Item<double> m_L_svf_sidebandlow;
+        NTuple::Item<double> m_Lerr_svf_sidebandlow;
         NTuple::Item<int> m_idxmc_sidebandlow;
         NTuple::Array<int> m_pdgid_sidebandlow;
         NTuple::Array<int> m_motheridx_sidebandlow;
@@ -292,6 +301,7 @@ class DDecayAlg : public Algorithm {
         NTuple::Matrix<double> m_p4_pi0_sidebandlow;
         NTuple::Item<double> m_chi2_pi0_save_sidebandlow;
         NTuple::Array<double> m_p4_pi0_save_sidebandlow;
+        NTuple::Item<double> m_rm_Dpipi_sidebandlow;
 
         // Ntuple10 info
         NTuple::Tuple* m_tuple10;
@@ -300,10 +310,11 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_flag1_sidebandup;
         NTuple::Item<int> m_n_trkD_sidebandup;
         NTuple::Matrix<double> m_rawp4_Dtrk_sidebandup;
-        NTuple::Matrix<double> m_p4_Dtrk_sidebandup;
         NTuple::Matrix<double> m_p4_Dtrkold_sidebandup;
+        NTuple::Matrix<double> m_p4_Dtrk_sidebandup;
         NTuple::Item<int> m_n_shwD_sidebandup;
         NTuple::Matrix<double> m_rawp4_Dshw_sidebandup;
+        NTuple::Matrix<double> m_p4_Dshwold_sidebandup;
         NTuple::Matrix<double> m_p4_Dshw_sidebandup;
         NTuple::Array<double> m_p4_piplus_sidebandup;
         NTuple::Array<double> m_p4_piminus_sidebandup;
@@ -312,6 +323,10 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_charm_sidebandup;
         NTuple::Item<double> m_chi2_vf_sidebandup;
         NTuple::Item<double> m_chi2_kf_sidebandup;
+        NTuple::Item<double> m_chi2_svf_sidebandup;
+        NTuple::Item<double> m_ctau_svf_sidebandup;
+        NTuple::Item<double> m_L_svf_sidebandup;
+        NTuple::Item<double> m_Lerr_svf_sidebandup;
         NTuple::Item<int> m_idxmc_sidebandup;
         NTuple::Array<int> m_pdgid_sidebandup;
         NTuple::Array<int> m_motheridx_sidebandup;
@@ -328,6 +343,7 @@ class DDecayAlg : public Algorithm {
         NTuple::Matrix<double> m_p4_pi0_sidebandup;
         NTuple::Item<double> m_chi2_pi0_save_sidebandup;
         NTuple::Array<double> m_p4_pi0_save_sidebandup;
+        NTuple::Item<double> m_rm_Dpipi_sidebandup;
 
         // functions
         void clearVariables();
@@ -345,7 +361,9 @@ class DDecayAlg : public Algorithm {
         double fitVertex(VWTrkPara &vwtrkpara, VertexParameter &birth_photon);
         double fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth);
         double fitKM_signal(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth);
-        bool fitSecondVertex(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus);
+        bool fitSecondVertex_signal(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus);
+        bool fitSecondVertex_sidebandlow(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus);
+        bool fitSecondVertex_sidebandup(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus);
         double fitKM_sidebandlow(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double sidebandlow_mean);
         double fitKM_sidebandup(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double sidebandup_mean);
         bool fitpi0(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);

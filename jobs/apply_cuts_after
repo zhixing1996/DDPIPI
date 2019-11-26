@@ -41,10 +41,20 @@ python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_p
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root 4.600 after
+signal MC: D2_2460
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4360/sigMC_D2_2460_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4360/sigMC_D2_2460_4360_after.root 4.358 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4420/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4420/sigMC_D2_2460_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4420/sigMC_D2_2460_4420_after.root 4.416 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4600/sigMC_D2_2460_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4600/sigMC_D2_2460_4600_after.root 4.600 after
 # inclusive MC: DD
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/*after*.root
-python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_after.root 4.358 after
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_after.root 4.358 after 
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_after.root 4.416 after
@@ -54,10 +64,83 @@ python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4
 # inclusive MC: qq
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/*after*.root
-python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_after.root 4.358 after
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_after.root 4.358 after 
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_after.root 4.416 after
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_after.root 4.600 after
+# inclusive MC: bhabha
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4360/incMC_bhabha_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4360/incMC_bhabha_4360_after.root 4.358 after 
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4420/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4420/incMC_bhabha_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4420/incMC_bhabha_4420_after.root 4.416 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4600/incMC_bhabha_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4600/incMC_bhabha_4600_after.root 4.600 after
+# inclusive MC: digamma
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4360/incMC_digamma_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4360/incMC_digamma_4360_after.root 4.358 after 
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4420/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4420/incMC_digamma_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4420/incMC_digamma_4420_after.root 4.416 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4600/incMC_digamma_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/digamma/4600/incMC_digamma_4600_after.root 4.600 after
+# inclusive MC: dimu
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4360/incMC_dimu_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4360/incMC_dimu_4360_after.root 4.358 after 
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4420/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4420/incMC_dimu_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4420/incMC_dimu_4420_after.root 4.416 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4600/incMC_dimu_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/dimu/4600/incMC_dimu_4600_after.root 4.600 after
+# inclusive MC: ditau
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4360/incMC_ditau_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4360/incMC_ditau_4360_after.root 4.358 after 
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4420/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4420/incMC_ditau_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4420/incMC_ditau_4420_after.root 4.416 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4600/incMC_ditau_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ditau/4600/incMC_ditau_4600_after.root 4.600 after
+# inclusive MC: gammaXYZ
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/gammaXYZ/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/gammaXYZ/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/gammaXYZ/4360/incMC_gammaXYZ_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/gammaXYZ/4360/incMC_gammaXYZ_4360_after.root 4.358 after 
+# inclusive MC: hadrons
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/incMC_hadrons_4360_after.root 4.358 after 
+# inclusive MC: ISR
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ISR/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ISR/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ISR/4360/incMC_ISR_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/ISR/4360/incMC_ISR_4360_after.root 4.358 after 
+# inclusive MC: LL
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/LL/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/LL/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/LL/4600/incMC_LL_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/LL/4600/incMC_LL_4600_after.root 4.600 after 
+# inclusive MC: twogamma
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4360/incMC_twogamma_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4360/incMC_twogamma_4360_after.root 4.358 after 
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4600/incMC_twogamma_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4600/incMC_twogamma_4600_after.root 4.600 after
+# background MC: DDPIPI
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4360/bkgMC_D_D_PI_PI_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4360/bkgMC_D_D_PI_PI_4360_after.root 4.358 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4420/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4420/bkgMC_D_D_PI_PI_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4420/bkgMC_D_D_PI_PI_4420_after.root 4.416 after
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600/bkgMC_D_D_PI_PI_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600/bkgMC_D_D_PI_PI_4600_after.root 4.600 after

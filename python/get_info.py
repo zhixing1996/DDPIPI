@@ -38,22 +38,33 @@ def save_missing(f_in, cms, t, MODE):
         m_mode = array('i', [0])
         m_charm = array('i', [0])
         m_rawm_D = array('d', [999.])
+        m_m_Dold = array('d', [999.])
+        m_rrawm_D = array('d', [999.])
         m_m_D = array('d', [999.])
         m_p_D = array('d', [999.])
         m_E_D = array('d', [999.])
         m_rm_D = array('d', [999.])
+        m_rm_D_old = array('d', [999.])
+        m_rm_Dmiss = array('d', [999.])
+        m_rm_DDmisspip = array('d', [999.])
+        m_rm_DDmisspim = array('d', [999.])
         m_rm_pipi = array('d', [999.])
         m_m_pipi = array('d', [999.])
         m_p_pipi = array('d', [999.])
         m_E_pipi = array('d', [999.])
         m_m_Dpi = array('d', [999.])
+        m_m_DDmiss = array('d', [999.])
         m_m_Dmisspi = array('d', [999.])
         m_rm_Dmisspi = array('d', [999.])
         m_rm_Dpi = array('d', [999.])
         m_m_Dpip = array('d', [999.])
         m_m_Dpim = array('d', [999.])
         m_m2_Kpip = array('d', [999.])
+        m_m_Kpip = array('d', [999.])
+        m_rm_Kpip = array('d', [999.])
         m_m2_Kpim = array('d', [999.])
+        m_m_Kpim = array('d', [999.])
+        m_rm_Kpim = array('d', [999.])
         m_m_Dpipi = array('d', [999.])
         m_rm_Dpipi = array('d', [999.])
         m_chi2_vf = array('d', [999.])
@@ -90,22 +101,33 @@ def save_missing(f_in, cms, t, MODE):
         t.Branch('mode', m_mode, 'm_mode/I')
         t.Branch('charm', m_charm, 'm_charm/I')
         t.Branch('rawm_D', m_rawm_D, 'm_rawm_D/D')
+        t.Branch('m_Dold', m_m_Dold, 'm_m_Dold/D')
+        t.Branch('rrawm_D', m_rrawm_D, 'm_rrawm_D/D')
         t.Branch('m_D', m_m_D, 'm_m_D/D')
         t.Branch('p_D', m_p_D, 'm_p_D/D')
         t.Branch('E_D', m_E_D, 'm_E_D/D')
         t.Branch('rm_D', m_rm_D, 'm_rm_D/D')
+        t.Branch('rm_D_old', m_rm_D_old, 'm_rm_D_old/D')
+        t.Branch('rm_Dmiss', m_rm_Dmiss, 'm_rm_Dmiss/D')
+        t.Branch('rm_DDmisspip', m_rm_DDmisspip, 'm_rm_DDmisspip/D')
+        t.Branch('rm_DDmisspim', m_rm_DDmisspim, 'm_rm_DDmisspim/D')
         t.Branch('rm_pipi', m_rm_pipi, 'm_rm_pipi/D')
         t.Branch('m_pipi', m_m_pipi, 'm_m_pipi/D')
         t.Branch('p_pipi', m_p_pipi, 'm_p_pipi/D')
         t.Branch('E_pipi', m_E_pipi, 'm_E_pipi/D')
         t.Branch('m_Dpi', m_m_Dpi, 'm_m_Dpi/D')
+        t.Branch('m_DDmiss', m_m_DDmiss, 'm_m_DDmiss/D')
         t.Branch('m_Dmisspi', m_m_Dmisspi, 'm_m_Dmisspi/D')
         t.Branch('rm_Dmisspi', m_rm_Dmisspi, 'm_rm_Dmisspi/D')
         t.Branch('rm_Dpi', m_rm_Dpi, 'm_rm_Dpi/D')
         t.Branch('m_Dpip', m_m_Dpip, 'm_m_Dpip/D')
         t.Branch('m_Dpim', m_m_Dpim, 'm_m_Dpim/D')
         t.Branch('m2_Kpip', m_m2_Kpip, 'm_m2_Kpip/D')
+        t.Branch('m_Kpip', m_m_Kpip, 'm_m_Kpip/D')
+        t.Branch('rm_Kpip', m_rm_Kpip, 'm_rm_Kpip/D')
         t.Branch('m2_Kpim', m_m2_Kpim, 'm_m2_Kpim/D')
+        t.Branch('m_Kpim', m_m_Kpim, 'm_m_Kpim/D')
+        t.Branch('rm_Kpim', m_rm_Kpim, 'm_rm_Kpim/D')
         t.Branch('m_Dpipi', m_m_Dpipi, 'm_m_Dpipi/D')
         t.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
         t.Branch('chi2_vf', m_chi2_vf, 'm_chi2_vf/D')
@@ -177,6 +199,16 @@ def save_missing(f_in, cms, t, MODE):
                 if t_in.rawp4_Dtrk[iTrk*6+4] == -1 and t_in.rawp4_Dtrk[iTrk*6+5] == 2:
                     ptrack_Kpim.SetPxPyPzE(t_in.rawp4_Dtrk[iTrk*6+0], t_in.rawp4_Dtrk[iTrk*6+1], t_in.rawp4_Dtrk[iTrk*6+2], t_in.rawp4_Dtrk[iTrk*6+3])
                     pKpim += ptrack_Kpim
+            for iShw in range(t_in.n_shwD):
+                pshower_raw = TLorentzVector(0, 0, 0, 0)
+                pshower_old = TLorentzVector(0, 0, 0, 0)
+                pshower = TLorentzVector(0, 0, 0, 0)
+                pshower_raw.SetPxPyPzE(t_in.rawp4_Dshw[iShw*4+0], t_in.rawp4_Dshw[iShw*4+1], t_in.rawp4_Dshw[iShw*4+2], t_in.rawp4_Dshw[iShw*4+3])
+                pshower_old.SetPxPyPzE(t_in.p4_Dshwold[iShw*4+0], t_in.p4_Dshwold[iShw*4+1], t_in.p4_Dshwold[iShw*4+2], t_in.p4_Dshwold[iShw*4+3])
+                pshower.SetPxPyPzE(t_in.p4_Dshw[iShw*4+0], t_in.p4_Dshw[iShw*4+1], t_in.p4_Dshw[iShw*4+2], t_in.p4_Dshw[iShw*4+3])
+                pD_raw += pshower_raw
+                pD_old += pshower_old
+                pD += pshower
             pPip = TLorentzVector(0, 0, 0, 0)
             pPim = TLorentzVector(0, 0, 0, 0)
             pDmiss = TLorentzVector(0, 0, 0, 0)
@@ -194,10 +226,14 @@ def save_missing(f_in, cms, t, MODE):
             m_mode[0] = t_in.mode
             m_charm[0] = t_in.charm
             m_rawm_D[0] = pD_raw.M()
+            m_m_Dold[0] = pD_old.M()
+            m_rrawm_D[0] = (cms-pD_raw).M()
             m_m_D[0] = pD.M()
             m_p_D[0] = pD.P()
             m_E_D[0] = pD.E()
-            m_rm_D[0] = (cms-pD_old).M()
+            m_rm_D[0] = (cms-pD).M()
+            m_rm_D_old[0] = (cms-pD_old).M()
+            m_rm_Dmiss[0] = (cms-pDmiss).M()
             m_rm_pipi[0] = (cms-pPip-pPim).M()
             m_m_pipi[0] = (pPip+pPim).M()
             m_p_pipi[0] = (rawpPip+rawpPim).P()
@@ -214,10 +250,17 @@ def save_missing(f_in, cms, t, MODE):
                 m_rm_Dmisspi[0] = (cms-pDmiss-pPim).M()
                 m_m_Dpi[0] = (pD_old+rawpPip).M()
                 m_rm_Dpi[0] = (cms-pD_old-rawpPip).M()
+            m_m_DDmiss[0] = (pDmiss+pD).M()
+            m_rm_DDmisspip[0] = (cms-pDmiss-pD-pPip).M()
+            m_rm_DDmisspim[0] = (cms-pDmiss-pD-pPim).M()
             m_m2_Kpip[0] = pKpip.M2()
+            m_m_Kpip[0] = pKpip.M()
+            m_rm_Kpip[0] = (cms-pKpip).M()
             m_m2_Kpim[0] = pKpim.M2()
+            m_m_Kpim[0] = pKpim.M()
+            m_rm_Kpim[0] = (cms-pKpim).M()
             m_m_Dpipi[0] = (pD+pPip+pPim).M()
-            m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
+            m_rm_Dpipi[0] = t_in.rm_Dpipi
             m_chi2_vf[0] = t_in.chi2_vf
             m_chi2_kf[0] = t_in.chi2_kf
             m_chi2_svf[0] = t_in.chi2_svf
@@ -270,6 +313,7 @@ def save_raw(f_in, cms, t, MODE):
         m_evtNo = array('i', [0])
         m_mode = array('i', [0])
         m_charm = array('i', [0])
+        m_rrawm_Dpipi = array('d', [999.])
         m_rawm_D = array('d', [999.])
         m_m_D = array('d', [999.])
         m_p_D = array('d', [999.])
@@ -310,6 +354,7 @@ def save_raw(f_in, cms, t, MODE):
         t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
         t.Branch('mode', m_mode, 'm_mode/I')
         t.Branch('charm', m_charm, 'm_charm/I')
+        t.Branch('rrawm_Dpipi', m_rrawm_Dpipi, 'm_rrawm_Dpipi/D')
         t.Branch('rawm_D', m_rawm_D, 'm_rawm_D/D')
         t.Branch('m_D', m_m_D, 'm_m_D/D')
         t.Branch('p_D', m_p_D, 'm_p_D/D')
@@ -378,27 +423,35 @@ def save_raw(f_in, cms, t, MODE):
                 if t_std.rawp4_Dtrk[iTrk*6+4] == -1 and t_std.rawp4_Dtrk[iTrk*6+5] == 2:
                     ptrack_Kpim.SetPxPyPzE(t_std.rawp4_Dtrk[iTrk*6+0], t_std.rawp4_Dtrk[iTrk*6+1], t_std.rawp4_Dtrk[iTrk*6+2], t_std.rawp4_Dtrk[iTrk*6+3])
                     pKpim += ptrack_Kpim
+            for iShw in range(t_std.n_shwD):
+                pshower_raw = TLorentzVector(0, 0, 0, 0)
+                pshower = TLorentzVector(0, 0, 0, 0)
+                pshower_raw.SetPxPyPzE(t_std.rawp4_Dshw[iShw*4+0], t_std.rawp4_Dshw[iShw*4+1], t_std.rawp4_Dshw[iShw*4+2], t_std.rawp4_Dshw[iShw*4+3])
+                pshower.SetPxPyPzE(t_std.p4_Dshw[iShw*4+0], t_std.p4_Dshw[iShw*4+1], t_std.p4_Dshw[iShw*4+2], t_std.p4_Dshw[iShw*4+3])
+                pD_raw += pshower_raw
+                pD += pshower
             pPip = TLorentzVector(0,0,0,0)
             pPim = TLorentzVector(0,0,0,0)
             t_otherTrk.GetEntry(ientry)
             t_otherShw.GetEntry(ientry)
             count = 0;
             for iTrk1 in range(t_otherTrk.n_othertrks):
-                if t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*7+4] != 1 or t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*7+4] == 0:
+                if t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*7+4] != 1:
                     continue
-                if t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*7+5] != 2 or t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*7+5] == 0:
+                if t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*7+5] != 2:
                     continue
                 pPip.SetPxPyPzE(t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*7+0], t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*7+1], t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*7+2], t_otherTrk.rawp4_otherMdcKaltrk[iTrk1*7+3])
                 for iTrk2 in range(t_otherTrk.n_othertrks):
-                    if t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+4] != -1 or t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+4] == 0:
+                    if t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+4] != -1:
                         continue
-                    if t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+5] != 2 or t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+5] == 0:
+                    if t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+5] != 2:
                         continue
                     pPim.SetPxPyPzE(t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+0], t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+1], t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+2], t_otherTrk.rawp4_otherMdcKaltrk[iTrk2*7+3])
                     m_runNo[0] = t_std.runNo
                     m_evtNo[0] = t_std.evtNo
                     m_mode[0] = t_std.mode
                     m_charm[0] = t_std.charm
+                    m_rrawm_Dpipi[0] = (cms-pD_raw-pPip-pPim).M()
                     m_rawm_D[0] = pD_raw.M()
                     m_m_D[0] = pD.M()
                     m_p_D[0] = pD.P()
@@ -461,6 +514,8 @@ def save_truth(f_in, cms, t, MODE):
         m_charm = array('i', [0])
         m_rawm_D = array('d', [999.])
         m_rm_D = array('d', [999.])
+        m_rm_D_old = array('d', [999.])
+        m_rm_Dmiss = array('d', [999.])
         m_m_D = array('d', [999.])
         m_rawm_D = array('d', [999.])
         m_p_D = array('d', [999.])
@@ -471,6 +526,7 @@ def save_truth(f_in, cms, t, MODE):
         m_rm_pipi = array('d', [999.])
         m_chi2_vf = array('d', [999.])
         m_chi2_kf = array('d', [999.])
+        m_m_DDmiss = array('d', [999.])
         m_m_Dmisspi = array('d', [999.])
         m_rm_Dmisspi = array('d', [999.])
         m_m_Dpi = array('d', [999.])
@@ -512,6 +568,8 @@ def save_truth(f_in, cms, t, MODE):
         t.Branch('charm', m_charm, 'm_charm/I')
         t.Branch('rawm_D', m_rawm_D, 'm_rawm_D/D')
         t.Branch('rm_D', m_rm_D, 'm_rm_D/D')
+        t.Branch('rm_D_old', m_rm_D_old, 'm_rm_D_old/D')
+        t.Branch('rm_Dmiss', m_rm_Dmiss, 'm_rm_Dmiss/D')
         t.Branch('m_D', m_m_D, 'm_m_D/D')
         t.Branch('rawm_D', m_rawm_D, 'm_rawm_D/D')
         t.Branch('p_D', m_p_D, 'm_p_D/D')
@@ -522,6 +580,7 @@ def save_truth(f_in, cms, t, MODE):
         t.Branch('rm_pipi', m_rm_pipi, 'm_rm_pipi/D')
         t.Branch('chi2_vf', m_chi2_vf, 'm_chi2_vf/D')
         t.Branch('chi2_kf', m_chi2_kf, 'm_chi2_kf/D')
+        t.Branch('m_DDmiss', m_m_DDmiss, 'm_m_DDmiss/D')
         t.Branch('m_Dmisspi', m_m_Dmisspi, 'm_m_Dmisspi/D')
         t.Branch('rm_Dmisspi', m_rm_Dmisspi, 'm_rm_Dmisspi/D')
         t.Branch('m_Dpi', m_m_Dpi, 'm_m_Dpi/D')
@@ -591,6 +650,16 @@ def save_truth(f_in, cms, t, MODE):
                 if t_in.rawp4_Dtrk[iTrk*6+4] == -1 and t_in.rawp4_Dtrk[iTrk*6+5] == 2:
                     ptrack_Kpim.SetPxPyPzE(t_in.rawp4_Dtrk[iTrk*6+0], t_in.rawp4_Dtrk[iTrk*6+1], t_in.rawp4_Dtrk[iTrk*6+2], t_in.rawp4_Dtrk[iTrk*6+3])
                     pKpim += ptrack_Kpim
+            for iShw in range(t_in.n_shwD):
+                pshower_raw = TLorentzVector(0, 0, 0, 0)
+                pshower_old = TLorentzVector(0, 0, 0, 0)
+                pshower = TLorentzVector(0, 0, 0, 0)
+                pshower_raw.SetPxPyPzE(t_in.rawp4_Dshw[iShw*4+0], t_in.rawp4_Dshw[iShw*4+1], t_in.rawp4_Dshw[iShw*4+2], t_in.rawp4_Dshw[iShw*4+3])
+                pshower_old.SetPxPyPzE(t_in.p4_Dshwold[iShw*4+0], t_in.p4_Dshwold[iShw*4+1], t_in.p4_Dshwold[iShw*4+2], t_in.p4_Dshwold[iShw*4+3])
+                pshower.SetPxPyPzE(t_in.p4_Dshw[iShw*4+0], t_in.p4_Dshw[iShw*4+1], t_in.p4_Dshw[iShw*4+2], t_in.p4_Dshw[iShw*4+3])
+                pD_raw += pshower_raw
+                pD_old += pshower_old
+                pD += pshower
             pPip = TLorentzVector(0,0,0,0)
             pPim = TLorentzVector(0,0,0,0)
             pDmiss = TLorentzVector(0,0,0,0)
@@ -608,7 +677,9 @@ def save_truth(f_in, cms, t, MODE):
             m_mode[0] = t_in.mode
             m_charm[0] = t_in.charm
             m_p_D = pD.P()
-            m_rm_D[0] = (cms-pD_old).M()
+            m_rm_D[0] = (cms-pD).M()
+            m_rm_D_old[0] = (cms-pD_old).M()
+            m_rm_Dmiss[0] = (cms-pDmiss).M()
             m_m_D = pD.M()
             m_rawm_D = pD_raw.M()
             m_E_D = pD.E()
@@ -621,7 +692,7 @@ def save_truth(f_in, cms, t, MODE):
             m_m2_Kpip[0] = pKpip.M2()
             m_m2_Kpim[0] = pKpim.M2()
             m_m_Dpipi[0] = (pD+pPip+pPim).M()
-            m_rm_Dpipi[0] = (cms-pD-pPip-pPim).M()
+            m_rm_Dpipi[0] = t_in.rm_Dpipi
             m_m_Dpim[0] = (pD+pPim).M()
             m_m_Dpip[0] = (pD+pPim).M()
             if t_in.charm > 0:
@@ -635,6 +706,7 @@ def save_truth(f_in, cms, t, MODE):
                 m_m_Dpi[0] = (pD_old+rawpPip).M()
                 m_rm_Dpi[0] = (cms-pD_old-rawpPip).M()
             m_indexmc[0] = t_in.indexmc
+            m_m_DDmiss[0] = (pDmiss+pD).M()
             m_n_othershws[0] = t_in.n_othershws
             m_n_othertrks[0] = t_in.n_othertrks
             m_charge_left[0] = t_in.charge_left

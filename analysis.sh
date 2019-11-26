@@ -233,14 +233,16 @@ case $option in
 
     0.3.5) echo "Draw figures -- studying M(pipi) before background study..."
            cd python
-           python plot_m_pipi.py 4360
-           python plot_m_pipi.py 4420
-           python plot_m_pipi.py 4600
+           python plot_m_pipi.py 4360 before
+           python plot_m_pipi.py 4420 before
+           python plot_m_pipi.py 4600 before
            ;;
 
     0.3.6) echo "Fit distributions -- fitting to M(pipi)..."
-           cd cxx
-           root -l -q fit_mKS_4420.cxx
+           cd python
+           python fit_m_pipi.py 4360
+           python fit_m_pipi.py 4420
+           python fit_m_pipi.py 4600
            ;;
 
     0.3.7) echo "Draw figures -- studying ctau of pipi before background study..."
@@ -258,8 +260,10 @@ case $option in
             ;;
 
     0.3.9) echo "Fit distributions -- fitting to M(Dpi0)..."
-           cd cxx
-           root -l -q fit_m_Dpi0_4420.cxx
+           cd python
+           python fit_m_Dpi0.py 4360
+           python fit_m_Dpi0.py 4420
+           python fit_m_Dpi0.py 4600
            ;;
 
     0.3.10) echo "Calculate numbers -- calculating efficiency and significance of cut2..."
@@ -281,7 +285,14 @@ case $option in
             python plot_rm_pipi.py 4600 after
             ;;
 
-    0.3.13) echo "Download software -- downloading topology..."
+    0.3.13) echo "Draw figures -- studying M(pipi) after background study..."
+            cd python
+            python plot_m_pipi.py 4360 after
+            python plot_m_pipi.py 4420 after
+            python plot_m_pipi.py 4600 after
+            ;;
+
+    0.3.14) echo "Download software -- downloading topology..."
             echo "Logout the SL5 environment to download topology v1.9.5!"
             mkdir -p topology
             cd topology
@@ -290,14 +301,14 @@ case $option in
             echo "Please login SL5 and set up BOSS6.6.4.p01 environment!"
             ;;
 
-    0.3.14) echo "Install software -- installinging topology..."
+    0.3.15) echo "Install software -- installinging topology..."
             echo "Login SL5 and set up BOSS6.6.4.p01 environment!"
             cd topology/v1.9.5
             ./compile.sh
             echo "Please check how to set up topoana variable environment in its README.md file!"
             ;;
 
-    0.3.15) echo "Topo analysis -- applying topology analysis..."
+    0.3.16) echo "Topo analysis -- applying topology analysis..."
             echo "Must be executed in bash shell mode and set up topoana environment!"
             mkdir -p scripts/ana/topo
             cd scripts/ana/topo

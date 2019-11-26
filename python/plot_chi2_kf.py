@@ -13,6 +13,7 @@ from ROOT import TFile, TH1F, TLegend
 import sys, os
 import logging
 from math import *
+from tools import *
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %(message)s')
 gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
@@ -25,14 +26,14 @@ def set_legend(legend, h1, h2, title):
     legend.SetFillColor(0)
     legend.SetLineColor(0)
 
-def chi2_KF_fill(t1, t2, entries1, entries2, h1, h2, width):
+def chi2_KF_fill(t1, t2, entries1, entries2, h1, h2, ecms):
     for ientry1 in xrange(entries1):
         t1.GetEntry(ientry1)
-        if fabs(t1.m_rawm_D - 1.86965) < width/2.:
+        if fabs(t1.m_rawm_D - 1.86965) < width(ecms)/2. and fabs(t1.m_rm_Dpipi - 1.86965) < window(ecms)/2.:
             h1.Fill(t1.m_chi2_kf)
     for ientry2 in xrange(entries2):
         t2.GetEntry(ientry2)
-        if fabs(t2.m_rawm_D - 1.86965) < width/2.:
+        if fabs(t2.m_rawm_D - 1.86965) < width(ecms)/2. and fabs(t2.m_rm_Dpipi - 1.86965) < window(ecms)/2.:
             h2.Fill(t2.m_chi2_kf)
 
 def set_histo_style(h1, h2, xtitle, ytitle, ymax):
@@ -63,7 +64,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, sigMC_path, leg_title, ecms, ymax, width):
+def plot(data_path, sigMC_path, leg_title, ecms, ymax):
     try:
         f_data = TFile(data_path)
         f_sigMC = TFile(sigMC_path)
@@ -88,7 +89,7 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax, width):
     h_sigMC = TH1F('sigMC', 'sigMC', xbins, xmin, xmax)
 
     set_histo_style(h_data, h_sigMC, xtitle, ytitle, ymax)
-    chi2_KF_fill(t_data, t_sigMC, entries_data, entries_sigMC, h_data, h_sigMC, width)
+    chi2_KF_fill(t_data, t_sigMC, entries_data, entries_sigMC, h_data, h_sigMC, ecms)
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
@@ -112,9 +113,8 @@ if __name__ == '__main__':
         sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
         leg_title = '(b)'
         ecms = 4360
-        ymax = 2000
-        width = 0.02063
-        plot(data_path, sigMC_path, leg_title, ecms, ymax, width)
+        ymax = 250
+        plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
     if int(energy) == 4420:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
@@ -122,14 +122,12 @@ if __name__ == '__main__':
         leg_title = '(b)'
         ecms = 4420
         ymax = 700
-        width = 0.02063
-        plot(data_path, sigMC_path, leg_title, ecms, ymax, width)
+        plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
     if int(energy) == 4600:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
         sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
         leg_title = '(b)'
         ecms = 4600
-        ymax = 2000
-        width = 0.02063
-        plot(data_path, sigMC_path, leg_title, ecms, ymax, width)
+        ymax = 400
+        plot(data_path, sigMC_path, leg_title, ecms, ymax)

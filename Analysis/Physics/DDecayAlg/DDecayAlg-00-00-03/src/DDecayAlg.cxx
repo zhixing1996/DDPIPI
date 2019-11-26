@@ -201,10 +201,11 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple8->addItem("flag1", m_flag1_signal);
             status = m_tuple8->addItem("n_trkD", m_n_trkD_signal, 0, 5); // number of members should locates in 0~5
             status = m_tuple8->addIndexedItem("rawp4_Dtrk", m_n_trkD_signal, 6, m_rawp4_Dtrk_signal); // four members array
-            status = m_tuple8->addIndexedItem("p4_Dtrk", m_n_trkD_signal, 4, m_p4_Dtrk_signal);
             status = m_tuple8->addIndexedItem("p4_Dtrkold", m_n_trkD_signal, 4, m_p4_Dtrkold_signal);
+            status = m_tuple8->addIndexedItem("p4_Dtrk", m_n_trkD_signal, 4, m_p4_Dtrk_signal);
             status = m_tuple8->addItem("n_shwD", m_n_shwD_signal, 0, 2); 
             status = m_tuple8->addIndexedItem("rawp4_Dshw", m_n_shwD_signal, 4, m_rawp4_Dshw_signal);
+            status = m_tuple8->addIndexedItem("p4_Dshwold", m_n_shwD_signal, 4, m_p4_Dshwold_signal);
             status = m_tuple8->addIndexedItem("p4_Dshw", m_n_shwD_signal, 4, m_p4_Dshw_signal);
             status = m_tuple8->addItem("p4_piplus", 4, m_p4_piplus_signal);
             status = m_tuple8->addItem("p4_piminus", 4, m_p4_piminus_signal);
@@ -213,10 +214,10 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple8->addItem("charm", m_charm_signal);
             status = m_tuple8->addItem("chi2_vf", m_chi2_vf_signal);
             status = m_tuple8->addItem("chi2_kf", m_chi2_kf_signal);
-            status = m_tuple8->addItem("chi2_svf", m_chi2_svf);
-            status = m_tuple8->addItem("L_svf", m_L_svf);
-            status = m_tuple8->addItem("Lerr_svf", m_Lerr_svf);
-            status = m_tuple8->addItem("ctau_svf", m_ctau_svf);
+            status = m_tuple8->addItem("chi2_svf", m_chi2_svf_signal);
+            status = m_tuple8->addItem("L_svf", m_L_svf_signal);
+            status = m_tuple8->addItem("Lerr_svf", m_Lerr_svf_signal);
+            status = m_tuple8->addItem("ctau_svf", m_ctau_svf_signal);
             status = m_tuple8->addItem("indexmc", m_idxmc_signal, 0, 100);
             status = m_tuple8->addIndexedItem("pdgid", m_idxmc_signal, m_pdgid_signal);
             status = m_tuple8->addIndexedItem("motheridx", m_idxmc_signal, m_motheridx_signal);
@@ -237,6 +238,7 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple8->addItem("matched_pi", m_matched_pi);
             status = m_tuple8->addItem("matched_piplus", m_matched_piplus);
             status = m_tuple8->addItem("matched_piminus", m_matched_piminus);
+            status = m_tuple8->addItem("rm_Dpipi", m_rm_Dpipi_signal);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple8) << endmsg;
@@ -254,10 +256,11 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple9->addItem("flag1", m_flag1_sidebandlow);
             status = m_tuple9->addItem("n_trkD", m_n_trkD_sidebandlow, 0, 5); // number of members should locates in 0~5
             status = m_tuple9->addIndexedItem("rawp4_Dtrk", m_n_trkD_sidebandlow, 6, m_rawp4_Dtrk_sidebandlow); // four members array
-            status = m_tuple9->addIndexedItem("p4_Dtrk", m_n_trkD_sidebandlow, 4, m_p4_Dtrk_sidebandlow);
             status = m_tuple9->addIndexedItem("p4_Dtrkold", m_n_trkD_sidebandlow, 4, m_p4_Dtrkold_sidebandlow);
+            status = m_tuple9->addIndexedItem("p4_Dtrk", m_n_trkD_sidebandlow, 4, m_p4_Dtrk_sidebandlow);
             status = m_tuple9->addItem("n_shwD", m_n_shwD_sidebandlow, 0, 2); 
             status = m_tuple9->addIndexedItem("rawp4_Dshw", m_n_shwD_sidebandlow, 4, m_rawp4_Dshw_sidebandlow);
+            status = m_tuple9->addIndexedItem("p4_Dshwold", m_n_shwD_sidebandlow, 4, m_p4_Dshwold_sidebandlow);
             status = m_tuple9->addIndexedItem("p4_Dshw", m_n_shwD_sidebandlow, 4, m_p4_Dshw_sidebandlow);
             status = m_tuple9->addItem("p4_piplus", 4, m_p4_piplus_sidebandlow);
             status = m_tuple9->addItem("p4_piminus", 4, m_p4_piminus_sidebandlow);
@@ -266,6 +269,10 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple9->addItem("charm", m_charm_sidebandlow);
             status = m_tuple9->addItem("chi2_vf", m_chi2_vf_sidebandlow);
             status = m_tuple9->addItem("chi2_kf", m_chi2_kf_sidebandlow);
+            status = m_tuple9->addItem("chi2_svf", m_chi2_svf_sidebandlow);
+            status = m_tuple9->addItem("L_svf", m_L_svf_sidebandlow);
+            status = m_tuple9->addItem("Lerr_svf", m_Lerr_svf_sidebandlow);
+            status = m_tuple9->addItem("ctau_svf", m_ctau_svf_sidebandlow);
             status = m_tuple9->addItem("indexmc", m_idxmc_sidebandlow, 0, 100);
             status = m_tuple9->addIndexedItem("pdgid", m_idxmc_sidebandlow, m_pdgid_sidebandlow);
             status = m_tuple9->addIndexedItem("motheridx", m_idxmc_sidebandlow, m_motheridx_sidebandlow);
@@ -282,6 +289,7 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple9->addIndexedItem("p4_pi0", m_n_pi0_sidebandlow, 4, m_p4_pi0_sidebandlow);
             status = m_tuple9->addItem("chi2_pi0_save", m_chi2_pi0_save_sidebandlow);
             status = m_tuple9->addItem("p4_pi0_save", 4, m_p4_pi0_save_sidebandlow);
+            status = m_tuple9->addItem("rm_Dpipi", m_rm_Dpipi_sidebandlow);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple9) << endmsg;
@@ -299,10 +307,11 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple10->addItem("flag1", m_flag1_sidebandup);
             status = m_tuple10->addItem("n_trkD", m_n_trkD_sidebandup, 0, 5); // number of members should locates in 0~5
             status = m_tuple10->addIndexedItem("rawp4_Dtrk", m_n_trkD_sidebandup, 6, m_rawp4_Dtrk_sidebandup); // four members array
-            status = m_tuple10->addIndexedItem("p4_Dtrk", m_n_trkD_sidebandup, 4, m_p4_Dtrk_sidebandup);
             status = m_tuple10->addIndexedItem("p4_Dtrkold", m_n_trkD_sidebandup, 4, m_p4_Dtrkold_sidebandup);
+            status = m_tuple10->addIndexedItem("p4_Dtrk", m_n_trkD_sidebandup, 4, m_p4_Dtrk_sidebandup);
             status = m_tuple10->addItem("n_shwD", m_n_shwD_sidebandup, 0, 2); 
             status = m_tuple10->addIndexedItem("rawp4_Dshw", m_n_shwD_sidebandup, 4, m_rawp4_Dshw_sidebandup);
+            status = m_tuple10->addIndexedItem("p4_Dshwold", m_n_shwD_sidebandup, 4, m_p4_Dshwold_sidebandup);
             status = m_tuple10->addIndexedItem("p4_Dshw", m_n_shwD_sidebandup, 4, m_p4_Dshw_sidebandup);
             status = m_tuple10->addItem("p4_piplus", 4, m_p4_piplus_sidebandup);
             status = m_tuple10->addItem("p4_piminus", 4, m_p4_piminus_sidebandup);
@@ -311,6 +320,10 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple10->addItem("charm", m_charm_sidebandup);
             status = m_tuple10->addItem("chi2_vf", m_chi2_vf_sidebandup);
             status = m_tuple10->addItem("chi2_kf", m_chi2_kf_sidebandup);
+            status = m_tuple10->addItem("chi2_svf", m_chi2_svf_sidebandup);
+            status = m_tuple10->addItem("L_svf", m_L_svf_sidebandup);
+            status = m_tuple10->addItem("Lerr_svf", m_Lerr_svf_sidebandup);
+            status = m_tuple10->addItem("ctau_svf", m_ctau_svf_sidebandup);
             status = m_tuple10->addItem("indexmc", m_idxmc_sidebandup, 0, 100);
             status = m_tuple10->addIndexedItem("pdgid", m_idxmc_sidebandup, m_pdgid_sidebandup);
             status = m_tuple10->addIndexedItem("motheridx", m_idxmc_sidebandup, m_motheridx_sidebandup);
@@ -327,6 +340,7 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple10->addIndexedItem("p4_pi0", m_n_pi0_sidebandup, 4, m_p4_pi0_sidebandup);
             status = m_tuple10->addItem("chi2_pi0_save", m_chi2_pi0_save_sidebandup);
             status = m_tuple10->addItem("p4_pi0_save", 4, m_p4_pi0_save_sidebandup);
+            status = m_tuple10->addItem("rm_Dpipi", m_rm_Dpipi_sidebandup);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple10) << endmsg;
@@ -750,13 +764,13 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         // very broad mass window requirement
         double DELTAM = 0;
         if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
-            DELTAM = 0.0179/2.;
+            DELTAM = 0.01554/2.;
         }
         if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
-            DELTAM = 0.02063/2.;
+            DELTAM = 0.019166/2.;
         }
         if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
-            DELTAM = 0.02063/2.;
+            DELTAM = 0.021238/2.;
         }
         if (fabs((*dtag_iter)->mass() - mDcand) > 0.07) {
             continue;
@@ -878,6 +892,7 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
 
         // record variables
         if (fabs(chi2_vf) < 100 && fabs(chi2_kf) < 999 && stat_saveOthertrks && stat_saveOthershws) {
+        // if (fabs(chi2_vf) < 100 && fabs(chi2_kf) < 999) {
             n_count++;
             recordVariables();
         }
@@ -907,11 +922,11 @@ double DDecayAlg::fitVertex(VWTrkPara &vwtrkpara, VertexParameter &birth) {
     return vf_chi2;
 }
 
-bool DDecayAlg::fitSecondVertex(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus) {
-    m_chi2_svf = 999.;
-    m_L_svf = 999.;
-    m_Lerr_svf = 99.;
-    m_ctau_svf = 999.;
+bool DDecayAlg::fitSecondVertex_signal(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus) {
+    m_chi2_svf_signal = 999.;
+    m_L_svf_signal = 999.;
+    m_Lerr_svf_signal = 99.;
+    m_ctau_svf_signal = 999.;
     Hep3Vector ip(0, 0, 0);
     HepSymMatrix ipEx(3, 0);
     IVertexDbSvc* vtxsvc;
@@ -957,10 +972,124 @@ bool DDecayAlg::fitSecondVertex(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpar
     svtxfit->AddTrack(0, vtxfit->wVirtualTrack(0));
     svtxfit->setVpar(vtxfit->vpar(0));
     if (!svtxfit->Fit()) return false;
-    m_chi2_svf = svtxfit->chisq();
-    m_ctau_svf = svtxfit->ctau();
-    m_L_svf = svtxfit->decayLength();
-    m_Lerr_svf = svtxfit->decayLengthError();
+    m_chi2_svf_signal = svtxfit->chisq();
+    m_ctau_svf_signal = svtxfit->ctau();
+    m_L_svf_signal = svtxfit->decayLength();
+    m_Lerr_svf_signal = svtxfit->decayLengthError();
+    return true;
+}
+
+bool DDecayAlg::fitSecondVertex_sidebandlow(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus) {
+    m_chi2_svf_sidebandlow = 999.;
+    m_L_svf_sidebandlow = 999.;
+    m_Lerr_svf_sidebandlow = 99.;
+    m_ctau_svf_sidebandlow = 999.;
+    Hep3Vector ip(0, 0, 0);
+    HepSymMatrix ipEx(3, 0);
+    IVertexDbSvc* vtxsvc;
+    Gaudi::svcLocator()->service("VertexDbSvc", vtxsvc);
+    if (vtxsvc->isVertexValid()) {
+        double* dbv = vtxsvc->PrimaryVertex();
+        double* vv = vtxsvc->SigmaPrimaryVertex();
+        ip.setX(dbv[0]);
+        ip.setY(dbv[1]);
+        ip.setZ(dbv[2]);
+        ipEx[0][0] = vv[0] * vv[0];
+        ipEx[1][1] = vv[1] * vv[1];
+        ipEx[2][2] = vv[2] * vv[2];
+    }
+    else false;
+    VertexParameter bs;
+    bs.setVx(ip);
+    bs.setEvx(ipEx);
+    HepPoint3D vx(0., 0., 0.);
+    HepSymMatrix Evx(3, 0);
+    double bx = 1E+6;
+    double by = 1E+6;
+    double bz = 1E+6;
+    Evx[0][0] = bx * bx;
+    Evx[1][1] = by * by;
+    Evx[2][2] = bz * bz;
+    // vertex fit
+    VertexParameter vxpar;
+    vxpar.setVx(vx);
+    vxpar.setEvx(Evx);
+    VertexFit *vtxfit = VertexFit::instance();
+    vtxfit->init();
+    vtxfit->AddTrack(0, vwtrkpara_piplus[n_piplus]);
+    vtxfit->AddTrack(1, vwtrkpara_piminus[n_piminus]);
+    vtxfit->AddVertex(0, vxpar, 0, 1);
+    if (!(vtxfit->Fit(0))) return false;
+    vtxfit->Swim(0);
+    vtxfit->BuildVirtualParticle(0);
+    // second vertex fit
+    SecondVertexFit *svtxfit = SecondVertexFit::instance();
+    svtxfit->init();
+    svtxfit->setPrimaryVertex(bs);
+    svtxfit->AddTrack(0, vtxfit->wVirtualTrack(0));
+    svtxfit->setVpar(vtxfit->vpar(0));
+    if (!svtxfit->Fit()) return false;
+    m_chi2_svf_sidebandlow = svtxfit->chisq();
+    m_ctau_svf_sidebandlow = svtxfit->ctau();
+    m_L_svf_sidebandlow = svtxfit->decayLength();
+    m_Lerr_svf_sidebandlow = svtxfit->decayLengthError();
+    return true;
+}
+
+bool DDecayAlg::fitSecondVertex_sidebandup(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus) {
+    m_chi2_svf_sidebandup = 999.;
+    m_L_svf_sidebandup = 999.;
+    m_Lerr_svf_sidebandup = 99.;
+    m_ctau_svf_sidebandup = 999.;
+    Hep3Vector ip(0, 0, 0);
+    HepSymMatrix ipEx(3, 0);
+    IVertexDbSvc* vtxsvc;
+    Gaudi::svcLocator()->service("VertexDbSvc", vtxsvc);
+    if (vtxsvc->isVertexValid()) {
+        double* dbv = vtxsvc->PrimaryVertex();
+        double* vv = vtxsvc->SigmaPrimaryVertex();
+        ip.setX(dbv[0]);
+        ip.setY(dbv[1]);
+        ip.setZ(dbv[2]);
+        ipEx[0][0] = vv[0] * vv[0];
+        ipEx[1][1] = vv[1] * vv[1];
+        ipEx[2][2] = vv[2] * vv[2];
+    }
+    else false;
+    VertexParameter bs;
+    bs.setVx(ip);
+    bs.setEvx(ipEx);
+    HepPoint3D vx(0., 0., 0.);
+    HepSymMatrix Evx(3, 0);
+    double bx = 1E+6;
+    double by = 1E+6;
+    double bz = 1E+6;
+    Evx[0][0] = bx * bx;
+    Evx[1][1] = by * by;
+    Evx[2][2] = bz * bz;
+    // vertex fit
+    VertexParameter vxpar;
+    vxpar.setVx(vx);
+    vxpar.setEvx(Evx);
+    VertexFit *vtxfit = VertexFit::instance();
+    vtxfit->init();
+    vtxfit->AddTrack(0, vwtrkpara_piplus[n_piplus]);
+    vtxfit->AddTrack(1, vwtrkpara_piminus[n_piminus]);
+    vtxfit->AddVertex(0, vxpar, 0, 1);
+    if (!(vtxfit->Fit(0))) return false;
+    vtxfit->Swim(0);
+    vtxfit->BuildVirtualParticle(0);
+    // second vertex fit
+    SecondVertexFit *svtxfit = SecondVertexFit::instance();
+    svtxfit->init();
+    svtxfit->setPrimaryVertex(bs);
+    svtxfit->AddTrack(0, vtxfit->wVirtualTrack(0));
+    svtxfit->setVpar(vtxfit->vpar(0));
+    if (!svtxfit->Fit()) return false;
+    m_chi2_svf_sidebandup = svtxfit->chisq();
+    m_ctau_svf_sidebandup = svtxfit->ctau();
+    m_L_svf_sidebandup = svtxfit->decayLength();
+    m_Lerr_svf_sidebandup = svtxfit->decayLengthError();
     return true;
 }
 
@@ -1340,30 +1469,48 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
             double sidebandup_up = 0;
             if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
                 cms = 4.358;
-                signal_low = 1.8590;
-                signal_up = 1.8803;
-                sidebandup_low = signal_up + (signal_up - signal_low);
-                sidebandup_up = sidebandup_low + (signal_up - signal_low);
-                sidebandlow_up = signal_low - (signal_up - signal_low);
-                sidebandlow_low = sidebandlow_up - (signal_up - signal_low);
+                // signal_low = 1.85931666667;
+                // signal_up = 1.87998333333;
+                // sidebandup_low = signal_up + (signal_up - signal_low);
+                // sidebandup_up = sidebandup_low + (signal_up - signal_low);
+                // sidebandlow_up = signal_low - (signal_up - signal_low);
+                // sidebandlow_low = sidebandlow_up - (signal_up - signal_low);
+                signal_low = 1.6;
+                signal_up = 2.0;
+                sidebandup_low = 1.6;
+                sidebandup_up = 2.0;
+                sidebandlow_up = 1.6;
+                sidebandlow_low = 2.0;
             }
             if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
                 cms = 4.416;
-                signal_low = 1.8593;
-                signal_up = 1.8800;
-                sidebandup_low = signal_up + (signal_up - signal_low);
-                sidebandup_up = sidebandup_low + (signal_up - signal_low);
-                sidebandlow_up = signal_low - (signal_up - signal_low);
-                sidebandlow_low = sidebandlow_up - (signal_up - signal_low);
+                // signal_low = 1.86231666667;
+                // signal_up = 1.87698333333;
+                // sidebandup_low = signal_up + (signal_up - signal_low);
+                // sidebandup_up = sidebandup_low + (signal_up - signal_low);
+                // sidebandlow_up = signal_low - (signal_up - signal_low);
+                // sidebandlow_low = sidebandlow_up - (signal_up - signal_low);
+                signal_low = 1.6;
+                signal_up = 2.0;
+                sidebandup_low = 1.6;
+                sidebandup_up = 2.0;
+                sidebandlow_up = 1.6;
+                sidebandlow_low = 2.0;
             }
             if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
                 cms = 4.600;
-                signal_low = 1.8548;
-                signal_up = 1.8845;
-                sidebandup_low = signal_up + (signal_up - signal_low);
-                sidebandup_up = sidebandup_low + (signal_up - signal_low);
-                sidebandlow_up = signal_low - (signal_up - signal_low);
-                sidebandlow_low = sidebandlow_up - (signal_up - signal_low);
+                // signal_low = 1.86065;
+                // signal_up = 1.87865;
+                // sidebandup_low = signal_up + (signal_up - signal_low);
+                // sidebandup_up = sidebandup_low + (signal_up - signal_low);
+                // sidebandlow_up = signal_low - (signal_up - signal_low);
+                // sidebandlow_low = sidebandlow_up - (signal_up - signal_low);
+                signal_low = 1.6;
+                signal_up = 2.0;
+                sidebandup_low = 1.6;
+                sidebandup_up = 2.0;
+                sidebandlow_up = 1.6;
+                sidebandlow_low = 2.0;
             }
             if (m_debug) {
                 std::cout << "Signal region, Sidebandup region, Sidebandlow_region..." << std::endl;
@@ -1374,21 +1521,28 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
             chi2_kf_signal = -999;
             m_chi2_kf_signal = -999;
             if (rm_Dpipi > signal_low && rm_Dpipi < signal_up) {
+                m_rm_Dpipi_signal = rm_Dpipi;
                 chi2_kf_signal = fitKM_signal(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
-                stat_fitSecondVertex = false;
-                stat_fitSecondVertex = fitSecondVertex(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
+                stat_fitSecondVertex_signal = false;
+                stat_fitSecondVertex_signal = fitSecondVertex_signal(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
             }
             chi2_kf_sidebandlow = -999;
             m_chi2_kf_sidebandlow = -999;
             if (rm_Dpipi > sidebandlow_low && rm_Dpipi < sidebandlow_up) {
+                m_rm_Dpipi_sidebandlow = rm_Dpipi;
                 double sidebandlow_mean = (sidebandlow_low + sidebandlow_up)/2;
                 chi2_kf_sidebandlow = fitKM_sidebandlow(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth , sidebandlow_mean);
+                stat_fitSecondVertex_sidebandlow = false;
+                stat_fitSecondVertex_sidebandlow = fitSecondVertex_sidebandlow(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
             }
             chi2_kf_sidebandup = -999;
             m_chi2_kf_sidebandup = -999;
             if (rm_Dpipi > sidebandup_low && rm_Dpipi < sidebandup_up) {
+                m_rm_Dpipi_sidebandup = rm_Dpipi;
                 double sidebandup_mean = (sidebandup_low + sidebandup_up)/2;
                 chi2_kf_sidebandup = fitKM_sidebandup(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, sidebandup_mean);
+                stat_fitSecondVertex_sidebandup = false;
+                stat_fitSecondVertex_sidebandup = fitSecondVertex_sidebandup(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
             }
             if (m_debug) std::cout << "Start recording region info if passed the requirement" << std::endl;
             if (fabs(chi2_kf_signal) < 999.) {
@@ -1407,7 +1561,9 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                         m_rawp4_Dtrk_signal[k][4] = KalTrk->charge();
                         m_rawp4_Dtrk_signal[k][5] = 2;
                     }
-                    for (int l = 0; l < 4; l++) m_p4_Dtrkold_signal[k][l] = m_p4_Dtrk[k][l];
+                    for (int l = 0; l < 4; l++) {
+                        m_p4_Dtrkold_signal[k][l] = m_p4_Dtrk[k][l];
+                    }
                 }
                 SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
                 for(int k = 0; k < Dshws.size(); k++) {
@@ -1417,6 +1573,9 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     Gm_Mom.setMag(gTrk->energy());
                     HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
                     for (int l = 0; l < 4; l++) m_rawp4_Dshw_signal[k][l] = Gm_p4[l];
+                    for (int l = 0; l < 4; l++) {
+                        m_p4_Dshwold_signal[k][l] = m_p4_Dshw[k][l];
+                    }
                 }
                 charge_left_signal = 0;
                 m_charge_left_signal = 0;
@@ -1459,9 +1618,13 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     }
                 }
                 RecMdcKalTrack *Piplus = othertracks[i]->mdcKalTrack();
-                for (int k = 0; k < 4; k++) m_rawp4_tagPiplus_signal[k] = Piplus->p4(mass[2])[k];
+                for (int k = 0; k < 4; k++) {
+                    m_rawp4_tagPiplus_signal[k] = Piplus->p4(mass[2])[k];
+                }
                 RecMdcKalTrack *Piminus = othertracks[j]->mdcKalTrack();
-                for (int k = 0; k < 4; k++) m_rawp4_tagPiminus_signal[k] = Piminus->p4(mass[2])[k];
+                for (int k = 0; k < 4; k++) {
+                    m_rawp4_tagPiminus_signal[k] = Piminus->p4(mass[2])[k];
+                }
                 SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
                 // to find the good photons in the othershowers list
                 VWTrkPara vwtrkpara_photons_signal;
@@ -1499,7 +1662,9 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                         m_rawp4_Dtrk_sidebandlow[k][4] = KalTrk->charge();
                         m_rawp4_Dtrk_sidebandlow[k][5] = 2;
                     }
-                    for (int l = 0; l < 4; l++) m_p4_Dtrkold_sidebandlow[k][l] = m_p4_Dtrk[k][l];
+                    for (int l = 0; l < 4; l++) {
+                        m_p4_Dtrkold_sidebandlow[k][l] = m_p4_Dtrk[k][l];
+                    }
                 }
                 SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
                 for(int k = 0; k < Dshws.size(); k++) {
@@ -1509,6 +1674,9 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     Gm_Mom.setMag(gTrk->energy());
                     HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
                     for (int l = 0; l < 4; l++) m_rawp4_Dshw_sidebandlow[k][l] = Gm_p4[l];
+                    for (int l = 0; l < 4; l++) {
+                        m_p4_Dshwold_sidebandlow[k][l] = m_p4_Dshw[k][l];
+                    }
                 }
                 charge_left_sidebandlow = 0;
                 m_charge_left_sidebandlow = 0;
@@ -1591,7 +1759,9 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                         m_rawp4_Dtrk_sidebandup[k][4] = KalTrk->charge();
                         m_rawp4_Dtrk_sidebandup[k][5] = 2;
                     }
-                    for (int l = 0; l < 4; l++) m_p4_Dtrkold_sidebandup[k][l] = m_p4_Dtrk[k][l];
+                    for (int l = 0; l < 4; l++) {
+                        m_p4_Dtrkold_sidebandup[k][l] = m_p4_Dtrk[k][l];
+                    }
                 }
                 SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
                 for(int k = 0; k < Dshws.size(); k++) {
@@ -1601,6 +1771,9 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                     Gm_Mom.setMag(gTrk->energy());
                     HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
                     for (int l = 0; l < 4; l++) m_rawp4_Dshw_sidebandup[k][l] = Gm_p4[l];
+                    for (int l = 0; l < 4; l++) {
+                        m_p4_Dshwold_sidebandup[k][l] = m_p4_Dshw[k][l];
+                    }
                 }
                 charge_left_sidebandup = 0;
                 m_charge_left_sidebandup = 0;

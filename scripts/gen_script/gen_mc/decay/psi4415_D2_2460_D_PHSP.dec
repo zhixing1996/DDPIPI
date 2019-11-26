@@ -1,0 +1,37 @@
+Alias A_D+  D+
+Alias A_D-  D-
+Alias A_D_2*+ D_2*+
+Alias A_D_2*- D_2*-
+
+Decay  psi(4415)
+1    A_D_2*-   D+   PHSP;
+1    D_2*-   A_D+   PHSP;
+1    A_D_2*+   D-   PHSP;
+1    D_2*+   A_D-   PHSP;
+Enddecay
+
+Decay A_D_2*+
+1.00  A_D+   pi+  pi-  PHSP;
+Enddecay
+
+Decay A_D_2*-
+1.00  A_D-   pi+  pi-  PHSP;
+Enddecay
+
+Decay D_2*+
+1.00  D+   pi+  pi-  PHSP;
+Enddecay
+
+Decay D_2*-
+1.00  D-   pi+  pi-  PHSP;
+Enddecay
+
+Decay A_D+
+1.00  K-  pi+  pi+  D_DALITZ;
+Enddecay
+
+Decay A_D-
+1.00  K+  pi-  pi-  D_DALITZ;
+Enddecay
+
+End
