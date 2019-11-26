@@ -14,7 +14,7 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.1.1" "Get samples -- synthesize root files"
     printf "\n\t%-9s  %-40s\n" "0.1.2" "Get samples -- extract useful info: raw"
 
-    printf "\n\t%-9s  %-40s\n" "0.2"   "[Study cuts]"
+    printf "\n\t%-9s  %-40s\n" "0.2"   "[Study Cuts]"
     printf "\n\t%-9s  %-40s\n" "0.2.1" "Draw figures -- draw invariant mass of Kpipi"
     printf "\n\t%-9s  %-40s\n" "0.2.2" "Draw figures -- study mass window of M(Kpipi)"
     printf "\n\t%-9s  %-40s\n" "0.2.3" "Draw figures -- draw recoiling mass of Dpipi"
@@ -41,6 +41,12 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.14"  "Install software -- install topology"
     printf "\n\t%-9s  %-40s\n" "0.3.15"  "Topo analysis -- apply topology analysis"
 
+    printf "\n\t%-9s  %-40s\n" "0.4"     "[Measurement of Cross Section]"
+    printf "\n\t%-9s  %-40s\n" "0.4.1"   "Get samples -- divide samples according to invariant mass of Kpipi"
+    printf "\n\t%-9s  %-40s\n" "0.4.2"   "Draw figures -- study RM(pipi) in Kpipi signal region"
+    printf "\n\t%-9s  %-40s\n" "0.4.3"   "Fit distributions -- fit to RM(Dpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.4.4"   "Draw figures -- study RM(pipi) in fitting region"
+    
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -62,7 +68,7 @@ case $option in
     0.1) echo "Pretreating of data and MC samples..."
          echo "--> Samples: data, signal MC, PHSP MC, inclusive MC"
          echo "--> E_{CMS}: 4360MeV, 4420MeV, 460MeV"
-         echo "--> Event Number: 1,000,000(signal MC,PHSP MC, inclusive MC)"
+         echo "--> Event Number: 1,000,000(signal MC, PHSP MC, inclusive MC)"
          echo "--> RunNo: 30616~31279(4360MeV), 31327~31390+36773~38140(4420MeV), 35227~36213(4600MeV)"
          echo "--> Cross Section: D1_2420: 41.8+/-5.6+/-3.8pb(4360MeV), 65.4+/-3.0+/-5.7pb(4420MeV), 27.7+/-2.7+/-1.2pb(4600MeV)" 
          echo "--> Cross Section: psi(3770): 17.3+/-5.4+/-1.5pb(4360MeV), 23.8+/-2.6+/-2.1pb(4420MeV), 7.2+/-2.7+/-1.2pb(4600MeV)" 
@@ -98,7 +104,7 @@ case $option in
     0.2) echo "Studying cuts..."
          echo "--> Samples: data, signal MC, PHSP MC, inclusive MC"
          echo "--> E_{CMS}: 4360MeV, 4420MeV, 460MeV"
-         echo "--> Event Number: 1,000,000(signal MC,PHSP MC, inclusive MC)"
+         echo "--> Event Number: 1,000,000(signal MC, PHSP MC, inclusive MC)"
          echo "--> RunNo: 30616~31279(4360MeV), 31327~31390+36773~38140(4420MeV), 35227~36213(4600MeV)"
          echo "--> Cross Section: D1(2420): 41.8+/-5.6+/-3.8pb(4360MeV), 65.4+/-3.0+/-5.7pb(4420MeV), 27.7+/-2.7+/-1.2pb(4600MeV)" 
          echo "--> Cross Section: psi(3770): 17.3+/-5.4+/-1.5pb(4360MeV), 23.8+/-2.6+/-2.1pb(4420MeV), 7.2+/-2.7+/-1.2pb(4600MeV)" 
@@ -188,12 +194,12 @@ case $option in
     0.3) echo "Pretreating of data and MC samples..."
          echo "--> Samples: data, signal MC, PHSP MC, inclusive MC"
          echo "--> E_{CMS}: 4360MeV, 4420MeV, 460MeV"
-         echo "--> Event Number: 1,000,000(signal MC,PHSP MC, inclusive MC)"
+         echo "--> Event Number: 1,000,000(signal MC, PHSP MC, inclusive MC)"
          echo "--> RunNo: 30616~31279(4360MeV), 31327~31390+36773~38140(4420MeV), 35227~36213(4600MeV)"
          echo "--> Cross Section: D1_2420: 41.8+/-5.6+/-3.8pb(4360MeV), 65.4+/-3.0+/-5.7pb(4420MeV), 27.7+/-2.7+/-1.2pb(4600MeV)" 
          echo "--> Cross Section: psi(3770): 17.3+/-5.4+/-1.5pb(4360MeV), 23.8+/-2.6+/-2.1pb(4420MeV), 7.2+/-2.7+/-1.2pb(4600MeV)" 
          echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89pb^{-1}(4420MeV), 566.93pb^{-1}(4600MeV)"
-         echo "--> Selection Algorithm Version: DDecayAlg-00-00-02(have applied cuts)"
+         echo "--> Selection Algorithm Version: DDecayAlg-00-00-03(have applied cuts)"
          ;;
 
     0.3.1) echo "Get samples -- getting topology info..."
@@ -378,5 +384,57 @@ case $option in
             topoana.exe topoana.card
             cd ../..
             ;;
+
+    # ---------------------------------
+    #  0.4 Measurement of Cross Section
+    # ---------------------------------
+
+    0.4) echo "Measurement of cross section..."
+         echo "--> Samples: data, signal MC, PHSP MC, inclusive MC"
+         echo "--> E_{CMS}: 4360MeV, 4420MeV, 460MeV"
+         echo "--> Event Number: 1,000,000(signal MC, PHSP MC, inclusive MC)"
+         echo "--> RunNo: 30616~31279(4360MeV), 31327~31390+36773~38140(4420MeV), 35227~36213(4600MeV)"
+         echo "--> Cross Section: D1(2420): 41.8+/-5.6+/-3.8pb(4360MeV), 65.4+/-3.0+/-5.7pb(4420MeV), 27.7+/-2.7+/-1.2pb(4600MeV)" 
+         echo "--> Cross Section: psi(3770): 17.3+/-5.4+/-1.5pb(4360MeV), 23.8+/-2.6+/-2.1pb(4420MeV), 7.2+/-2.7+/-1.2pb(4600MeV)" 
+         echo "--> Luminosity: 539.84pb^{-1}(4360MeV), 44.67+1028.89pb^{-1}(4420MeV), 566.93pb^{-1}(4600MeV)"
+         echo "--> Selection Algorithm Version: DDecayAlg-00-00-03(have applied cuts)"
+         ;;
+
+    0.4.1) echo "Get samples -- dividing samples according to invariant mass of Kpipi..."
+           cd python
+           python divide_samples.py 4360
+           python divide_samples.py 4420
+           python divide_samples.py 4600
+           ;;
+
+    0.4.2) echo "Draw figures -- studying RM(Dpipi) in Kpipi signal and sideband region..."
+           cd python
+           python plot_rm_Dpipi.py 4360 signal_after
+           python plot_rm_Dpipi.py 4420 signal_after
+           python plot_rm_Dpipi.py 4600 signal_after
+           python plot_rm_Dpipi.py 4360 sideband_after
+           python plot_rm_Dpipi.py 4420 sideband_after
+           python plot_rm_Dpipi.py 4600 sideband_after
+           ;;
+
+    0.4.3) echo "Fit distributions -- fitting to RM(Dpipi)..."
+           cd python
+           python fit_rm_Dpipi.py 4360 data
+           python fit_rm_Dpipi.py 4360 D1_2420
+           python fit_rm_Dpipi.py 4360 psipp
+           python fit_rm_Dpipi.py 4420 data
+           python fit_rm_Dpipi.py 4420 D1_2420
+           python fit_rm_Dpipi.py 4420 psipp
+           python fit_rm_Dpipi.py 4600 data
+           python fit_rm_Dpipi.py 4600 D1_2420
+           python fit_rm_Dpipi.py 4600 psipp
+           ;;
+
+    0.4.4) echo "Draw figures -- studying RM(pipi) in fitting region..."
+           cd python
+           python plot_rm_pipi 4360 X_3842
+           python plot_rm_pipi 4420 X_3842
+           python plot_rm_pipi 4600 X_3842
+           ;;
 
 esac
