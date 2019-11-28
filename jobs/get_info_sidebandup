@@ -4,10 +4,19 @@ cd $HOME/bes/DDPIPI/v0.2/python
 # data
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/*sidebandup*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4360/data_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sidebandup.root 4.358 sidebandup
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4360/data_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sidebandup.root 4.358 STDDmiss_sidebandup
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/*sidebandup*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4420/data_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_sidebandup.root 4.416 sidebandup
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4420/data_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_sidebandup.root 4.416 STDDmiss_sidebandup
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/*sidebandup*.root
-python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4600/data_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sidebandup.root 4.600 sidebandup
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4600/data_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sidebandup.root 4.600 STDDmiss_sidebandup
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/*raw_sidebandup*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4360/data_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw_sidebandup.root 4.358 raw_sidebandup
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/*raw_sidebandup*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4420/data_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw_sidebandup.root 4.416 raw_sidebandup
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/*raw_sidebandup*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/4600/data_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw_sidebandup.root 4.600 raw_sidebandup

@@ -180,7 +180,6 @@ def fit(path, ecms, mode):
 
     mbc.SaveAs('./figs/fit_rm_Dpipi_'+str(ecms)+'_'+mode+'.pdf')
 
-
 def main():
     args = sys.argv[1:]
     if len(args)<2:
@@ -193,29 +192,29 @@ def main():
 
     if ecms == 4360:
         if mode == 'data':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw_before.root')
         if mode == 'D1_2420':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal_signal.root')
+            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw_before.root')
         if mode == 'psipp':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_signal_signal.root')
+            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw_before.root')
         fit(path, ecms, mode)
 
     if ecms == 4420:
         if mode == 'data':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw_before.root')
         if mode == 'D1_2420':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal_signal.root')
+            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw_before.root')
         if mode == 'psipp':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_signal_signal.root')
+            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw_before.root')
         fit(path, ecms, mode)
 
     if ecms == 4600:
         if mode == 'data':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw_before.root')
         if mode == 'D1_2420':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal_signal.root')
+            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw_before.root')
         if mode == 'psipp':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal_signal.root')
+            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw_before.root')
         fit(path, ecms, mode)
 
 if __name__ == '__main__':

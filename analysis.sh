@@ -42,10 +42,12 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.15"  "Topo analysis -- apply topology analysis"
 
     printf "\n\t%-9s  %-40s\n" "0.4"     "[Measurement of Cross Section]"
-    printf "\n\t%-9s  %-40s\n" "0.4.1"   "Get samples -- divide samples according to invariant mass of Kpipi"
-    printf "\n\t%-9s  %-40s\n" "0.4.2"   "Draw figures -- study RM(pipi) in Kpipi signal region"
+    printf "\n\t%-9s  %-40s\n" "0.4.1"   "Get samples -- synthesize sideband samples"
+    printf "\n\t%-9s  %-40s\n" "0.4.2"   "Draw figures -- study RM(Dpipi) in Kpipi signal region"
     printf "\n\t%-9s  %-40s\n" "0.4.3"   "Fit distributions -- fit to RM(Dpipi)"
     printf "\n\t%-9s  %-40s\n" "0.4.4"   "Draw figures -- study RM(pipi) in fitting region"
+    printf "\n\t%-9s  %-40s\n" "0.4.5"   "Get shape -- get shape of X(3842)"
+    printf "\n\t%-9s  %-40s\n" "0.4.6"   "Draw figures -- study RM(pipi) in fitting region (RM(Dpii) signal and sideband region)"
     
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -400,11 +402,22 @@ case $option in
          echo "--> Selection Algorithm Version: DDecayAlg-00-00-03(have applied cuts)"
          ;;
 
-    0.4.1) echo "Get samples -- dividing samples according to invariant mass of Kpipi..."
-           cd python
-           python divide_samples.py 4360
-           python divide_samples.py 4420
-           python divide_samples.py 4600
+    0.4.1) echo "Get samples -- synthesizing sideband samples..."
+           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
+           rm data_4360_raw_sideband_before.root -rf
+           hadd data_4360_raw_sideband_before.root data_4360_raw_sidebandlow_before.root data_4360_raw_sidebandup_before.root
+           rm data_4360_sideband.root -rf
+           hadd data_4360_sideband.root data_4360_STDDmiss_sidebandlow_after.root data_4360_STDDmiss_sidebandup_after.root
+           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
+           rm data_4420_raw_sideband_before.root -rf
+           hadd data_4420_raw_sideband_before.root data_4420_raw_sidebandlow_before.root data_4420_raw_sidebandup_before.root
+           rm data_4420_sideband.root -rf
+           hadd data_4420_sideband.root data_4420_STDDmiss_sidebandlow_after.root data_4420_STDDmiss_sidebandup_after.root
+           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
+           rm data_4600_raw_sideband_before.root -rf
+           hadd data_4600_raw_sideband_before.root data_4600_raw_sidebandlow_before.root data_4600_raw_sidebandup_before.root
+           rm data_4600_sideband.root -rf
+           hadd data_4600_sideband.root data_4600_STDDmiss_sidebandlow_after.root data_4600_STDDmiss_sidebandup_after.root
            ;;
 
     0.4.2) echo "Draw figures -- studying RM(Dpipi) in Kpipi signal and sideband region..."
@@ -412,9 +425,9 @@ case $option in
            python plot_rm_Dpipi.py 4360 signal_after
            python plot_rm_Dpipi.py 4420 signal_after
            python plot_rm_Dpipi.py 4600 signal_after
-           python plot_rm_Dpipi.py 4360 sideband_after
-           python plot_rm_Dpipi.py 4420 sideband_after
-           python plot_rm_Dpipi.py 4600 sideband_after
+           python plot_rm_Dpipi_sideband.py 4360
+           python plot_rm_Dpipi_sideband.py 4420
+           python plot_rm_Dpipi_sideband.py 4600
            ;;
 
     0.4.3) echo "Fit distributions -- fitting to RM(Dpipi)..."
@@ -435,6 +448,19 @@ case $option in
            python plot_rm_pipi 4360 X_3842
            python plot_rm_pipi 4420 X_3842
            python plot_rm_pipi 4600 X_3842
+           ;;
+
+    0.4.5) echo "Get shape -- getting shape of X(3842)..."
+           mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape
+           cd python
+           python get_shape.py /besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_X3842.root
+           ;;
+
+    0.4.6) echo "Draw figures -- study RM(pipi) in fitting region(RM(Dpii) signal and sideband region)..."
+           cd python 
+           python plot_rm_D.py 4360
+           python plot_rm_D.py 4420
+           python plot_rm_D.py 4600
            ;;
 
 esac
