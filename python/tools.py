@@ -239,3 +239,12 @@ def window(ecms):
     if int(ecms) == 4600:
         WINDOW = 0.018
     return WINDOW
+
+def chi2_kf(ecms):
+    if int(ecms) == 4360:
+        CHI2_KF = 25.
+    if int(ecms) == 4420:
+        CHI2_KF = 15.
+    if int(ecms) == 4600:
+        CHI2_KF = 15.
+    return CHI2_KF

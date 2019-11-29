@@ -48,6 +48,8 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.4.4"   "Draw figures -- study RM(pipi) in fitting region"
     printf "\n\t%-9s  %-40s\n" "0.4.5"   "Get shape -- get shape of X(3842)"
     printf "\n\t%-9s  %-40s\n" "0.4.6"   "Draw figures -- study RM(pipi) in fitting region (RM(Dpii) signal and sideband region)"
+    printf "\n\t%-9s  %-40s\n" "0.4.7"   "Get shape -- get shape of D1(2420) (signal and sideand region)"
+    printf "\n\t%-9s  %-40s\n" "0.4.8"   "Get shape -- get shape of D1(2420) (signal shape)"
     
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -453,7 +455,7 @@ case $option in
     0.4.5) echo "Get shape -- getting shape of X(3842)..."
            mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape
            cd python
-           python get_shape.py /besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_X3842.root
+           python get_shape.py 4360 X_3842 
            ;;
 
     0.4.6) echo "Draw figures -- study RM(pipi) in fitting region(RM(Dpii) signal and sideband region)..."
@@ -461,6 +463,54 @@ case $option in
            python plot_rm_D.py 4360
            python plot_rm_D.py 4420
            python plot_rm_D.py 4600
+           ;;
+
+    0.4.7) echo "Get shape -- getting shape of D1(2420) (signal and sideand region)..."
+           mkdir -p scripts/ana/shape
+           cd scripts/ana/shape
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/shape/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/shape/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/shape/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_shape ./get_shape_4360_signal
+           sed -i "s/ECMS/4360/g" get_shape_4360_signal
+           sed -i "s/MODE/D1_2420_signal/g" get_shape_4360_signal
+           hep_sub -g physics get_shape_4360_signal -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_shape ./get_shape_4360_sideband
+           sed -i "s/ECMS/4360/g" get_shape_4360_sideband
+           sed -i "s/MODE/D1_2420_sideband/g" get_shape_4360_sideband
+           mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape
+           hep_sub -g physics get_shape_4360_sideband -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_shape ./get_shape_4420_signal
+           sed -i "s/ECMS/4420/g" get_shape_4420_signal
+           sed -i "s/MODE/D1_2420_signal/g" get_shape_4420_signal
+           hep_sub -g physics get_shape_4420_signal -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_shape ./get_shape_4420_sideband
+           sed -i "s/ECMS/4420/g" get_shape_4420_sideband
+           sed -i "s/MODE/D1_2420_sideband/g" get_shape_4420_sideband
+           mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape
+           hep_sub -g physics get_shape_4420_sideband -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_shape ./get_shape_4600_signal
+           sed -i "s/ECMS/4600/g" get_shape_4600_signal
+           sed -i "s/MODE/D1_2420_signal/g" get_shape_4600_signal
+           hep_sub -g physics get_shape_4600_signal -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/jobs/get_shape ./get_shape_4600_sideband
+           sed -i "s/ECMS/4600/g" get_shape_4600_sideband
+           sed -i "s/MODE/D1_2420_sideband/g" get_shape_4600_sideband
+           mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape
+           hep_sub -g physics get_shape_4600_sideband -o jobs.out -e jobs.err
+           ;;
+
+    0.4.8) echo "Get shape -- getting shape of D1(2420) (signal shape)..."
+           cd python
+           python get_shape.py 4360 D1_2420
+           python get_shape.py 4420 D1_2420
+           python get_shape.py 4600 D1_2420
            ;;
 
 esac

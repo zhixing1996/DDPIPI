@@ -33,7 +33,7 @@ DATE
     October 2019
 \n''')
 
-def save_before(path_in, path_out, chi2_kf_cut, cms, region):
+def save_before(path_in, path_out, cms, region):
     try:
         chain = TChain('save')
         chain.Add(path_in)
@@ -71,7 +71,7 @@ def save_before(path_in, path_out, chi2_kf_cut, cms, region):
         signal_up = 1.86965 + width(cms)/2.
         window_low = 1.86965 - window(cms)/2.
         window_up = 1.86965 + window(cms)/2.
-        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf_cut) + ')'
+        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf(cms)) + ')'
         cut_window = '(m_rm_Dpipi > ' + str(window_low) + ' && m_rm_Dpipi < ' + str(window_up) + ')'
         cut = cut_base + ' && ' + cut_window
 
@@ -82,7 +82,7 @@ def save_before(path_in, path_out, chi2_kf_cut, cms, region):
         window_up = 1.86965 + window(cms)/2.
         windowlow_up = window_low - (window_up - window_low)
         windowlow_low = windowlow_up - (window_up - window_low)
-        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf_cut) + ')'
+        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf(cms)) + ')'
         cut_window = '(m_rm_Dpipi > ' + str(windowlow_low) + '&& m_rm_Dpipi < ' + str(windowlow_up) + ')'
         cut = cut_base + ' && ' + cut_window
 
@@ -93,14 +93,14 @@ def save_before(path_in, path_out, chi2_kf_cut, cms, region):
         window_up = 1.86965 + window(cms)/2.
         windowup_low = window_up + (window_up - window_low)
         windowup_up = windowup_low + (window_up - window_low)
-        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf_cut) + ')'
+        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf(cms)) + ')'
         cut_window = '(m_rm_Dpipi > ' + str(windowup_low) + '&& m_rm_Dpipi < ' + str(windowup_up) + ')'
         cut = cut_base + ' && ' + cut_window
 
     t = chain.CopyTree(cut)
     t.SaveAs(path_out)
 
-def save_after(path_in, path_out, chi2_kf_cut, cms, region):
+def save_after(path_in, path_out, cms, region):
     try:
         chain = TChain('save')
         chain.Add(path_in)
@@ -114,7 +114,7 @@ def save_after(path_in, path_out, chi2_kf_cut, cms, region):
         signal_up = 1.86965 + width(cms)/2.
         window_low = 1.86965 - window(cms)/2.
         window_up = 1.86965 + window(cms)/2.
-        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf_cut) + ')'
+        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf(cms)) + ')'
         cut_window = '(m_rm_Dpipi > ' + str(window_low) + ' && m_rm_Dpipi < ' + str(window_up) + ')'
         cut_KS = '!(m_m_pipi > 0.491036 && m_m_pipi < 0.503471 && m_ctau_svf < 0.5)'
         cut_Dst = '(m_m_Dpi0 < 2.0082 || m_m_Dpi0 > 2.01269)'
@@ -127,7 +127,7 @@ def save_after(path_in, path_out, chi2_kf_cut, cms, region):
         window_up = 1.86965 + window(cms)/2.
         windowlow_up = window_low - (window_up - window_low)
         windowlow_low = windowlow_up - (window_up - window_low)
-        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf_cut) + ')'
+        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf(cms)) + ')'
         cut_window = '(m_rm_Dpipi > ' + str(windowlow_low) + '&& m_rm_Dpipi < ' + str(windowlow_up) + ')'
         cut_KS = '!(m_m_pipi > 0.491036 && m_m_pipi < 0.503471 && m_ctau_svf < 0.5)'
         cut_Dst = '(m_m_Dpi0 < 2.0082 || m_m_Dpi0 > 2.01269)'
@@ -140,7 +140,7 @@ def save_after(path_in, path_out, chi2_kf_cut, cms, region):
         window_up = 1.86965 + window(cms)/2.
         windowup_low = window_up + (window_up - window_low)
         windowup_up = windowup_low + (window_up - window_low)
-        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf_cut) + ')'
+        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < ' + str(chi2_kf(cms)) + ')'
         cut_window = '(m_rm_Dpipi > ' + str(windowup_low) + '&& m_rm_Dpipi < ' + str(windowup_up) + ')'
         cut_KS = '!(m_m_pipi > 0.491036 && m_m_pipi < 0.503471 && m_ctau_svf < 0.5)'
         cut_Dst = '(m_m_Dpi0 < 2.0082 || m_m_Dpi0 > 2.01269)'
@@ -160,22 +160,19 @@ def main():
     MODE = args[3]
     region = args[4]
 
-    chi2_kf_cut = 999
+    cms = 999
     if ecms == 4.358:
-        chi2_kf_cut = 25
         cms = 4360
     if ecms == 4.416:
-        chi2_kf_cut = 15
         cms = 4420
     if ecms == 4.600:
-        chi2_kf_cut = 15
         cms = 4600
 
     print '--> Begin to process file: ' + path_in
     if MODE == 'before':
-        save_before(path_in, path_out, chi2_kf_cut, cms, region)
+        save_before(path_in, path_out, cms, region)
     if MODE == 'after':
-        save_after(path_in, path_out, chi2_kf_cut, cms, region)
+        save_after(path_in, path_out, cms, region)
     print '--> End of processing file: ' + path_out
 
 if __name__ == '__main__':

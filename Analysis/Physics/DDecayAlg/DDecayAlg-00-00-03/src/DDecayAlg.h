@@ -103,6 +103,13 @@ class DDecayAlg : public Algorithm {
         double p4_Dp_psi[4];
         double p4_Dm_psi[4];
 
+        // X(3842) McTruth info
+        double p4_pip_X3842[4];
+        double p4_pim_X3842[4];
+        double p4_X3842[4];
+        double p4_Dp_X3842[4];
+        double p4_Dm_X3842[4];
+
         // DpDm McTruth info
         int DpId;
         int DmId;
@@ -177,6 +184,11 @@ class DDecayAlg : public Algorithm {
         NTuple::Array<double> m_p4_psi;
         NTuple::Array<double> m_p4_Dp_psi;
         NTuple::Array<double> m_p4_Dm_psi;
+        NTuple::Array<double> m_p4_pip_X3842;
+        NTuple::Array<double> m_p4_pim_X3842;
+        NTuple::Array<double> m_p4_X3842;
+        NTuple::Array<double> m_p4_Dp_X3842;
+        NTuple::Array<double> m_p4_Dm_X3842;
         NTuple::Item<int> m_Id_Dp;
         NTuple::Item<int> m_Id_Dm;
 
@@ -238,6 +250,23 @@ class DDecayAlg : public Algorithm {
         NTuple::Item<int> m_matched_piplus;
         NTuple::Item<int> m_matched_piminus;
         NTuple::Item<double> m_rm_Dpipi_STDDmiss;
+        NTuple::Array<double> m_p4_pip_STDDmiss;
+        NTuple::Array<double> m_p4_pim_STDDmiss;
+        NTuple::Array<double> m_p4_Dstst_STDDmiss;
+        NTuple::Array<double> m_p4_D1_STDDmiss; // D comes from D1_2420
+        NTuple::Array<double> m_p4_D2_STDDmiss; // D comes out of D1_2420
+        NTuple::Array<double> m_p4_pip_psi_STDDmiss;
+        NTuple::Array<double> m_p4_pim_psi_STDDmiss;
+        NTuple::Array<double> m_p4_psi_STDDmiss;
+        NTuple::Array<double> m_p4_Dp_psi_STDDmiss;
+        NTuple::Array<double> m_p4_Dm_psi_STDDmiss;
+        NTuple::Array<double> m_p4_pip_X3842_STDDmiss;
+        NTuple::Array<double> m_p4_pim_X3842_STDDmiss;
+        NTuple::Array<double> m_p4_X3842_STDDmiss;
+        NTuple::Array<double> m_p4_Dp_X3842_STDDmiss;
+        NTuple::Array<double> m_p4_Dm_X3842_STDDmiss;
+        NTuple::Item<int> m_Id_Dp_STDDmiss;
+        NTuple::Item<int> m_Id_Dm_STDDmiss;
 
         // functions
         void clearVariables();
@@ -246,6 +275,7 @@ class DDecayAlg : public Algorithm {
         void saveAllMcTruthInfo();
         void saveDststMcTruthInfo();
         void savePsi_3770McTruthInfo();
+        void saveX_3842McTruthInfo();
         void saveDpDmMcTruthInfo();
         bool useDTagTool();
         bool tagSingleD();

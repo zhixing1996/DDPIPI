@@ -96,8 +96,13 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple1->addItem("p4_pip_psi", 4, m_p4_pip_psi);
             status = m_tuple1->addItem("p4_pim_psi", 4, m_p4_pim_psi);
             status = m_tuple1->addItem("p4_psi", 4, m_p4_psi);
-            status = m_tuple1->addItem("p4_Dp", 4, m_p4_Dp_psi);
-            status = m_tuple1->addItem("p4_Dm", 4, m_p4_Dm_psi);
+            status = m_tuple1->addItem("p4_Dp_psi", 4, m_p4_Dp_psi);
+            status = m_tuple1->addItem("p4_Dm_psi", 4, m_p4_Dm_psi);
+            status = m_tuple1->addItem("p4_pip_X3842", 4, m_p4_pip_X3842);
+            status = m_tuple1->addItem("p4_pim_X3842", 4, m_p4_pim_X3842);
+            status = m_tuple1->addItem("p4_X3842", 4, m_p4_X3842);
+            status = m_tuple1->addItem("p4_Dp_X3842", 4, m_p4_Dp_X3842);
+            status = m_tuple1->addItem("p4_Dm_X3842", 4, m_p4_Dm_X3842);
             status = m_tuple1->addItem("DpId", m_Id_Dp);
             status = m_tuple1->addItem("DmId", m_Id_Dm);
         }
@@ -167,6 +172,23 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple2->addItem("matched_piplus", m_matched_piplus);
             status = m_tuple2->addItem("matched_piminus", m_matched_piminus);
             status = m_tuple2->addItem("rm_Dpipi", m_rm_Dpipi_STDDmiss);
+            status = m_tuple2->addItem("p4_pip", 4, m_p4_pip_STDDmiss);
+            status = m_tuple2->addItem("p4_pim", 4, m_p4_pim_STDDmiss);
+            status = m_tuple2->addItem("p4_Dstst", 4, m_p4_Dstst_STDDmiss);
+            status = m_tuple2->addItem("p4_D1", 4, m_p4_D1_STDDmiss);
+            status = m_tuple2->addItem("p4_D2", 4, m_p4_D2_STDDmiss);
+            status = m_tuple2->addItem("p4_pip_psi", 4, m_p4_pip_psi_STDDmiss);
+            status = m_tuple2->addItem("p4_pim_psi", 4, m_p4_pim_psi_STDDmiss);
+            status = m_tuple2->addItem("p4_psi", 4, m_p4_psi_STDDmiss);
+            status = m_tuple2->addItem("p4_Dp_psi", 4, m_p4_Dp_psi_STDDmiss);
+            status = m_tuple2->addItem("p4_Dm_psi", 4, m_p4_Dm_psi_STDDmiss);
+            status = m_tuple2->addItem("p4_pip_X3842", 4, m_p4_pip_X3842_STDDmiss);
+            status = m_tuple2->addItem("p4_pim_X3842", 4, m_p4_pim_X3842_STDDmiss);
+            status = m_tuple2->addItem("p4_X3842", 4, m_p4_X3842_STDDmiss);
+            status = m_tuple2->addItem("p4_Dp_X3842", 4, m_p4_Dp_X3842_STDDmiss);
+            status = m_tuple2->addItem("p4_Dm_X3842", 4, m_p4_Dm_X3842_STDDmiss);
+            status = m_tuple2->addItem("DpId", m_Id_Dp_STDDmiss);
+            status = m_tuple2->addItem("DmId", m_Id_Dm_STDDmiss);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple2) << endmsg;
@@ -207,6 +229,7 @@ StatusCode DDecayAlg::execute() {
     if (runNo < 0 && m_isMonteCarlo) saveAllMcTruthInfo();
     if (runNo < 0 && m_isMonteCarlo) saveDststMcTruthInfo();
     if (runNo < 0 && m_isMonteCarlo) savePsi_3770McTruthInfo();
+    if (runNo < 0 && m_isMonteCarlo) saveX_3842McTruthInfo();
     if (runNo < 0 && m_isMonteCarlo) saveDpDmMcTruthInfo();
 
     // use DTagTool
@@ -268,9 +291,50 @@ void DDecayAlg::clearVariables() {
         m_p4_psi[i] = -999;
     }
 
+    // X(3842) McTruth info
+    for (int i = 0; i < 4; i++) {
+        p4_pip_X3842[i] = -999;
+        p4_pim_X3842[i] = -999;
+        p4_Dp_X3842[i] = -999;
+        p4_Dm_X3842[i] = -999;
+        p4_X3842[i] = -999;
+        m_p4_pip_X3842[i] = -999;
+        m_p4_pim_X3842[i] = -999;
+        m_p4_Dp_X3842[i] = -999;
+        m_p4_Dm_X3842[i] = -999;
+        m_p4_X3842[i] = -999;
+    }
+
     // DpDm McTruth info
     DpId = -999;
     DmId = -999;
+
+    // Dstst McTruth info
+    for (int i = 0; i < 4; i++) {
+        m_p4_pip_STDDmiss[i] = -999;
+        m_p4_pim_STDDmiss[i] = -999;
+        m_p4_D1_STDDmiss[i] = -999;
+        m_p4_D2_STDDmiss[i] = -999;
+        m_p4_Dstst_STDDmiss[i] = -999;
+    }
+
+    // psi(3770) McTruth info
+    for (int i = 0; i < 4; i++) {
+        m_p4_pip_psi_STDDmiss[i] = -999;
+        m_p4_pim_psi_STDDmiss[i] = -999;
+        m_p4_Dp_psi_STDDmiss[i] = -999;
+        m_p4_Dm_psi_STDDmiss[i] = -999;
+        m_p4_psi_STDDmiss[i] = -999;
+    }
+
+    // X(3842) McTruth info
+    for (int i = 0; i < 4; i++) {
+        m_p4_pip_X3842_STDDmiss[i] = -999;
+        m_p4_pim_X3842_STDDmiss[i] = -999;
+        m_p4_Dp_X3842_STDDmiss[i] = -999;
+        m_p4_Dm_X3842_STDDmiss[i] = -999;
+        m_p4_X3842_STDDmiss[i] = -999;
+    }
 
     // single D tag
     m_n_trkD = 0;
@@ -468,6 +532,43 @@ void DDecayAlg::saveDpDmMcTruthInfo() {
         }
         if (m_debug) std::cout << runNo << " : " << evtNo << " : decay mode " << DpId << "   " << DmId << std::endl;
     }
+}
+
+void DDecayAlg::saveX_3842McTruthInfo() {
+    SmartDataPtr<Event::McParticleCol> mcParticleCol(eventSvc(), "/Event/MC/McParticleCol");
+    Event::McParticleCol::iterator iter_X3842mc = mcParticleCol->begin();
+    int num_Dp=0,num_Dm=0, num_pip=0, num_pim=0, num_X3842=0, num_others;
+    for (; iter_X3842mc != mcParticleCol->end(); iter_X3842mc++) {
+        if (m_debug) std::cout << "  X(3842) truth:  " << (*iter_X3842mc)->particleProperty() << "   mother:  " << (*iter_X3842mc)->mother().particleProperty() << std::endl;
+        if ((*iter_X3842mc)->particleProperty() == 211 && fabs((*iter_X3842mc)->mother().particleProperty()) != 411) {
+            for (int j = 0; j < 4; j++) p4_pip_X3842[j] = (*iter_X3842mc)->initialFourMomentum()[j];
+            num_pip++;
+        }
+        if ((*iter_X3842mc)->particleProperty() == -211 && fabs((*iter_X3842mc)->mother().particleProperty()) != 411) {
+            for (int j = 0; j < 4; j++) p4_pim_X3842[j] = (*iter_X3842mc)->initialFourMomentum()[j];
+            num_pim++;
+        }
+        if ((*iter_X3842mc)->particleProperty() == 9033443) {
+            for (int j = 0; j < 4; j++) p4_X3842[j] = (*iter_X3842mc)->initialFourMomentum()[j];
+            num_X3842++;
+            const SmartRefVector<Event::McParticle>& gcd = (*iter_X3842mc)->daughterList();
+            if (m_debug) std::cout << " GCD.SIZE():   " << gcd.size() << std::endl;
+            if (gcd.size() < 0) continue;
+            for(unsigned int j = 0; j < gcd.size(); j++) {
+                if (gcd[j]->particleProperty() == 411) {
+                    for (int k = 0; k < 4; k++) p4_Dp_X3842[k] = gcd[j]->initialFourMomentum()[k];
+                    num_Dp++;
+                }
+                if (gcd[j]->particleProperty() == -411) {
+                    for (int k = 0; k < 4; k++) p4_Dm_X3842[k] = gcd[j]->initialFourMomentum()[k];
+                    num_Dm++;
+                }
+            }
+        }
+        if (fabs((*iter_X3842mc)->particleProperty()) != 211 || (*iter_X3842mc)->particleProperty() == 9033443 || fabs((*iter_X3842mc)->particleProperty()) != 411) num_others++;
+    }
+    if (m_debug) std::cout << " recording X(3842) truth information 1:  " << num_X3842 << "  " << num_pim << "  " << num_X3842 << "  " << num_Dp << "  " << num_Dm << std::endl;
+    if (m_debug) std::cout << " recording X(3842) truth information 2:  " << p4_pip_X3842[3] << "  " << p4_pim_X3842[3] << "  " << p4_X3842[3] << "  " << p4_Dp_X3842[3] << "  " << p4_Dm_X3842[3] << std::endl;
 }
 
 bool DDecayAlg::useDTagTool() {
@@ -1618,6 +1719,17 @@ void DDecayAlg::recordVariables() {
         }
     }
 
+    // save X(3842) McTruth info
+    if (m_runNo < 0 && m_isMonteCarlo) {
+        for (int i = 0; i < 4; i++) {
+            m_p4_pip_X3842[i] = p4_pip_X3842[i];
+            m_p4_pim_X3842[i] = p4_pim_X3842[i];
+            m_p4_X3842[i] = p4_X3842[i];
+            m_p4_Dp_X3842[i] = p4_Dp_X3842[i];
+            m_p4_Dm_X3842[i] = p4_Dm_X3842[i];
+        }
+    }
+
     // save DpDm McTruth info
     m_Id_Dp = DpId;
     m_Id_Dm = DmId;
@@ -1662,6 +1774,44 @@ void DDecayAlg::recordVariables_STDDmiss() {
             m_pdgid_STDDmiss[i] = pdgid[i];
         }
     }
+
+    // save Dstst McTruth info
+    if (m_runNo_STDDmiss < 0 && m_isMonteCarlo) {
+        for (int i = 0; i < 4; i++) {
+            m_p4_pip_STDDmiss[i] = p4_pip[i];
+            m_p4_pim_STDDmiss[i] = p4_pim[i];
+            m_p4_Dstst_STDDmiss[i] = p4_Dstst[i];
+            m_p4_D1_STDDmiss[i] = p4_D1[i];
+            m_p4_D2_STDDmiss[i] = p4_D2[i];
+        }
+    }
+
+    // save psi(3770) McTruth info
+    if (m_runNo_STDDmiss < 0 && m_isMonteCarlo) {
+        for (int i = 0; i < 4; i++) {
+            m_p4_pip_psi_STDDmiss[i] = p4_pip_psi[i];
+            m_p4_pim_psi_STDDmiss[i] = p4_pim_psi[i];
+            m_p4_psi_STDDmiss[i] = p4_psi[i];
+            m_p4_Dp_psi_STDDmiss[i] = p4_Dp_psi[i];
+            m_p4_Dm_psi_STDDmiss[i] = p4_Dm_psi[i];
+        }
+    }
+
+    // save X(3842) McTruth info
+    if (m_runNo_STDDmiss < 0 && m_isMonteCarlo) {
+        for (int i = 0; i < 4; i++) {
+            m_p4_pip_X3842_STDDmiss[i] = p4_pip_X3842[i];
+            m_p4_pim_X3842_STDDmiss[i] = p4_pim_X3842[i];
+            m_p4_X3842_STDDmiss[i] = p4_X3842[i];
+            m_p4_Dp_X3842_STDDmiss[i] = p4_Dp_X3842[i];
+            m_p4_Dm_X3842_STDDmiss[i] = p4_Dm_X3842[i];
+        }
+    }
+
+    // save DpDm McTruth info
+    m_Id_Dp_STDDmiss = DpId;
+    m_Id_Dm_STDDmiss = DmId;
+
     m_tuple2->write();
 
     if (m_debug) std::cout << " Signal region: entry in ntuple is filled for " << mode << std::endl;
