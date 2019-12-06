@@ -1,26 +1,24 @@
 #!/bin/bash
 
+rm -rf totList
 rm -rf badList
 rm -rf goodList
 
 #set +x
 ANA_DIR=$1
 echo "This is a script to check whether the job is successful or not"
-echo "./check.sh [PATH]"
+echo "./check_boss.sh [PATH]"
 echo "[PATH]: job log path"
 
 echo Current dir: $ANA_DIR
 cd $ANA_DIR
-ls *.bosslog > badList
-total_num=`wc -l badList | cut -d" " -f1`
-#ls *.txt > badList
+ls *.bosslog | cut -d "." -f1 > totList
+total_num=`wc -l totList | cut -d" " -f1`
 grep -in 'INFO Application Manager Terminated successfully' *.bosslog | cut -d "." -f1 > goodList
 good_num=`wc -l goodList | cut -d" " -f1`
 
-while read MY_LINE
-do
-	#echo $MY_LINE
-	sed -i "/$MY_LINE/d" badList
-done < goodList 
+diff totList goodList > badList
 bad_num=`wc -l badList | cut -d" " -f1`
+let "bad_num = $bad_num - 1"
+if [ $bad_num -lt 0 ]; then let "bad_num = 0"; fi
 echo total: $total_num  success: $good_num jobs, failed $bad_num jobs

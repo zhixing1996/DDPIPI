@@ -35,31 +35,31 @@ def rm_Dpipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, runNolow, runNoup, ecm
         t1.GetEntry(ientry1)
         if mode == 'before' and fabs(t1.m_runNo) >= runNolow and fabs(t1.m_runNo) <= runNoup and fabs(t1.m_rawm_D - 1.86965) < width(ecms)/2.:
             h1.Fill(t1.m_rm_Dpipi)
-        if (mode == 'signal_after' or mode == 'sideband_after') and fabs(t1.m_runNo) >= runNolow and fabs(t1.m_runNo) <= runNoup:
+        if mode == 'signal' and fabs(t1.m_runNo) >= runNolow and fabs(t1.m_runNo) <= runNoup:
             h1.Fill(t1.m_rm_Dpipi)
     for ientry2 in xrange(t2.GetEntries()):
         t2.GetEntry(ientry2)
         if mode == 'before' and fabs(t2.m_runNo) >= runNolow and fabs(t2.m_runNo) <= runNoup and fabs(t2.m_rawm_D - 1.86965) < width(ecms)/2.:
             h2.Fill(t2.m_rm_Dpipi)
-        if (mode == 'signal_after' or mode == 'sideband_after') and fabs(t2.m_runNo) >= runNolow and fabs(t2.m_runNo) <= runNoup:
+        if mode == 'signal' and fabs(t2.m_runNo) >= runNolow and fabs(t2.m_runNo) <= runNoup:
             h2.Fill(t2.m_rm_Dpipi)
     for ientry3 in xrange(t3.GetEntries()):
         t3.GetEntry(ientry3)
         if mode == 'before' and fabs(t3.m_runNo) >= runNolow and fabs(t3.m_runNo) <= runNoup and fabs(t3.m_rawm_D - 1.86965) < width(ecms)/2.:
             h3.Fill(t3.m_rm_Dpipi)
-        if (mode == 'signal_after' or mode == 'sideband_after') and fabs(t3.m_runNo) >= runNolow and fabs(t3.m_runNo) <= runNoup:
+        if mode == 'signal' and fabs(t3.m_runNo) >= runNolow and fabs(t3.m_runNo) <= runNoup:
             h3.Fill(t3.m_rm_Dpipi)
     for ientry4 in xrange(t4.GetEntries()):
         t4.GetEntry(ientry4)
         if mode == 'before' and fabs(t4.m_runNo) >= runNolow and fabs(t4.m_runNo) <= runNoup and fabs(t4.m_rawm_D - 1.86965) < width(ecms)/2.:
             h4.Fill(t4.m_rm_Dpipi)
-        if (mode == 'signal_after' or mode == 'sideband_after') and fabs(t4.m_runNo) >= runNolow and fabs(t4.m_runNo) <= runNoup:
+        if mode == 'signal' and fabs(t4.m_runNo) >= runNolow and fabs(t4.m_runNo) <= runNoup:
             h4.Fill(t4.m_rm_Dpipi)
     for ientry5 in xrange(t5.GetEntries()):
         t5.GetEntry(ientry5)
         if mode == 'before' and fabs(t5.m_runNo) >= runNolow and fabs(t5.m_runNo) <= runNoup and fabs(t5.m_rawm_D - 1.86965) < width(ecms)/2.:
             h5.Fill(t5.m_rm_Dpipi)
-        if (mode == 'signal_after' or mode == 'sideband_after') and fabs(t5.m_runNo) >= runNolow and fabs(t5.m_runNo) <= runNoup:
+        if mode == 'signal' and fabs(t5.m_runNo) >= runNolow and fabs(t5.m_runNo) <= runNoup:
             h5.Fill(t5.m_rm_Dpipi)
 
 def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle, ymax):
@@ -178,7 +178,7 @@ if __name__ == '__main__':
             xmax = 2.2
             xbins = 160
             ymax = 600
-        if mode == 'signal_after':
+        if mode == 'signal':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_raw_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_raw_before.root')
@@ -208,7 +208,7 @@ if __name__ == '__main__':
             xmax = 2.2
             xbins = 160
             ymax = 1500
-        if mode == 'signal_after':
+        if mode == 'signal':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_raw_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_raw_before.root')
@@ -238,7 +238,7 @@ if __name__ == '__main__':
             xmax = 2.2
             xbins = 200
             ymax = 400
-        if mode == 'signal_after':
+        if mode == 'signal':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_raw_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_raw_before.root')

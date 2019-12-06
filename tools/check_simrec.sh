@@ -7,7 +7,7 @@ rm -rf goodList
 #set +x
 ANA_DIR=$1
 echo "This is a script to check whether the job is successful or not"
-echo "./check.sh [PATH]"
+echo "./check_simrec.sh [PATH]"
 echo "[PATH]: job log path"
 
 echo Current dir: $ANA_DIR

@@ -1,4 +1,0 @@
-#!/bin/bash
-
-cd $HOME/bes/DDPIPI/v0.2/python
-python get_shape.py ECMS MODE

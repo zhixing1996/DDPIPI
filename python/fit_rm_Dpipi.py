@@ -122,9 +122,9 @@ def fit(path, ecms, mode):
         rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
         data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
     if mode == 'D1_2420' or mode == 'psipp':
-        xmin = 1.855
-        xmax = 1.885
-        xbins = 12
+        xmin = 1.84
+        xmax = 1.9
+        xbins = 40
         rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
         data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
 
@@ -132,53 +132,87 @@ def fit(path, ecms, mode):
     if ecms == 4360:
         mean = RooRealVar('mean', 'mean of gaussian', 1.86965, 1.865, 1.875)
         sigma = RooRealVar('sigma', 'sigma of gaussian', 0.01, 0, 0.01)
-        gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
+        sigpdf = RooGaussian('sigpdf', 'gaussian', rm_Dpipi, mean, sigma)
     if ecms == 4420:
         mean = RooRealVar('mean', 'mean of gaussian', 1.86965, 1.865, 1.875)
         sigma = RooRealVar('sigma', 'sigma of gaussian', 0.01, 0, 0.1)
-        gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
+        sigpdf = RooGaussian('sigpdf', 'gaussian', rm_Dpipi, mean, sigma)
     if ecms == 4600:
         mean = RooRealVar('mean', 'mean of gaussian', 1.86965, 1.865, 1.875)
         sigma = RooRealVar('sigma', 'sigma of gaussian', 0.01, 0, 0.01)
-        gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
+        sigpdf = RooGaussian('sigpdf', 'gaussian', rm_Dpipi, mean, sigma)
 
     # background
     a = RooRealVar('a', 'a', 0, -99, 99)
     b = RooRealVar('b', 'b', 0, -99, 99)
     c = RooRealVar('c', 'c', 0, -99, 99)
+    d = RooRealVar('c', 'c', 0, -99, 99)
     if ecms == 4360:
         bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
     if ecms == 4420:
-        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
+        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
     if ecms == 4600:
-        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
+        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
 
     # event number
     nsig = RooRealVar('nsig', 'nsig', 100, 0, 500000)
     nbkg = RooRealVar('nbkg', 'nbkg', 80, 0, 500000)
 
     # fit model
-    model = RooAddPdf('model', 'gauss+bkgpdf', RooArgList(gauss, bkgpdf), RooArgList(nsig, nbkg))
+    model = RooAddPdf('model', 'sigpdf + bkgpdf', RooArgList(sigpdf, bkgpdf), RooArgList(nsig, nbkg))
     model.fitTo(data)
 
     # plot results
     xframe = rm_Dpipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
     data.plotOn(xframe)
     model.plotOn(xframe)
-    model.plotOn(xframe, RooFit.Components('gauss'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
+    model.plotOn(xframe, RooFit.Components('sigpdf'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
     model.plotOn(xframe, RooFit.Components('bkgpdf'), RooFit.LineColor(kGreen), RooFit.LineWidth(2), RooFit.LineStyle(1))
     xtitle = 'RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})(GeV)'
     content = (xmax - xmin)/xbins * 1000
     ytitle = 'Events/%.1f MeV'%content
     set_xframe_style(xframe, xtitle, ytitle)
     xframe.Draw()
-    range = 'Mass Region: [' + str(mean.getVal() - 3*sigma.getVal()) + ', ' + str(mean.getVal() + 3*sigma.getVal()) + ']'
-    print range
+
+    if mode == 'data':
+        window_low = 1.86965 - window(ecms)/2.
+        window_up = 1.86965 + window(ecms)/2.
+        windowlow_up = window_low - (window_up - window_low)
+        windowlow_low = windowlow_up - (window_up - window_low)
+        windowup_low = window_up + (window_up - window_low)
+        windowup_up = windowup_low + (window_up - window_low)
+        rm_Dpipi.setRange('srange', window_low, window_up)
+        rm_Dpipi.setRange('sbrangel', windowlow_low, windowlow_up)
+        rm_Dpipi.setRange('sbrangeh', windowup_low, windowup_up)
+        nsrange = bkgpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('srange'))
+        nsbrangel = bkgpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('sbrangel'))
+        nsbrangeh = bkgpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('sbrangeh'))
+        S_srv = nsrange.getVal()*(nbkg.getVal()) + nsig.getVal()
+        srv = nsrange.getVal()*nbkg.getVal()
+        srv_err = nsrange.getVal()*nbkg.getError()
+        sbrlv = nsbrangel.getVal()*nbkg.getVal()
+        sbrhv = nsbrangeh.getVal()*nbkg.getVal()
+        out1 = 'S_srv: ' + str(S_srv) + ' srv: ' + str(srv) + ' srv_err: ' + str(srv_err) + ' sbrlv: ' + str(sbrlv) + ' sbrhv: ' + str(sbrhv)
+        out2 = 'nsrange: ' + str(nsrange.getVal()) + ' nsbrangl: ' + str(nsbrangel.getVal()) + ' nsbrangeh: ' + str(nsbrangeh.getVal())
+        print out1
+        print out2
+
+        if not os.path.exists('./txts/'):
+            os.makedirs('./txts/')
+
+        path_out = './txts/background_events_'+ str(ecms) +'.txt'
+        f_out = open(path_out, 'w')
+        f_out.write(out1)
+        f_out.write(out2)
+        f_out.close()
 
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
 
     mbc.SaveAs('./figs/fit_rm_Dpipi_'+str(ecms)+'_'+mode+'.pdf')
+
+    range = 'Mass Region: [' + str(mean.getVal() - 3*sigma.getVal()) + ', ' + str(mean.getVal() + 3*sigma.getVal()) + ']'
+    print range
 
 def main():
     args = sys.argv[1:]
@@ -194,27 +228,27 @@ def main():
         if mode == 'data':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw_before.root')
         if mode == 'D1_2420':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw_before.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw_before.root')
         if mode == 'psipp':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw_before.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw_before.root')
         fit(path, ecms, mode)
 
     if ecms == 4420:
         if mode == 'data':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw_before.root')
         if mode == 'D1_2420':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw_before.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw_before.root')
         if mode == 'psipp':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw_before.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw_before.root')
         fit(path, ecms, mode)
 
     if ecms == 4600:
         if mode == 'data':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw_before.root')
         if mode == 'D1_2420':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw_before.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw_before.root')
         if mode == 'psipp':
-            path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw_before.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw_before.root')
         fit(path, ecms, mode)
 
 if __name__ == '__main__':

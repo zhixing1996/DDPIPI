@@ -796,12 +796,12 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         stat_saveOthertrks = saveOthertrks(vwtrkpara_charge, vwtrkpara_photon, birth);
 
         // record variables
-        if (fabs(chi2_vf) < 100 && fabs(chi2_kf) < 9999 && stat_saveOthertrks && stat_saveOthershws) {
+        if (stat_saveOthertrks && stat_saveOthershws) {
             n_count++;
             recordVariables();
         }
     }
-    if (fabs(chi2_vf) < 100 && fabs(chi2_kf) < 9999 && stat_saveOthertrks && stat_saveOthershws) return true;
+    if (stat_saveOthertrks && stat_saveOthershws) return true;
     else return false;
 }
 
