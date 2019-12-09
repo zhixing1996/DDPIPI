@@ -8,13 +8,28 @@ __copyright__ = "Copyright (c) Maoqiang JING"
 __created__ = "[2019-08-13 Tue 15:05]" 
 
 import sys 
-import os
+import os, errno
+import shutil
 import ROOT 
-
 
 # ---------------------------------------------
 # Function 
 # ---------------------------------------------
+
+# remove path or bachelor file
+def rm_r(path):
+    if os.path.isdir(path) and not os.path.islink(path):
+        shutil.rmtree(path)
+    elif os.path.exists(path):
+        os.remove(path)
+
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError, exc: # Python >2.5 (except OSError, exc: for Python <2.5)
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else: raise
 
 def search(allfile, root, target):
     items = os.listdir(root)
@@ -240,6 +255,7 @@ def window(ecms):
         WINDOW = 0.018
     return WINDOW
 
+# chi2 of kinematic fit(missing method)
 def chi2_kf(ecms):
     if int(ecms) == 4360:
         CHI2_KF = 25.

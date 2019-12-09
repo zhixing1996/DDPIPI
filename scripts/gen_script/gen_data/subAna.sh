@@ -11,7 +11,7 @@ echo "subject jobs"
 
 for line in $(cat temp)
 do
-    
+
     boss.condor $line
 
     echo $line" done!"
