@@ -152,6 +152,18 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.42.1" "Simulation & Reconstruction -- generate background MC sample"
     printf "\n\t%-9s  %-40s\n" "0.42.2" "Single D tag -- run on background MC sample"
 
+    printf "\n\t%-9s  %-40s\n" "0.43"   "[run on signal MC of psi(4415)->D0_(2300)DPI(PHSP), D0_(2300)->DPI(PHSP) @4360MeV]" # psi(4415) -> @4360MeV
+    printf "\n\t%-9s  %-40s\n" "0.43.1" "Simulation & Reconstruction -- generate signal MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.43.2" "Single D tag -- run on signal MC sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.44"   "[run on signal MC of psi(4415)->D0_(2300)DPI(PHSP), D0_(2300)->DPI(PHSP) @4420MeV]" # psi(4415) -> @4420MeV
+    printf "\n\t%-9s  %-40s\n" "0.44.1" "Simulation & Reconstruction -- generate signal MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.44.2" "Single D tag -- run on signal MC sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.45"   "[run on background MC of psi(4415)->D0_(2300)DPI(PHSP), D0_(2300)->DPI(PHSP) @4600MeV]" # psi(4415) -> @4600MeV
+    printf "\n\t%-9s  %-40s\n" "0.45.1" "Simulation & Reconstruction -- generate background MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.45.2" "Single D tag -- run on background MC sample"
+
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -314,7 +326,7 @@ case $option in
     0.4) echo "signal MC of psi(4415)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) @4360MeV..."
          echo "--> Process: psi(4415)->D1_(2420)D, D1_(2420)->DPIPI"
          echo "--> E_{CMS}: 4360MeV"
-         echo "--> Generation mode: psi(4415)->D1_(2420)D PHSH; D1_(2420)->DPiPi HELAMP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+         echo "--> Generation mode: psi(4415)->D1_(2420)D PHSH; D1_(2420)->DPIPI HELAMP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
          echo "--> Event Number: 500,000"
          echo "--> RunNo: 30616~31279"
          ;;
@@ -361,7 +373,7 @@ case $option in
     0.5) echo "signal MC of psi(4415)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) @4420MeV..."
          echo "--> Process: psi(4415)->D1_(2420)D, D1_(2420)->DPIPI"
          echo "--> E_{CMS}: 4420MeV"
-         echo "--> Generation mode: psi(4415)->D1_(2420)D PHSH; D1_(2420)->DPiPi HELAMP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+         echo "--> Generation mode: psi(4415)->D1_(2420)D PHSH; D1_(2420)->DPIPI HELAMP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
          echo "--> Event Number: 500,000"
          echo "--> RunNo: 31327~31390, 36773~38140"
          ;;
@@ -408,7 +420,7 @@ case $option in
     0.6) echo "signal MC of psi(4415)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) @4600MeV..."
          echo "--> Process: psi(4415)->D1_(2420)D, D1_(2420)->DPIPI"
          echo "--> E_{CMS}: 4600MeV"
-         echo "--> Generation mode: psi(4415)->D1_(2420)D PHSH; D1_(2420)->DPiPi HELAMP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+         echo "--> Generation mode: psi(4415)->D1_(2420)D PHSH; D1_(2420)->DPIPI HELAMP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
          echo "--> Event Number: 500,000"
          echo "--> RunNo: 35227~36213"
          ;;
@@ -1480,7 +1492,7 @@ case $option in
     0.37) echo "signal MC of psi(4415)->D2_(2460)D(PHSP), D2_(2460)->DPIPI(PHSP) @4360MeV..."
           echo "--> Process: psi(4415)->D2_(2460)D, D2_(2460)->DPIPI"
           echo "--> E_{CMS}: 4360MeV"
-          echo "--> Generation mode: psi(4415)->D2_(2460)D PHSH; D2_(2460)->DPiPi PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+          echo "--> Generation mode: psi(4415)->D2_(2460)D PHSH; D2_(2460)->DPIPI PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
           echo "--> Event Number: 500,000"
           echo "--> RunNo: 30616~31279"
           ;;
@@ -1527,7 +1539,7 @@ case $option in
     0.38) echo "signal MC of psi(4415)->D2_(2460)D(PHSP), D2_(2460)->DPIPI(PHSP) @4420MeV..."
           echo "--> Process: psi(4415)->D2_(2460)D, D2_(2460)->DPIPI"
           echo "--> E_{CMS}: 4420MeV"
-          echo "--> Generation mode: psi(4415)->D2_(2460)D PHSH; D2_(2460)->DPiPi PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+          echo "--> Generation mode: psi(4415)->D2_(2460)D PHSH; D2_(2460)->DPIPI PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
           echo "--> Event Number: 500,000"
           echo "--> RunNo: 31327~31390, 36773~38140"
           ;;
@@ -1574,7 +1586,7 @@ case $option in
     0.39) echo "signal MC of psi(4415)->D2_(2460)D(PHSP), D2_(2460)->DPIPI(PHSP) @4600MeV..."
           echo "--> Process: psi(4415)->D2_(2460)D, D2_(2460)->DPIPI"
           echo "--> E_{CMS}: 4600MeV"
-          echo "--> Generation mode: psi(4415)->D2_(2460)D PHSH; D2_(2460)->DPiPi PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+          echo "--> Generation mode: psi(4415)->D2_(2460)D PHSH; D2_(2460)->DPIPI PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
           echo "--> Event Number: 500,000"
           echo "--> RunNo: 35227~36213"
           ;;
@@ -1753,6 +1765,147 @@ case $option in
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600/rootfile/*root
             ./subAna.sh bkgMC_D_D_PI_PI_PHSP_4600
+            ;;
+
+    # -------------------------------------------------------------------------------
+    #  0.43 signal MC of psi(4415)->D_0(2300)DPI(PHSP), D_0(2300)->DPI(PHSP) @4360MeV
+    # -------------------------------------------------------------------------------
+    
+    0.43) echo "signal MC of psi(4415)->D0_(2300)DPI(PHSP), D0_(2300)->DPI(PHSP) @4360MeV..."
+          echo "--> Process: psi(4415)->D0_(2300)DPI, D0_(2300)->DPI"
+          echo "--> E_{CMS}: 4360MeV"
+          echo "--> Generation mode: psi(4415)->D0_(2300)DPI PHSH; D0_(2300)->DPI PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+          echo "--> Event Number: 500,000"
+          echo "--> RunNo: 30616~31279"
+          ;;
+
+    0.43.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
+            mkdir -p scripts/sigMC/D0_2300/4360
+            cd scripts/sigMC/D0_2300/4360
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D0_2300/4360/jobs_sig" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D0_2300/4360/jobs_sig
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D0_2300/4360/jobs_sig ./jobs_sig
+            fi
+            cd jobs_sig
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/rtraw
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/dst
+            rm -rf jobOptions*txt
+            rm -rf subSimRec_*.sh
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_D0_2300_D_PI_PHSP_4360.sh ./
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/rtraw/*.rtraw
+            ./jobOptions_sim_sig_D0_2300_D_PI_PHSP_4360.sh 0 99 5000
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_D0_2300_D_PI_PHSP_4360.sh ./
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/dst/*.dst
+            ./jobOptions_rec_sig_D0_2300_D_PI_PHSP_4360.sh 0 99
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
+            ./subSimRec.sh jobOptions_sim_sig_D0_2300_D_PI_PHSP_4360 jobOptions_rec_sig_D0_2300_D_PI_PHSP_4360 subSimRec 0 99
+            ;;
+
+    0.43.2) echo "Single D tag -- run on signal MC sample..."
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/rootfile
+            cd scripts/sigMC/D0_2300/4360/jobs_sig
+            rm -rf sigMC_D0_2300_D_PI_PHSP_4360_*txt
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
+            ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/dst sigMC D0_2300_D_PI PHSP D0_2300 4360 10
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
+            rm -rf *boss*
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/rootfile/*root
+            ./subAna.sh sigMC_D0_2300_D_PI_PHSP_4360
+            ;;
+
+    # -------------------------------------------------------------------------------
+    #  0.44 signal MC of psi(4415)->D_0(2300)DPI(PHSP), D_0(2300)->DPI(PHSP) @4420MeV
+    # -------------------------------------------------------------------------------
+    
+    0.44) echo "signal MC of psi(4415)->D0_(2300)DPI(PHSP), D0_(2300)->DPI(PHSP) @4420MeV..."
+          echo "--> Process: psi(4415)->D0_(2300)DPI, D0_(2300)->DPI"
+          echo "--> E_{CMS}: 4420MeV"
+          echo "--> Generation mode: psi(4415)->D0_(2300)DPI PHSH; D0_(2300)->DPI PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+          echo "--> Event Number: 500,000"
+          echo "--> RunNo: 31327~31390, 36773~38140"
+          ;;
+
+    0.44.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
+            mkdir -p scripts/sigMC/D0_2300/4420
+            cd scripts/sigMC/D0_2300/4420
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D0_2300/4420/jobs_sig" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D0_2300/4420/jobs_sig
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D0_2300/4420/jobs_sig ./jobs_sig
+            fi
+            cd jobs_sig
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/rtraw
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/dst
+            rm -rf jobOptions*txt
+            rm -rf subSimRec_*.sh
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_D0_2300_D_PI_PHSP_4420.sh ./
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/rtraw/*.rtraw
+            ./jobOptions_sim_sig_D0_2300_D_PI_PHSP_4420.sh 0 99 5000
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_D0_2300_D_PI_PHSP_4420.sh ./
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/dst/*.dst
+            ./jobOptions_rec_sig_D0_2300_D_PI_PHSP_4420.sh 0 99
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
+            ./subSimRec.sh jobOptions_sim_sig_D0_2300_D_PI_PHSP_4420 jobOptions_rec_sig_D0_2300_D_PI_PHSP_4420 subSimRec 0 99
+            ;;
+
+    0.44.2) echo "Single D tag -- run on signal MC sample..."
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/rootfile
+            cd scripts/sigMC/D0_2300/4420/jobs_sig
+            rm -rf sigMC_D0_2300_D_PI_PHSP_4420_*txt
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
+            ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/dst sigMC D0_2300_D_PI PHSP D0_2300 4420 10
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
+            rm -rf *boss*
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/rootfile/*root
+            ./subAna.sh sigMC_D0_2300_D_PI_PHSP_4420
+            ;;
+
+    # -------------------------------------------------------------------------------
+    #  0.45 signal MC of psi(4415)->D_0(2300)DPI(PHSP), D_0(2300)->DPI(PHSP) @4600MeV
+    # -------------------------------------------------------------------------------
+    
+    0.45) echo "signal MC of psi(4415)->D0_(2300)DPI(PHSP), D0_(2300)->DPI(PHSP) @4600MeV..."
+          echo "--> Process: psi(4415)->D0_(2300)DPI, D0_(2300)->DPI"
+          echo "--> E_{CMS}: 4600MeV"
+          echo "--> Generation mode: psi(4415)->D0_(2300)DPI PHSH; D0_(2300)->DPI PHSP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+          echo "--> Event Number: 500,000"
+          echo "--> RunNo: 35227~36213"
+          ;;
+
+    0.45.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
+            mkdir -p scripts/sigMC/D0_2300/4600
+            cd scripts/sigMC/D0_2300/4600
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D0_2300/4600/jobs_sig" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D0_2300/4600/jobs_sig
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D0_2300/4600/jobs_sig ./jobs_sig
+            fi
+            cd jobs_sig
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/rtraw
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/dst
+            rm -rf jobOptions*txt
+            rm -rf subSimRec_*.sh
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_D0_2300_D_PI_PHSP_4600.sh ./
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/rtraw/*.rtraw
+            ./jobOptions_sim_sig_D0_2300_D_PI_PHSP_4600.sh 0 99 5000
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_D0_2300_D_PI_PHSP_4600.sh ./
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/dst/*.dst
+            ./jobOptions_rec_sig_D0_2300_D_PI_PHSP_4600.sh 0 99
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
+            ./subSimRec.sh jobOptions_sim_sig_D0_2300_D_PI_PHSP_4600 jobOptions_rec_sig_D0_2300_D_PI_PHSP_4600 subSimRec 0 99
+            ;;
+
+    0.45.2) echo "Single D tag -- run on signal MC sample..."
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/rootfile
+            cd scripts/sigMC/D0_2300/4600/jobs_sig
+            rm -rf sigMC_D0_2300_D_PI_PHSP_4600_*txt
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
+            ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/dst sigMC D0_2300_D_PI PHSP D0_2300 4600 10
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
+            rm -rf *boss*
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/rootfile/*root
+            ./subAna.sh sigMC_D0_2300_D_PI_PHSP_4600
             ;;
 
 esac

@@ -144,3 +144,13 @@ python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4420/rootfi
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600/*signal*.root
 python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600/rootfile/bkgMC_D_D_PI_PI_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600/bkgMC_D_D_PI_PI_4600_signal.root 4.600 STDDmiss_signal
+# STDDmiss_signal MC: D0_2300
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/*signal*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/rootfile/sigMC_D0_2300_4360.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/sigMC_D0_2300_4360_signal.root 4.358 STDDmiss_signal
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/*signal*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/rootfile/sigMC_D0_2300_4420.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/sigMC_D0_2300_4420_signal.root 4.416 STDDmiss_signal
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/*signal*.root
+python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/rootfile/sigMC_D0_2300_4600.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/sigMC_D0_2300_4600_signal.root 4.600 STDDmiss_signal

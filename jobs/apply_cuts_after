@@ -164,3 +164,13 @@ python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4420/bkgMC_
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600/*after*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600/bkgMC_D_D_PI_PI_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4600/bkgMC_D_D_PI_PI_4600_after.root 4.600 after STDDmiss_signal
+# signal MC: D0_2300
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/sigMC_D0_2300_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/sigMC_D0_2300_4360_after.root 4.358 after STDDmiss_signal
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/sigMC_D0_2300_4420_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/sigMC_D0_2300_4420_after.root 4.416 after STDDmiss_signal
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/*after*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/sigMC_D0_2300_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/sigMC_D0_2300_4600_after.root 4.600 after STDDmiss_signal
