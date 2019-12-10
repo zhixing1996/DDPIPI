@@ -21,14 +21,14 @@ do
     fi
     mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/$PARAM_0
     cd jobs_data
-    rm -rf data*.txt
+    rm -rf data*txt
+    rm -rf *boss*
+    rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/$PARAM_0/*root
     cp -rf $HOME/bes/DDPIPI/v0.2/python/make_data.py ./
     chmod u+x make_data.py
     cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
     python make_data.py $PARAM_5 $PARAM_1 $PARAM_2 $PARAM_0
     cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/subAna.sh ./
     chmod u+x subAna.sh
-    rm -rf *boss*
-    rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/$PARAM_0/*root
     sh subAna.sh data
 done

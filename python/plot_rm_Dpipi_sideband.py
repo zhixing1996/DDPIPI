@@ -100,7 +100,7 @@ if __name__ == '__main__':
         xmin = 1.75
         xmax = 1.95
         xbins = 80
-        ymax = 1200
+        ymax = 500
         runNolow = 30616
         runNoup = 31279
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax)

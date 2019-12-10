@@ -170,12 +170,15 @@ case $option in
     0.2.6) echo "Get samples -- getting data sideband samples..."
            cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
            rm -rf data_4360_sideband.root
+           rm -rf data_4360_sideband_fit.root
            hadd data_4360_sideband.root data_4360_sideband*.root
            cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
            rm -rf data_4420_sideband.root
+           rm -rf data_4420_sideband_fit.root
            hadd data_4420_sideband.root data_4420_sideband*.root
            cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
            rm -rf data_4600_sideband.root
+           rm -rf data_4600_sideband_fit.root
            hadd data_4600_sideband.root data_4600_sideband*.root
            ;;
 

@@ -55,16 +55,20 @@ def save_before(path_in, path_out, cms, region):
         signal_up = 1.86965 + width(cms)/2.
         sidebandlow_up = signal_low - (signal_up - signal_low)
         sidebandlow_low = sidebandlow_up - (signal_up - signal_low)
-        cut_base = '(m_rawm_D > ' + str(sidebandlow_low) + '&& m_rawm_D < ' + str(sidebandlow_up) + ')'
-        cut = cut_base
+        cut_base = '(m_rawm_D > ' + str(sidebandlow_low) + '&& m_rawm_D < ' + str(sidebandlow_up) + ' && m_chi2_kf < 20)'
+        cut_KS = '!(m_m_pipi > 0.491036 && m_m_pipi < 0.503471)'
+        cut_Dst = '(m_m_Dpi0 < 2.0082 || m_m_Dpi0 > 2.01269)'
+        cut = cut_base + ' && ' + cut_KS + ' && ' + cut_Dst
 
     if region == 'raw_sidebandup':
         signal_low = 1.86965 - width(cms)/2.
         signal_up = 1.86965 + width(cms)/2.
         sidebandup_low = signal_up + (signal_up - signal_low)
         sidebandup_up = sidebandup_low + (signal_up - signal_low)
-        cut_base = '(m_rawm_D > ' + str(sidebandup_low) + '&& m_rawm_D < ' + str(sidebandup_up) + ')'
-        cut = cut_base
+        cut_base = '(m_rawm_D > ' + str(sidebandup_low) + '&& m_rawm_D < ' + str(sidebandup_up) + ' && m_chi2_kf < 20)'
+        cut_KS = '!(m_m_pipi > 0.491036 && m_m_pipi < 0.503471)'
+        cut_Dst = '(m_m_Dpi0 < 2.0082 || m_m_Dpi0 > 2.01269)'
+        cut = cut_base + ' && ' + cut_KS + ' && ' + cut_Dst
 
     if region == 'STDDmiss_signal':
         signal_low = 1.86965 - width(cms)/2.
