@@ -6,16 +6,16 @@ UPLIMIT=$2
 SEED=3020023
 ENERGYPOINT="4360"
 
-DIR_NAME="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4360/rtraw/"
+DIR_NAME="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4360/rtraw/"
 EVENT_NO=$3
 
-echo "./jobOptions_sim_sig_D2_2460_D_PHSP_4360.sh [NUM1] [NUM2] [NUM3]"
+echo "./jobOptions_sim_sig_D_D_PI_PI_PHSP_4360.sh [NUM1] [NUM2] [NUM3]"
 echo "[NUM1]: the minimum number range of job generated"
 echo "[NUM2]: the maximum number range of job generated"
 echo "[NUM3]: the number of events in one job"
 
-JOB_NAME="jobOptions_sim_sig_D2_2460_D_PHSP"
-FILE_NAME="Sig_D2_2460_D_PHSP"
+JOB_NAME="jobOptions_sim_sig_D_D_PI_PI_PHSP"
+FILE_NAME="Sig_D_D_PI_PI_PHSP"
 
 # steer file for simulation
 echo "steer file for simulation"
@@ -38,14 +38,14 @@ do
     echo "KKMC.GeneratePsi4415=true;" >> $SIM_NAME
     echo "KKMC.ResParameterPs6 = {4.35826, 74e-3, 0.47e-6};" >> $SIM_NAME
     echo "KKMC.ParticleDecayThroughEvtGen = true;" >> $SIM_NAME
-    echo "KKMC.ThresholdCut = 4.33;" >> $SIM_NAME # 4.35826 - 3*74e-3
+    echo "KKMC.ThresholdCut = 4.32;" >> $SIM_NAME # 4.35826 - 3*74e-3
     echo "KKMC.RadiationCorrection = 1;" >> $SIM_NAME
     echo "KKMC.TagISR = 1;" >> $SIM_NAME
     echo "KKMC.TagFSR = 1;" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "//**************job options for EvtGen************************" >> $SIM_NAME
     echo "#include \"\$BESEVTGENROOT/share/BesEvtGen.txt\"" >> $SIM_NAME
-    echo "EvtDecay.userDecayTableName = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/psi4415_D2_2460_D_PHSP.dec\";" >> $SIM_NAME
+    echo "EvtDecay.userDecayTableName = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/psi4415_D_D_PI_PI_PHSP.dec\";" >> $SIM_NAME
     echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/pdt_664p01.table\";" >> $SIM_NAME
     echo "EvtDecay.statDecays = true;" >> $SIM_NAME
     echo "" >> $SIM_NAME

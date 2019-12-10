@@ -45,7 +45,7 @@ do
     echo "//**************job options for EvtGen************************" >> $SIM_NAME
     echo "#include \"\$BESEVTGENROOT/share/BesEvtGen.txt\"" >> $SIM_NAME
     echo "EvtDecay.userDecayTableName = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/psi4415_X_3842_PI_PI_PHSP.dec\";" >> $SIM_NAME
-    echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/mypdt.table\";" >> $SIM_NAME
+    echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/pdt_664p01.table\";" >> $SIM_NAME
     echo "EvtDecay.statDecays = true;" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "//**************job options for random number************************" >> $SIM_NAME

@@ -4,18 +4,18 @@ INPUT=$1
 UPLIMIT=$2
 
 SEED=3020023
-ENERGYPOINT="4420"
+ENERGYPOINT="TEMP_0"
 
-DIR_NAME="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4420/rtraw/"
+DIR_NAME="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/TEMP_0/rtraw/"
 EVENT_NO=$3
 
-echo "./jobOptions_sim_bkg_D_D_PI_PI_PHSP_4420.sh [NUM1] [NUM2] [NUM3]"
+echo "./jobOptions_sim_sig_D_D_PI_PI_PHSP_TEMP_0.sh [NUM1] [NUM2] [NUM3]"
 echo "[NUM1]: the minimum number range of job generated"
 echo "[NUM2]: the maximum number range of job generated"
 echo "[NUM3]: the number of events in one job"
 
-JOB_NAME="jobOptions_sim_bkg_D_D_PI_PI_PHSP"
-FILE_NAME="Bkg_D_D_PI_PI_PHSP"
+JOB_NAME="jobOptions_sim_sig_D_D_PI_PI_PHSP"
+FILE_NAME="Sig_D_D_PI_PI_PHSP"
 
 # steer file for simulation
 echo "steer file for simulation"
@@ -32,12 +32,13 @@ do
     echo "" >> $SIM_NAME
     echo "//**************job options for generator (KKMC)************************" >> $SIM_NAME
     echo "#include \"\$KKMCROOT/share/jobOptions_KKMC.txt\"" >> $SIM_NAME
-    echo "KKMC.CMSEnergy = 4.415;" >> $SIM_NAME
-    echo "KKMC.BeamEnergySpread=0.00203;" >> $SIM_NAME
+    echo "KKMC.CMSEnergy = TEMP_3;" >> $SIM_NAME
+    echo "KKMC.BeamEnergySpread=0.0011;" >> $SIM_NAME
     echo "KKMC.NumberOfEventPrinted=10;" >> $SIM_NAME
     echo "KKMC.GeneratePsi4415=true;" >> $SIM_NAME
+    echo "KKMC.ResParameterPs6 = {TEMP_3, 74e-3, 0.47e-6};" >> $SIM_NAME
     echo "KKMC.ParticleDecayThroughEvtGen = true;" >> $SIM_NAME
-    echo "KKMC.ThresholdCut = 4.360;" >> $SIM_NAME
+    echo "KKMC.ThresholdCut = TEMP_6;" >> $SIM_NAME # 4.35826 - 3*74e-3
     echo "KKMC.RadiationCorrection = 1;" >> $SIM_NAME
     echo "KKMC.TagISR = 1;" >> $SIM_NAME
     echo "KKMC.TagFSR = 1;" >> $SIM_NAME
@@ -45,7 +46,7 @@ do
     echo "//**************job options for EvtGen************************" >> $SIM_NAME
     echo "#include \"\$BESEVTGENROOT/share/BesEvtGen.txt\"" >> $SIM_NAME
     echo "EvtDecay.userDecayTableName = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/psi4415_D_D_PI_PI_PHSP.dec\";" >> $SIM_NAME
-    echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/mypdt.table\";" >> $SIM_NAME
+    echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/pdt_703p01.table\";" >> $SIM_NAME
     echo "EvtDecay.statDecays = true;" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "//**************job options for random number************************" >> $SIM_NAME
@@ -58,7 +59,7 @@ do
     echo "#include \"\$CALIBSVCROOT/share/calibConfig_sim.txt\"" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "// run ID" >> $SIM_NAME
-    echo "RealizationSvc.RunIdList = {-31327, 0, -31390, -36773, 0, -38140};" >> $SIM_NAME
+    echo "RealizationSvc.RunIdList = {-TEMP_1, 0, -TEMP_2};" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "#include \"\$ROOTIOROOT/share/jobOptions_Digi2Root.txt\"" >> $SIM_NAME
     echo "RootCnvSvc.digiRootOutputFile = \"$DIR_NAME$OUTPUT_NAME\";" >> $SIM_NAME

@@ -3,19 +3,19 @@
 INPUT=$1
 UPLIMIT=$2
 
-echo "./jobOptions_rec_bkg_D_D_PI_PI_PHSP_4360.sh [NUM1] [NUM2]"
+echo "./jobOptions_rec_sig_D_D_PI_PI_PHSP_TEMP_0.sh [NUM1] [NUM2]"
 echo "[NUM1]: the minimum number range of job generated"
 echo "[NUM2]: the maximum number range of job generated"
 
 SEED=123
     
-DIR_NAME_RTRAW="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4360/rtraw/"
-DIR_NAME_DST="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/bkgMC/DDPIPI/4360/dst/"
+DIR_NAME_RTRAW="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/TEMP_0/rtraw/"
+DIR_NAME_DST="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/TEMP_0/dst/"
 EVENT_NO=-1
 
-JOB_NAME="jobOptions_rec_bkg_D_D_PI_PI_PHSP_4360"
-INPUT_NAME="Bkg_D_D_PI_PI_PHSP_4360"
-OUTPUT_NAME="Bkg_D_D_PI_PI_PHSP_4360"
+JOB_NAME="jobOptions_rec_sig_D_D_PI_PI_PHSP_TEMP_0"
+INPUT_NAME="Sig_D_D_PI_PI_PHSP_TEMP_0"
+OUTPUT_NAME="Sig_D_D_PI_PI_PHSP_TEMP_0"
 
 # steer file for reconstruction
 echo "steer file for reconstruction"
