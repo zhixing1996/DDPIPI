@@ -665,15 +665,23 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
             mD_low = M_Dplus - 4.* DELTAM;
             mD_up = M_Dplus + 4.* DELTAM;
         }
-        if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
+        else if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
             DELTAM = 0.019166/2.;
             mD_low = M_Dplus - 4.* DELTAM;
             mD_up = M_Dplus + 4.* DELTAM;
         }
-        if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
+        else if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
             DELTAM = 0.021238/2.;
             mD_low = M_Dplus - 4.* DELTAM;
             mD_up = M_Dplus + 4.* DELTAM;
+        }
+        else {
+            DELTAM = 0.021238/2.;
+            mD_low = M_Dplus - 4.* DELTAM;
+            mD_up = M_Dplus + 4.* DELTAM;
+        }
+        if (m_debug) {
+            std::cout << "M(Kpipi) range: [" << mD_low << ", " << mD_up << "]" << std::endl;
         }
         if (fabs((*dtag_iter)->mass() - mDcand) > 0.07) {
             continue;
@@ -1061,11 +1069,18 @@ double DDecayAlg::fitKM_STDDmiss(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpa
     if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
         cms = 4.358;
     }
-    if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
+    else if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
         cms = 4.416;
     }
-    if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
+    else if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
         cms = 4.600;
+    }
+    else {
+        cms = ECMS(fabs(runNo));
+    }
+    if (cms < 0) {
+        std::cout << "runNo " << fabs(runNo) << " missed, please check..." << std::endl; 
+        return -999;
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
@@ -1128,11 +1143,18 @@ double DDecayAlg::fitKM_STDDmiss_low(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwt
     if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
         cms = 4.358;
     }
-    if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
+    else if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
         cms = 4.416;
     }
-    if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
+    else if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
         cms = 4.600;
+    }
+    else {
+        cms = ECMS(fabs(runNo));
+    }
+    if (cms < 0) {
+        std::cout << "runNo " << fabs(runNo) << "missed, please check..." << std::endl; 
+        return -999;
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
@@ -1195,11 +1217,18 @@ double DDecayAlg::fitKM_STDDmiss_up(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
     if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
         cms = 4.358;
     }
-    if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
+    else if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
         cms = 4.416;
     }
-    if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
+    else if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
         cms = 4.600;
+    }
+    else {
+        cms = ECMS(fabs(runNo));
+    }
+    if (cms < 0) {
+        std::cout << "runNo " << fabs(runNo) << "missed, please check..." << std::endl; 
+        return -999;
     }
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
@@ -1368,7 +1397,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 low = 1.6;
                 up = 2.0;
             }
-            if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
+            else if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
                 cms = 4.416;
                 signal_low = M_Dplus - 0.0146666666667/2.;
                 signal_up = M_Dplus + 0.0146666666667/2.;
@@ -1379,7 +1408,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 low = 1.6;
                 up = 2.0;
             }
-            if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
+            else if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
                 cms = 4.600;
                 signal_low = M_Dplus - 0.018/2.;
                 signal_up = M_Dplus + 0.018/2.;
@@ -1389,6 +1418,21 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 sidebandlow_low = sidebandlow_up - (signal_up - signal_low);
                 low = 1.6;
                 up = 2.0;
+            }
+            else {
+                cms = ECMS(fabs(runNo));
+                signal_low = M_Dplus - 0.018/2.;
+                signal_up = M_Dplus + 0.018/2.;
+                sidebandup_low = signal_up + (signal_up - signal_low);
+                sidebandup_up = sidebandup_low + (signal_up - signal_low);
+                sidebandlow_up = signal_low - (signal_up - signal_low);
+                sidebandlow_low = sidebandlow_up - (signal_up - signal_low);
+                low = 1.6;
+                up = 2.0;
+            }
+            if (cms < 0) {
+                std::cout << "runNo " << fabs(runNo) << "missed, please check..." << std::endl; 
+                return false;
             }
             if (m_debug) {
                 std::cout << "Signal region, Sidebandup region, Sidebandlow_region..." << std::endl;
@@ -1681,6 +1725,39 @@ bool DDecayAlg::fitpi0_STDDmiss(VWTrkPara &vwtrkpara_photons, VertexParameter &b
         }
     }
     return true;
+}
+
+double DDecayAlg::ECMS(int runNo) {
+    if (runNo >= 47543 && runNo <= 48170) return 4.1888;
+    else if (runNo >= 30372 && runNo <= 30437) return 4.1886; 
+    else if (runNo >= 48172 && runNo <= 48713) return 4.1989;
+    else if (runNo >= 48714 && runNo <= 49239) return 4.2092;
+    else if (runNo >= 31983 && runNo <= 32045) return 4.2077;
+    else if (runNo >= 49270 && runNo <= 49787) return 4.2187;
+    else if (runNo >= 32046 && runNo <= 32140) return 4.2171;
+    else if (runNo >= 30438 && runNo <= 30491) return 4.2263;
+    else if (runNo >= 32239 && runNo <= 33484) return 4.2263;
+    else if (runNo >= 49788 && runNo <= 50254) return 4.2357;
+    else if (runNo >= 32141 && runNo <= 32226) return 4.2417;
+    else if (runNo >= 50255 && runNo <= 50793) return 4.2438;
+    else if (runNo >= 29677 && runNo <= 30367) return 4.25797;
+    else if (runNo >= 31561 && runNo <= 31981) return 4.25797;
+    else if (runNo >= 50796 && runNo <= 51302) return 4.2668; 
+    else if (runNo >= 51303 && runNo <= 51498) return 4.2777;
+    else if (runNo >= 30492 && runNo <= 30557) return 4.3079;
+    else if (runNo >= 30616 && runNo <= 31279) return 4.3583;
+    else if (runNo >= 31281 && runNo <= 31325) return 4.3874;
+    else if (runNo >= 36245 && runNo <= 36393) return 4.4671;
+    else if (runNo >= 36398 && runNo <= 36588) return 4.5271;
+    else if (runNo >= 59163 && runNo <= 59573) return 4.12848; 
+    else if (runNo >= 59574 && runNo <= 59896) return 4.15744;
+    else if (runNo >= 59902 && runNo <= 60363) return 4.28788;
+    else if (runNo >= 60364 && runNo <= 60805) return 4.31205;
+    else if (runNo >= 60808 && runNo <= 61242) return 4.33739;
+    else if (runNo >= 61249 && runNo <= 61762) return 4.37737;
+    else if (runNo >= 61763 && runNo <= 62285) return 4.39645;
+    else if (runNo >= 62286 && runNo <= 62823) return 4.43624;
+    else return -999;
 }
 
 void DDecayAlg::recordVariables() {

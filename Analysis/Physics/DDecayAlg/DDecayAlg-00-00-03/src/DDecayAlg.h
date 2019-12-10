@@ -293,5 +293,6 @@ class DDecayAlg : public Algorithm {
         bool saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth);
         bool saveOthershws();
         int MatchMC(HepLorentzVector &p4, std::string MODE);
+        double ECMS(int runNo);
 };
 #endif
