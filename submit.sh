@@ -1956,6 +1956,8 @@ case $option in
             ;;
 
     0.47.2) echo "Single D tag -- run on signal MC sample..."
+            cd scripts/gen_script/gen_mc
+            ./subAna_X_3842_703p01.sh
             ;;
 
     # ----------------------------------------------------------------------------------------------
@@ -1973,6 +1975,8 @@ case $option in
             ;;
 
     0.48.2) echo "Single D tag -- run on signal MC sample..."
+            cd scripts/gen_script/gen_mc
+            ./subAna_D1_2420_703p01.sh
             ;;
 
     # -------------------------------------------------------------------------------------------
@@ -1990,6 +1994,8 @@ case $option in
             ;;
 
     0.49.2) echo "Single D tag -- run on signal MC sample..."
+            cd scripts/gen_script/gen_mc
+            ./subAna_psipp_703p01.sh
             ;;
 
     # ----------------------------------------------------------------
@@ -2007,6 +2013,8 @@ case $option in
             ;;
 
     0.50.2) echo "Single D tag -- run on signal MC sample..."
+            cd scripts/gen_script/gen_mc
+            ./subAna_D_D_PI_PI_703p01.sh
             ;;
 
 esac
