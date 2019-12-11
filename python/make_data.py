@@ -41,7 +41,7 @@ def main():
     for runNo in range(int(runNo_low), int(runNo_up) + 1):
         dst_list = []
         print '***************************************start to search***************************************'
-        dst_list = search(dst_list, dst_path, str(runNo))
+        dst_list = search(dst_list, dst_path, '00' + str(runNo))
         print '***************************************searching ending**************************************'
         if dst_list:
             file_name = 'data'+str(runNo)+'.txt'
