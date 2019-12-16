@@ -52,6 +52,7 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.4.8"    "[D1_2420] Fit distributions -- perform simultaneous fit"
     printf "\n\t%-9s  %-40s\n" "0.4.9"    "[D1_2420] Fit distributions -- fit to RM(pipi)(with and without X(3842) signal)"
     printf "\n\t%-9s  %-40s\n" "0.4.10"   "[X_3842] Calculate numbers -- calculate upper limit number of X(3842)"
+    printf "\n\t%-9s  %-40s\n" "0.4.11"   "[DDPIPI] Get samples -- synthesize signal samples @703p01"
     
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -514,6 +515,16 @@ case $option in
             python fit_rm_pipi.py 4360 upper_limit
             python fit_rm_pipi.py 4420 upper_limit 
             python fit_rm_pipi.py 4600 upper_limit
+            ;;
+
+    0.4.11) echo "[DDPIPI] Get samples -- synthesizing signal samples @703p01..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data
+            ./synthesizeData_703p01.sh
+            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc
+            ./synthesizeD1_2420_703p01.sh
+            ./synthesizeDDPIPI_703p01.sh
+            ./synthesizepsipp_703p01.sh
+            ./synthesizeX_3842_703p01.sh
             ;;
 
 esac
