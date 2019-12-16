@@ -53,6 +53,7 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.4.9"    "[D1_2420] Fit distributions -- fit to RM(pipi)(with and without X(3842) signal)"
     printf "\n\t%-9s  %-40s\n" "0.4.10"   "[X_3842] Calculate numbers -- calculate upper limit number of X(3842)"
     printf "\n\t%-9s  %-40s\n" "0.4.11"   "[DDPIPI] Get samples -- synthesize signal samples @703p01"
+    printf "\n\t%-9s  %-40s\n" "0.4.12"   "[DDPIPI] Get samples -- Get samples -- extract useful info: raw and signal @703p01"
     
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -526,5 +527,49 @@ case $option in
             ./synthesizepsipp_703p01.sh
             ./synthesizeX_3842_703p01.sh
             ;;
+
+    0.4.12) echo "[DDPIPI] Get samples -- extracting useful info: raw and signal @703p01..."
+           mkdir -p scripts/ana/sel
+           cd scripts/ana/sel
+           if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana" ]; then
+               mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana
+               ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana ./jobs_ana
+           fi
+           cd jobs_ana
+           rm -rf jobs.out
+           rm -rf jobs.err
+           mkdir jobs.out
+           mkdir jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_703p01.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_703p01 .
+           echo "#!/bin/bash" > Data_Sub_703p01
+           echo "./getInfoData_703p01.sh" >> Data_Sub_703p01
+           chmod u+x Data_Sub_703p01
+           hep_sub -g physics Data_Sub_703p01 -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoD1_2420_703p01.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420_Base_703p01 .
+           echo "#!/bin/bash" > D1_2420_Sub_703p01
+           echo "./getInfoD1_2420_703p01.sh" >> D1_2420_Sub_703p01
+           chmod u+x D1_2420_Sub_703p01
+           hep_sub -g physics D1_2420_Sub_703p01 -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoDDPIPI_703p01.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI_Base_703p01 .
+           echo "#!/bin/bash" > DDPIPI_Sub_703p01
+           echo "./getInfoDDPIPI_703p01.sh" >> DDPIPI_Sub_703p01
+           chmod u+x DDPIPI_Sub_703p01
+           hep_sub -g physics DDPIPI_Sub_703p01 -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfopsipp_703p01.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp_Base_703p01 .
+           echo "#!/bin/bash" > psipp_Sub_703p01
+           echo "./getInfopsipp_703p01.sh" >> psipp_Sub_703p01
+           chmod u+x psipp_Sub_703p01
+           hep_sub -g physics psipp_Sub_703p01 -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoX_3842_703p01.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/X_3842_Base_703p01 .
+           echo "#!/bin/bash" > X_3842_Sub_703p01
+           echo "./getInfoX_3842_703p01.sh" >> X_3842_Sub_703p01
+           chmod u+x X_3842_Sub_703p01
+           hep_sub -g physics X_3842_Sub_703p01 -o jobs.out -e jobs.err
+           ;;
 
 esac
