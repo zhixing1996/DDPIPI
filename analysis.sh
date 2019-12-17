@@ -54,6 +54,9 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.4.10"   "[X_3842] Calculate numbers -- calculate upper limit number of X(3842)"
     printf "\n\t%-9s  %-40s\n" "0.4.11"   "[DDPIPI] Get samples -- synthesize signal samples @703p01"
     printf "\n\t%-9s  %-40s\n" "0.4.12"   "[DDPIPI] Get samples -- Get samples -- extract useful info: raw and signal @703p01"
+    printf "\n\t%-9s  %-40s\n" "0.4.13"   "[DDPIPI] && [X_3842] Get samples -- apply cuts @703p01"
+    printf "\n\t%-9s  %-40s\n" "0.4.14"   "[DDPIPI] Fit distributions -- fit to RM(Dpipi) @703p01"
+    printf "\n\t%-9s  %-40s\n" "0.4.15"   "[DDPIPI] Calculate numbers -- calculate cross sections"
     
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -523,7 +526,7 @@ case $option in
             ./synthesizeData_703p01.sh
             cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc
             ./synthesizeD1_2420_703p01.sh
-            ./synthesizeDDPIPI_703p01.sh
+            ./synthesizeD_D_PI_PI_703p01.sh
             ./synthesizepsipp_703p01.sh
             ./synthesizeX_3842_703p01.sh
             ;;
@@ -552,12 +555,12 @@ case $option in
            echo "./getInfoD1_2420_703p01.sh" >> D1_2420_Sub_703p01
            chmod u+x D1_2420_Sub_703p01
            hep_sub -g physics D1_2420_Sub_703p01 -o jobs.out -e jobs.err
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoDDPIPI_703p01.sh .
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI_Base_703p01 .
-           echo "#!/bin/bash" > DDPIPI_Sub_703p01
-           echo "./getInfoDDPIPI_703p01.sh" >> DDPIPI_Sub_703p01
-           chmod u+x DDPIPI_Sub_703p01
-           hep_sub -g physics DDPIPI_Sub_703p01 -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoD_D_PI_PI_703p01.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D_D_PI_PI_Base_703p01 .
+           echo "#!/bin/bash" > D_D_PI_PI_Sub_703p01
+           echo "./getInfoDDPIPI_703p01.sh" >> D_D_PI_PI_Sub_703p01
+           chmod u+x D_D_PI_PI_Sub_703p01
+           hep_sub -g physics D_D_PI_PI_Sub_703p01 -o jobs.out -e jobs.err
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfopsipp_703p01.sh .
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp_Base_703p01 .
            echo "#!/bin/bash" > psipp_Sub_703p01
@@ -571,5 +574,29 @@ case $option in
            chmod u+x X_3842_Sub_703p01
            hep_sub -g physics X_3842_Sub_703p01 -o jobs.out -e jobs.err
            ;;
+
+    0.4.13) echo "[DDPIPI] && [X_3842] Get samples -- applying cuts @703p01..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data
+            ./applyCutsData_703p01.sh
+            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc
+            ./applyCutsD1_2420_703p01.sh
+            ./applyCutsD_D_PI_PI_703p01.sh
+            ./applyCutspsipp_703p01.sh
+            ./applyCutsX_3842_703p01.sh
+            ;;
+
+    0.4.14) echo "[DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./fitRMDpipi_703p01.sh
+            ;;
+
+    0.4.15) echo "[DDPIPI] Calculate numbers -- calculating cross sections..."
+            cd $HOME/bes/DDPIPI/v0.2/python
+            python cal_xs.py 4360
+            python cal_xs.py 4420
+            python cal_xs.py 4600
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./calXS_703p01.sh
+            ;;
 
 esac

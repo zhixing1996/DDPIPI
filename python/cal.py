@@ -139,7 +139,7 @@ if __name__ == '__main__':
         energy = args[0]
         MODE = args[1]
     except:
-        logging.error('python plot_stat_match.py [energy] [MODE]: MODE = raw or cut')
+        logging.error('python cal.py [energy] [MODE]: MODE = raw or cut')
         sys.exit()
 
     if int(energy) == 4360:

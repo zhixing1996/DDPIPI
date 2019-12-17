@@ -160,17 +160,9 @@ def main():
 
     path_in = args[0]
     path_out = args[1]
-    ecms = float(args[2])
+    cms = int(args[2])
     MODE = args[3]
     region = args[4]
-
-    cms = 999
-    if ecms == 4.358:
-        cms = 4360
-    if ecms == 4.416:
-        cms = 4420
-    if ecms == 4.600:
-        cms = 4600
 
     print '--> Begin to process file: ' + path_in
     if MODE == 'before':

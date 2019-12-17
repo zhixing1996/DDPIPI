@@ -237,30 +237,128 @@ def scale_factor(energy, mode):
 
 # width for M(Kpipi)
 def width(ecms):
+    WIDTH = 999.
     if int(ecms) == 4360:
         WIDTH = 0.018648
     if int(ecms) == 4420:
         WIDTH = 0.019166
     if int(ecms) == 4600:
         WIDTH = 0.021238
+    if not (int(ecms) == 4360 or int(ecms) == 4420 or int(ecms) == 4600):
+        WIDTH = 0.021238
     return WIDTH
 
 # signal window for RM(Dpipi)
 def window(ecms):
+    WINDOW = 999.
     if int(ecms) == 4360:
         WINDOW = 0.0146666666667
     if int(ecms) == 4420:
         WINDOW = 0.0146666666667
     if int(ecms) == 4600:
         WINDOW = 0.018
+    if not (int(ecms) == 4360 or int(ecms) == 4420 or int(ecms) == 4600):
+        WINDOW = 0.018
     return WINDOW
 
 # chi2 of kinematic fit(missing method)
 def chi2_kf(ecms):
+    CHI2_KF = 999.
     if int(ecms) == 4360:
         CHI2_KF = 25.
     if int(ecms) == 4420:
         CHI2_KF = 15.
     if int(ecms) == 4600:
         CHI2_KF = 15.
+    if not (int(ecms) == 4360 or int(ecms) == 4420 or int(ecms) == 4600):
+        CHI2_KF = 25.
     return CHI2_KF
+
+# parameter of rm(Dpipi) fit: sigma of gaussion
+def sigma_up(ecms):
+    SIGMA_UP = 999.
+    if int(ecms) == 4190:
+        SIGMA_UP = 0.02
+    elif int(ecms) == 4200:
+        SIGMA_UP = 0.015
+    elif int(ecms) == 4530:
+        SIGMA_UP = 0.006
+    else:
+        SIGMA_UP = 0.01
+    return SIGMA_UP
+
+# essential parameters of XS calaulation
+def data_base(ecms):
+    if int(ecms) == 4190:
+        LUM = 570.03
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4200:
+        LUM = 526.0
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4210:
+        LUM = 572.05
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4220:
+        LUM = 569.2
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4230:
+        LUM = 1100.94
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4237:
+        LUM = 530.3
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4245:
+        LUM = 55.88
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4246:
+        LUM = 538.1
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4260:
+        LUM = 828.4
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4270:
+        LUM = 531.1
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4280:
+        LUM = 175.7
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
+    if int(ecms) == 4310:
+        LUM = 45.08
+        FRAC_D1_2420 = 0.5
+        FRAC_PSIPP = 0.5
+    if int(ecms) == 4360:
+        LUM = 539.84
+        FRAC_D1_2420 = 41.8/(41.8 + 17.3)
+        FRAC_PSIPP = 17.3/(41.8 + 17.3)
+    if int(ecms) == 4390:
+        LUM = 55.57
+        FRAC_D1_2420 = 0.5
+        FRAC_PSIPP = 0.5
+    if int(ecms) == 4420:
+        LUM = 44.67 + 1028.89
+        FRAC_D1_2420 = 65.4/(65.4 + 23.8)
+        FRAC_PSIPP = 23.8/(65.4 + 23.8)
+    if int(ecms) == 4470:
+        LUM = 111.09
+        FRAC_D1_2420 = 0.5
+        FRAC_PSIPP = 0.5
+    if int(ecms) == 4530:
+        LUM = 112.12
+        FRAC_D1_2420 = 0.5
+        FRAC_PSIPP = 0.5
+    if int(ecms) == 4600:
+        LUM = 566.93
+        FRAC_D1_2420 = 27.7/(27.7 + 7.2)
+        FRAC_PSIPP = 7.2/(27.7 + 7.2)
+    return FRAC_D1_2420, FRAC_PSIPP, LUM
