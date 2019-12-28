@@ -45,16 +45,6 @@ hadd sigMC_psipp_4420.root *.root
 cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/rootfile
 rm -rf sigMC_psipp_4600.root
 hadd sigMC_psipp_4600.root *.root
-# signal MC: D2(2460)
-cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4360/rootfile
-rm -rf sigMC_D2_2460_4360.root
-hadd sigMC_D2_2460_4360.root *.root
-cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4420/rootfile
-rm -rf sigMC_D2_2460_4420.root
-hadd sigMC_D2_2460_4420.root *.root
-cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D2_2460/4600/rootfile
-rm -rf sigMC_D2_2460_4600.root
-hadd sigMC_D2_2460_4600.root *.root
 # inclusive MC: DD
 cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile
 rm -rf incMC_DD_4360.root
@@ -148,13 +138,3 @@ hadd sigMC_D_D_PI_PI_4420.root *.root
 cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/rootfile
 rm -rf sigMC_D_D_PI_PI_4600.root
 hadd sigMC_D_D_PI_PI_4600.root *.root
-# signal MC: D0(2300)
-cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4360/rootfile
-rm -rf sigMC_D0_2300_4360.root
-hadd sigMC_D0_2300_4360.root *.root
-cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4420/rootfile
-rm -rf sigMC_D0_2300_4420.root
-hadd sigMC_D0_2300_4420.root *.root
-cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D0_2300/4600/rootfile
-rm -rf sigMC_D0_2300_4600.root
-hadd sigMC_D0_2300_4600.root *.root

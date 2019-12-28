@@ -134,9 +134,9 @@ def set_root_style(stat=0, grid=0, PadTopMargin=0.08, PadBottomMargin=0.08,
     ROOT.gStyle.SetStatColor(0)
     ROOT.gStyle.SetStatBorderSize(1)
     
-def scale_factor(energy, mode):
+def scale_factor(ecms, mode):
     BR = 0.0938
-    if int(energy) == 4360:
+    if int(ecms) == 4360:
         lum = 543.9
         if mode == 'D1_2420':
             XS = 41.8*BR
@@ -174,7 +174,7 @@ def scale_factor(energy, mode):
         if mode == 'hadrons':
             XS = 249.9
             Evt = 190000.0
-    if int(energy) == 4420:
+    if int(ecms) == 4420:
         lum = 46.80 + 1043.9
         if mode == 'D1_2420':
             XS = 65.4*BR
@@ -200,7 +200,7 @@ def scale_factor(energy, mode):
         if mode == 'digamma':
             XS = 18600.0
             Evt = 18000000.0
-    if int(energy) == 4600:
+    if int(ecms) == 4600:
         lum = 586.9
         if mode == 'D1_2420':
             XS = 27.7*BR

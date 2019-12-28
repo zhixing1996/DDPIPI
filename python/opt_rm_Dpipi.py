@@ -205,16 +205,15 @@ def main():
     args = sys.argv[1:]
     if len(args)<1:
         return usage()
-    energy = args[0]
+    ecms = args[0]
 
     path = []
-    if int(energy) == 4360:
+    if int(ecms) == 4360:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_raw.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_raw.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw.root')
         pt_title = '(a)'
-        ecms = 4360
         arrow_left = 15
         arrow_right = 15
         arrow_bottom = 0
@@ -222,13 +221,12 @@ def main():
         plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
     path = []
-    if int(energy) == 4420:
+    if int(ecms) == 4420:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_raw.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_raw.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw.root')
         pt_title = '(b)'
-        ecms = 4420
         arrow_left = 15
         arrow_right = 15
         arrow_bottom = 0
@@ -236,13 +234,12 @@ def main():
         plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
     path = []
-    if int(energy) == 4600:
+    if int(ecms) == 4600:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_raw.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_raw.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw.root')
         pt_title = '(c)'
-        ecms = 4600
         arrow_left = 15
         arrow_right = 15
         arrow_bottom = 0

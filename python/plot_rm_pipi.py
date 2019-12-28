@@ -168,11 +168,11 @@ if __name__ == '__main__':
     args = sys.argv[1:]
     if len(args)<2:
         return usage()
-    energy = args[0]
+    ecms = args[0]
     mode = args[1]
 
     path = []
-    if int(energy) == 4360:
+    if int(ecms) == 4360:
         if mode == 'before':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root')
@@ -204,12 +204,11 @@ if __name__ == '__main__':
             xmax = 3.9
             xbins = 40
         leg_title = '(a)'
-        ecms = 4360
         runNolow = 30616
         runNoup = 31279
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax, mode)
 
-    if int(energy) == 4420:
+    if int(ecms) == 4420:
         if mode == 'before':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root')
@@ -241,12 +240,11 @@ if __name__ == '__main__':
             xmax = 3.9
             xbins = 40
         leg_title = '(b)'
-        ecms = 4420
         runNolow = 36773
         runNoup = 38140
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax, mode)
 
-    if int(energy) == 4600:
+    if int(ecms) == 4600:
         if mode == 'before':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root')
@@ -278,7 +276,6 @@ if __name__ == '__main__':
             xmax = 3.9
             xbins = 50
         leg_title = '(c)'
-        ecms = 4600
         runNolow = 35227
         runNoup = 35743
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax, mode)
