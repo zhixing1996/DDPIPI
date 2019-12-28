@@ -20,7 +20,7 @@ Login with lxslc7 and use hep_container shell SL5 to enter lxslc5
 
 ## Initialize BOSS
 
-BOSS version 6.6.4.p01(inclusive MC), 6.6.5.p01(R-scan data), 7.0.3.p01(XYZ data)
+BOSS version 6.6.4.p01(topology analysis), 6.6.5.p01(R-scan data), 7.0.3.p01(XYZ data, inclusive MC)
 
 > NOTE: *****When you do simulation and reconstruction under 665p01, the environment has to be set by the way of lig(boss_envirenmet.csh)*****
 
