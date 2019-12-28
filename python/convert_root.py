@@ -33,7 +33,7 @@ DATE
     November 2019
 \n''')
 
-def convert(path_in, path_out, mode):
+def convert(path_in, path_out, mode, ecms):
     for i in xrange(len(path_in)):
         try:
             f_in = TFile(path_in[i])
@@ -51,9 +51,14 @@ def convert(path_in, path_out, mode):
         m_rm_D = array('d', [999.])
         t_out.Branch('rm_D', m_rm_D, 'm_rm_D/D')
 
+        low, up, temp = param_rm_D(ecms)
         nentries = t_in.GetEntries()
         for ientry in xrange(nentries):
             t_in.GetEntry(ientry)
+            if t_in.m_rm_D < low or t_in.m_rm_D > up:
+                continue
+            if t_in.m_rm_Dmiss < low or t_in.m_rm_Dmiss > up:
+                continue
             m_rm_D[0] = t_in.m_rm_D
             t_out.Fill()
             m_rm_D[0] = t_in.m_rm_Dmiss
@@ -68,54 +73,37 @@ def main():
     args = sys.argv[1:]
     if len(args)<1:
         return usage()
-
     ecms = int(args[0])
 
     path_in = []
     path_out = []
     mode = []
-    if ecms == 4360:
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_after.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_after.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_after.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_fit.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sideband_fit.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_fit.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_fit.root')
+    if ecms >= 4290:
+        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_after.root')
+        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_sideband.root')
+        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_after.root')
+        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_after.root')
+        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_fit.root')
+        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_sideband_fit.root')
+        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_fit.root')
+        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_fit.root')
         mode.append('data')
         mode.append('sideband')
         mode.append('D1_2420')
         mode.append('psipp')
-        convert(path_in, path_out, mode)
-    if ecms == 4420:
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_after.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_sideband.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_after.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_after.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_fit.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_sideband_fit.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_fit.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_fit.root')
+        convert(path_in, path_out, mode, ecms)
+
+    if ecms < 4290:
+        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_after.root')
+        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_sideband.root')
+        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_after.root')
+        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_fit.root')
+        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_sideband_fit.root')
+        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_fit.root')
         mode.append('data')
         mode.append('sideband')
-        mode.append('D1_2420')
         mode.append('psipp')
-        convert(path_in, path_out, mode)
-    if ecms == 4600:
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_after.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_after.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_fit.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sideband_fit.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_fit.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_fit.root')
-        mode.append('data')
-        mode.append('sideband')
-        mode.append('D1_2420')
-        mode.append('psipp')
-        convert(path_in, path_out, mode)
+        convert(path_in, path_out, mode, ecms)
 
 if __name__ == '__main__':
     main()

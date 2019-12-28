@@ -18,6 +18,21 @@ logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %
 gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
 
+def usage():
+    sys.stdout.write('''
+NAME
+    plot_chi2_kf.py
+
+SYNOPSIS
+    ./plot_chi2_kf.py [ecms]
+
+AUTHOR
+    Maoqiang JING <jingmq@ihep.ac.cn>
+
+DATE
+    September 2019
+\n''')
+
 def set_legend(legend, h1, h2, title):
     legend.AddEntry(h1, 'data')
     legend.AddEntry(h2, 'X(3842)#pi^{+}#pi^{-}')
@@ -106,28 +121,27 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax):
 
 if __name__ == '__main__':
     args = sys.argv[1:]
-    energy = args[0]
+    if len(args)<1:
+        return usage()
+    ecms = args[0]
 
-    if int(energy) == 4360:
+    if int(ecms) == 4360:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
         sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
         leg_title = '(b)'
-        ecms = 4360
         ymax = 250
         plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
-    if int(energy) == 4420:
+    if int(ecms) == 4420:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
         sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_signal.root'
         leg_title = '(b)'
-        ecms = 4420
         ymax = 700
         plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
-    if int(energy) == 4600:
+    if int(ecms) == 4600:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
         sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
         leg_title = '(b)'
-        ecms = 4600
         ymax = 400
         plot(data_path, sigMC_path, leg_title, ecms, ymax)

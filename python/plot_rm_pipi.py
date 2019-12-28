@@ -19,6 +19,21 @@ gStyle.SetOptTitle(0) # quench title
 gStyle.SetPadTickX(1) # dicide on boxing on or not of x and y axis  
 gStyle.SetPadTickY(1) # dicide on boxing on or not of x and y axis
 
+def usage():
+    sys.stdout.write('''
+NAME
+    plot_rm_pipi.py
+
+SYNOPSIS
+    ./plot_rm_pipi.py [ecms] [mode]
+
+AUTHOR
+    Maoqiang JING <jingmq@ihep.ac.cn>
+
+DATE
+    November 2019
+\n''')
+
 def set_legend(legend, h1, h2, h3, h4, h5, title):
     legend.AddEntry(h1, 'data')
     legend.AddEntry(h2, 'inclusive MC: open charm')
@@ -151,6 +166,8 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax, mode
 
 if __name__ == '__main__':
     args = sys.argv[1:]
+    if len(args)<2:
+        return usage()
     energy = args[0]
     mode = args[1]
 

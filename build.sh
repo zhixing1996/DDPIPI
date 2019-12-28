@@ -26,16 +26,22 @@ fi
 
 case $option in
     1) echo "Building DDecay analyzer: DDecayAlg-00-00-01..."
+       rm -rf Analysis/Physics/DDecayAlg/DDecayAlg-00-00-01/x86_*/
        cd Analysis/Physics/DDecayAlg/DDecayAlg-00-00-01/cmt
+       cmt config
        gmake
        ;;
     2) echo "Building DDecay analyzer: DDecayAlg-00-00-02..."
+       rm -rf Analysis/Physics/DDecayAlg/DDecayAlg-00-00-02/x86_*/
        cd Analysis/Physics/DDecayAlg/DDecayAlg-00-00-02/cmt
+       cmt config
        gmake
        ;;
 
     3) echo "Building DDecay analyzer: DDecayAlg-00-00-03..."
+       rm -rf Analysis/Physics/DDecayAlg/DDecayAlg-00-00-03/x86_*/
        cd Analysis/Physics/DDecayAlg/DDecayAlg-00-00-03/cmt
+       cmt config
        gmake
        ;;
 

@@ -104,7 +104,7 @@ def fit(path, ecms, mode):
         f_data = TFile(path[0])
         t_data = f_data.Get('save')
         entries_data = t_data.GetEntries()
-        logging.info('data entries :'+str(entries_data))
+        logging.info('Entries :'+str(entries_data))
     except:
         logging.error('File paths are invalid!')
 
@@ -121,7 +121,7 @@ def fit(path, ecms, mode):
         xbins = 100
         rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
         data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
-    if mode == 'D1_2420' or mode == 'psipp':
+    if mode == 'D1_2420' or mode == 'psipp' or mode == 'DDPIPI':
         xmin = 1.84
         xmax = 1.9
         xbins = 30
@@ -145,13 +145,15 @@ def fit(path, ecms, mode):
     d = RooRealVar('c', 'c', 0, -99, 99)
     if mode == 'data':
         bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
-    if mode == 'D1_2420' or mode == 'psipp':
+    if mode == 'D1_2420' or mode == 'psipp' or mode == 'DDPIPI':
         if not ecms == 4600:
             bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b, c))
         if ecms == 4600:
             if mode == 'D1_2420':
                 bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
             if mode == 'psipp':
+                bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
+            if mode == 'DDPIPI':
                 bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
 
     # event number
@@ -174,37 +176,6 @@ def fit(path, ecms, mode):
     set_xframe_style(xframe, xtitle, ytitle)
     xframe.Draw()
 
-    if mode == 'data':
-        window_low = 1.86965 - window(ecms)/2.
-        window_up = 1.86965 + window(ecms)/2.
-        windowlow_up = window_low - (window_up - window_low)
-        windowlow_low = windowlow_up - (window_up - window_low)
-        windowup_low = window_up + (window_up - window_low)
-        windowup_up = windowup_low + (window_up - window_low)
-        rm_Dpipi.setRange('srange', window_low, window_up)
-        rm_Dpipi.setRange('sbrangel', windowlow_low, windowlow_up)
-        rm_Dpipi.setRange('sbrangeh', windowup_low, windowup_up)
-        nsrange = bkgpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('srange'))
-        nsbrangel = bkgpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('sbrangel'))
-        nsbrangeh = bkgpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('sbrangeh'))
-        S_srv = nsrange.getVal()*(nbkg.getVal()) + nsig.getVal()
-        srv = nsrange.getVal()*nbkg.getVal()
-        srv_err = nsrange.getVal()*nbkg.getError()
-        sbrlv = nsbrangel.getVal()*nbkg.getVal()
-        sbrhv = nsbrangeh.getVal()*nbkg.getVal()
-        out1 = 'S_srv: ' + str(S_srv) + ' srv: ' + str(srv) + ' srv_err: ' + str(srv_err) + ' sbrlv: ' + str(sbrlv) + ' sbrhv: ' + str(sbrhv)
-        out2 = 'nsrange: ' + str(nsrange.getVal()) + ' nsbrangl: ' + str(nsbrangel.getVal()) + ' nsbrangeh: ' + str(nsbrangeh.getVal())
-        print out1
-        print out2
-
-        if not os.path.exists('./txts/'):
-            os.makedirs('./txts/')
-        path_bkg = './txts/background_events_'+ str(ecms) +'.txt'
-        f_bkg = open(path_bkg, 'w')
-        f_bkg.write(out1)
-        f_bkg.write(out2)
-        f_bkg.close()
-
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
     mbc.SaveAs('./figs/fit_rm_Dpipi_'+str(ecms)+'_'+mode+'.pdf')
@@ -213,7 +184,8 @@ def fit(path, ecms, mode):
         os.makedirs('./txts/')
     path_sig = './txts/' + mode + '_signal_events_'+ str(ecms) +'.txt'
     f_sig = open(path_sig, 'w')
-    f_sig.write(str(nsig.getVal()))
+    out = str(nsig.getVal()) + ' ' + str(nsig.getError()) + '\n'
+    f_sig.write(out)
     f_sig.close()
 
     range = 'Mass Region: [' + str(mean.getVal() - 3*sigma.getVal()) + ', ' + str(mean.getVal() + 3*sigma.getVal()) + ']'
@@ -223,47 +195,19 @@ def main():
     args = sys.argv[1:]
     if len(args)<2:
         return usage()
-
     ecms = int(args[0])
     mode = args[1]
 
     path = []
-
-    if ecms == 4360:
-        if mode == 'data':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw_before.root')
-        if mode == 'D1_2420':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw_before.root')
-        if mode == 'psipp':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw_before.root')
-        fit(path, ecms, mode)
-
-    if ecms == 4420:
-        if mode == 'data':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw_before.root')
-        if mode == 'D1_2420':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw_before.root')
-        if mode == 'psipp':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw_before.root')
-        fit(path, ecms, mode)
-
-    if ecms == 4600:
-        if mode == 'data':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw_before.root')
-        if mode == 'D1_2420':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw_before.root')
-        if mode == 'psipp':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw_before.root')
-        fit(path, ecms, mode)
-
-    if not (ecms == 4360 or ecms == 4420 or ecms == 4600):
-        if mode == 'data':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
-        if mode == 'D1_2420':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_raw_before.root')
-        if mode == 'psipp':
-            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw_before.root')
-        fit(path, ecms, mode)
+    if mode == 'data':
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
+    if mode == 'D1_2420':
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_raw_before.root')
+    if mode == 'psipp':
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw_before.root')
+    if mode == 'DDPIPI':
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
+    fit(path, ecms, mode)
 
 if __name__ == '__main__':
     main()

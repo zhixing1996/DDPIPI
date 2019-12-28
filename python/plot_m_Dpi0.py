@@ -19,6 +19,21 @@ gStyle.SetOptTitle(0) # quench title
 gStyle.SetPadTickX(1) # dicide on boxing on or not of x and y axis  
 gStyle.SetPadTickY(1) # dicide on boxing on or not of x and y axis
 
+def usage():
+    sys.stdout.write('''
+NAME
+    plot_m_Dpi0.py
+
+SYNOPSIS
+    ./plot_m_Dpi0.py [ecms]
+
+AUTHOR
+    Maoqiang JING <jingmq@ihep.ac.cn>
+
+DATE
+    November 2019
+\n''')
+
 def set_legend(legend, h1, h2, h3, h4, h5, title):
     legend.AddEntry(h1, 'data')
     legend.AddEntry(h2, 'inclusive MC: open charm')
@@ -151,17 +166,18 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax):
 
 if __name__ == '__main__':
     args = sys.argv[1:]
-    energy = args[0]
+    if len(args)<1:
+        return usage()
+    ecms = args[0]
 
     path = []
-    if int(energy) == 4360:
+    if int(ecms) == 4360:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root')
-        leg_title = '(b)'
-        ecms = 4360
+        leg_title = '(a)'
         xmin = 2.004
         xmax = 2.018
         xbins = 75
@@ -171,14 +187,13 @@ if __name__ == '__main__':
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax)
 
     path = []
-    if int(energy) == 4420:
+    if int(ecms) == 4420:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root')
         leg_title = '(b)'
-        ecms = 4420
         xmin = 2.004
         xmax = 2.018
         xbins = 75
@@ -188,14 +203,13 @@ if __name__ == '__main__':
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax)
 
     path = []
-    if int(energy) == 4600:
+    if int(ecms) == 4600:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_before.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root')
-        leg_title = '(b)'
-        ecms = 4600
+        leg_title = '(c)'
         xmin = 2.004
         xmax = 2.018
         xbins = 75

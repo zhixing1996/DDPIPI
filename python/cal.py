@@ -18,18 +18,18 @@ logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %
 gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
 
-def cal(t1, t2, t3, t4, ecms, MODE, runNolow, runNoup):
+def cal(t1, t2, t3, t4, ecms, mode, runNolow, runNoup):
     N1 = 0
     for ientry in xrange(t1.GetEntries()):
         t1.GetEntry(ientry)
         if fabs(t1.m_runNo) <= runNolow or fabs(t1.m_runNo) >= runNoup:
             continue
-        if MODE == 'raw':
+        if mode == 'raw':
             N1 += 1
-        if MODE == 'cut1':
+        if mode == 'cut1':
             if not ((t1.m_m_pipi > 0.491036 and t1.m_m_pipi < 0.503471) and t1.m_ctau_svf > 0.5):
                 N1 += 1
-        if MODE == 'cut2':
+        if mode == 'cut2':
             if not ((t1.m_m_pipi > 0.491036 and t1.m_m_pipi < 0.503471) and t1.m_ctau_svf > 0.5):
                 if (t1.m_m_Dpi0 < 2.0082 or t1.m_m_Dpi0 > 2.01269):
                     N1 += 1
@@ -38,12 +38,12 @@ def cal(t1, t2, t3, t4, ecms, MODE, runNolow, runNoup):
         t2.GetEntry(ientry)
         if fabs(t2.m_runNo) <= runNolow or fabs(t2.m_runNo) >= runNoup:
             continue
-        if MODE == 'raw':
+        if mode == 'raw':
             N2 += 1
-        if MODE == 'cut1':
+        if mode == 'cut1':
             if not ((t2.m_m_pipi > 0.491036 and t2.m_m_pipi < 0.503471) and t2.m_ctau_svf > 0.5):
                 N2 += 1
-        if MODE == 'cut2':
+        if mode == 'cut2':
             if not ((t2.m_m_pipi > 0.491036 and t2.m_m_pipi < 0.503471) and t2.m_ctau_svf > 0.5):
                 if (t2.m_m_Dpi0 < 2.0082 or t2.m_m_Dpi0 > 2.01269):
                     N2 += 1
@@ -52,12 +52,12 @@ def cal(t1, t2, t3, t4, ecms, MODE, runNolow, runNoup):
         t3.GetEntry(ientry)
         if fabs(t3.m_runNo) <= runNolow or fabs(t3.m_runNo) >= runNoup:
             continue
-        if MODE == 'raw':
+        if mode == 'raw':
             N3 += 1
-        if MODE == 'cut1':
+        if mode == 'cut1':
             if not ((t3.m_m_pipi > 0.491036 and t3.m_m_pipi < 0.503471) and t3.m_ctau_svf > 0.5):
                 N3 += 1
-        if MODE == 'cut2':
+        if mode == 'cut2':
             if not ((t3.m_m_pipi > 0.491036 and t3.m_m_pipi < 0.503471) and t3.m_ctau_svf > 0.5):
                 if (t3.m_m_Dpi0 < 2.0082 or t3.m_m_Dpi0 > 2.01269):
                     N3 += 1
@@ -66,12 +66,12 @@ def cal(t1, t2, t3, t4, ecms, MODE, runNolow, runNoup):
         t4.GetEntry(ientry)
         if fabs(t4.m_runNo) <= runNolow or fabs(t4.m_runNo) >= runNoup:
             continue
-        if MODE == 'raw':
+        if mode == 'raw':
             N4 += 1
-        if MODE == 'cut1':
+        if mode == 'cut1':
             if not ((t4.m_m_pipi > 0.491036 and t4.m_m_pipi < 0.503471) and t4.m_ctau_svf > 0.5):
                 N4 += 1
-        if MODE == 'cut2':
+        if mode == 'cut2':
             if not ((t4.m_m_pipi > 0.491036 and t4.m_m_pipi < 0.503471) and t4.m_ctau_svf > 0.5):
                 if (t4.m_m_Dpi0 < 2.0082 or t4.m_m_Dpi0 > 2.01269):
                     N4 += 1
@@ -99,17 +99,17 @@ def cal(t1, t2, t3, t4, ecms, MODE, runNolow, runNoup):
         scale4 = scale_factor(ecms, 'qq')
 
     significance = (N1*scale1 + N2*scale2)/sqrt(N1*scale1+ N2*scale2 + N3*scale3 + N4*scale4)
-    print 'sigificance of ' + MODE + ': ' + str(significance)
+    print 'sigificance of ' + mode + ': ' + str(significance)
     eff1 = N1/500000.
     eff2 = N2/500000.
     eff3 = N3/NDD/0.0938
     eff4 = N4/Nqq/0.0938
-    print 'efficiency of D1(2420): ' + '(' + MODE + ')' + ': ' + str(eff1)
-    print 'efficiency of psipp: ' + '(' + MODE + ')' + ': ' + str(eff2)
-    print 'efficiency of open charm' + '(' + MODE + ')' + ': ' + str(eff3)
-    print 'efficiency of qqbar: ' + '(' + MODE + ')' + ': ' + str(eff4)
+    print 'efficiency of D1(2420): ' + '(' + mode + ')' + ': ' + str(eff1)
+    print 'efficiency of psipp: ' + '(' + mode + ')' + ': ' + str(eff2)
+    print 'efficiency of open charm' + '(' + mode + ')' + ': ' + str(eff3)
+    print 'efficiency of qqbar: ' + '(' + mode + ')' + ': ' + str(eff4)
 
-def content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, MODE, runNolow, runNoup):
+def content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, mode, runNolow, runNoup):
     try:
         f_incMC1 = TFile(incMC1_path)
         f_incMC2 = TFile(incMC2_path)
@@ -131,43 +131,40 @@ def content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, MODE, runN
         logging.error('File is invalid!')
         sys.exit()
 
-    cal(t_sigMC1, t_sigMC2, t_incMC1, t_incMC2, ecms, MODE, runNolow, runNoup)
+    cal(t_sigMC1, t_sigMC2, t_incMC1, t_incMC2, ecms, mode, runNolow, runNoup)
     
 if __name__ == '__main__':
     try:
         args = sys.argv[1:]
-        energy = args[0]
-        MODE = args[1]
+        ecms = args[0]
+        mode = args[1]
     except:
-        logging.error('python cal.py [energy] [MODE]: MODE = raw or cut')
+        logging.error('python cal.py [ecms] [mode]: mode = raw or cutN, N = 1, 2')
         sys.exit()
 
-    if int(energy) == 4360:
+    if int(ecms) == 4360:
         incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root'
         incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root'
         sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_before.root'
         sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root'
-        ecms = 4360
         runNolow = 30616
         runNoup = 31279
-        content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, MODE, runNolow, runNoup)
+        content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, mode, runNolow, runNoup)
 
-    if int(energy) == 4420:
+    if int(ecms) == 4420:
         incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root'
         incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root'
         sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root'
         sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root'
-        ecms = 4420
         runNolow = 36773
         runNoup = 38140
-        content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, MODE, runNolow, runNoup)
+        content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, mode, runNolow, runNoup)
 
-    if int(energy) == 4600:
+    if int(ecms) == 4600:
         incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root'
         incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_before.root'
         sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_before.root'
         sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root'
-        ecms = 4600
         runNolow = 35227
         runNoup = 36213
-        content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, MODE, runNolow, runNoup)
+        content(incMC1_path, incMC2_path, sigMC1_path, sigMC2_path, ecms, mode, runNolow, runNoup)

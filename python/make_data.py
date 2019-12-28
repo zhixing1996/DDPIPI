@@ -17,7 +17,7 @@ NAME
     make_data.py 
 
 SYNOPSIS
-    ./make_data.py [dst_file_path] [runNo_low] [runNo_up] [energy]
+    ./make_data.py [dst_path] [runNo_low] [runNo_up] [ecms]
 
 AUTHOR 
     Maoqiang JING <jingmq@ihep.ac.cn> 
@@ -31,11 +31,10 @@ def main():
     args = sys.argv[1:]
     if len(args) < 3:
         return usage()
-    
     dst_path = args[0]
     runNo_low = args[1]
     runNo_up = args[2]
-    energy = args[3]
+    ecms = args[3]
     sys.stdout.write('Scanning %s...\n' %dst_path)
 
     for runNo in range(int(runNo_low), int(runNo_up) + 1):
@@ -86,7 +85,7 @@ def main():
             f.write('ApplicationMgr.EvtMax = -1;\n')
             f.write('\n')
             f.write('ApplicationMgr.HistogramPersistency = "ROOT";\n')
-            f.write('NTupleSvc.Output = {\"FILE1 DATAFILE=\'/scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/' + energy + '/' + 'data' + str(runNo) + '.root\' OPT=\'NEW\' TYP=\'ROOT\'\"};\n')
+            f.write('NTupleSvc.Output = {\"FILE1 DATAFILE=\'/scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/' + ecms + '/' + 'data' + str(runNo) + '.root\' OPT=\'NEW\' TYP=\'ROOT\'\"};\n')
             f.close()
         else:
             print 'runNo: ' + str(runNo) + ' is empty, just ignore it!'

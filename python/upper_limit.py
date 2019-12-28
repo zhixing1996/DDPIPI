@@ -29,7 +29,7 @@ NAME
     upper_limit.py
 
 SYNOPSIS
-    ./significance.py [ECMS]
+    ./significance.py [ecms] [mode]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -66,7 +66,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def upper_limit(step_size, path, ecms, arrow_top):
+def upper_limit(step_size, path, root, ecms, mode, arrow_top):
     try:
         f = open(path, 'r')
     except:
@@ -126,31 +126,38 @@ def upper_limit(step_size, path, ecms, arrow_top):
 
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
-
     mbc.SaveAs('./figs/upper_limit_'+str(ecms)+'.pdf')
+
+    f = TFile(root)
+    t = f.Get('save')
+    entries = t.GetEntries()
+    if (ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420):
+        eff = entries/40000.
+    else:
+        eff = entries/20000.
+    temp1, temp2, lum = data_base(ecms)
+    Br = 0.0938
+    xs = round(n_upl/2./Br/eff/lum, 2)
+    if not os.path.exists('./txts/'): 
+        os.makedirs('./txts/')
+    path_out = './txts/xs_upper_limit_' + mode + '_' + str(ecms) + '.txt'
+    f_out = open(path_out, 'w')
+    out = '& @' + str(ecms) + 'MeV& ' + str(n_upl) + '& ' + str(round(eff*100, 2)) + '\%& ' + str(lum) + '& ' + str(Br*100) + '\%& ' + str(xs) + '& \\\\'
+    f_out.write(out)
+    f_out.close()
 
 def main():
     args = sys.argv[1:]
-    if len(args)<1:
+    if len(args)<2:
         return usage()
-
     ecms = int(args[0])
+    mode = args[1]
 
-    if ecms == 4360:
-        path = './txts/upper_limit_likelihood_' + str(ecms) + '.txt'
-        step_size = 0.1
-        arrow_top = 0.3
-        upper_limit(step_size, path, ecms, arrow_top)
-    if ecms == 4420:
-        path = './txts/upper_limit_likelihood_' + str(ecms) + '.txt'
-        step_size = 0.1
-        arrow_top = 0.3
-        upper_limit(step_size, path, ecms, arrow_top)
-    if ecms == 4600:
-        path = './txts/upper_limit_likelihood_' + str(ecms) + '.txt'
-        step_size = 0.1
-        arrow_top = 0.67
-        upper_limit(step_size, path, ecms, arrow_top)
+    path = './txts/upper_limit_likelihood_' + str(ecms) + '.txt'
+    root = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/' + str(ecms) + '/sigMC_X_3842_' + str(ecms) + '_after.root'
+    step_size = 0.1
+    arrow_top = 0.3
+    upper_limit(step_size, path, root, ecms, mode, arrow_top)
 
 if __name__ == '__main__':
     main()

@@ -18,14 +18,14 @@ NAME
     make_mc.py 
 
 SYNOPSIS
-    ./make_mc.py [dst_file_path] [sample] [decay] [mode] [type] [energy] [dst_file_num]
-    [dst_file_path]: dst file path
+    ./make_mc.py [dst_path] [sample] [decay] [mode] [type] [ecms] [dst_num]
+    [dst_path]: dst file path
     [sample]: sigMC, incMC, data or others
     [decay]: decay chain, such as X_3842_PI_PI for e+e- -> X(3842)PI+PI-
     [mode]: generation mode
     [type]: X_3842, D1_2420, psi_3770 or others, for inclusive MC the same as mode
-    [energy]: energy point
-    [dst_file_num]: number of dst files in one jobOption file
+    [ecms]: energy point
+    [dst_num]: number of dst files in one jobOption file
 
 AUTHOR 
     Maoqiang JING <jingmq@ihep.ac.cn> 
@@ -45,18 +45,18 @@ def main():
     decay = args[2]
     mode = args[3]
     type = args[4]
-    energy = args[5]
-    dst_file_num = args[6]
+    ecms = args[5]
+    dst_num = args[6]
     sys.stdout.write('Scanning %s...\n' %dst_path)
 
     dst_list = []
     print '***************************************start to search***************************************'
     dst_list = search(dst_list, dst_path, '.dst')
     print '***************************************searching ending**************************************'
-    dst_list_groups = group_files_by_num(dst_list, dst_file_num)
+    dst_list_groups = group_files_by_num(dst_list, dst_num)
     i = 0
     for dst_list_fill in dst_list_groups:
-        file_name = sample + '_' + decay + '_' + mode + '_' + energy + '_' + str(i) + '.txt'
+        file_name = sample + '_' + decay + '_' + mode + '_' + ecms + '_' + str(i) + '.txt'
         f = open(file_name, 'w')
         f.write('#include "$ROOTIOROOT/share/jobOptions_ReadRec.txt"\n')
         f.write('#include "$MAGNETICFIELDROOT/share/MagneticField.txt"\n')
@@ -97,7 +97,7 @@ def main():
         f.write('ApplicationMgr.EvtMax = -1;\n')
         f.write('\n')
         f.write('ApplicationMgr.HistogramPersistency = "ROOT";\n')
-        f.write('NTupleSvc.Output = {\"FILE1 DATAFILE=\'/scratchfs/bes/$USER/bes/DDPIPI/v0.2/'+sample+'/'+type+'/'+energy+'/rootfile/'+sample+'_'+decay+'_'+mode+'_'+energy+'_'+str(i)+'.root'+'\' OPT=\'NEW\' TYP=\'ROOT\'\"};\n')
+        f.write('NTupleSvc.Output = {\"FILE1 DATAFILE=\'/scratchfs/bes/$USER/bes/DDPIPI/v0.2/'+sample+'/'+type+'/'+ecms+'/rootfile/'+sample+'_'+decay+'_'+mode+'_'+ecms+'_'+str(i)+'.root'+'\' OPT=\'NEW\' TYP=\'ROOT\'\"};\n')
         f.close()
         i = i + 1
     print 'All done!'

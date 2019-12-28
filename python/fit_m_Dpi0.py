@@ -163,22 +163,11 @@ def main():
     args = sys.argv[1:]
     if len(args)<1:
         return usage()
-
     ecms = int(args[0])
 
     path = []
-
-    if ecms == 4360:
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_before.root')
-        fit(path, ecms)
-
-    if ecms == 4420:
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_before.root')
-        fit(path, ecms)
-
-    if ecms == 4600:
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_before.root')
-        fit(path, ecms)
+    path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_before.root')
+    fit(path, ecms)
 
 if __name__ == '__main__':
     main()

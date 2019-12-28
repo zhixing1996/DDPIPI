@@ -224,7 +224,17 @@ python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4360/incM
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4600
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4600/*before*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4600/incMC_twogamma_4600_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4600/incMC_twogamma_4600_before.root 4600 before STDDmiss_signal
-# background MC: DDPIPI
+# signal MC: DDPIPI (raw)
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4360
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4360/*raw_before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4360/sigMC_D_D_PI_PI_4360_raw.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4360/sigMC_D_D_PI_PI_4360_raw_before.root 4360 before raw_signal
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4420
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4420/*raw_before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4420/sigMC_D_D_PI_PI_4420_raw.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4420/sigMC_D_D_PI_PI_4420_raw_before.root 4420 before raw_signal
+mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600
+rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/*raw_before*.root
+python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/sigMC_D_D_PI_PI_4600_raw.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/sigMC_D_D_PI_PI_4600_raw_before.root 4600 before raw_signal
+# signal MC: DDPIPI (STDDmiss)
 mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4360
 rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4360/*before*.root
 python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4360/sigMC_D_D_PI_PI_4360_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4360/sigMC_D_D_PI_PI_4360_before.root 4360 before STDDmiss_signal

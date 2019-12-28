@@ -27,9 +27,11 @@ do
         python fit_rm_Dpipi.py $PARAM_0 data
         python fit_rm_Dpipi.py $PARAM_0 D1_2420
         python fit_rm_Dpipi.py $PARAM_0 psipp
+        python fit_rm_Dpipi.py $PARAM_0 DDPIPI
     else 
         python fit_rm_Dpipi.py $PARAM_0 data
         python fit_rm_Dpipi.py $PARAM_0 psipp
+        python fit_rm_Dpipi.py $PARAM_0 DDPIPI
     fi
     echo "$PARAM_0 is done!"
 done

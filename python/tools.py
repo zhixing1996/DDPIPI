@@ -137,7 +137,7 @@ def set_root_style(stat=0, grid=0, PadTopMargin=0.08, PadBottomMargin=0.08,
 def scale_factor(energy, mode):
     BR = 0.0938
     if int(energy) == 4360:
-        lum = 539.84
+        lum = 543.9
         if mode == 'D1_2420':
             XS = 41.8*BR
             Evt = 500000.0
@@ -175,7 +175,7 @@ def scale_factor(energy, mode):
             XS = 249.9
             Evt = 190000.0
     if int(energy) == 4420:
-        lum = 44.67 + 1028.89
+        lum = 46.80 + 1043.9
         if mode == 'D1_2420':
             XS = 65.4*BR
             Evt = 500000.0
@@ -201,7 +201,7 @@ def scale_factor(energy, mode):
             XS = 18600.0
             Evt = 18000000.0
     if int(energy) == 4600:
-        lum = 566.93
+        lum = 586.9
         if mode == 'D1_2420':
             XS = 27.7*BR
             Evt = 500000.0
@@ -289,6 +289,10 @@ def sigma_up(ecms):
 
 # essential parameters of XS calaulation
 def data_base(ecms):
+    if int(ecms) == 4090:
+        LUM = 52.86
+        FRAC_D1_2420 = 0.
+        FRAC_PSIPP = 1.
     if int(ecms) == 4190:
         LUM = 570.03
         FRAC_D1_2420 = 0.
@@ -335,30 +339,113 @@ def data_base(ecms):
         FRAC_PSIPP = 1.
     if int(ecms) == 4310:
         LUM = 45.08
-        FRAC_D1_2420 = 0.5
-        FRAC_PSIPP = 0.5
+        FRAC_D1_2420 = 0
+        FRAC_PSIPP = 1
     if int(ecms) == 4360:
         LUM = 539.84
         FRAC_D1_2420 = 41.8/(41.8 + 17.3)
         FRAC_PSIPP = 17.3/(41.8 + 17.3)
     if int(ecms) == 4390:
         LUM = 55.57
-        FRAC_D1_2420 = 0.5
-        FRAC_PSIPP = 0.5
+        FRAC_D1_2420 = 47.53/(47.53 + 7.95)
+        FRAC_PSIPP = 7.95/(47.53 + 7.95)
     if int(ecms) == 4420:
         LUM = 44.67 + 1028.89
         FRAC_D1_2420 = 65.4/(65.4 + 23.8)
         FRAC_PSIPP = 23.8/(65.4 + 23.8)
     if int(ecms) == 4470:
         LUM = 111.09
-        FRAC_D1_2420 = 0.5
-        FRAC_PSIPP = 0.5
+        FRAC_D1_2420 = 25.03/(25.03 + 8.6)
+        FRAC_PSIPP = 8.6/(25.03 + 8.6)
     if int(ecms) == 4530:
         LUM = 112.12
-        FRAC_D1_2420 = 0.5
-        FRAC_PSIPP = 0.5
+        FRAC_D1_2420 = 32.75/(32.75 + 3.59)
+        FRAC_PSIPP = 3.59/(32.75 + 3.59)
     if int(ecms) == 4600:
         LUM = 566.93
         FRAC_D1_2420 = 27.7/(27.7 + 7.2)
         FRAC_PSIPP = 7.2/(27.7 + 7.2)
     return FRAC_D1_2420, FRAC_PSIPP, LUM
+
+# range of D1(2420) when getting shape
+def param_rm_D(ecms):
+    LOW = 999.
+    UP = 999.
+    BINS = 999
+    if int(ecms) == 4090:
+        LOW = 2.15
+        UP = 2.33
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4190:
+        LOW = 2.15
+        UP = 2.33
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4200:
+        LOW = 2.15
+        UP = 2.34
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4210:
+        LOW = 2.16
+        UP = 2.34
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4220:
+        LOW = 2.16
+        UP = 2.35
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4230:
+        LOW = 2.15
+        UP = 2.36
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4237:
+        LOW = 2.17
+        UP = 2.37
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4245:
+        LOW = 2.17
+        UP = 2.38
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4246:
+        LOW = 2.16
+        UP = 2.38
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4260:
+        LOW = 2.19
+        UP = 2.39
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4270:
+        LOW = 2.21
+        UP = 2.4
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4280:
+        LOW = 2.18
+        UP = 2.41
+        BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4310:
+        LOW = 2.21
+        UP = 2.49
+        BINS = 400
+    if int(ecms) == 4360:
+        LOW = 2.14
+        UP = 2.49
+        BINS = 300
+    if int(ecms) == 4390:
+        LOW = 2.28
+        UP = 2.52
+        BINS = 300
+    if int(ecms) == 4420:
+        LOW = 2.14
+        UP = 2.55
+        BINS = 300
+    if int(ecms) == 4470:
+        LOW = 2.18
+        UP = 2.60
+        BINS = 400
+    if int(ecms) == 4530:
+        LOW = 2.18
+        UP = 2.66
+        BINS = 400
+    if int(ecms) == 4600:
+        LOW = 2.14
+        UP = 2.72
+        BINS = 400
+    return LOW, UP, BINS

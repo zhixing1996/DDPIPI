@@ -174,7 +174,7 @@ def fit(path, ecms, xmin, xmax, xbins, mode, step_size, step_n):
         if not os.path.exists('./txts/'):
             os.makedirs('./txts/')
 
-        path_out = './txts/significance_likelihood_'+ str(ecms) +'.txt'
+        path_out = './txts/significance_likelihood_' + str(ecms) + '.txt'
         f_out = open(path_out, 'a')
         # -log(L) minimum
         out = str(results.minNll()) + '\n'
@@ -206,7 +206,6 @@ def main():
     args = sys.argv[1:]
     if len(args)<2:
         return usage()
-
     ecms = int(args[0])
     mode = args[1]
 
@@ -239,6 +238,16 @@ def main():
         step_n = 700
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_after.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_after.root')
+        fit(path, ecms, xmin, xmax, xbins, mode, step_size, step_n)
+
+    if not (ecms == 4360 or ecms == 4420 or ecms == 4600) and ecms >= 4190:
+        xmin = 3.8
+        xmax = 3.9
+        xbins = 40
+        step_size = 0.1
+        step_n = 700
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_after.root')
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/' + str(ecms) + '/sigMC_X_3842_' + str(ecms) + '_after.root')
         fit(path, ecms, xmin, xmax, xbins, mode, step_size, step_n)
 
 if __name__ == '__main__':

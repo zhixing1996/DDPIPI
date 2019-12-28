@@ -16,6 +16,21 @@ logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %
 gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
 
+def usage():
+    sys.stdout.write('''
+NAME
+    plot_ctau_pipi.py
+
+SYNOPSIS
+    ./plot_ctau_pipi.py [ecms]
+
+AUTHOR
+    Maoqiang JING <jingmq@ihep.ac.cn>
+
+DATE
+    November 2019
+\n''')
+
 def set_arrow(arrow):
     arrow.SetLineWidth(0)
     arrow.SetLineColor(1)
@@ -141,15 +156,16 @@ def plot(sigMC1_path, sigMC2_path, incMC1_path, incMC2_path, leg_title, ecms, xm
 
 if __name__ == '__main__':
     args = sys.argv[1:]
-    energy = args[0]
+    if len(args)<1:
+        return usage()
+    ecms = args[0]
 
-    if int(energy) == 4360:
+    if int(ecms) == 4360:
         sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_before.root'
         sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root'
         incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root'
         incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root'
         leg_title = '(a)'
-        ecms = 4360
         xmax = 4.
         arrow_left = 0.5
         arrow_right = 0.5
@@ -157,13 +173,12 @@ if __name__ == '__main__':
         arrow_top = 25
         plot(sigMC1_path, sigMC2_path, incMC1_path, incMC2_path, leg_title, ecms, xmax, arrow_left, arrow_right, arrow_bottom, arrow_top)
 
-    if int(energy) == 4420:
+    if int(ecms) == 4420:
         sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root'
         sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root'
         incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root'
         incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root'
         leg_title = '(b)'
-        ecms = 4420
         xmax = 4.
         arrow_left = 0.5
         arrow_right = 0.5
@@ -171,13 +186,12 @@ if __name__ == '__main__':
         arrow_top = 40
         plot(sigMC1_path, sigMC2_path, incMC1_path, incMC2_path, leg_title, ecms, xmax, arrow_left, arrow_right, arrow_bottom, arrow_top)
 
-    if int(energy) == 4600:
+    if int(ecms) == 4600:
         sigMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_before.root'
         sigMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root'
         incMC1_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root'
         incMC2_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_before.root'
         leg_title = '(c)'
-        ecms = 4600
         xmax = 4.
         arrow_left = 0.5
         arrow_right = 0.5

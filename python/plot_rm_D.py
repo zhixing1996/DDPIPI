@@ -18,6 +18,21 @@ gStyle.SetOptTitle(0) # quench title
 gStyle.SetPadTickX(1) # dicide on boxing on or not of x and y axis  
 gStyle.SetPadTickY(1) # dicide on boxing on or not of x and y axis
 
+def usage():
+    sys.stdout.write('''
+NAME
+    plot_rm_D.py
+
+SYNOPSIS
+    ./plot_rm_D.py [ecms]
+
+AUTHOR
+    Maoqiang JING <jingmq@ihep.ac.cn>
+
+DATE
+    November 2019
+\n''')
+
 def set_legend(legend, h1, h2, title):
     legend.AddEntry(h1, 'data: signal region of RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})')
     legend.AddEntry(h2, 'data: sideband region of RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})')
@@ -106,14 +121,15 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup):
 
 if __name__ == '__main__':
     args = sys.argv[1:]
-    energy = args[0]
+    if len(args)<1:
+        return usage()
+    ecms = args[0]
 
     path = []
-    if int(energy) == 4360:
+    if int(ecms) == 4360:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_after.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_sideband.root')
         leg_title = '(a)'
-        ecms = 4360
         xmin = 2.14
         xmax = 2.49
         xbins = 140
@@ -122,11 +138,10 @@ if __name__ == '__main__':
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup)
 
     path = []
-    if int(energy) == 4420:
+    if int(ecms) == 4420:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_after.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_sideband.root')
         leg_title = '(b)'
-        ecms = 4420
         xmin = 2.14
         xmax = 2.55
         xbins = 164
@@ -135,11 +150,10 @@ if __name__ == '__main__':
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup)
 
     path = []
-    if int(energy) == 4600:
+    if int(ecms) == 4600:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_after.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_sideband.root')
         leg_title = '(c)'
-        ecms = 4600
         xmin = 2.14
         xmax = 2.72
         xbins = 232

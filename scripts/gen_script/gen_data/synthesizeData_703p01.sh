@@ -12,11 +12,19 @@ do
     PARAM_3=${arr[3]} # float energy poit
     PARAM_4=${arr[4]} # luminosity
     PARAM_5=${arr[5]} # dst path
-    echo /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/$PARAM_0
     mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/$PARAM_0
     cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/data/$PARAM_0
-    rm -rf data_$PARAM_0\.root
-    hadd data_$PARAM_0\.root *.root
+    if [[ $PARAM_0 == "4420-2" ]]; then
+        rm -rf data_$PARAM_0\.root
+        hadd data_4420_temp1.root data36*.root
+        hadd data_4420_temp2.root data37*.root
+        hadd data_4420_temp3.root data38*.root
+        hadd data_$PARAM_0\.root data_4420_temp*.root
+        rm -rf data_4420_temp*.root
+    else
+        rm -rf data_$PARAM_0\.root
+        hadd data_$PARAM_0\.root *.root
+    fi
     cd ..
     shortbar1="-1"
     shortbar2="-2"

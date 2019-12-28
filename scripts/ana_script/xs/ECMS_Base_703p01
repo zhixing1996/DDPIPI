@@ -15,6 +15,10 @@
 4270;50796;51302;4266.8;531.1;/besfs3/offline/data/703-1/xyz/round10/4270/dst
 4280;51303;51498;4277.7;175.7;/besfs3/offline/data/703-1/xyz/round10/4280/dst
 4310;30492;30557;4307.9;45.08;/besfs3/offline/data/703-1/xyz/round06/4260scan/4310/dst
+4360;30616;31279;4358.26;543.9;/besfs3/offline/data/703-1/xyz/round06/4360/dst
 4390;31281;31325;4387.4;55.57;/besfs3/offline/data/703-1/xyz/round06/4360scan/4390/dst
+4420-1;31327;31390;4415.58;46.80;/besfs3/offline/data/703-1/xyz/round06/4360scan/4420/dst
+4420-2;36773;38140;4415.58;1043.9;/besfs3/offline/data/703-1/xyz/round07/4420/dst
 4470;36245;36393;4467.1;111.09;/besfs3/offline/data/703-1/xyz/round07/4470/dst
 4530;36398;36588;4527.1;112.12;/besfs3/offline/data/703-1/xyz/round07/4530/dst
+4600;35227;36213;4599.53;586.9;/besfs3/offline/data/703-1/xyz/round07/4600/dst

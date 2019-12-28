@@ -28,6 +28,7 @@ do
         mv /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/$PARAM_0/rootfile/sigMC_X_3842_$PARAM_0\.root ./$dir
         cd $dir
         VAR=$(echo $PARAM_0 | sed 's/-2//g')
+        rm -rf sigMC_X_3842_$VAR\.root
         hadd sigMC_X_3842_$VAR\.root sigMC_X_3842_$VAR-1.root sigMC_X_3842_$VAR-2.root
     else
         echo "No need to change for $PARAM_0"

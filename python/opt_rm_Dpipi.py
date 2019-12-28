@@ -23,6 +23,21 @@ gStyle.SetPadLeftMargin(0.16)
 gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
 
+def usage():
+    sys.stdout.write('''
+NAME
+    opt_rm_Dpipi.py
+
+SYNOPSIS
+    ./opt_rm_Dpipi.py [ecms]
+
+AUTHOR
+    Maoqiang JING <jingmq@ihep.ac.cn>
+
+DATE
+    September 2019
+\n''')
+
 def set_pavetext(pt):
     pt.SetFillStyle(0)
     pt.SetBorderSize(0)
@@ -116,7 +131,7 @@ def cal_significance(t1, t2, t3, t4, N, step, ecms):
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = '|RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})-m_{D^{-}}'
+    xtitle = '|RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})-m_{D^{-}}|'
     ytitle = '#frac{S}{#sqrt{S+B}}'
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 5)
     set_histo_style(h_FOM, xtitle, ytitle)
@@ -188,6 +203,8 @@ def plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
 def main():
     args = sys.argv[1:]
+    if len(args)<1:
+        return usage()
     energy = args[0]
 
     path = []

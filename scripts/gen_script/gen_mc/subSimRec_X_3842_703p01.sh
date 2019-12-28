@@ -23,11 +23,11 @@ do
     mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/$PARAM_0/dst
     rm -rf jobOptions*txt
     rm -rf subSimRec_*.sh
-    cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_X_3842_PI_PI_PHSP_tempE_703p01.sh ./jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0.sh
-    sed -i "s/TEMP_0/$PARAM_0/g" jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0.sh
-    sed -i "s/TEMP_1/$PARAM_1/g" jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0.sh
-    sed -i "s/TEMP_2/$PARAM_2/g" jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0.sh
-    sed -i "s/TEMP_3/$PARAM_3/g" jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0.sh
+    cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_sim_sig_X_3842_PI_PI_PHSP_tempE_703p01.sh ./jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh
+    sed -i "s/TEMP_0/$PARAM_0/g" jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh
+    sed -i "s/TEMP_1/$PARAM_1/g" jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh
+    sed -i "s/TEMP_2/$PARAM_2/g" jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh
+    sed -i "s/TEMP_3/$PARAM_3/g" jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh
     temp=$(echo "-0.222+$PARAM_3"|bc)
     thre=4.122
     if [ `expr $temp \> $thre` -eq 0 ]; then
@@ -35,13 +35,13 @@ do
     else
         PARAM_6=$temp
     fi
-    sed -i "s/TEMP_6/$PARAM_6/g" jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0.sh
+    sed -i "s/TEMP_6/$PARAM_6/g" jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/$PARAM_0/rtraw/*.rtraw
-    sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0.sh 0 9 5000
-    cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_X_3842_PI_PI_PHSP_tempE_703p01.sh ./jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0.sh
-    sed -i "s/TEMP_0/$PARAM_0/g" jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0.sh
+    sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh 0 3 5000
+    cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/jobOptions_rec_sig_X_3842_PI_PI_PHSP_tempE_703p01.sh ./jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh
+    sed -i "s/TEMP_0/$PARAM_0/g" jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/$PARAM_0/dst/*.dst
-    sh jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0.sh 0 9
+    sh jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh 0 3
     cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-    sh subSimRec.sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0 jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0 subSimRec 0 9
+    sh subSimRec.sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0 jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0 subSimRec_X_3842_$PARAM_0\_703p01 0 3
 done

@@ -129,7 +129,6 @@ def shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins):
                     pD += ptrack
                     pD_raw += ptrack_raw
                 for m in xrange(t.n_shwD):
-                    print t.n_shwD
                     pshower = TLorentzVector(0, 0, 0, 0)
                     pshower_raw = TLorentzVector(0, 0, 0, 0)
                     pshower.SetPxPyPzE(t.p4_Dshw[m*4+0], t.p4_Dshw[m*4+1], t.p4_Dshw[m*4+2], t.p4_Dshw[m*4+3])
@@ -189,74 +188,25 @@ def main():
     ecms = int(args[0])
     mode = args[1]
 
-    if ecms == 4360:
-        xmin = 2.14
-        xmax = 2.49
-        xbins = 300
-        cms = TLorentzVector(0.011*4.358, 0, 0, 4.358)
-        if mode == 'D1_2420_signal':
-            path_in = '/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/rootfile/sigMC_D1_2420_4360.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4360_signal.root'
-            shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins)
-        if mode == 'D1_2420_sideband':
-            path_in = '/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/rootfile/sigMC_D1_2420_4360.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4360_sideband.root'
-            shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins)
-        if mode == 'D1_2420':
-            path_signal = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4360_signal.root'
-            path_sideband = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4360_sideband.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4360.root'
-            shape_D1_2420_hist(path_signal, path_sideband, path_out, xmin, xmax, xbins)
-        if mode == 'D1_2420_conv':
-            path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4360.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_conv_4360.root'
-            shape_D1_2420_conv(path_in, path_out, ecms, xmin, xmax, xbins)
-
-    if ecms == 4420:
-        xmin = 2.14
-        xmax = 2.55
-        xbins = 300
-        cms = TLorentzVector(0.011*4.416, 0, 0, 4.416)
-        if mode == 'D1_2420_signal':
-            path_in = '/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/rootfile/sigMC_D1_2420_4420.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4420_signal.root'
-            shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins)
-        if mode == 'D1_2420_sideband':
-            path_in = '/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/rootfile/sigMC_D1_2420_4420.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4420_sideband.root'
-            shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins)
-        if mode == 'D1_2420':
-            path_signal = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4420_signal.root'
-            path_sideband = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4420_sideband.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4420.root'
-            shape_D1_2420_hist(path_signal, path_sideband, path_out, xmin, xmax, xbins)
-        if mode == 'D1_2420_conv':
-            path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4420.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_conv_4420.root'
-            shape_D1_2420_conv(path_in, path_out, ecms, xmin, xmax, xbins)
-
-    if ecms == 4600:
-        xmin = 2.14
-        xmax = 2.72
-        xbins = 400
-        cms = TLorentzVector(0.011*4.600, 0, 0, 4.600)
-        if mode == 'D1_2420_signal':
-            path_in = '/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/rootfile/sigMC_D1_2420_4600.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4600_signal.root'
-            shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins)
-        if mode == 'D1_2420_sideband':
-            path_in = '/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/rootfile/sigMC_D1_2420_4600.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4600_sideband.root'
-            shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins)
-        if mode == 'D1_2420':
-            path_signal = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4600_signal.root'
-            path_sideband = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4600_sideband.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4600.root'
-            shape_D1_2420_hist(path_signal, path_sideband, path_out, xmin, xmax, xbins)
-        if mode == 'D1_2420_conv':
-            path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_4600.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_conv_4600.root'
-            shape_D1_2420_conv(path_in, path_out, ecms, xmin, xmax, xbins)
+    xmin, xmax, xbins = param_rm_D(ecms)
+    cms = TLorentzVector(0.011*ecms/1000., 0, 0, ecms/1000.)
+    if mode == 'D1_2420_signal':
+        path_in = '/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/rootfile/sigMC_D1_2420_'+str(ecms)+'.root'
+        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_'+str(ecms)+'_signal.root'
+        shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins)
+    if mode == 'D1_2420_sideband':
+        path_in = '/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/rootfile/sigMC_D1_2420_'+str(ecms)+'.root'
+        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_'+str(ecms)+'_sideband.root'
+        shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins)
+    if mode == 'D1_2420':
+        path_signal = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_'+str(ecms)+'_signal.root'
+        path_sideband = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_'+str(ecms)+'_sideband.root'
+        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_'+str(ecms)+'.root'
+        shape_D1_2420_hist(path_signal, path_sideband, path_out, xmin, xmax, xbins)
+    if mode == 'D1_2420_conv':
+        path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_'+str(ecms)+'.root'
+        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_conv_'+str(ecms)+'.root'
+        shape_D1_2420_conv(path_in, path_out, ecms, xmin, xmax, xbins)
 
 if __name__ == '__main__':
     main()

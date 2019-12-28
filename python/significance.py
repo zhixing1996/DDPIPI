@@ -22,7 +22,7 @@ NAME
     significance.py
 
 SYNOPSIS
-    ./significance.py [ECMS]
+    ./significance.py [ecms] [mode]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -31,7 +31,7 @@ DATE
     December 2019
 \n''')
 
-def significance(path, r):
+def significance(ecms, mode, path, r):
     try:
         f = open(path, 'r')
     except:
@@ -43,27 +43,25 @@ def significance(path, r):
     likelihood_none_sig = float(lines[1].rstrip('\n'))
     prob = TMath.Prob(2*fabs(likelihood_sig - likelihood_none_sig), r)
     sig = RooStats.PValueToSignificance(prob * 0.5)
-    print 'significance = ' + str(sig)
+
+    if not os.path.exists('./txts/'):
+        os.makedirs('./txts/')
+    path_out = './txts/significance_' + mode + '_' + str(ecms) + '.txt'
+    f_out = open(path_out, 'w')
+    out = '@' + str(ecms) + ' ' + str(round(sig, 3))
+    f_out.write(out)
+    f_out.close()
 
 def main():
     args = sys.argv[1:]
-    if len(args)<1:
+    if len(args)<2:
         return usage()
-
     ecms = int(args[0])
+    mode = args[1]
 
-    if ecms == 4360:
-        path = './txts/significance_likelihood_' + str(ecms) + '.txt'
-        num_free_para  = 1
-        significance(path, num_free_para)
-    if ecms == 4420:
-        path = './txts/significance_likelihood_' + str(ecms) + '.txt'
-        num_free_para  = 1
-        significance(path, num_free_para)
-    if ecms == 4600:
-        path = './txts/significance_likelihood_' + str(ecms) + '.txt'
-        num_free_para  = 1
-        significance(path, num_free_para)
+    path = './txts/significance_likelihood_' + str(ecms) + '.txt'
+    num_free_para  = 1
+    significance(ecms, mode, path, num_free_para)
 
 if __name__ == '__main__':
     main()

@@ -22,7 +22,6 @@ do
     fi
     cd $HOME/bes/DDPIPI/v0.2/python
     echo "Begininning of $PARAM_0!"
-    thresh=4310
     python cal_xs.py $PARAM_0
     echo "$PARAM_0 is done!"
 done

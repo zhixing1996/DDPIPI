@@ -20,9 +20,8 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.2.3" "Draw figures -- draw recoiling mass of Dpipi"
     printf "\n\t%-9s  %-40s\n" "0.2.4" "Draw figures -- study signal region of RM(Dpipi)"
     printf "\n\t%-9s  %-40s\n" "0.2.5" "Get samples -- extract useful info: signal region and sideband region"
-    printf "\n\t%-9s  %-40s\n" "0.2.6" "Get samples -- get data sideband samples"
-    printf "\n\t%-9s  %-40s\n" "0.2.7" "Draw figures -- compare data and X(3842) MC(chi2_kf)"
-    printf "\n\t%-9s  %-40s\n" "0.2.8" "Draw figures -- study chi2 of Dtag Dmissing pi pi"
+    printf "\n\t%-9s  %-40s\n" "0.2.6" "Draw figures -- compare data and X(3842) MC(chi2_kf)"
+    printf "\n\t%-9s  %-40s\n" "0.2.7" "Draw figures -- study chi2 of Dtag Dmissing pi pi"
 
     printf "\n\t%-9s  %-40s\n" "0.3"     "[Background Study]"
     printf "\n\t%-9s  %-40s\n" "0.3.1"   "Get samples -- get topology info"
@@ -42,21 +41,21 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.3.15"  "Topo analysis -- apply topology analysis"
 
     printf "\n\t%-9s  %-40s\n" "0.4"      "[Measurement of Cross Section]"
-    printf "\n\t%-9s  %-40s\n" "0.4.1"    "Get samples -- synthesize sideband samples"
-    printf "\n\t%-9s  %-40s\n" "0.4.2"    "[DDPIPI] Draw figures -- study RM(Dpipi) in Kpipi signal region"
-    printf "\n\t%-9s  %-40s\n" "0.4.3"    "[DDPIPI] Fit distributions -- fit to RM(Dpipi)"
-    printf "\n\t%-9s  %-40s\n" "0.4.4"    "[X_3842] Draw figures -- study RM(pipi) in fitting region"
-    printf "\n\t%-9s  %-40s\n" "0.4.5"    "[D1_2420] Draw figures -- study RM(D) in fitting region (RM(Dpipi) signal and sideband region)"
-    printf "\n\t%-9s  %-40s\n" "0.4.6"    "[D1_2420] Get shape -- get shape of D1(2420)"
-    printf "\n\t%-9s  %-40s\n" "0.4.7"    "[D1_2420] Get samples -- get samples used for simultaneous fit"
-    printf "\n\t%-9s  %-40s\n" "0.4.8"    "[D1_2420] Fit distributions -- perform simultaneous fit"
-    printf "\n\t%-9s  %-40s\n" "0.4.9"    "[D1_2420] Fit distributions -- fit to RM(pipi)(with and without X(3842) signal)"
-    printf "\n\t%-9s  %-40s\n" "0.4.10"   "[X_3842] Calculate numbers -- calculate upper limit number of X(3842)"
-    printf "\n\t%-9s  %-40s\n" "0.4.11"   "[DDPIPI] Get samples -- synthesize signal samples @703p01"
-    printf "\n\t%-9s  %-40s\n" "0.4.12"   "[DDPIPI] Get samples -- Get samples -- extract useful info: raw and signal @703p01"
-    printf "\n\t%-9s  %-40s\n" "0.4.13"   "[DDPIPI] && [X_3842] Get samples -- apply cuts @703p01"
-    printf "\n\t%-9s  %-40s\n" "0.4.14"   "[DDPIPI] Fit distributions -- fit to RM(Dpipi) @703p01"
-    printf "\n\t%-9s  %-40s\n" "0.4.15"   "[DDPIPI] Calculate numbers -- calculate cross sections"
+    printf "\n\t%-9s  %-40s\n" "0.4.1"    "Get samples -- synthesize samples"
+    printf "\n\t%-9s  %-40s\n" "0.4.2"    "Get samples -- Get samples -- extract useful info: raw and signal"
+    printf "\n\t%-9s  %-40s\n" "0.4.3"    "Get samples -- apply cuts"
+    printf "\n\t%-9s  %-40s\n" "0.4.4"    "[D1_2420 & psi(3770)] Draw figures -- study RM(D) in fitting region(RM(Dpipi) signal and sideband region)"
+    printf "\n\t%-9s  %-40s\n" "0.4.5"    "[D1_2420 & psi(3770)] Get shape -- get shape of D1(2420)"
+    printf "\n\t%-9s  %-40s\n" "0.4.6"    "[D1_2420 & psi(3770)] Get samples -- get samples used for RM(D) fit"
+    printf "\n\t%-9s  %-40s\n" "0.4.7"    "[D1_2420 & psi(3770)] Fit distributions -- perform RM(D) fit"
+    printf "\n\t%-9s  %-40s\n" "0.4.8"    "[X_3842] Draw figures -- study RM(pipi) in fitting region"
+    printf "\n\t%-9s  %-40s\n" "0.4.9"    "[X_3842] Fit distributions -- fit to RM(pipi)(with and without X(3842) signal)"
+    printf "\n\t%-9s  %-40s\n" "0.4.10"   "[X_3842] Calculate numbers -- calculate significance and upper limit number of X(3842)"
+    printf "\n\t%-9s  %-40s\n" "0.4.11"   "[DDPIPI] Draw figures -- study RM(Dpipi) in Kpipi signal and sideband region"
+    printf "\n\t%-9s  %-40s\n" "0.4.12"   "[DDPIPI] Fit distributions -- fit to RM(Dpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.4.13"   "[DDPIPI] Calculate numbers -- calculate cross sections"
+    printf "\n\t%-9s  %-40s\n" "0.4.14"   "[DDPIPI] Calculate numbers -- modify cross sections"
+    printf "\n\t%-9s  %-40s\n" "0.4.15"   "[DDPIPI] Draw figures -- draw modified cross sections"
     
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -172,29 +171,14 @@ case $option in
            hep_sub -g physics get_info_sidebandup -o jobs.out -e jobs.err
            ;;
 
-    0.2.6) echo "Get samples -- getting data sideband samples..."
-           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
-           rm -rf data_4360_sideband.root
-           rm -rf data_4360_sideband_fit.root
-           hadd data_4360_sideband.root data_4360_sideband*.root
-           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
-           rm -rf data_4420_sideband.root
-           rm -rf data_4420_sideband_fit.root
-           hadd data_4420_sideband.root data_4420_sideband*.root
-           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
-           rm -rf data_4600_sideband.root
-           rm -rf data_4600_sideband_fit.root
-           hadd data_4600_sideband.root data_4600_sideband*.root
-           ;;
-
-    0.2.7) echo "Draw figures -- comparing data and X(3842) MC(chi2_kf)..."
+    0.2.6) echo "Draw figures -- comparing data and X(3842) MC(chi2_kf)..."
            cd python
            python plot_chi2_kf.py 4360
            python plot_chi2_kf.py 4420
            python plot_chi2_kf.py 4600
            ;;
 
-    0.2.8) echo "Draw figures -- studying chi2 of Dtag Dmissing pi pi..."
+    0.2.7) echo "Draw figures -- studying chi2 of Dtag Dmissing pi pi..."
            cd python
            python opt_chi2_kf.py 4360
            python opt_chi2_kf.py 4420
@@ -414,124 +398,17 @@ case $option in
          echo "--> Selection Algorithm Version: DDecayAlg-00-00-03(have applied cuts)"
          ;;
 
-    0.4.1) echo "Get samples -- synthesizing sideband samples..."
-           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4360
-           rm data_4360_raw_sideband_before.root -rf
-           hadd data_4360_raw_sideband_before.root data_4360_raw_sidebandlow_before.root data_4360_raw_sidebandup_before.root
-           rm data_4360_sideband.root -rf
-           hadd data_4360_sideband.root data_4360_STDDmiss_sidebandlow_after.root data_4360_STDDmiss_sidebandup_after.root
-           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4420
-           rm data_4420_raw_sideband_before.root -rf
-           hadd data_4420_raw_sideband_before.root data_4420_raw_sidebandlow_before.root data_4420_raw_sidebandup_before.root
-           rm data_4420_sideband.root -rf
-           hadd data_4420_sideband.root data_4420_STDDmiss_sidebandlow_after.root data_4420_STDDmiss_sidebandup_after.root
-           cd /besfs/users/$USER/bes/DDPIPI/v0.2/data/4600
-           rm data_4600_raw_sideband_before.root -rf
-           hadd data_4600_raw_sideband_before.root data_4600_raw_sidebandlow_before.root data_4600_raw_sidebandup_before.root
-           rm data_4600_sideband.root -rf
-           hadd data_4600_sideband.root data_4600_STDDmiss_sidebandlow_after.root data_4600_STDDmiss_sidebandup_after.root
+    0.4.1) echo "Get samples -- synthesizing samples..."
+           cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data
+           ./synthesizeData_703p01.sh
+           cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc
+           ./synthesizeD1_2420_703p01.sh
+           ./synthesizeD_D_PI_PI_703p01.sh
+           ./synthesizepsipp_703p01.sh
+           ./synthesizeX_3842_703p01.sh
            ;;
 
-    0.4.2) echo "[DDPIPI] Draw figures -- studying RM(Dpipi) in Kpipi signal and sideband region..."
-           cd python
-           python plot_rm_Dpipi.py 4360 signal
-           python plot_rm_Dpipi.py 4420 signal
-           python plot_rm_Dpipi.py 4600 signal
-           python plot_rm_Dpipi_sideband.py 4360
-           python plot_rm_Dpipi_sideband.py 4420
-           python plot_rm_Dpipi_sideband.py 4600
-           ;;
-
-    0.4.3) echo "[DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
-           cd python
-           python fit_rm_Dpipi.py 4360 data
-           python fit_rm_Dpipi.py 4360 D1_2420
-           python fit_rm_Dpipi.py 4360 psipp
-           python fit_rm_Dpipi.py 4420 data
-           python fit_rm_Dpipi.py 4420 D1_2420
-           python fit_rm_Dpipi.py 4420 psipp
-           python fit_rm_Dpipi.py 4600 data
-           python fit_rm_Dpipi.py 4600 D1_2420
-           python fit_rm_Dpipi.py 4600 psipp
-           ;;
-
-    0.4.4) echo "[X_3842] Draw figures -- studying RM(pipi) in fitting region..."
-           cd python
-           python plot_rm_pipi 4360 X_3842 
-           python plot_rm_pipi 4420 X_3842
-           python plot_rm_pipi 4600 X_3842
-           ;;
-
-    0.4.5) echo "[D1_2420] Draw figures -- study RM(D) in fitting region(RM(Dpipi) signal and sideband region)..."
-           cd python 
-           python plot_rm_D.py 4360
-           python plot_rm_D.py 4420
-           python plot_rm_D.py 4600
-           ;;
-
-    0.4.6) echo "[D1_2420] Get shape -- getting shape of D1(2420)..."
-           cd python
-           python get_shape.py 4360 D1_2420_signal
-           python get_shape.py 4360 D1_2420_sideband
-           python get_shape.py 4360 D1_2420
-           python get_shape.py 4360 D1_2420_conv
-           python get_shape.py 4420 D1_2420_signal
-           python get_shape.py 4420 D1_2420_sideband
-           python get_shape.py 4420 D1_2420
-           python get_shape.py 4420 D1_2420_conv
-           python get_shape.py 4600 D1_2420_signal
-           python get_shape.py 4600 D1_2420_sideband
-           python get_shape.py 4600 D1_2420
-           python get_shape.py 4600 D1_2420_conv
-           ;;
-
-    0.4.7) echo "[D1_2420] Get samples -- getting samples used for simultaneous fit..."
-           cd python
-           python convert_root.py 4360
-           python convert_root.py 4420
-           python convert_root.py 4600
-           ;;
-
-    0.4.8) echo "[D1_2420] Fit distributions -- performing simultaneous fit..."
-           cd python
-           python simu_fit.py 4600
-           ;;
-
-    0.4.9) echo "[X_3842] Fit distributions -- fitting to RM(pipi)(with and without X(3842) signal)..."
-           cd python
-           python fit_rm_pipi.py 4360 sig 
-           python fit_rm_pipi.py 4360 none_sig 
-           python fit_rm_pipi.py 4420 sig
-           python fit_rm_pipi.py 4420 none_sig
-           python fit_rm_pipi.py 4600 sig
-           python fit_rm_pipi.py 4600 none_sig
-           ;;
-
-    0.4.10) echo "[X_3842] Calculate numbers -- calculating significance and upper limit number of X(3842)..."
-            cd python
-            rm -rf ./txts/significance_likelihood_4*
-            python upper_limit.py 4360 
-            python upper_limit.py 4420 
-            python upper_limit.py 4600 
-            python significance.py 4360
-            python significance.py 4420
-            python significance.py 4600
-            python fit_rm_pipi.py 4360 upper_limit
-            python fit_rm_pipi.py 4420 upper_limit 
-            python fit_rm_pipi.py 4600 upper_limit
-            ;;
-
-    0.4.11) echo "[DDPIPI] Get samples -- synthesizing signal samples @703p01..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data
-            ./synthesizeData_703p01.sh
-            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc
-            ./synthesizeD1_2420_703p01.sh
-            ./synthesizeD_D_PI_PI_703p01.sh
-            ./synthesizepsipp_703p01.sh
-            ./synthesizeX_3842_703p01.sh
-            ;;
-
-    0.4.12) echo "[DDPIPI] Get samples -- extracting useful info: raw and signal @703p01..."
+    0.4.2) echo "Get samples -- extracting useful info: raw and signal @703p01..."
            mkdir -p scripts/ana/sel
            cd scripts/ana/sel
            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana" ]; then
@@ -575,28 +452,85 @@ case $option in
            hep_sub -g physics X_3842_Sub_703p01 -o jobs.out -e jobs.err
            ;;
 
-    0.4.13) echo "[DDPIPI] && [X_3842] Get samples -- applying cuts @703p01..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data
-            ./applyCutsData_703p01.sh
-            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc
-            ./applyCutsD1_2420_703p01.sh
-            ./applyCutsD_D_PI_PI_703p01.sh
-            ./applyCutspsipp_703p01.sh
-            ./applyCutsX_3842_703p01.sh
+    0.4.3) echo "Get samples -- applying cuts @703p01..."
+           cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data
+           ./applyCutsData_703p01.sh
+           cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc
+           ./applyCutsD1_2420_703p01.sh
+           ./applyCutsD_D_PI_PI_703p01.sh
+           ./applyCutspsipp_703p01.sh
+           ./applyCutsX_3842_703p01.sh
+           ;;
+
+    0.4.4) echo "[D1_2420 & psi(3770)] Draw figures -- studying RM(D) in fitting region(RM(Dpipi) signal and sideband region)..."
+           cd python 
+           python plot_rm_D.py 4360
+           python plot_rm_D.py 4420
+           python plot_rm_D.py 4600
+           ;;
+
+    0.4.5) echo "[D1_2420 & psi(3770)] Get shape -- getting shape of D1(2420)..."
+           cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+           ./getShape_703p01.sh
+           ;;
+
+    0.4.6) echo "[D1_2420 & psi(3770)] Get samples -- getting samples used for RM(D) fit..."
+           cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+           ./convertROOT_703p01.sh
+           ;;
+
+    0.4.7) echo "[D1_2420 & psi(3770)] Fit distributions -- performing RM(D) fit..."
+           cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+           ./fitRMD_703p01.sh
+           ;;
+
+    0.4.8) echo "[X_3842] Draw figures -- studying RM(pipi) in fitting region..."
+           cd python
+           python plot_rm_pipi 4360 X_3842 
+           python plot_rm_pipi 4420 X_3842
+           python plot_rm_pipi 4600 X_3842
+           ;;
+
+    0.4.9) echo "[X_3842] Fit distributions -- fitting to RM(pipi)(with and without X(3842) signal)..."
+           cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+           rm -rf $HOME/bes/DDPIPI/v0.2/python/txts/significance_likelihood_4*
+           ./fitRMpipi_703p01.sh
+           ;;
+
+    0.4.10) echo "[X_3842] Calculate numbers -- calculating significance and upper limit number of X(3842)..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./calSignificance_703p01.sh
+            ./calUpperLimit_703p01.sh
             ;;
 
-    0.4.14) echo "[DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
+    0.4.11) echo "[DDPIPI] Draw figures -- studying RM(Dpipi) in Kpipi signal and sideband region..."
+            cd python
+            python plot_rm_Dpipi.py 4360 signal
+            python plot_rm_Dpipi.py 4420 signal
+            python plot_rm_Dpipi.py 4600 signal
+            python plot_rm_Dpipi_sideband.py 4360
+            python plot_rm_Dpipi_sideband.py 4420
+            python plot_rm_Dpipi_sideband.py 4600
+            ;;
+
+    0.4.12) echo "[DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./fitRMDpipi_703p01.sh
             ;;
 
-    0.4.15) echo "[DDPIPI] Calculate numbers -- calculating cross sections..."
-            cd $HOME/bes/DDPIPI/v0.2/python
-            python cal_xs.py 4360
-            python cal_xs.py 4420
-            python cal_xs.py 4600
+    0.4.13) echo "[DDPIPI] Calculate numbers -- calculating cross sections..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./calXS_703p01.sh
+            ;;
+
+    0.4.14) echo "[DDPIPI] Calculate numbers -- modifying cross sections..."
+            cd python
+            python modify_xs.py
+            ;;
+
+    0.4.15) echo "[DDPIPI] Draw figures -- drawing modified cross sections..."
+            cd python
+            python plot_xs.py
             ;;
 
 esac

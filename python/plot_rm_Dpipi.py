@@ -19,6 +19,21 @@ gStyle.SetOptTitle(0) # quench title
 gStyle.SetPadTickX(1) # dicide on boxing on or not of x and y axis  
 gStyle.SetPadTickY(1) # dicide on boxing on or not of x and y axis
 
+def usage():
+    sys.stdout.write('''
+NAME
+    plot_rm_Dpipi.py
+
+SYNOPSIS
+    ./plot_rm_Dpipi.py [ecms] [mode]
+
+AUTHOR
+    Maoqiang JING <jingmq@ihep.ac.cn>
+
+DATE
+    November 2019
+\n''')
+
 def set_legend(legend, h1, h2, h3, h4, h5, title):
     legend.AddEntry(h1, 'data')
     legend.AddEntry(h2, 'inclusive MC: open charm')
@@ -161,11 +176,13 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, mode, ymax
 
 if __name__ == '__main__':
     args = sys.argv[1:]
-    energy = args[0]
+    if len(args)<2:
+        return usage()
+    ecms = args[0]
     mode = args[1]
 
     path = []
-    if int(energy) == 4360:
+    if int(ecms) == 4360:
         if mode == 'before':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_raw.root')
@@ -173,7 +190,6 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw.root')
             leg_title = '(a)'
-            ecms = 4360
             xmin = 1.8
             xmax = 2.2
             xbins = 160
@@ -185,7 +201,6 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw_before.root')
             leg_title = '(a)'
-            ecms = 4360
             xmin = 1.75
             xmax = 1.95
             xbins = 80
@@ -195,7 +210,7 @@ if __name__ == '__main__':
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, mode, ymax)
 
     path = []
-    if int(energy) == 4420:
+    if int(ecms) == 4420:
         if mode == 'before':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_raw.root')
@@ -203,7 +218,6 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw.root')
             leg_title = '(b)'
-            ecms = 4420
             xmin = 1.8
             xmax = 2.2
             xbins = 160
@@ -215,7 +229,6 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw_before.root')
             leg_title = '(b)'
-            ecms = 4420
             xmin = 1.75
             xmax = 1.95
             xbins = 80
@@ -225,7 +238,7 @@ if __name__ == '__main__':
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, mode, ymax)
 
     path = []
-    if int(energy) == 4600:
+    if int(ecms) == 4600:
         if mode == 'before':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_raw.root')
@@ -233,7 +246,6 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw.root')
             leg_title = '(c)'
-            ecms = 4600
             xmin = 1.8
             xmax = 2.2
             xbins = 200
@@ -245,7 +257,6 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw_before.root')
             leg_title = '(c)'
-            ecms = 4600
             xmin = 1.75
             xmax = 1.95
             xbins = 50

@@ -19,6 +19,21 @@ gStyle.SetOptTitle(0) # quench title
 gStyle.SetPadTickX(1) # dicide on boxing on or not of x and y axis  
 gStyle.SetPadTickY(1) # dicide on boxing on or not of x and y axis
 
+def usage():
+    sys.stdout.write('''
+NAME
+    plot_rm_Dpipi_sideband.py
+
+SYNOPSIS
+    ./plot_rm_Dpipi_sideband.py [ecms]
+
+AUTHOR
+    Maoqiang JING <jingmq@ihep.ac.cn>
+
+DATE
+    November 2019
+\n''')
+
 def set_legend(legend, h, title):
     legend.AddEntry(h, 'data: sideband region of M(K^{-}#pi^{+}#pi^{+})')
     legend.SetHeader(title)
@@ -90,13 +105,14 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax):
 
 if __name__ == '__main__':
     args = sys.argv[1:]
-    energy = args[0]
+    if len(args)<1:
+        return usage()
+    ecms = args[0]
 
     path = []
-    if int(energy) == 4360:
+    if int(ecms) == 4360:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw_sideband_before.root')
         leg_title = '(a)'
-        ecms = 4360
         xmin = 1.75
         xmax = 1.95
         xbins = 80
@@ -106,10 +122,9 @@ if __name__ == '__main__':
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax)
 
     path = []
-    if int(energy) == 4420:
+    if int(ecms) == 4420:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw_sideband_before.root')
         leg_title = '(b)'
-        ecms = 4420
         xmin = 1.75
         xmax = 1.95
         xbins = 80
@@ -119,10 +134,9 @@ if __name__ == '__main__':
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax)
 
     path = []
-    if int(energy) == 4600:
+    if int(ecms) == 4600:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw_sideband_before.root')
         leg_title = '(c)'
-        ecms = 4600
         xmin = 1.75
         xmax = 1.95
         xbins = 50
