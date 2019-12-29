@@ -138,7 +138,7 @@ def fit(path, ecms, xmin, xmax, xbins, mode, step_size, step_n):
     a = RooRealVar('a', 'a', 0, -99, 99)
     b = RooRealVar('b', 'b', 0, -99, 99)
     c = RooRealVar('c', 'c', 0, -99, 99)
-    bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_pipi, RooArgList(a, b))
+    bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_pipi, RooArgList(a))
 
     # event number
     nsig = RooRealVar('nsig', 'nsig', 0, 10000)
