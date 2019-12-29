@@ -238,18 +238,18 @@ def main():
     shape = []
     root = []
     if ecms >= 4290:
-        path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_fit.root')
-        path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_sideband_fit.root')
-        path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_fit.root')
-        shape.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_conv_'+str(ecms)+'.root')
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_fit.root')
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_sideband_fit.root')
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_fit.root')
+        shape.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_conv_'+str(ecms)+'.root')
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_after.root')
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/sigMC_D1_2420_'+str(ecms)+'_after.root')
         simul_fit(ecms, path, shape, root)
 
     if ecms < 4290:
-        path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_fit.root')
-        path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_sideband_fit.root')
-        path.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_fit.root')
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_fit.root')
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_sideband_fit.root')
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_fit.root')
         shape.append('')
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_after.root')
         simul_fit(ecms, path, shape, root)

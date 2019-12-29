@@ -425,7 +425,7 @@ def param_rm_D(ecms):
         UP = 2.49
         BINS = 400
     if int(ecms) == 4360:
-        LOW = 2.14
+        LOW = 2.18
         UP = 2.49
         BINS = 300
     if int(ecms) == 4390:

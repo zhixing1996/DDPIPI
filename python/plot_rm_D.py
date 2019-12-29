@@ -122,7 +122,8 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup):
 if __name__ == '__main__':
     args = sys.argv[1:]
     if len(args)<1:
-        return usage()
+        usage()
+        sys.exit()
     ecms = args[0]
 
     path = []

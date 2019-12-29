@@ -94,7 +94,8 @@ def plot(data_path, leg_title, ecms, xmin, xmax, xbins):
 if __name__ == '__main__':
     args = sys.argv[1:]
     if len(args)<1:
-        return usage()
+        usage()
+        sys.exit()
     ecms = args[0]
 
     if int(ecms) == 4360:

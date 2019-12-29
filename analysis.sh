@@ -486,9 +486,9 @@ case $option in
 
     0.4.8) echo "[X_3842] Draw figures -- studying RM(pipi) in fitting region..."
            cd python
-           python plot_rm_pipi 4360 X_3842 
-           python plot_rm_pipi 4420 X_3842
-           python plot_rm_pipi 4600 X_3842
+           python plot_rm_pipi.py 4360 X_3842 
+           python plot_rm_pipi.py 4420 X_3842
+           python plot_rm_pipi.py 4600 X_3842
            ;;
 
     0.4.9) echo "[X_3842] Fit distributions -- fitting to RM(pipi)(with and without X(3842) signal)..."

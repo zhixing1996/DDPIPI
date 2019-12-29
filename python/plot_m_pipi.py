@@ -169,7 +169,8 @@ def plot(path, leg_title, ecms, xmax, ymax, runNolow, runNoup, mode):
 if __name__ == '__main__':
     args = sys.argv[1:]
     if len(args)<2:
-        return usage()
+        usage()
+        sys.exit()
     ecms = args[0]
     mode = args[1]
 
