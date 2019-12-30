@@ -40,6 +40,12 @@ def modify():
     f_xs = open(path_xs, 'w')
     path_xs_read = './txts/xs_info_modified_read.txt'
     f_xs_read = open(path_xs_read, 'w')
+    path_xs_D1_2420 = './txts/xs_info_D1_2420.txt'
+    f_xs_D1_2420 = open(path_xs_D1_2420, 'w')
+    path_xs_psipp = './txts/xs_info_psipp.txt'
+    f_xs_psipp = open(path_xs_psipp, 'w')
+    path_xs_DDPIPI = './txts/xs_info_DDPIPI.txt'
+    f_xs_DDPIPI = open(path_xs_DDPIPI, 'w')
 
     ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4310, 4360, 4390, 4420, 4470, 4530, 4600]
     for ecm in ecms:
@@ -85,8 +91,18 @@ def modify():
         out_read += ' ' + str(round(eff_D1_2420*100, 2)) + ' ' + str(round(eff_psipp*100, 2)) + ' ' + str(round(eff_DDPIPI*100, 2)) + ' ' + str(round(eff*100, 2))
         out_read += ' ' + str(lum) + ' ' + str(Br*100) + ' ' + str(round(xs, 2)) + ' ' + str(round(xs_err, 2)) + ' \n'
         f_xs_read.write(out_read)
+        if ecm >= 4290:
+            out_D1_2420 = str(ecm/1000.) + ' ' + str(xs_D1_2420) + '\n'
+            f_xs_D1_2420.write(out_D1_2420)
+        out_psipp = str(ecm/1000.) + ' ' + str(xs_psipp) + '\n'
+        f_xs_psipp.write(out_psipp)
+        out_DDPIPI = str(ecm/1000.) + ' ' + str(xs_DDPIPI) + '\n'
+        f_xs_DDPIPI.write(out_DDPIPI)
     f_xs.close()
     f_xs_read.close()
+    f_xs_D1_2420.close()
+    f_xs_psipp.close()
+    f_xs_DDPIPI.close()
     
 if __name__ == '__main__':
     usage()

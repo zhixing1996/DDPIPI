@@ -132,9 +132,9 @@ def upper_limit(step_size, path, root, ecms, mode, arrow_top):
     t = f.Get('save')
     entries = t.GetEntries()
     if (ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420):
-        eff = entries/40000.
+        eff = entries/100000.
     else:
-        eff = entries/20000.
+        eff = entries/50000.
     temp1, temp2, lum = data_base(ecms)
     Br = 0.0938
     xs = round(n_upl/2./Br/eff/lum, 2)

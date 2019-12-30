@@ -141,12 +141,12 @@ case $option in
          ;;
 
     0.2.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
-           cd scripts/gen_script/gen_mc
+           cd scripts/gen_script/gen_mc/X_3842
            ./subSimRec_X_3842_703p01.sh
            ;;
 
     0.2.2) echo "Single D tag -- run on signal MC sample..."
-           cd scripts/gen_script/gen_mc
+           cd scripts/gen_script/gen_mc/X_3842
            ./subAna_X_3842_703p01.sh
            ;;
 
@@ -161,12 +161,12 @@ case $option in
          ;;
 
     0.3.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
-           cd scripts/gen_script/gen_mc
+           cd scripts/gen_script/gen_mc/D1_2420
            ./subSimRec_D1_2420_703p01.sh
            ;;
 
     0.3.2) echo "Single D tag -- run on signal MC sample..."
-           cd scripts/gen_script/gen_mc
+           cd scripts/gen_script/gen_mc/D1_2420
            ./subAna_D1_2420_703p01.sh
            ;;
 
@@ -181,12 +181,12 @@ case $option in
          ;;
 
     0.4.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
-           cd scripts/gen_script/gen_mc
+           cd scripts/gen_script/gen_mc/psipp
            ./subSimRec_psipp_703p01.sh
            ;;
 
     0.4.2) echo "Single D tag -- run on signal MC sample..."
-           cd scripts/gen_script/gen_mc
+           cd scripts/gen_script/gen_mc/psipp
            ./subAna_psipp_703p01.sh
            ;;
 
@@ -201,12 +201,12 @@ case $option in
          ;;
 
     0.5.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
-           cd scripts/gen_script/gen_mc
+           cd scripts/gen_script/gen_mc/DDPIPI
            ./subSimRec_D_D_PI_PI_703p01.sh
            ;;
 
     0.5.2) echo "Single D tag -- run on signal MC sample..."
-           cd scripts/gen_script/gen_mc
+           cd scripts/gen_script/gen_mc/DDPIPI
            ./subAna_D_D_PI_PI_703p01.sh
            ;;
 

@@ -42,11 +42,11 @@ def xs(ecms, data_path, D1_2420_path, psipp_path, DDPIPI_path):
         N_DDPIPI = float(float(rs_DDPIPI[0]))
 
     if (ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420):
-        eff_psipp = N_psipp/40000.
-        eff_DDPIPI = N_DDPIPI/40000.
+        eff_psipp = N_psipp/100000.
+        eff_DDPIPI = N_DDPIPI/100000.
     else:
-        eff_psipp = N_psipp/20000.
-        eff_DDPIPI = N_DDPIPI/20000.
+        eff_psipp = N_psipp/50000.
+        eff_DDPIPI = N_DDPIPI/50000.
 
     N_D1_2420 = 0.
     eff_D1_2420 = 0.
@@ -58,9 +58,9 @@ def xs(ecms, data_path, D1_2420_path, psipp_path, DDPIPI_path):
             rs_D1_2420 = filter(None, rs_D1_2420.split(" "))
             N_D1_2420 = float(float(rs_D1_2420[0]))
         if ecms == 4420:
-            eff_D1_2420 = N_D1_2420/40000.
+            eff_D1_2420 = N_D1_2420/100000.
         else:
-            eff_D1_2420 = N_D1_2420/20000.
+            eff_D1_2420 = N_D1_2420/50000.
 
     Br = 0.0938
     frac_D1_2420, frac_psipp, lum = data_base(ecms)

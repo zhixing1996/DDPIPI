@@ -162,14 +162,14 @@ def simul_fit(ecms, path, shape, root):
     if ecms >= 4290:
         n_D1_2420 = n2420.getVal()
         if ecms == 4420:
-            eff_D1_2420 = entries_D1_2420_root/40000.
+            eff_D1_2420 = entries_D1_2420_root/100000.
         else:
-            eff_D1_2420 = entries_D1_2420_root/20000.
+            eff_D1_2420 = entries_D1_2420_root/50000.
         xs_D1_2420 = n_D1_2420/2./2./Br/eff_D1_2420/lum
     if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420:
-        eff_psipp = entries_psipp_root/40000.
+        eff_psipp = entries_psipp_root/100000.
     else:
-        eff_psipp = entries_psipp_root/20000.
+        eff_psipp = entries_psipp_root/50000.
     xs_psipp = npsipp.getVal()/2./2./Br/eff_psipp/lum
     line = '& @' + str(ecms) + 'MeV& ' + str(int(n_D1_2420)) + '& ' + str(int(npsipp.getVal())) + '& ' + str(round(eff_D1_2420*100, 2)) + '\%& ' + str(round(eff_psipp*100, 2)) + '\%& '
     line += str(lum) + '& ' + str(Br*100) + '\%& ' + str(round(xs_D1_2420, 2)) + '& ' + str(round(xs_psipp, 2)) + '& ' + str(round(xs_D1_2420 + xs_psipp, 2)) + '& \\\\\n'

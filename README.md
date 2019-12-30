@@ -10,19 +10,9 @@ This is a work of measuring cross section of DDPIPI
 
 > git clone https://github.com/zhixing1996/DDPIPI.git v0.2
 
-## Login container (664p01)
-
-Login with lxslc7 and use hep_container shell SL5 to enter lxslc5
-
-> NOTE: *****Login SL5 after installing as well as pushing codes(git version problem)*****
-
-> source login-container.sh
-
 ## Initialize BOSS
 
-BOSS version 6.6.4.p01(topology analysis), 6.6.5.p01(R-scan data), 7.0.3.p01(XYZ data, inclusive MC)
-
-> NOTE: *****When you do simulation and reconstruction under 665p01, the environment has to be set by the way of lig(boss_envirenmet.csh)*****
+BOSS version 7.0.3.p01(XYZ data, inclusive MC)
 
 This is only need to be done for the first time after clone the code:
 
