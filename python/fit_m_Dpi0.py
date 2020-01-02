@@ -159,6 +159,8 @@ def fit(path, ecms):
 
     mbc.SaveAs('./figs/fit_m_Dpi0_'+str(ecms)+'.pdf')
 
+    raw_input('Enter anything to end...')
+
 def main():
     args = sys.argv[1:]
     if len(args)<1:

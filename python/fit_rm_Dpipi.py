@@ -191,6 +191,8 @@ def fit(path, ecms, mode):
     range = 'Mass Region: [' + str(mean.getVal() - 3*sigma.getVal()) + ', ' + str(mean.getVal() + 3*sigma.getVal()) + ']'
     print range
 
+    raw_input('Enter anything to end...')
+
 def main():
     args = sys.argv[1:]
     if len(args)<2:

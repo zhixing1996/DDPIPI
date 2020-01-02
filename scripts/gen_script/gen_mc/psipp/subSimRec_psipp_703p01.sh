@@ -35,7 +35,7 @@ do
     if [ `expr $temp \> $thre` -eq 0 ]; then
         PARAM_6=$thre
     else
-        PARAM_6=$temp
+        PARAM_6=$thre
     fi
     sed -i "s/TEMP_6/$PARAM_6/g" jobOptions_sim_sig_psipp_PI_PI_VSS_$PARAM_0\.sh
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/rtraw/*.rtraw

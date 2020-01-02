@@ -201,6 +201,8 @@ def plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
     mbc.Update()
     mbc.SaveAs('./figs/opt_m_Kpipi_'+str(ecms)+'.pdf')
 
+    raw_input('Enter anything to end...')
+
 def main():
     args = sys.argv[1:]
     if len(args)<1:

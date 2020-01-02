@@ -154,6 +154,8 @@ def plot(sigMC1_path, sigMC2_path, incMC1_path, incMC2_path, leg_title, ecms, xm
 
     mbc.SaveAs('./figs/ctau_pipi_'+str(ecms)+'.pdf')
 
+    raw_input('Enter anything to end...')
+
 if __name__ == '__main__':
     args = sys.argv[1:]
     if len(args)<1:

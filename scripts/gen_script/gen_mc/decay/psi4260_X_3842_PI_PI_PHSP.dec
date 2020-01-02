@@ -1,9 +1,13 @@
 Alias A_D+  D+  
 Alias A_D-  D- 
 
-Decay  psi(4415)
-1.00  D-   A_D+   pi+   pi-   PHSP;
-1.00  A_D-   D+   pi+   pi-   PHSP;
+Decay  psi(4260)
+1.00  psi(3D3)   pi+  pi-  PHSP;
+Enddecay
+
+Decay psi(3D3) 
+1.00  A_D+  D-  PHSP;
+1.00  D+  A_D-  PHSP;
 Enddecay
 
 Decay A_D+

@@ -133,7 +133,7 @@ def set_root_style(stat=0, grid=0, PadTopMargin=0.08, PadBottomMargin=0.08,
     ROOT.gStyle.SetOptStat(stat)
     ROOT.gStyle.SetStatColor(0)
     ROOT.gStyle.SetStatBorderSize(1)
-    
+
 def scale_factor(ecms, mode):
     BR = 0.0938
     if int(ecms) == 4360:

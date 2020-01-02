@@ -146,6 +146,8 @@ def upper_limit(step_size, path, root, ecms, mode, arrow_top):
     f_out.write(out)
     f_out.close()
 
+    raw_input('Enter anything to end...')
+
 def main():
     args = sys.argv[1:]
     if len(args)<2:

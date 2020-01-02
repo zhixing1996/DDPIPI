@@ -18,6 +18,7 @@ const double M_Dst = 2.01026;
 const double mass[5] = {
     0.000511, 0.105658, 0.139570, 0.493677, 0.938272 // e, mu, pi, K, p
 };
+int Ncut0, Ncut1, Ncut2, Ncut3, Ncut4, Ncut5, Ncut6, Ncut7, Ncut8, Ncut9, Ncut10, Ncut11, Ncut12, Ncut13, Ncut14, Ncut15, Ncut16, Ncut17, Ncut18, Ncut19, Ncut20;
 
 // 
 // module declare
@@ -239,6 +240,20 @@ StatusCode DDecayAlg::execute() {
 }
 
 StatusCode DDecayAlg::finalize() {
+    std::cout << "Ncut0: " << Ncut0 << std::endl;
+    std::cout << "Ncut1: " << Ncut1 << std::endl;
+    std::cout << "Ncut2: " << Ncut2 << std::endl;
+    std::cout << "Ncut3: " << Ncut3 << std::endl;
+    std::cout << "Ncut4: " << Ncut4 << std::endl;
+    std::cout << "Ncut5: " << Ncut5 << std::endl;
+    std::cout << "Ncut6: " << Ncut6 << std::endl;
+    std::cout << "Ncut7: " << Ncut7 << std::endl;
+    std::cout << "Ncut8: " << Ncut8 << std::endl;
+    std::cout << "Ncut9: " << Ncut9 << std::endl;
+    std::cout << "Ncut10: " << Ncut10 << std::endl;
+    std::cout << "Ncut11: " << Ncut11 << std::endl;
+    std::cout << "Ncut12: " << Ncut12 << std::endl;
+    std::cout << "Ncut13: " << Ncut13 << std::endl;
     MsgStream log(msgSvc(), name());
     log << MSG::INFO << ">>>>>>> in finalize()" << endmsg;
 
@@ -641,7 +656,9 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
 
     // loop over the dtag list
     for (; dtag_iter != dtag_iter_end; dtag_iter++) {
+        // std::cout << "Recording..., run: " << runNo << ", evt: " << evtNo << std::endl;
         // whether to use pid
+        Ncut0++;
         if (m_pid) {
             if ((*dtag_iter)->type() !=1 || (*dtag_iter)->decayMode() != mode) {
                 continue; // type = 1: PID has been performed, type = 0, PID hasn't been performed
@@ -652,9 +669,10 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
                 continue;
             }
         }
+        Ncut1++;
 
         if (m_debug) std::cout << " --> dtag found : " << mode << std::endl;
-        if (m_debug) std::cout<< " D charm number: " << (*dtag_iter)->charm() << std::endl; // (*dtag_iter)->charm() = 1: c, -1: cbar
+        if (m_debug) std::cout << " D charm number: " << (*dtag_iter)->charm() << std::endl; // (*dtag_iter)->charm() = 1: c, -1: cbar
 
         // very broad mass window requirement
         double DELTAM = 0.;
@@ -686,6 +704,7 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         if (fabs((*dtag_iter)->mass() - mDcand) > 0.07) {
             continue;
         }
+        Ncut2++;
 
         SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
         SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
@@ -755,12 +774,14 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         if (vwtrkpara_charge.size() != n_trkD) {
             continue;
         }
+        Ncut3++;
 
         // do vertex fit
         chi2_vf = fitVertex(vwtrkpara_charge, birth);
         if (chi2_vf > 100) {
             continue;
         }
+        Ncut4++;
 
         if (m_debug) std::cout << " vertex fitting chisq: " << chi2_vf << std::endl;
         if (m_debug) std::cout << " vertex fitting vertex: " << birth.vx() << std::endl;
@@ -1272,6 +1293,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
     // to find the good pions and kaons
     for (int i = 0; i < othertracks.size(); i++) {
         if (!(dtagTool.isGoodTrack(othertracks[i]))) continue;
+        Ncut5++;
         if (dtagTool.isPion(othertracks[i])) {
             RecMdcTrack *mdcTrk = othertracks[i]->mdcTrack();
             RecMdcKalTrack *mdcKalTrk = othertracks[i]->mdcKalTrack();
@@ -1321,6 +1343,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
         if (!(dtagTool.isGoodTrack(othertracks[i]))) continue;
         if (m_rawp4_otherMdcKaltrk[i][4] != 1) continue;
         if (m_rawp4_otherMdcKaltrk[i][5] != 2) continue;
+        Ncut6++;
         RecMdcKalTrack *mdcKalTrk_plus = othertracks[i]->mdcKalTrack();
         ppi.setPx(mdcKalTrk_plus->p4(mass[2])[0]);
         ppi.setPy(mdcKalTrk_plus->p4(mass[2])[1]);
@@ -1336,6 +1359,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
             if (!(dtagTool.isGoodTrack(othertracks[j]))) continue;
             if (m_rawp4_otherMdcKaltrk[j][4] != -1) continue;
             if (m_rawp4_otherMdcKaltrk[j][5] != 2) continue;
+            Ncut7++;
             RecMdcKalTrack *mdcKalTrk_minus = othertracks[j]->mdcKalTrack();
             ppi.setPx(mdcKalTrk_minus->p4(mass[2])[0]);
             ppi.setPy(mdcKalTrk_minus->p4(mass[2])[1]);
@@ -1498,6 +1522,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                  for (int k = 0; k < othertracks.size(); k++) {
                      if (k != i && k != j) {
                          if (!(dtagTool.isGoodTrack(othertracks[k]))) continue;
+                         Ncut8++;
                          if (dtagTool.isPion(othertracks[k])) {
                              RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
                              RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
@@ -1526,6 +1551,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                          }
                          m_n_othertrks_STDDmiss++;
                          if (m_n_othertrks_STDDmiss >= 20) continue;
+                         Ncut9++;
                      }
                  }
                  RecMdcKalTrack *Piplus = othertracks[i]->mdcKalTrack();
@@ -1543,6 +1569,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                  m_n_othershws_STDDmiss = 0;
                  for (int k = 0; k < othershowers.size(); k++) {
                      if (!(dtagTool.isGoodShower(othershowers[k]))) continue;
+                     Ncut10++;
                      RecEmcShower *gTrk = othershowers[k]->emcShower();
                      Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
                      Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
@@ -1551,6 +1578,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                      for (int m = 0; m < 4; m++) m_rawp4_othershw_STDDmiss[m_n_othershws_STDDmiss][m] = Gm_p4[m];
                      m_n_othershws_STDDmiss++;
                      if (m_n_othershws_STDDmiss >= 50) continue;
+                     Ncut11++;
                      vwtrkpara_photons_STDDmiss.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE()));
                  }
                  stat_fitpi0_STDDmiss = fitpi0_STDDmiss(vwtrkpara_photons_STDDmiss, birth, pD);
@@ -1898,6 +1926,7 @@ void DDecayAlg::recordVariables() {
     m_n_count = n_count;
 
     m_tuple1->write();
+    Ncut12++;
 
     if (m_debug) std::cout << " entry in ntuple is filled for " << mode << std::endl;
 }
@@ -1965,6 +1994,7 @@ void DDecayAlg::recordVariables_STDDmiss() {
     m_Id_Dm_STDDmiss = DmId;
 
     m_tuple2->write();
+    Ncut13++;
 
     if (m_debug) std::cout << " Signal region: entry in ntuple is filled for " << mode << std::endl;
 }

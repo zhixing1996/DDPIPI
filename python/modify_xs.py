@@ -24,7 +24,7 @@ NAME
     modify_xs.py
 
 SYNOPSIS
-    ./modify_xs.py
+    ./modify_xs.py [patch]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -33,18 +33,18 @@ DATE
     December 2019
 \n''')
 
-def modify():
+def modify(patch):
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
-    path_xs = './txts/xs_info_modified.txt'
+    path_xs = './txts/xs_info_modified_' + patch + '.txt'
     f_xs = open(path_xs, 'w')
-    path_xs_read = './txts/xs_info_modified_read.txt'
+    path_xs_read = './txts/xs_info_modified_read_' + patch + '.txt'
     f_xs_read = open(path_xs_read, 'w')
-    path_xs_D1_2420 = './txts/xs_info_D1_2420.txt'
+    path_xs_D1_2420 = './txts/xs_info_D1_2420_' + patch + '.txt'
     f_xs_D1_2420 = open(path_xs_D1_2420, 'w')
-    path_xs_psipp = './txts/xs_info_psipp.txt'
+    path_xs_psipp = './txts/xs_info_psipp_' + patch + '.txt'
     f_xs_psipp = open(path_xs_psipp, 'w')
-    path_xs_DDPIPI = './txts/xs_info_DDPIPI.txt'
+    path_xs_DDPIPI = './txts/xs_info_DDPIPI_' + patch + '.txt'
     f_xs_DDPIPI = open(path_xs_DDPIPI, 'w')
 
     ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4310, 4360, 4390, 4420, 4470, 4530, 4600]
@@ -105,5 +105,10 @@ def modify():
     f_xs_DDPIPI.close()
     
 if __name__ == '__main__':
-    usage()
-    modify()
+    args = sys.argv[1:]
+    if len(args)<1:
+        usage()
+        sys.exit()
+    patch = str(args[0])
+
+    modify(patch)

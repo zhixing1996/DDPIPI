@@ -226,7 +226,8 @@ def simul_fit(ecms, path, shape, root):
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
     c.SaveAs(canvas_name)
-    # f_out.close()
+
+    raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]

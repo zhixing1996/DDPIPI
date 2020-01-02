@@ -40,8 +40,8 @@ do
     echo "#include \"\$MAGNETICFIELDROOT/share/MagneticField.txt\"" >> $REC_NAME
     echo "#include \"\$ESTIMEALGROOT/share/job_EsTimeAlg.txt\"" >> $REC_NAME
     echo "" >> $REC_NAME
-    echo "// PAT+TSF method for MDC reconstruction" >> $REC_NAME
-    echo "#include \"\$MDCXRECOROOT/share/jobOptions_MdcPatTsfRec.txt\"" >> $REC_NAME
+    echo "// PAT+TSF+HOUGH method for MDC reconstruction" >> $REC_NAME
+    echo "#include \"\$MDCHOUGHFINDERROOT/share/jobOptions_MdcPatTsfHoughRec.txt\"" >> $REC_NAME
     echo "" >> $REC_NAME
     echo "#include \"\$KALFITALGROOT/share/job_kalfit_numf_data.txt\"" >> $REC_NAME
     echo "#include \"\$MDCDEDXALGROOT/share/job_dedx_all.txt\"" >> $REC_NAME

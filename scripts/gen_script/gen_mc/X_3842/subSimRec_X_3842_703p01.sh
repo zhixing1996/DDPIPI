@@ -43,5 +43,5 @@ do
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/$PARAM_0/dst/*.dst
     sh jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0\.sh 0 3
     cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
-    sh subSimRec.sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0 jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0 subSimRec_X_3842_$PARAM_0\_703p01 0 3
+    # sh subSimRec.sh jobOptions_sim_sig_X_3842_PI_PI_PHSP_$PARAM_0 jobOptions_rec_sig_X_3842_PI_PI_PHSP_$PARAM_0 subSimRec_X_3842_$PARAM_0\_703p01 0 3
 done

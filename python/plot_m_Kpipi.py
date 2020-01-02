@@ -91,6 +91,8 @@ def plot(data_path, leg_title, ecms, xmin, xmax, xbins):
 
     mbc.SaveAs('./figs/m_Kpipi_'+str(ecms)+'.pdf')
 
+    raw_input('Enter anything to end...')
+
 if __name__ == '__main__':
     args = sys.argv[1:]
     if len(args)<1:

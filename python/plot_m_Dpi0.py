@@ -164,6 +164,8 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax):
 
     mbc.SaveAs('./figs/m_Dpi0_'+str(ecms)+'.pdf')
 
+    raw_input('Enter anything to end...')
+
 if __name__ == '__main__':
     args = sys.argv[1:]
     if len(args)<1:

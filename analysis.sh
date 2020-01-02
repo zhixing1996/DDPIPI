@@ -525,12 +525,12 @@ case $option in
 
     0.4.14) echo "[DDPIPI] Calculate numbers -- modifying cross sections..."
             cd python
-            python modify_xs.py
+            python modify_xs.py round0
             ;;
 
     0.4.15) echo "[DDPIPI] Draw figures -- drawing modified cross sections..."
             cd python
-            python plot_xs.py
+            python plot_xs.py round0
             ;;
 
 esac

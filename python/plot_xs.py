@@ -25,7 +25,7 @@ NAME
     plot_xs.py
 
 SYNOPSIS
-    ./plot_xs.py
+    ./plot_xs.py [patch]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -59,13 +59,13 @@ def set_canvas_style(mbc):
     mbc.SetBottomMargin(0.15)
     mbc.SetGrid()
 
-def draw():
+def draw(patch):
     N = 18
     ecms = array('f', N*[0])
     ecms_err = array('f', N*[0])
     xs = array('f', N*[0])
     xs_err = array('f', N*[0])
-    path = './txts/xs_info_modified_read.txt'
+    path = './txts/xs_info_modified_read_' + patch + '.txt'
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
@@ -82,18 +82,25 @@ def draw():
         xs_err[count] = float(rs[-1])
         count += 1
 
-    gr = TGraphErrors(N, ecms, xs, ecms_err, xs_err)
+    grerr = TGraphErrors(N, ecms, xs, ecms_err, xs_err)
     xtitle = 'E_{cms}(GeV)'
     ytitle = '#sigma(e^{+}e^{-}#rightarrowD^{+}D^{-}#pi^{+}#pi^{-})(pb)'
-    set_graph_style(gr, xtitle, ytitle)
-    gr.Draw('ALP')
+    set_graph_style(grerr, xtitle, ytitle)
+    grerr.Draw('ALP')
 
     mbc.Update()
 
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
-    mbc.SaveAs('./figs/xs_DDPIPI.pdf')
+    mbc.SaveAs('./figs/xs_DDPIPI_' + patch + '.pdf')
+
+    raw_input('Enter anything to end...')
     
 if __name__ == '__main__':
-    usage()
-    draw()
+    args = sys.argv[1:]
+    if len(args)<1:
+        usage()
+        sys.exit()
+    patch = str(args[0])
+
+    draw(patch)

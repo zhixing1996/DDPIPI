@@ -166,6 +166,8 @@ def plot(path, leg_title, ecms, xmax, ymax, runNolow, runNoup, mode):
 
     mbc.SaveAs('./figs/m_pipi_'+str(ecms)+'_'+mode+'.pdf')
 
+    raw_input('Enter anything to end...')
+
 if __name__ == '__main__':
     args = sys.argv[1:]
     if len(args)<2:
