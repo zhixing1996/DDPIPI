@@ -1,6 +1,6 @@
 # DDPIPI
 
-This is a work of measuring cross section of DDPIPI
+This is a work about measuring cross sections of DDPIPI
 
 ## Install v0.2
 
