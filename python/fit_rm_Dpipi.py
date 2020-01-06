@@ -59,7 +59,7 @@ NAME
     fit_rm_Dpipi.py
 
 SYNOPSIS
-    ./fit_rm_Dpipi.py [ecms] [mode]
+    ./fit_rm_Dpipi.py [ecms] [mode] [patch]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -99,7 +99,7 @@ def set_canvas_style(mbc):
     mbc.SetBottomMargin(0.15)
     mbc.SetGrid()
 
-def fit(path, ecms, mode):
+def fit(path, ecms, mode, patch):
     try:
         f_data = TFile(path[0])
         t_data = f_data.Get('save')
@@ -115,46 +115,29 @@ def fit(path, ecms, mode):
     set_pad_style(pad)
     pad.Draw()
 
-    if mode == 'data':
-        xmin = 1.75
-        xmax = 1.95
-        xbins = 100
-        rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
-        data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
-    if mode == 'D1_2420' or mode == 'psipp' or mode == 'DDPIPI':
-        xmin = 1.84
-        xmax = 1.9
-        xbins = 30
-        rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
-        data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
+    xmin = 1.75
+    xmax = 1.95
+    xbins = 100
+    rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
+    data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
 
     # signal
-    if not ecms == 4600:
-        mean = RooRealVar('mean', 'mean of gaussian', 1.86965, 1.865, 1.875)
-        sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up(ecms))
-        sigpdf = RooGaussian('sigpdf', 'gaussian', rm_Dpipi, mean, sigma)
-    if ecms == 4600:
-        mean = RooRealVar('mean', 'mean of gaussian', 1.86965, 1.875, 1.875)
-        sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up(ecms))
-        sigpdf = RooGaussian('sigpdf', 'gaussian', rm_Dpipi, mean, sigma)
+    mean_up, mean_low, sigma_up = param_rm_Dpipi(ecms)
+    mean1 = RooRealVar('mean1', 'mean of gaussian', 1.86965, mean_low, mean_up)
+    sigma1 = RooRealVar('sigma1', 'sigma of gaussian', 0.001, 0, sigma_up)
+    gauss1 = RooGaussian('gauss1', 'gaussian', rm_Dpipi, mean1, sigma1)
+    mean2 = RooRealVar('mean2', 'mean of gaussian', 1.86965, mean_low, mean_up)
+    sigma2 = RooRealVar('sigma2', 'sigma of gaussian', 0.001, 0, sigma_up)
+    gauss2 = RooGaussian('gauss2', 'gaussian', rm_Dpipi, mean2, sigma2)
+    frac = RooRealVar('frac', 'fraction od two gaussian', 0.5, 0., 2.)
+    sigpdf = RooAddPdf('sigpdf', 'signal pdf', RooArgList(gauss1, gauss2), RooArgList(frac))
 
     # background
     a = RooRealVar('a', 'a', 0, -99, 99)
     b = RooRealVar('b', 'b', 0, -99, 99)
     c = RooRealVar('c', 'c', 0, -99, 99)
     d = RooRealVar('c', 'c', 0, -99, 99)
-    if mode == 'data':
-        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
-    if mode == 'D1_2420' or mode == 'psipp' or mode == 'DDPIPI':
-        if not ecms == 4600:
-            bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b, c))
-        if ecms == 4600:
-            if mode == 'D1_2420':
-                bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
-            if mode == 'psipp':
-                bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
-            if mode == 'DDPIPI':
-                bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
+    bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
 
     # event number
     nsig = RooRealVar('nsig', 'nsig', 100, 0, 500000)
@@ -168,7 +151,8 @@ def fit(path, ecms, mode):
     xframe = rm_Dpipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
     data.plotOn(xframe)
     model.plotOn(xframe)
-    model.plotOn(xframe, RooFit.Components('sigpdf'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
+    model.plotOn(xframe, RooFit.Components('gauss1'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
+    model.plotOn(xframe, RooFit.Components('gauss2'), RooFit.LineColor(kYellow), RooFit.LineWidth(2), RooFit.LineStyle(1))
     model.plotOn(xframe, RooFit.Components('bkgpdf'), RooFit.LineColor(kGreen), RooFit.LineWidth(2), RooFit.LineStyle(1))
     xtitle = 'RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})(GeV)'
     content = (xmax - xmin)/xbins * 1000
@@ -178,27 +162,23 @@ def fit(path, ecms, mode):
 
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
-    mbc.SaveAs('./figs/fit_rm_Dpipi_'+str(ecms)+'_'+mode+'.pdf')
+    mbc.SaveAs('./figs/fit_rm_Dpipi_' + str(ecms) + '_' + mode + '.pdf')
 
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
-    path_sig = './txts/' + mode + '_signal_events_'+ str(ecms) +'.txt'
+    path_sig = './txts/' + mode + '_signal_events_'+ str(ecms) +'_' + patch + '.txt'
     f_sig = open(path_sig, 'w')
     out = str(nsig.getVal()) + ' ' + str(nsig.getError()) + '\n'
     f_sig.write(out)
     f_sig.close()
 
-    range = 'Mass Region: [' + str(mean.getVal() - 3*sigma.getVal()) + ', ' + str(mean.getVal() + 3*sigma.getVal()) + ']'
-    print range
-
-    raw_input('Enter anything to end...')
-
 def main():
     args = sys.argv[1:]
-    if len(args)<2:
+    if len(args)<3:
         return usage()
     ecms = int(args[0])
     mode = args[1]
+    patch = args[2]
 
     path = []
     if mode == 'data':
@@ -209,7 +189,7 @@ def main():
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw_before.root')
     if mode == 'DDPIPI':
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
-    fit(path, ecms, mode)
+    fit(path, ecms, mode, patch)
 
 if __name__ == '__main__':
     main()

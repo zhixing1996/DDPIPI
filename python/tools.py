@@ -274,98 +274,125 @@ def chi2_kf(ecms):
         CHI2_KF = 25.
     return CHI2_KF
 
-# parameter of rm(Dpipi) fit: sigma of gaussion
-def sigma_up(ecms):
-    SIGMA_UP = 999.
-    if int(ecms) == 4190:
+# parameter of rm(Dpipi) fit
+def param_rm_Dpipi(ecms):
+    MEAN_UP = 999.
+    MEAN_LOW = 999.
+    if int(ecms == 4190):
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.865
         SIGMA_UP = 0.02
-    elif int(ecms) == 4200:
-        SIGMA_UP = 0.015
-    elif int(ecms) == 4530:
-        SIGMA_UP = 0.006
-    else:
+    if int(ecms == 4200):
+        MEAN_UP = 1.871
+        MEAN_LOW = 1.868
+        SIGMA_UP = 0.009
+    if int(ecms == 4210):
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.02
+    if int(ecms == 4220):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
         SIGMA_UP = 0.01
-    return SIGMA_UP
+    if int(ecms == 4230):
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.008
+    if int(ecms == 4237):
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.01
+    if int(ecms == 4245):
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.02
+    if int(ecms == 4246):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.008
+    if int(ecms == 4260):
+        MEAN_UP = 1.873
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.01
+    if int(ecms == 4270):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.01
+    if int(ecms == 4280):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.01
+    if int(ecms == 4310):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.01
+    if int(ecms == 4360):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.01
+    elif int(ecms == 4390):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.01
+    elif int(ecms == 4420):
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.01
+    elif int(ecms == 4470):
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.01
+    elif int(ecms == 4530):
+        MEAN_UP = 1.869
+        MEAN_LOW = 1.87
+        SIGMA_UP = 0.02
+    elif int(ecms == 4600):
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.01
+    return MEAN_UP, MEAN_LOW, SIGMA_UP
 
-# essential parameters of XS calaulation
-def data_base(ecms):
+# luminosity
+def luminosity(ecms):
     if int(ecms) == 4090:
         LUM = 52.86
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4190:
         LUM = 570.03
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4200:
         LUM = 526.0
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4210:
         LUM = 572.05
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4220:
         LUM = 569.2
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4230:
         LUM = 1100.94
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4237:
         LUM = 530.3
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4245:
         LUM = 55.88
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4246:
         LUM = 538.1
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4260:
         LUM = 828.4
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4270:
         LUM = 531.1
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4280:
         LUM = 175.7
-        FRAC_D1_2420 = 0.
-        FRAC_PSIPP = 1.
     if int(ecms) == 4310:
         LUM = 45.08
-        FRAC_D1_2420 = 0
-        FRAC_PSIPP = 1
     if int(ecms) == 4360:
         LUM = 539.84
-        FRAC_D1_2420 = 41.8/(41.8 + 17.3)
-        FRAC_PSIPP = 17.3/(41.8 + 17.3)
     if int(ecms) == 4390:
         LUM = 55.57
-        FRAC_D1_2420 = 47.53/(47.53 + 7.95)
-        FRAC_PSIPP = 7.95/(47.53 + 7.95)
     if int(ecms) == 4420:
         LUM = 44.67 + 1028.89
-        FRAC_D1_2420 = 65.4/(65.4 + 23.8)
-        FRAC_PSIPP = 23.8/(65.4 + 23.8)
     if int(ecms) == 4470:
         LUM = 111.09
-        FRAC_D1_2420 = 25.03/(25.03 + 8.6)
-        FRAC_PSIPP = 8.6/(25.03 + 8.6)
     if int(ecms) == 4530:
         LUM = 112.12
-        FRAC_D1_2420 = 32.75/(32.75 + 3.59)
-        FRAC_PSIPP = 3.59/(32.75 + 3.59)
     if int(ecms) == 4600:
         LUM = 566.93
-        FRAC_D1_2420 = 27.7/(27.7 + 7.2)
-        FRAC_PSIPP = 7.2/(27.7 + 7.2)
-    return FRAC_D1_2420, FRAC_PSIPP, LUM
+    return LUM
 
 # range of D1(2420) when getting shape
 def param_rm_D(ecms):
@@ -445,7 +472,7 @@ def param_rm_D(ecms):
         UP = 2.66
         BINS = 400
     if int(ecms) == 4600:
-        LOW = 2.14
-        UP = 2.72
+        LOW = 2.2
+        UP = 2.73
         BINS = 400
     return LOW, UP, BINS

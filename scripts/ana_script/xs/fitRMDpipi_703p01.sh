@@ -1,4 +1,5 @@
 #!/bin/sh
+PATCH=$1
 cat ECMS_Base_703p01 | while read line
 do
     str=$line
@@ -24,14 +25,14 @@ do
     echo "Begininning of $PARAM_0!"
     thresh=4310
     if [ $PARAM_0 -ge $thresh ]; then
-        python fit_rm_Dpipi.py $PARAM_0 data
-        python fit_rm_Dpipi.py $PARAM_0 D1_2420
-        python fit_rm_Dpipi.py $PARAM_0 psipp
-        python fit_rm_Dpipi.py $PARAM_0 DDPIPI
+        python fit_rm_Dpipi.py $PARAM_0 data $PATCH
+        python fit_rm_Dpipi.py $PARAM_0 D1_2420 $PATCH
+        python fit_rm_Dpipi.py $PARAM_0 psipp $PATCH
+        python fit_rm_Dpipi.py $PARAM_0 DDPIPI $PATCH
     else 
-        python fit_rm_Dpipi.py $PARAM_0 data
-        python fit_rm_Dpipi.py $PARAM_0 psipp
-        python fit_rm_Dpipi.py $PARAM_0 DDPIPI
+        python fit_rm_Dpipi.py $PARAM_0 data $PATCH
+        python fit_rm_Dpipi.py $PARAM_0 psipp $PATCH
+        python fit_rm_Dpipi.py $PARAM_0 DDPIPI $PATCH
     fi
     echo "$PARAM_0 is done!"
 done

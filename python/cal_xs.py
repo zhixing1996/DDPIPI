@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %
 gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
 
-def xs(ecms, data_path, D1_2420_path, psipp_path, DDPIPI_path):
+def xs(ecms, patch, data_path, D1_2420_path, psipp_path, DDPIPI_path):
     f_data = open(data_path, 'r')
     lines_data = f_data.readlines()
     for line_data in lines_data:
@@ -62,48 +62,121 @@ def xs(ecms, data_path, D1_2420_path, psipp_path, DDPIPI_path):
         else:
             eff_D1_2420 = N_D1_2420/50000.
 
+    factor_path = './txts/fit_rm_D_' + str(ecms) + '_read_' + patch + '.txt'
+    f_factor = open(factor_path, 'r')
+    lines_factor = f_factor.readlines()
+    for line_factor in lines_factor:
+        rs_factor = line_factor.rstrip('\n')
+        rs_factor = filter(None, rs_factor.split(' '))
+        omega_D1_2420 = float(rs_factor[1])
+        omega_psipp = float(rs_factor[2])
+        omega_DDPIPI = float(rs_factor[3])
+        xs_D1_2420 = float(rs_factor[4])
+        xs_psipp = float(rs_factor[5])
+        xs_DDPIPI = float(rs_factor[6])
+
     Br = 0.0938
-    frac_D1_2420, frac_psipp, lum = data_base(ecms)
-    eff = eff_psipp*frac_psipp + frac_D1_2420*eff_D1_2420
-    xs = N_data/(2*eff*Br*lum)
-    xs_err = Err_data/(2*eff*Br*lum)
+    lum = luminosity(ecms)
+    ISR_D1_2420 = 1.
+    ISR_psipp = 1.
+    ISR_DDPIPI = 1.
+    VP = 1.
+    eff_ISR_D1_2420 = 0.
+    eff_ISR_psipp = 0.
+    eff_ISR_DDPIPI = 0.
+    if omega_D1_2420 == 0:
+        flag_D1_2420 = 0
+        eff_ISR_D1_2420 = 1
+    else:
+        flag_D1_2420 = 1
+        eff_ISR_D1_2420 = eff_D1_2420/omega_D1_2420
+    if omega_psipp == 0:
+        flag_psipp = 0
+        eff_ISR_psipp = 1
+    else:
+        flag_psipp = 1
+        eff_ISR_psipp = eff_psipp/omega_psipp
+    if omega_DDPIPI == 0:
+        flag_DDPIPI = 0
+        eff_ISR_DDPIPI = 1
+    else:
+        flag_DDPIPI = 1
+        eff_ISR_DDPIPI = eff_DDPIPI/omega_DDPIPI
+    xs = flag_psipp*N_data/(2*eff_ISR_psipp*Br*lum) + flag_DDPIPI*N_data/(2*eff_ISR_DDPIPI*Br*lum) + flag_D1_2420*N_data/(2*eff_ISR_D1_2420*Br*lum)
+    xs_err = flag_psipp*Err_data/(2*eff_ISR_psipp*Br*lum) + flag_DDPIPI*Err_data/(2*eff_ISR_DDPIPI*Br*lum) + flag_D1_2420*Err_data/(2*eff_ISR_D1_2420*Br*lum)
+
+    if patch == 'round1':
+        for line_factor in lines_factor:
+            rs_factor = line_factor.rstrip('\n')
+            rs_factor = filter(None, rs_factor.split(' '))
+            ISR_D1_2420 = float(rs_factor[7])
+            ISR_psipp = float(rs_factor[8])
+            ISR_DDPIPI = float(rs_factor[9])
+            VP = float(rs_factor[10])
+        if omega_D1_2420 == 0:
+            flag_D1_2420 = 0
+            eff_ISR_D1_2420 = 1
+        else:
+            flag_D1_2420 = 1
+            eff_ISR_D1_2420 = eff_D1_2420*ISR_D1_2420/omega_D1_2420
+        if omega_psipp == 0:
+            flag_psipp = 0
+            eff_ISR_psipp = 1
+        else:
+            flag_psipp = 1
+            eff_ISR_psipp = eff_psipp*ISR_psipp/omega_psipp
+        if omega_DDPIPI == 0:
+            flag_DDPIPI = 0
+            eff_ISR_DDPIPI = 1
+        else:
+            flag_DDPIPI = 1
+            eff_ISR_DDPIPI = eff_DDPIPI*ISR_DDPIPI/omega_DDPIPI
+        xs = flag_psipp*N_data/(2*eff_ISR_psipp*Br*lum*VP) + flag_DDPIPI*N_data/(2*eff_ISR_DDPIPI*Br*lum*VP) + flag_D1_2420*N_data/(2*eff_ISR_D1_2420*Br*lum*VP)
+        xs_err = flag_psipp*Err_data/(2*eff_ISR_psipp*Br*lum*VP) + flag_DDPIPI*Err_data/(2*eff_ISR_DDPIPI*Br*lum*VP) + flag_D1_2420*Err_data/(2*eff_ISR_D1_2420*Br*lum*VP)
 
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
-    path_xs = './txts/xs_info_' + str(ecms) + '.txt'
+    path_xs = './txts/xs_info_' + str(ecms) + '_' + patch + '.txt'
+
     f_xs = open(path_xs, 'w')
-    out = '& @'  + str(ecms) + 'MeV& ' + str(int(N_data)) + '& ' + str(int(N_D1_2420)) + '& ' + str(int(N_psipp))
-    out += '& ' + str(round(eff_D1_2420*100, 2)) + '\%& ' + str(round(eff_psipp*100, 2)) + '\%& ' + str(round(eff*100, 2)) + '\%'
-    out += '& ' + str(lum) + '& ' + str(Br*100) + '\%& ' + str(round(xs, 2)) + '\pm' + str(round(xs_err, 2)) + '& ' + str(round(eff_DDPIPI*100, 2))  + '\%& ' + str(round(Err_data, 2)) + '& \\\\\n'
+    out = '& @'  + str(ecms) + 'MeV& ' + str(int(N_data))
+    out += '& ' + str(round(eff_D1_2420*100, 2)) + '\%& ' + str(round(eff_psipp*100, 2)) + '\%& ' + str(round(eff_DDPIPI*100, 2)) + '\%'
+    out += '& ' + str(round(omega_D1_2420, 2)) + '& ' + str(round(omega_psipp, 2)) + '& ' + str(round(omega_DDPIPI, 2))
+    out += '& ' + str(round(ISR_D1_2420, 2)) + '& ' + str(round(ISR_psipp, 2)) + '& ' + str(round(ISR_DDPIPI, 2)) + str(round(VP, 2))
+    out += '& ' + str(lum) + '& ' + str(Br*100) + '\%& ' + str(round(xs, 2)) + '\pm' + str(round(xs_err, 2)) + '&\\\\\n'
     f_xs.write(out)
     f_xs.close()
 
-    path_xs_read = './txts/xs_info_' + str(ecms) + '_read.txt'
+    path_xs_read = './txts/xs_info_' + str(ecms) + '_read_' + patch + '.txt'
     f_xs_read = open(path_xs_read, 'w')
-    out_read = str(ecms) + ' ' + str(int(N_data)) + ' ' + str(int(N_D1_2420)) + ' ' + str(int(N_psipp))
-    out_read += ' ' + str(round(eff_D1_2420*100, 2)) + ' ' + str(round(eff_psipp*100, 2)) + ' ' + str(round(eff*100, 2))
-    out_read += ' ' + str(lum) + ' ' + str(Br*100) + ' ' + str(round(xs, 2)) + ' ' + str(round(xs_err, 2)) + ' ' + str(round(eff_DDPIPI*100, 2)) + ' ' + str(round(Err_data, 2)) + ' \n'
+    out_read = str(ecms) + ' ' + str(int(N_data))
+    out_read += ' ' + str(round(eff_D1_2420*100, 2)) + ' ' + str(round(eff_psipp*100, 2)) + ' ' + str(round(eff_DDPIPI*100, 2))
+    out_read += ' ' + str(round(omega_D1_2420, 2)) + ' ' + str(round(omega_psipp, 2)) + ' ' + str(round(omega_DDPIPI, 2))
+    out_read += ' ' + str(round(ISR_D1_2420, 2)) + ' ' + str(round(ISR_psipp, 2)) + ' ' + str(round(ISR_DDPIPI, 2)) + ' ' + str(round(VP, 2))
+    out_read += ' ' + str(round(xs_D1_2420, 2)) + ' ' + str(round(xs_psipp, 2)) + ' ' + str(round(xs_DDPIPI, 2))
+    out_read += ' ' + str(lum) + ' ' + str(Br*100) + ' ' + str(round(xs, 2)) + ' ' + str(round(xs_err, 2)) + '\n'
     f_xs_read.write(out_read)
     f_xs_read.close()
-    
+
 if __name__ == '__main__':
     try:
         args = sys.argv[1:]
         ecms = int(args[0])
+        patch = args[1]
     except:
-        logging.error('python cal_xs.py [ecms]')
+        logging.error('python cal_xs.py [ecms] [patch]')
         sys.exit()
 
     if ecms < 4290:
-        data_path = './txts/data_signal_events_' + str(ecms) + '.txt'
-        psipp_path = './txts/psipp_signal_events_' + str(ecms) + '.txt'
+        data_path = './txts/data_signal_events_' + str(ecms) + '_' + patch + '.txt'
+        psipp_path = './txts/psipp_signal_events_' + str(ecms) + '_' + patch + '.txt'
         D1_2420_path = ''
-        DDPIPI_path = './txts/DDPIPI_signal_events_' + str(ecms) + '.txt'
-        xs(ecms, data_path, D1_2420_path, psipp_path, DDPIPI_path)
+        DDPIPI_path = './txts/DDPIPI_signal_events_' + str(ecms) + '_' + patch + '.txt'
+        xs(ecms, patch, data_path, D1_2420_path, psipp_path, DDPIPI_path)
 
     if ecms >= 4290:
-        data_path = './txts/data_signal_events_' + str(ecms) + '.txt'
-        psipp_path = './txts/psipp_signal_events_' + str(ecms) + '.txt'
-        D1_2420_path = './txts/D1_2420_signal_events_' + str(ecms) + '.txt'
-        DDPIPI_path = './txts/DDPIPI_signal_events_' + str(ecms) + '.txt'
-        xs(ecms, data_path, D1_2420_path, psipp_path, DDPIPI_path)
+        data_path = './txts/data_signal_events_' + str(ecms) + '_' + patch + '.txt'
+        psipp_path = './txts/psipp_signal_events_' + str(ecms) + '_' + patch + '.txt'
+        D1_2420_path = './txts/D1_2420_signal_events_' + str(ecms) + '_' + patch + '.txt'
+        DDPIPI_path = './txts/DDPIPI_signal_events_' + str(ecms) + '_' + patch + '.txt'
+        xs(ecms, patch, data_path, D1_2420_path, psipp_path, DDPIPI_path)

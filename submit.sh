@@ -14,19 +14,19 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.1"    "[run on data reconstructed @703p01]"
     printf "\n\t%-9s  %-40s\n" "0.1.1"  "Single D tag -- inclusive MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.2"    "[run on signal MC of psi(4415)->X(3842)PIPI(PHSP), X(3842)->DD(PHSP) reconstructed @703p01]" 
+    printf "\n\t%-9s  %-40s\n" "0.2"    "[run on signal MC of psi(4260)->X(3842)PIPI(PHSP), X(3842)->DD(PHSP) reconstructed @703p01]" 
     printf "\n\t%-9s  %-40s\n" "0.2.1"  "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.2.2"  "Single D tag -- run on signal MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.3"    "[run on signal MC of psi(4415)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) reconstructed @703p01]" 
+    printf "\n\t%-9s  %-40s\n" "0.3"    "[run on signal MC of psi(4260)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) reconstructed @703p01]" 
     printf "\n\t%-9s  %-40s\n" "0.3.1"  "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.3.2"  "Single D tag -- run on signal MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.4"    "[run on signal MC of psi(4415)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @703p01]"
+    printf "\n\t%-9s  %-40s\n" "0.4"    "[run on signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @703p01]"
     printf "\n\t%-9s  %-40s\n" "0.4.1"  "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.4.2"  "Single D tag -- run on signal MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.5"    "[run on signal MC of psi(4415)->DDPIPI(PHSP) reconstructed @703p01]"
+    printf "\n\t%-9s  %-40s\n" "0.5"    "[run on signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @703p01]"
     printf "\n\t%-9s  %-40s\n" "0.5.1"  "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.5.2"  "Single D tag -- run on signal MC sample"
 
@@ -131,12 +131,12 @@ case $option in
            ;;
 
     # ---------------------------------------------------------------------------------------
-    #  0.2 signal MC of psi(4415)->X(3842)PIPI(PHSP), X(3842)->DD(PHSP) reconstructed @703p01
+    #  0.2 signal MC of psi(4260)->X(3842)PIPI(PHSP), X(3842)->DD(PHSP) reconstructed @703p01
     # ---------------------------------------------------------------------------------------
     
-    0.2) echo "signal MC of psi(4415)->X(3842)PIPI(PHSP), X(3842)->DD(PHSP) reconstructed @703p01..."
-         echo "--> Process: psi(4415)->X(3842)PIPI, X(3842)->DD"
-         echo "--> Generation mode: psi(4415)->X(3842)PIPI PHSH; X(3842)->DD PHSP; D decay D_DALITZ(assignated mode) or inlusive decay"
+    0.2) echo "signal MC of psi(4260)->X(3842)PIPI(PHSP), X(3842)->DD(PHSP) reconstructed @703p01..."
+         echo "--> Process: psi(4260)->X(3842)PIPI, X(3842)->DD"
+         echo "--> Generation mode: psi(4260)->X(3842)PIPI PHSH; X(3842)->DD PHSP; D decay D_DALITZ(assignated mode) or inlusive decay"
          echo "--> Event Number: 20,000"
          ;;
 
@@ -151,12 +151,12 @@ case $option in
            ;;
 
     # ---------------------------------------------------------------------------------------------
-    #  0.3 signal MC of psi(4415)->D_1(2420)D(PHSP), D_1(2420)->DPIPI(HELAMP) reconstructed @703p01
+    #  0.3 signal MC of psi(4260)->D_1(2420)D(PHSP), D_1(2420)->DPIPI(HELAMP) reconstructed @703p01
     # ---------------------------------------------------------------------------------------------
     
-    0.3) echo "signal MC of psi(4415)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) reconstructed @703p01..."
-         echo "--> Process: psi(4415)->D1_(2420)D, D1_(2420)->DPIPI"
-         echo "--> Generation mode: psi(4415)->D1_(2420)D PHSH; D1_(2420)->DPIPI HELAMP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+    0.3) echo "signal MC of psi(4260)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) reconstructed @703p01..."
+         echo "--> Process: psi(4260)->D1_(2420)D, D1_(2420)->DPIPI"
+         echo "--> Generation mode: psi(4260)->D1_(2420)D PHSH; D1_(2420)->DPIPI HELAMP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
          echo "--> Event Number: 20,000"
          ;;
 
@@ -171,12 +171,12 @@ case $option in
            ;;
 
     # ------------------------------------------------------------------------------------------
-    #  0.4 signal MC of psi(4415)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @703p01
+    #  0.4 signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @703p01
     # ------------------------------------------------------------------------------------------
 
-    0.4) echo "signal MC of psi(4415)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @703p01..."
-         echo "--> Process: psi(4415)->psi(3770)PIPI, psi(3770)->DD"
-         echo "--> Generation mode: psi(4415)->psi(3770)PIPI PHSH; psi(3770)->DD VSS; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+    0.4) echo "signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @703p01..."
+         echo "--> Process: psi(4260)->psi(3770)PIPI, psi(3770)->DD"
+         echo "--> Generation mode: psi(4260)->psi(3770)PIPI PHSH; psi(3770)->DD VSS; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
          echo "--> Event Number: 20,000"
          ;;
 
@@ -191,12 +191,12 @@ case $option in
            ;;
 
     # ---------------------------------------------------------------
-    #  0.5 signal MC of psi(4415)->DDPIPI(PHSP) reconstructed @703p01
+    #  0.5 signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @703p01
     # ---------------------------------------------------------------
     
-    0.5) echo "signal MC of psi(4415)->DDPIPI(PHSP) reconstructed @703p01..."
-         echo "--> Process: psi(4415)->DDPIPI"
-         echo "--> Generation mode: psi(4415)->DDPIPI PHSH; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+    0.5) echo "signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @703p01..."
+         echo "--> Process: psi(4260)->DDPIPI"
+         echo "--> Generation mode: psi(4260)->DDPIPI PHSH; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
          echo "--> Event Number: 20,000"
          ;;
 

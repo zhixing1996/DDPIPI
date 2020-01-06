@@ -135,7 +135,7 @@ def upper_limit(step_size, path, root, ecms, mode, arrow_top):
         eff = entries/100000.
     else:
         eff = entries/50000.
-    temp1, temp2, lum = data_base(ecms)
+    lum = luminosity(ecms)
     Br = 0.0938
     xs = round(n_upl/2./Br/eff/lum, 2)
     if not os.path.exists('./txts/'): 

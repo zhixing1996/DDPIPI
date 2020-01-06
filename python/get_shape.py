@@ -41,25 +41,6 @@ def BW(m, M, G):
     bw = 1/(pow((s-M*M),2) + M*M*G*G)
     return bw
 
-def shape_D1_2420_conv(path_in, path_out, ecms, xmin, xmax, xbins):
-    rm_D = RooRealVar('rm_D', 'rm_D', xmin, xmax)
-    f_in = TFile(path_in, 'READ')
-    f_out = TFile(path_out, 'RECREATE')
-    for i in xrange(1):
-        for j in xrange(1):
-            h_name = 'h_' + str(i) + '_' + str(j)
-            pdf_name = 'Covpdf_D1_2420_' + str(ecms) + '_' + str(i) + '_' + str(j)
-            h_signal_raw = f_in.Get(h_name)
-            hist_signal_raw = RooDataHist('hist_signal_raw', 'hist_signal_raw', RooArgList(rm_D), h_signal_raw)
-            pdf_signal_raw = RooHistPdf('pdf_signal_raw', 'pdf_signal_raw', RooArgSet(rm_D), hist_signal_raw, 0)
-            mean = RooRealVar('mean', 'mean', 0)
-            sigma = RooRealVar('sigma', 'sigma', 0.00123)
-            gauss = RooGaussian('gauss', 'guass', rm_D, mean, sigma)
-            rm_D.setBins(xbins, 'cache')
-            pdf_conv = RooFFTConvPdf(pdf_name, pdf_name, rm_D, pdf_signal_raw, gauss)
-            pdf_conv.Write()
-    f_out.Close()
-
 def shape_D1_2420_hist(path_signal, path_sideband, path_out, xmin, xmax, xbins):
     f_signal = TFile(path_signal)
     f_sideband = TFile(path_sideband)
@@ -203,10 +184,6 @@ def main():
         path_sideband = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_'+str(ecms)+'_sideband.root'
         path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_'+str(ecms)+'.root'
         shape_D1_2420_hist(path_signal, path_sideband, path_out, xmin, xmax, xbins)
-    if mode == 'D1_2420_conv':
-        path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_'+str(ecms)+'.root'
-        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_conv_'+str(ecms)+'.root'
-        shape_D1_2420_conv(path_in, path_out, ecms, xmin, xmax, xbins)
 
 if __name__ == '__main__':
     main()

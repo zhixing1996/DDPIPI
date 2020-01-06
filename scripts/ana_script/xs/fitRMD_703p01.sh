@@ -1,4 +1,5 @@
 #!/bin/sh
+PATCH=$1
 cat ECMS_Base_703p01 | while read line
 do
     str=$line
@@ -22,6 +23,6 @@ do
     fi
     echo "Begininning of $PARAM_0!"
     cd $HOME/bes/DDPIPI/v0.2/python
-    python fit_rm_D.py $PARAM_0
+    python fit_rm_D.py $PARAM_0 $PATCH
     echo "$PARAM_0 is done!"
 done

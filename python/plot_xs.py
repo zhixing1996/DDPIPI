@@ -65,7 +65,7 @@ def draw(patch):
     ecms_err = array('f', N*[0])
     xs = array('f', N*[0])
     xs_err = array('f', N*[0])
-    path = './txts/xs_info_modified_read_' + patch + '.txt'
+    path = './txts/xs_total_' + patch + '.txt'
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
@@ -76,10 +76,10 @@ def draw(patch):
     for line in lines:
         rs = line.rstrip('\n')
         rs = filter(None, rs.split(' '))
-        ecms[count] = float(rs[0])/1000.
+        ecms[count] = float(rs[0])
         ecms_err[count] = 0.0022
-        xs[count] = float(rs[-2])
-        xs_err[count] = float(rs[-1])
+        xs[count] = float(rs[1])
+        xs_err[count] = float(rs[2])
         count += 1
 
     grerr = TGraphErrors(N, ecms, xs, ecms_err, xs_err)

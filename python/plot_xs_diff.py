@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Calculate cross section differences between two patches
+Plot cross section differences between two patches
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
@@ -8,8 +8,7 @@ __copyright__ = "Copyright (c) Maoqiang JING"
 __created__ = "[2019-12-30 Mon 22:55]"
 
 import ROOT
-from ROOT import TCanvas, gStyle
-from ROOT import TFile, TH1F, TLegend, TPaveText
+from ROOT import *
 import sys, os
 import logging
 from math import *
@@ -21,10 +20,10 @@ gStyle.SetOptTitle(0)
 def usage():
     sys.stdout.write('''
 NAME
-    cal_xs_diff.py
+    plot_xs_diff.py
 
 SYNOPSIS
-    ./cal_xs_diff.py [mode]
+    ./plot_xs_diff.py [mode]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -62,12 +61,9 @@ def cal_diff(patch1, patch2, mode):
     path_xs_diff = './txts/xs_diff_' + mode + '_' + patch1 + '_' + patch2 + '.txt'
     f_xs_diff = open(path_xs_diff, 'w')
 
-    path1 = './txts/xs_info_' + mode + '_' + patch1 + '.txt'
-    path2 = './txts/xs_info_' + mode + '_' + patch2 + '.txt'
+    path1 = './txts/xs_' + mode + '_' + patch1 + '.txt'
+    path2 = './txts/xs_' + mode + '_' + patch2 + '.txt'
     XS1, XS2 = open(path1, 'r'), open(path2, 'r')
-    if not (len(XS1) == len(XS2)):
-        print 'Number of energy points is not the same, please check...'
-        sys.exit()
     for line1, line2 in zip(XS1, XS2):
         info1 = line1.strip().split()
         info2 = line2.strip().split()
@@ -76,9 +72,11 @@ def cal_diff(patch1, patch2, mode):
         ecms, xs1 = finfo1[0], finfo1[1]
         ecms, xs2 = finfo2[0], finfo2[1]
         grerr.Set(ipoint + 1)
-        grerr.SetPoint(ipoint, ecms, (xs1 - xs2)/xs1)
+        if xs1 == 0 or xs2 == 0:
+            continue
+        grerr.SetPoint(ipoint, ecms, (xs2 - xs1)/xs2)
         ipoint += 1
-        out = str(ecms) + ' ' + str((xs1 - xs2)/xs1) + '\n'
+        out = str(ecms) + ' ' + str((xs2 - xs1)/xs2) + '\n'
         f_xs_diff.write(out)
     f_xs_diff.close()
     return grerr
@@ -89,6 +87,7 @@ def set_canvas_style(mbc):
     mbc.SetRightMargin(0.15)
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
+    mbc.SetGrid()
 
 def main(mode):
     mbc = TCanvas('mbc', 'mbc', 800, 600)
@@ -101,12 +100,9 @@ def main(mode):
     grerr_0_to_1.SetMarkerColor(2)
     grerr_0_to_1.SetLineColor(2)
     grerr_0_to_1.SetMarkerStyle(20)
-    grerr_0_to_1.SetName('gecs')
-    gaxis = TGaxis(0, 0, 0, 0, 'gecs')
-    gaxis.SetMaxDigits(3)
     grerr_0_to_1.Draw('ALP')
 
-    legend = TLegend(0.5, 0.6, 0.95, 0.90)
+    legend = TLegend(0.7, 0.83, 0.85, 0.88)
     set_legend(legend, grerr_0_to_1)
     legend.Draw()
 
