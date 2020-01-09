@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-cd besenv/703p01
+# cd besenv/703p01
+cd besenv/703
 source setupCVS.csh
 source setupCMT.csh
 cmt config
 source setup.csh
 
-cd ../../TestRelease/703p01/TestRelease-00-00-86/cmt
+# cd ../../TestRelease/703p01/TestRelease-00-00-86/cmt
+cd ../../TestRelease/703/TestRelease-00-00-86/cmt
 source setup.csh
 cd ../../../..
 

@@ -26,7 +26,7 @@ do
     cd $HOME/bes/DDPIPI/v0.2/python
     rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/*signal*.root
     rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/*raw*.root
-    echo "Begininning of $PARAM_0!"
+    echo "Begining of $PARAM_0!"
     python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/rootfile/sigMC_D1_2420_$PARAM_0\.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/sigMC_D1_2420_$PARAM_0\_signal.root $PARAM_3 STDDmiss_signal
     echo "STDDmiss of $PARAM_0 is done!"
     python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/rootfile/sigMC_D1_2420_$PARAM_0\.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/sigMC_D1_2420_$PARAM_0\_raw.root $PARAM_3 raw_signal
