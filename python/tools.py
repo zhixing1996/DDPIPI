@@ -280,12 +280,12 @@ def param_rm_Dpipi(ecms):
     MEAN_LOW = 999.
     if int(ecms == 4190):
         MEAN_UP = 1.875
-        MEAN_LOW = 1.865
+        MEAN_LOW = 1.866
         SIGMA_UP = 0.02
     if int(ecms == 4200):
-        MEAN_UP = 1.874
+        MEAN_UP = 1.872
         MEAN_LOW = 1.865
-        SIGMA_UP = 0.012
+        SIGMA_UP = 0.01
     if int(ecms == 4210):
         MEAN_UP = 1.875
         MEAN_LOW = 1.865
@@ -299,13 +299,13 @@ def param_rm_Dpipi(ecms):
         MEAN_LOW = 1.865
         SIGMA_UP = 0.008
     if int(ecms == 4237):
-        MEAN_UP = 1.875
-        MEAN_LOW = 1.865
-        SIGMA_UP = 0.0082
+        MEAN_UP = 1.877
+        MEAN_LOW = 1.866
+        SIGMA_UP = 0.0075
     if int(ecms == 4245):
         MEAN_UP = 1.875
         MEAN_LOW = 1.865
-        SIGMA_UP = 0.02
+        SIGMA_UP = 0.022
     if int(ecms == 4246):
         MEAN_UP = 1.875
         MEAN_LOW = 1.865
@@ -315,9 +315,9 @@ def param_rm_Dpipi(ecms):
         MEAN_LOW = 1.865
         SIGMA_UP = 0.01
     if int(ecms == 4270):
-        MEAN_UP = 1.872
-        MEAN_LOW = 1.865
-        SIGMA_UP = 0.01
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.011
     if int(ecms == 4280):
         MEAN_UP = 1.872
         MEAN_LOW = 1.865
@@ -325,11 +325,11 @@ def param_rm_Dpipi(ecms):
     if int(ecms == 4310):
         MEAN_UP = 1.871
         MEAN_LOW = 1.867
-        SIGMA_UP = 0.008
+        SIGMA_UP = 0.01
     if int(ecms == 4360):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
-        SIGMA_UP = 0.0075
+        SIGMA_UP = 0.02
     elif int(ecms == 4390):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
@@ -341,7 +341,7 @@ def param_rm_Dpipi(ecms):
     elif int(ecms == 4470):
         MEAN_UP = 1.875
         MEAN_LOW = 1.865
-        SIGMA_UP = 0.01
+        SIGMA_UP = 0.015
     elif int(ecms == 4530):
         MEAN_UP = 1.875
         MEAN_LOW = 1.865

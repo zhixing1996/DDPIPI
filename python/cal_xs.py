@@ -142,7 +142,7 @@ def xs(ecms, patch, data_path, D1_2420_path, psipp_path, DDPIPI_path):
     out = '& @'  + str(ecms) + 'MeV& ' + str(int(N_data))
     out += '& ' + str(round(eff_D1_2420*100, 2)) + '\%& ' + str(round(eff_psipp*100, 2)) + '\%& ' + str(round(eff_DDPIPI*100, 2)) + '\%'
     out += '& ' + str(round(omega_D1_2420, 2)) + '& ' + str(round(omega_psipp, 2)) + '& ' + str(round(omega_DDPIPI, 2))
-    out += '& ' + str(round(ISR_D1_2420, 2)) + '& ' + str(round(ISR_psipp, 2)) + '& ' + str(round(ISR_DDPIPI, 2)) + str(round(VP, 2))
+    out += '& ' + str(round(ISR_D1_2420, 2)) + '& ' + str(round(ISR_psipp, 2)) + '& ' + str(round(ISR_DDPIPI, 2)) + "& " + str(round(VP, 2))
     out += '& ' + str(lum) + '& ' + str(Br*100) + '\%& ' + str(round(xs, 2)) + '\pm' + str(round(xs_err, 2)) + '&\\\\\n'
     f_xs.write(out)
     f_xs.close()

@@ -74,6 +74,15 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.4.31"   "[ROUND2: DDPIPI] Calculate numbers -- format cross section outputs"
     printf "\n\t%-9s  %-40s\n" "0.4.32"   "[ROUND2: DDPIPI] Draw figures -- draw cross sections"
     printf "\n\t%-9s  %-40s\n" "0.4.33"   "[ROUND2: DDPIPI] Draw figures -- draw cross section differences between iterations"
+    printf "\n\t%-9s  %-40s\n" "0.4.34"   "[ROUND3: DDPIPI] Get factor -- get ridiative correction and vacuum polarization factors"
+    printf "\n\t%-9s  %-40s\n" "0.4.35"   "[ROUND3: DDPIPI] Get shape -- get shape of D1(2420)"
+    printf "\n\t%-9s  %-40s\n" "0.4.36"   "[ROUND3: DDPIPI] Get samples -- get samples used for RM(D) fit"
+    printf "\n\t%-9s  %-40s\n" "0.4.37"   "[ROUND3: DDPIPI] Fit distributions -- perform RM(D) fit"
+    printf "\n\t%-9s  %-40s\n" "0.4.38"   "[ROUND3: DDPIPI] Fit distributions -- fit to RM(Dpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.4.39"   "[ROUND3: DDPIPI] Calculate numbers -- calculate cross sections"
+    printf "\n\t%-9s  %-40s\n" "0.4.40"   "[ROUND3: DDPIPI] Calculate numbers -- format cross section outputs"
+    printf "\n\t%-9s  %-40s\n" "0.4.41"   "[ROUND3: DDPIPI] Draw figures -- draw cross sections"
+    printf "\n\t%-9s  %-40s\n" "0.4.42"   "[ROUND3: DDPIPI] Draw figures -- draw cross section differences between iterations"
     
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -640,6 +649,54 @@ case $option in
             ;;
 
     0.4.33) echo "[ROUND2: DDPIPI] Draw figures -- drawing cross section differences between iterations..."
+            cd python
+            python plot_xs_diff.py DDPIPI
+            python plot_xs_diff.py D1_2420
+            python plot_xs_diff.py psipp
+            python plot_xs_diff.py total
+            ;;
+
+    0.4.34) echo "[ROUND3: DDPIPI] Get factor -- getting ridiative correction and vacuum polarization factors..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420
+            ./getFactorD1_2420_703p01.sh round3
+            ;;
+
+    0.4.35) echo "[ROUND3: DDPIPI] Get shape -- getting shape of D1(2420)..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./getShape_703p01.sh
+            ;;
+
+    0.4.36) echo "[ROUND3: DDPIPI] Get samples -- getting samples used for RM(D) fit..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./convertROOT_703p01.sh
+            ;;
+
+    0.4.37) echo "[ROUND3: DDPIPI] Fit distributions -- performing RM(D) fit..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./fitRMD_703p01.sh round3
+            ;;
+
+    0.4.38) echo "[ROUND3: DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./fitRMDpipi_703p01.sh round3
+            ;;
+
+    0.4.39) echo "[ROUND3: DDPIPI] Calculate numbers -- calculating cross sections..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./calXS_703p01.sh round3
+            ;;
+
+    0.4.40) echo "[ROUND3: DDPIPI] Calculate numbers -- formatting cross section outputs..."
+            cd python
+            python format_xs.py round3
+            ;;
+
+    0.4.41) echo "[ROUND3: DDPIPI] Draw figures -- drawing cross sections..."
+            cd python
+            python plot_xs.py round3
+            ;;
+
+    0.4.42) echo "[ROUND3: DDPIPI] Draw figures -- drawing cross section differences between iterations..."
             cd python
             python plot_xs_diff.py DDPIPI
             python plot_xs_diff.py D1_2420

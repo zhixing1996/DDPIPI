@@ -32,9 +32,10 @@ DATE
     December 2019
 \n''')
 
-def set_legend(legend, gr1, gr2):
+def set_legend(legend, gr1, gr2, gr3):
     legend.AddEntry(gr1, 'ini. #rightarrow 1th', 'lp')
-    legend.AddEntry(gr2, '1th  #rightarrow 2rd', 'lp')
+    legend.AddEntry(gr2, '1th  #rightarrow 2nd', 'lp')
+    legend.AddEntry(gr3, '2nh  #rightarrow 3rd', 'lp')
     legend.SetBorderSize(0)
     legend.SetFillColor(0)
     legend.SetLineColor(0)
@@ -96,10 +97,12 @@ def main(mode):
 
     grerr_0_to_1 = cal_diff('round0', 'round1', mode)
     grerr_1_to_2 = cal_diff('round1', 'round2', mode)
+    grerr_2_to_3 = cal_diff('round2', 'round3', mode)
     xtitle = 'E_{cms}(GeV)'
     ytitle = '#Delta#sigma^{dress}/#sigma^{dress}(pb)'
     set_graph_style(grerr_0_to_1, xtitle, ytitle)
     set_graph_style(grerr_1_to_2, xtitle, ytitle)
+    set_graph_style(grerr_2_to_3, xtitle, ytitle)
     grerr_0_to_1.SetMarkerColor(2)
     grerr_0_to_1.SetLineColor(2)
     grerr_0_to_1.SetMarkerStyle(20)
@@ -108,9 +111,13 @@ def main(mode):
     grerr_1_to_2.SetLineColor(1)
     grerr_1_to_2.SetMarkerStyle(20)
     grerr_1_to_2.Draw('LP')
+    grerr_2_to_3.SetMarkerColor(3)
+    grerr_2_to_3.SetLineColor(3)
+    grerr_2_to_3.SetMarkerStyle(20)
+    grerr_2_to_3.Draw('LP')
 
     legend = TLegend(0.7, 0.83, 0.85, 0.88)
-    set_legend(legend, grerr_0_to_1, grerr_1_to_2)
+    set_legend(legend, grerr_0_to_1, grerr_1_to_2, grerr_2_to_3)
     legend.Draw()
 
     if not os.path.exists('./figs/'):
