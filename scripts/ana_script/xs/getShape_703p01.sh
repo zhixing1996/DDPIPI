@@ -27,7 +27,6 @@ do
         python get_shape.py $PARAM_0 D1_2420_signal
         python get_shape.py $PARAM_0 D1_2420_sideband
         python get_shape.py $PARAM_0 D1_2420
-        python get_shape.py $PARAM_0 D1_2420_conv
         echo "$PARAM_0 is done!"
     fi
 done

@@ -161,7 +161,7 @@ def fit(ecms, patch, path, shape, root):
         hist_D1_2420 = RooDataHist('h_D1_2420', 'h_D1_2420', RooArgList(rm_D), h_D1_2420)
         pdf_D1_2420 = RooHistPdf('pdf_D1_2420', 'pdf_D1_2420', RooArgSet(rm_D), hist_D1_2420, 0)
         mean = RooRealVar('mean', 'mean', 0)
-        sigma = RooRealVar('sigma', 'sigma', 0.00123, 0., 0.01)
+        sigma = RooRealVar('sigma', 'sigma', 0.00123, 0., 0.02)
         gauss = RooGaussian('gauss', 'guass', rm_D, mean, sigma)
         rm_D.setBins(xbins, 'cache')
         covpdf_D1_2420 = RooFFTConvPdf(pdf_name, pdf_name, rm_D, pdf_D1_2420, gauss)
@@ -178,11 +178,12 @@ def fit(ecms, patch, path, shape, root):
     xs_D1_2420 = 0.
     ISR_D1_2420 = 0.
     VP_D1_2420 = 0.
+    xserr_D1_2420 = 0.
     if ecms >= 4290:
         n_D1_2420 = n2420.getVal()
         if ecms == 4420:
             eff_D1_2420 = entries_D1_2420_root/100000.
-            if patch == 'round1':
+            if patch == 'round1' or patch == 'round2' or patch == 'round3' or patch == 'round4':
                 f_D1_2420_factor = open('./txts/factor_info_' + str(ecms) + '_D1_2420_' + patch + '.txt', 'r')
                 lines_D1_2420 = f_D1_2420_factor.readlines()
                 for line_D1_2420 in lines_D1_2420:
@@ -193,7 +194,8 @@ def fit(ecms, patch, path, shape, root):
         else:
             eff_D1_2420 = entries_D1_2420_root/50000.
         xs_D1_2420 = n_D1_2420/2./2./Br/eff_D1_2420/lum
-        if patch == 'round1':
+        xserr_D1_2420 = n2420.getError()/2./2./Br/eff_D1_2420/lum
+        if patch == 'round1' or patch == 'round2' or patch == 'round3' or patch == 'round4':
             f_D1_2420_factor = open('./txts/factor_info_' + str(ecms) + '_D1_2420_' + patch + '.txt', 'r')
             lines_D1_2420 = f_D1_2420_factor.readlines()
             for line_D1_2420 in lines_D1_2420:
@@ -202,13 +204,21 @@ def fit(ecms, patch, path, shape, root):
                 ISR_D1_2420 = float(rs_D1_2420[0])
                 VP_D1_2420 = float(rs_D1_2420[1])
             xs_D1_2420 = n_D1_2420/2./2./Br/eff_D1_2420/lum/ISR_D1_2420/VP_D1_2420
+            xserr_D1_2420 = n2420.getError()/2./2./Br/eff_D1_2420/lum/ISR_D1_2420/VP_D1_2420
 
+    n_psipp = 0.
+    eff_psipp = 0.
+    xs_psipp = 0.
+    ISR_psipp = 0.
+    VP_psipp = 0.
+    xserr_psipp = 0.
     if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420:
         eff_psipp = entries_psipp_root/100000.
     else:
         eff_psipp = entries_psipp_root/50000.
     xs_psipp = npsipp.getVal()/2./2./Br/eff_psipp/lum
-    if patch == 'round1':
+    xserr_psipp = npsipp.getError()/2./2./Br/eff_psipp/lum
+    if patch == 'round1' or patch == 'round2' or patch == 'round3' or patch == 'round4':
         f_psipp_factor = open('./txts/factor_info_' + str(ecms) + '_psipp_' + patch + '.txt', 'r')
         lines_psipp = f_psipp_factor.readlines()
         for line_psipp in lines_psipp:
@@ -217,13 +227,21 @@ def fit(ecms, patch, path, shape, root):
             ISR_psipp = float(rs_psipp[0])
             VP_psipp = float(rs_psipp[1])
         xs_psipp = npsipp.getVal()/2./2./Br/eff_psipp/lum/ISR_psipp/VP_psipp
+        xserr_psipp = npsipp.getError()/2./2./Br/eff_psipp/lum/ISR_psipp/VP_psipp
 
+    n_DDPIPI = 0.
+    eff_DDPIPI = 0.
+    xs_DDPIPI = 0.
+    ISR_DDPIPI = 0.
+    VP_DDPIPI = 0.
+    xserr_DDPIPI = 0.
     if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420:
         eff_DDPIPI = entries_DDPIPI_root/100000.
     else:
         eff_DDPIPI = entries_DDPIPI_root/50000.
     xs_DDPIPI = nDDPIPI.getVal()/2./2./Br/eff_DDPIPI/lum
-    if patch == 'round1':
+    xserr_DDPIPI = nDDPIPI.getError()/2./2./Br/eff_DDPIPI/lum
+    if patch == 'round1' or patch == 'round2' or patch == 'round3' or patch == 'round4':
         f_DDPIPI_factor = open('./txts/factor_info_' + str(ecms) + '_DDPIPI_' + patch + '.txt', 'r')
         lines_DDPIPI = f_DDPIPI_factor.readlines()
         for line_DDPIPI in lines_DDPIPI:
@@ -232,6 +250,7 @@ def fit(ecms, patch, path, shape, root):
             ISR_DDPIPI = float(rs_DDPIPI[0])
             VP_DDPIPI = float(rs_DDPIPI[1])
         xs_DDPIPI = nDDPIPI.getVal()/2./2./Br/eff_DDPIPI/lum/ISR_DDPIPI/VP_DDPIPI
+        xserr_DDPIPI = nDDPIPI.getError()/2./2./Br/eff_DDPIPI/lum/ISR_DDPIPI/VP_DDPIPI
 
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
@@ -239,7 +258,7 @@ def fit(ecms, patch, path, shape, root):
     f_out = open(path_out, 'w')
     line = '& @' + str(ecms) + 'MeV& ' + str(int(n_D1_2420)) + '& ' + str(int(npsipp.getVal())) + '& ' + str(int(nDDPIPI.getVal())) 
     line += '& ' + str(round(eff_D1_2420*100, 2)) + '\%& ' + str(round(eff_psipp*100, 2)) + '\%& ' + str(round(eff_DDPIPI*100, 2)) + '\%& '
-    line += str(lum) + '& ' + str(Br*100) + '\%& ' + str(round(xs_D1_2420, 2)) + '& ' + str(round(xs_psipp, 2)) + '& ' + str(round(xs_DDPIPI, 2)) + '& \\\\\n'
+    line += str(lum) + '& ' + str(Br*100) + '\%& ' + str(round(xs_D1_2420, 2)) + '& ' + str(round(xs_psipp, 2)) + '& ' + str(round(xs_DDPIPI, 2)) + '& ' + str(round(xserr_D1_2420, 2)) + '& ' + str(round(xserr_psipp, 2)) + '& ' + str(round(xserr_DDPIPI, 2)) + '& \\\\\n'
     f_out.write(line)
     f_out.close()
 
@@ -248,8 +267,7 @@ def fit(ecms, patch, path, shape, root):
     N_tot = n_D1_2420 + npsipp.getVal() + nDDPIPI.getVal()
     line_read = str(ecms) + ' ' + str(round(n_D1_2420/N_tot, 2)) + ' ' + str(round(npsipp.getVal()/N_tot, 2)) + ' ' + str(round(nDDPIPI.getVal()/N_tot, 2))
     line_read += ' ' + str(round(xs_D1_2420, 2)) + ' ' + str(round(xs_psipp, 2)) + ' ' + str(round(xs_DDPIPI, 2))
-    if patch == 'round1':
-        line_read += ' ' + str(round(ISR_D1_2420, 2)) + ' ' + str(round(ISR_psipp, 2)) + ' ' + str(round(ISR_DDPIPI, 2)) + ' ' + str(round(VP_DDPIPI, 2))
+    line_read += ' ' + str(round(ISR_D1_2420, 2)) + ' ' + str(round(ISR_psipp, 2)) + ' ' + str(round(ISR_DDPIPI, 2)) + ' ' + str(round(VP_DDPIPI, 2)) + ' ' + str(round(xserr_D1_2420, 2)) + ' ' + str(round(xserr_psipp, 2)) + ' ' + str(round(xserr_DDPIPI, 2))
     line_read += '\n'
     f_out_read.write(line_read)
     f_out_read.close()

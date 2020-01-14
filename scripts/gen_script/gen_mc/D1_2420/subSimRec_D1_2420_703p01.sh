@@ -11,7 +11,7 @@ do
     PARAM_2=${arr[2]} # ruNo up
     PARAM_3=`echo "scale=4; ${arr[3]} / 1000" | bc -l` # float energy poit
     PARAM_4=${arr[4]} # luminosity
-    WORKAREA=$HOME"/bes/DDPIPI/v0.2"
+    WORKAREA=$HOME/bes/DDPIPI/v0.2
     mkdir -p $WORKAREA/scripts/sigMC/D1_2420/$PARAM_0
     cd $WORKAREA/scripts/sigMC/D1_2420/$PARAM_0
     if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D1_2420/$PARAM_0/jobs_sig" ]; then

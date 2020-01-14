@@ -557,7 +557,7 @@ case $option in
 
     0.4.15) echo "[DDPIPI] Draw figures -- drawing cross sections..."
             cd python
-            python plot_xs.py round0
+            python plot_xs.py total round0
             ;;
 
     0.4.16) echo "[ROUND1: DDPIPI] Get factor -- getting ridiative correction and vacuum polarization factors..."
@@ -597,7 +597,7 @@ case $option in
 
     0.4.23) echo "[ROUND1: DDPIPI] Draw figures -- drawing cross sections..."
             cd python
-            python plot_xs.py round1
+            python plot_xs.py total round1
             ;;
 
     0.4.24) echo "[ROUND1: DDPIPI] Draw figures -- drawing cross section differences between iterations..."
@@ -645,7 +645,7 @@ case $option in
 
     0.4.32) echo "[ROUND2: DDPIPI] Draw figures -- drawing cross sections..."
             cd python
-            python plot_xs.py round2
+            python plot_xs.py total round2
             ;;
 
     0.4.33) echo "[ROUND2: DDPIPI] Draw figures -- drawing cross section differences between iterations..."
@@ -693,7 +693,7 @@ case $option in
 
     0.4.41) echo "[ROUND3: DDPIPI] Draw figures -- drawing cross sections..."
             cd python
-            python plot_xs.py round3
+            python plot_xs.py total round3
             ;;
 
     0.4.42) echo "[ROUND3: DDPIPI] Draw figures -- drawing cross section differences between iterations..."

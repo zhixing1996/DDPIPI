@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Plot cross section of DDPIPI
+Plot cross section
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
@@ -25,7 +25,7 @@ NAME
     plot_xs.py
 
 SYNOPSIS
-    ./plot_xs.py [patch]
+    ./plot_xs.py [mode] [patch]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -59,13 +59,16 @@ def set_canvas_style(mbc):
     mbc.SetBottomMargin(0.15)
     mbc.SetGrid()
 
-def draw(patch):
-    N = 18
+def draw(mode, patch):
+    if mode == 'DDPIPI' or mode == 'psipp' or mode == 'total':
+        N = 18
+    if mode == 'D1_2420':
+        N = 7
     ecms = array('f', N*[0])
     ecms_err = array('f', N*[0])
     xs = array('f', N*[0])
     xs_err = array('f', N*[0])
-    path = './txts/xs_total_' + patch + '.txt'
+    path = './txts/xs_' + mode + '_' + patch + '.txt'
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
@@ -84,7 +87,14 @@ def draw(patch):
 
     grerr = TGraphErrors(N, ecms, xs, ecms_err, xs_err)
     xtitle = 'E_{cms}(GeV)'
-    ytitle = '#sigma(e^{+}e^{-}#rightarrowD^{+}D^{-}#pi^{+}#pi^{-})(pb)'
+    if mode == 'D1_2420':
+        ytitle = '#sigma(e^{+}e^{-}#rightarrowD_{1}(2420)D)(pb)'
+    if mode == 'psipp':
+        ytitle = '#sigma(e^{+}e^{-}#rightarrow#psi(3770)#pi^{+}#pi^{-})(pb)'
+    if mode == 'DDPIPI':
+        ytitle = '#sigma(e^{+}e^{-}#rightarrowD^{+}D^{-}#pi^{+}#pi^{-})(PHSP)(pb)'
+    if mode == 'total':
+        ytitle = '#sigma(e^{+}e^{-}#rightarrowD^{+}D^{-}#pi^{+}#pi^{-})(pb)'
     set_graph_style(grerr, xtitle, ytitle)
     grerr.Draw('ALP')
 
@@ -92,15 +102,16 @@ def draw(patch):
 
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
-    mbc.SaveAs('./figs/xs_DDPIPI_' + patch + '.pdf')
+    mbc.SaveAs('./figs/xs_' + mode + '_' + patch + '.pdf')
 
     raw_input('Enter anything to end...')
     
 if __name__ == '__main__':
     args = sys.argv[1:]
-    if len(args)<1:
+    if len(args)<2:
         usage()
         sys.exit()
-    patch = str(args[0])
+    mode = args[0]
+    patch = args[1]
 
-    draw(patch)
+    draw(mode, patch)

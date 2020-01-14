@@ -73,6 +73,9 @@ def format(patch):
             Br = float(rs_xs[16])/100.
             xs = float(rs_xs[17])
             xs_err = float(rs_xs[18])
+            xserr_D1_2420 = float(rs_xs[19])
+            xserr_psipp = float(rs_xs[20])
+            xserr_DDPIPI = float(rs_xs[21])
 
         out = '& @'  + str(ecm) + 'MeV& ' + str(N_data)
         out += '& ' + str(eff_D1_2420*100) + '\%& ' + str(eff_psipp*100) + '\%& ' + str(eff_DDPIPI*100) + '\%'
@@ -82,13 +85,19 @@ def format(patch):
         f_xs.write(out)
 
         if ecm >= 4290:
-            out_D1_2420 = str(ecm/1000.) + ' ' + str(xs_D1_2420) + '\n'
+            if xserr_D1_2420 > 9999.:
+                xserr_D1_2420 = 0.
+            out_D1_2420 = str(ecm/1000.) + ' ' + str(xs_D1_2420) + ' ' + str(xserr_D1_2420) + '\n'
             f_xs_D1_2420.write(out_D1_2420)
 
-        out_psipp = str(ecm/1000.) + ' ' + str(xs_psipp) + '\n'
+        if xserr_psipp > 9999.:
+            xserr_psipp = 0.
+        out_psipp = str(ecm/1000.) + ' ' + str(xs_psipp) + ' ' + str(xserr_psipp) + '\n'
         f_xs_psipp.write(out_psipp)
 
-        out_DDPIPI = str(ecm/1000.) + ' ' + str(xs_DDPIPI) + '\n'
+        if xserr_DDPIPI > 9999.:
+            xserr_DDPIPI = 0.
+        out_DDPIPI = str(ecm/1000.) + ' ' + str(xs_DDPIPI) + ' ' + str(xserr_DDPIPI) + '\n'
         f_xs_DDPIPI.write(out_DDPIPI)
 
         out_total = str(ecm/1000.) + ' ' + str(xs) + ' ' + str(xs_err) + '\n'
