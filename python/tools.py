@@ -278,6 +278,7 @@ def chi2_kf(ecms):
 def param_rm_Dpipi(ecms):
     MEAN_UP = 999.
     MEAN_LOW = 999.
+    SIGMA_UP = 999.
     if int(ecms == 4190):
         MEAN_UP = 1.875
         MEAN_LOW = 1.866
@@ -351,6 +352,85 @@ def param_rm_Dpipi(ecms):
         MEAN_LOW = 1.865
         SIGMA_UP = 0.0085
     return MEAN_UP, MEAN_LOW, SIGMA_UP
+
+# parameter of rm(Dpipi) fit
+def num_rm_D(ecms):
+    N_D1_2420 = 9999999
+    N_PSIPP = 9999999
+    N_DDPIPI = 9999999
+    if int(ecms == 4190):
+        N_D1_2420 = 0
+        N_PSIPP = 100
+        N_DDPIPI = 100
+    if int(ecms == 4200):
+        N_D1_2420 = 0
+        N_PSIPP = 100
+        N_DDPIPI = 100
+    if int(ecms == 4210):
+        N_D1_2420 = 0
+        N_PSIPP = 100
+        N_DDPIPI = 200
+    if int(ecms == 4220):
+        N_D1_2420 = 0
+        N_PSIPP = 500
+        N_DDPIPI = 500
+    if int(ecms == 4230):
+        N_D1_2420 = 0
+        N_PSIPP = 500
+        N_DDPIPI = 500
+    if int(ecms == 4237):
+        N_D1_2420 = 0
+        N_PSIPP = 500
+        N_DDPIPI = 500
+    if int(ecms == 4245):
+        N_D1_2420 = 0
+        N_PSIPP = 500
+        N_DDPIPI = 300
+    if int(ecms == 4246):
+        N_D1_2420 = 0
+        N_PSIPP = 500
+        N_DDPIPI = 300
+    if int(ecms == 4260):
+        N_D1_2420 = 0
+        N_PSIPP = 500
+        N_DDPIPI = 500
+    if int(ecms == 4270):
+        N_D1_2420 = 0
+        N_PSIPP = 500
+        N_DDPIPI = 500
+    if int(ecms == 4280):
+        N_D1_2420 = 0
+        N_PSIPP = 200
+        N_DDPIPI = 200
+    if int(ecms == 4310):
+        N_D1_2420 = 1000
+        N_PSIPP = 400
+        N_DDPIPI = 400
+    if int(ecms == 4360):
+        N_D1_2420 = 5000
+        N_PSIPP = 1000
+        N_DDPIPI = 1000
+    elif int(ecms == 4390):
+        N_D1_2420 = 500
+        N_PSIPP = 200
+        N_DDPIPI = 100
+    elif int(ecms == 4420):
+        N_D1_2420 = 5000
+        N_PSIPP = 5000
+        N_DDPIPI = 1000
+    elif int(ecms == 4470):
+        N_D1_2420 = 1000
+        N_PSIPP = 200
+        N_DDPIPI = 1000
+    elif int(ecms == 4530):
+        N_D1_2420 = 1500
+        N_PSIPP = 1000
+        N_DDPIPI = 1000
+    elif int(ecms == 4600):
+        N_D1_2420 = 3000
+        N_PSIPP = 3000
+        N_DDPIPI = 3000
+    return N_D1_2420, N_PSIPP, N_DDPIPI
 
 # luminosity
 def luminosity(ecms):

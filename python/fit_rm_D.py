@@ -129,11 +129,12 @@ def fit(ecms, patch, path, shape, root):
     xbins = int((xmax - xmin)/0.002)
 
     rm_D = RooRealVar('rm_D', 'rm_D', xmin, xmax)
+    N_D1_2420, N_PSIPP, N_DDPIPI = num_rm_D(ecms)
     if ecms >= 4290:
-        n2420 = RooRealVar('n2420', 'n2420', 500, 0, 200000)
+        n2420 = RooRealVar('n2420', 'n2420', 500, 0, N_D1_2420)
     nsideband = RooRealVar('nsideband', 'nsideband', int(entries_sideband/2.))
-    npsipp = RooRealVar('npsipp', 'npsipp', 0, 200000)
-    nDDPIPI = RooRealVar('nDDPIPI', 'nDDPIPI', 0, 200000)
+    npsipp = RooRealVar('npsipp', 'npsipp', 0, N_PSIPP)
+    nDDPIPI = RooRealVar('nDDPIPI', 'nDDPIPI', 0, N_DDPIPI)
 
     h_sideband = TH1F('h_sideband', '', xbins, xmin, xmax)
     h_psipp = TH1F('h_psipp', '', xbins, xmin, xmax)
@@ -317,6 +318,8 @@ def fit(ecms, patch, path, shape, root):
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
     c.SaveAs(canvas_name)
+
+    raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]

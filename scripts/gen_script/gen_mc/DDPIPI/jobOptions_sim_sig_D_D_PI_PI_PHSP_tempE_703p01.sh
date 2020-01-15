@@ -34,14 +34,15 @@ do
     echo "#include \"\$KKMCROOT/share/jobOptions_KKMC.txt\"" >> $SIM_NAME
     echo "KKMC.CMSEnergy = TEMP_3;" >> $SIM_NAME
     echo "KKMC.BeamEnergySpread = 0.0011;" >> $SIM_NAME
-    echo "KKMC.NumberOfEventPrinted = 10;" >> $SIM_NAME
+    echo "KKMC.NumberOfEventPrinted = 1;" >> $SIM_NAME
     echo "KKMC.GeneratePsi4260 = true;" >> $SIM_NAME
-    echo "KKMC.ResParameterPs6 = {TEMP_3, 74e-3, 0.47e-6};" >> $SIM_NAME
     echo "KKMC.ParticleDecayThroughEvtGen = true;" >> $SIM_NAME
     echo "KKMC.ThresholdCut = TEMP_6;" >> $SIM_NAME # 4.35826 - 3*74e-3
     echo "KKMC.RadiationCorrection = 1;" >> $SIM_NAME
     echo "KKMC.TagISR = 1;" >> $SIM_NAME
     echo "KKMC.TagFSR = 1;" >> $SIM_NAME
+    echo "KKMC.ModeIndexExpXS = -2;" >> $SIM_NAME
+    echo "KKMC.IHVP = 1;" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "//**************job options for EvtGen************************" >> $SIM_NAME
     echo "#include \"\$BESEVTGENROOT/share/BesEvtGen.txt\"" >> $SIM_NAME

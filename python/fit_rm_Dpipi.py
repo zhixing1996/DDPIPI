@@ -171,7 +171,6 @@ def fit(path, ecms, mode, patch):
     out = str(nsig.getVal()) + ' ' + str(nsig.getError()) + '\n'
     f_sig.write(out)
     f_sig.close()
-    raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]

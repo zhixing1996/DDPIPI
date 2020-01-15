@@ -136,6 +136,7 @@ def xs(ecms, patch, data_path, D1_2420_path, psipp_path, DDPIPI_path):
             eff_ISR_DDPIPI = eff_DDPIPI*ISR_DDPIPI/omega_DDPIPI
         xs = flag_psipp*N_data/(2*eff_ISR_psipp*Br*lum*VP) + flag_DDPIPI*N_data/(2*eff_ISR_DDPIPI*Br*lum*VP) + flag_D1_2420*N_data/(2*eff_ISR_D1_2420*Br*lum*VP)
         xs_err = flag_psipp*Err_data/(2*eff_ISR_psipp*Br*lum*VP) + flag_DDPIPI*Err_data/(2*eff_ISR_DDPIPI*Br*lum*VP) + flag_D1_2420*Err_data/(2*eff_ISR_D1_2420*Br*lum*VP)
+        print xs, xs_err
 
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')

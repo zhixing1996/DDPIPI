@@ -114,7 +114,7 @@ def fit(mode, patch):
     if mode == 'psipp':
         xs_func, xs_pars = '[0] * TMath::Gaus(x, [1], [2]) + [3] * x * x + [4] * x + [5]', array('d', [0.1, 4.45, 0.1, 0.1, 0.1, 0.1])
     if mode == 'DDPIPI':
-        xs_func, xs_pars = '[0] * x * x * x + [1] * x * x + [2] * x + [3]', array('d', [1.1, 1.1, 1.1, 1.1])
+        xs_func, xs_pars = '[0] * TMath::Gaus(x, [1], [2])', array('d', [1.1, 4.45, 1.1])
     if mode == 'total':
         xs_func, xs_pars = '[0] * TMath::BreitWigner(x, [1], [2]) + [3] * TMath::BreitWigner(x, [4], [5]) + [6] * TMath::Gaus(x, [7], [8])', array('d', [0.1, 4.39, 0.096, 0.1, 4.455, 1.1, 0.1, 4.415, 2.2])
 
@@ -177,7 +177,7 @@ def fit(mode, patch):
         xs_f.SetParName(0, 'par[0] of pol\t')
         xs_f.SetParLimits(0, 1., 10.)
         xs_f.SetParName(1, 'par[1] of pol\t')
-        xs_f.SetParLimits(1, 1., 10.)
+        xs_f.SetParLimits(1, 4.4, 4.5)
         xs_f.SetParName(2, 'par[2] of pol\t')
         xs_f.SetParLimits(2, 1., 10.)
         xs_f.SetParName(3, 'par[3] of pol\t')
