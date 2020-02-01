@@ -22,7 +22,8 @@ do
         dir=$(echo $PARAM_0 | sed 's/-1//g')/rootfile
         mkdir -p $dir
         mv /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/$PARAM_0/rootfile/sigMC_D_D_PI_PI_$PARAM_0\.root ./$dir
-    elif [[ $PARAM_0 == *$shortbar2* ]]; then
+    fi
+    if [[ $PARAM_0 == *$shortbar2* ]]; then
         dir=$(echo $PARAM_0 | sed 's/-2//g')/rootfile
         mkdir -p $dir
         mv /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/$PARAM_0/rootfile/sigMC_D_D_PI_PI_$PARAM_0\.root ./$dir
@@ -30,7 +31,5 @@ do
         VAR=$(echo $PARAM_0 | sed 's/-2//g')
         rm -rf sigMC_D_D_PI_PI_$VAR\.root
         hadd sigMC_D_D_PI_PI_$VAR\.root sigMC_D_D_PI_PI_$VAR-1.root sigMC_D_D_PI_PI_$VAR-2.root
-    else
-        echo "No need to change for $PARAM_0"
     fi
 done

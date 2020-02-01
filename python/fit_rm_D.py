@@ -184,7 +184,7 @@ def fit(ecms, patch, path, shape, root):
         n_D1_2420 = n2420.getVal()
         if ecms == 4420:
             eff_D1_2420 = entries_D1_2420_root/100000.
-            if patch == 'round1' or patch == 'round2' or patch == 'round3' or patch == 'round4':
+            if not patch == 'round0':
                 f_D1_2420_factor = open('./txts/factor_info_' + str(ecms) + '_D1_2420_' + patch + '.txt', 'r')
                 lines_D1_2420 = f_D1_2420_factor.readlines()
                 for line_D1_2420 in lines_D1_2420:
@@ -196,7 +196,7 @@ def fit(ecms, patch, path, shape, root):
             eff_D1_2420 = entries_D1_2420_root/50000.
         xs_D1_2420 = n_D1_2420/2./2./Br/eff_D1_2420/lum
         xserr_D1_2420 = n2420.getError()/2./2./Br/eff_D1_2420/lum
-        if patch == 'round1' or patch == 'round2' or patch == 'round3' or patch == 'round4':
+        if not patch == 'round0':
             f_D1_2420_factor = open('./txts/factor_info_' + str(ecms) + '_D1_2420_' + patch + '.txt', 'r')
             lines_D1_2420 = f_D1_2420_factor.readlines()
             for line_D1_2420 in lines_D1_2420:
@@ -219,7 +219,7 @@ def fit(ecms, patch, path, shape, root):
         eff_psipp = entries_psipp_root/50000.
     xs_psipp = npsipp.getVal()/2./2./Br/eff_psipp/lum
     xserr_psipp = npsipp.getError()/2./2./Br/eff_psipp/lum
-    if patch == 'round1' or patch == 'round2' or patch == 'round3' or patch == 'round4':
+    if not patch == 'round0':
         f_psipp_factor = open('./txts/factor_info_' + str(ecms) + '_psipp_' + patch + '.txt', 'r')
         lines_psipp = f_psipp_factor.readlines()
         for line_psipp in lines_psipp:
@@ -242,7 +242,7 @@ def fit(ecms, patch, path, shape, root):
         eff_DDPIPI = entries_DDPIPI_root/50000.
     xs_DDPIPI = nDDPIPI.getVal()/2./2./Br/eff_DDPIPI/lum
     xserr_DDPIPI = nDDPIPI.getError()/2./2./Br/eff_DDPIPI/lum
-    if patch == 'round1' or patch == 'round2' or patch == 'round3' or patch == 'round4':
+    if not patch == 'round0':
         f_DDPIPI_factor = open('./txts/factor_info_' + str(ecms) + '_DDPIPI_' + patch + '.txt', 'r')
         lines_DDPIPI = f_DDPIPI_factor.readlines()
         for line_DDPIPI in lines_DDPIPI:
