@@ -35,7 +35,7 @@ DATE
 def set_legend(legend, gr1, gr2, gr3, gr4, gr5, gr6, gr7):
     legend.AddEntry(gr1, 'ini. #rightarrow 1th', 'lp')
     legend.AddEntry(gr2, '1th  #rightarrow 2nd', 'lp')
-    legend.AddEntry(gr3, '2nh  #rightarrow 3rd', 'lp')
+    legend.AddEntry(gr3, '2nd  #rightarrow 3rd', 'lp')
     legend.AddEntry(gr4, '3rd  #rightarrow 4th', 'lp')
     legend.AddEntry(gr5, '4th  #rightarrow 5th', 'lp')
     legend.AddEntry(gr6, '5th  #rightarrow 6th', 'lp')
