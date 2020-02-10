@@ -209,8 +209,8 @@ def main():
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_signal.root')
         pt_title = '(a)'
-        arrow_left = 25
-        arrow_right = 25
+        arrow_left = 20
+        arrow_right = 20
         arrow_bottom = 0
         arrow_top = 15
         plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
@@ -238,7 +238,7 @@ def main():
         arrow_left = 15
         arrow_right = 15
         arrow_bottom = 0
-        arrow_top = 10.5
+        arrow_top = 9
         plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
 if __name__ == '__main__':

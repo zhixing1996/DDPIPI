@@ -49,6 +49,7 @@ def main():
             f.write('#include "$MAGNETICFIELDROOT/share/MagneticField.txt"\n')
             f.write('#include "$DTAGALGROOT/share/jobOptions_dTag.txt"\n')
             f.write('#include "$DDECAYALGROOT/share/jobOptions_DDecay.txt"\n')
+            f.write('#include "$MEASUREDECMSSVCROOT/share/anaOptions.txt"\n')
             f.write('\n')
             f.write('DTag.NeutralDReconstruction  = true;\n')
             f.write('DTag.ChargedDReconstruction  = true;\n')

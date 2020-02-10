@@ -65,24 +65,6 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.4.22"   "[ROUND1: DDPIPI] Calculate numbers -- format cross section outputs"
     printf "\n\t%-9s  %-40s\n" "0.4.23"   "[ROUND1: DDPIPI] Draw figures -- draw cross sections"
     printf "\n\t%-9s  %-40s\n" "0.4.24"   "[ROUND1: DDPIPI] Draw figures -- draw cross section differences between iterations"
-    printf "\n\t%-9s  %-40s\n" "0.4.25"   "[ROUND2: DDPIPI] Get factor -- get ridiative correction and vacuum polarization factors"
-    printf "\n\t%-9s  %-40s\n" "0.4.26"   "[ROUND2: DDPIPI] Get shape -- get shape of D1(2420)"
-    printf "\n\t%-9s  %-40s\n" "0.4.27"   "[ROUND2: DDPIPI] Get samples -- get samples used for RM(D) fit"
-    printf "\n\t%-9s  %-40s\n" "0.4.28"   "[ROUND2: DDPIPI] Fit distributions -- perform RM(D) fit"
-    printf "\n\t%-9s  %-40s\n" "0.4.29"   "[ROUND2: DDPIPI] Fit distributions -- fit to RM(Dpipi)"
-    printf "\n\t%-9s  %-40s\n" "0.4.30"   "[ROUND2: DDPIPI] Calculate numbers -- calculate cross sections"
-    printf "\n\t%-9s  %-40s\n" "0.4.31"   "[ROUND2: DDPIPI] Calculate numbers -- format cross section outputs"
-    printf "\n\t%-9s  %-40s\n" "0.4.32"   "[ROUND2: DDPIPI] Draw figures -- draw cross sections"
-    printf "\n\t%-9s  %-40s\n" "0.4.33"   "[ROUND2: DDPIPI] Draw figures -- draw cross section differences between iterations"
-    printf "\n\t%-9s  %-40s\n" "0.4.34"   "[ROUND3: DDPIPI] Get factor -- get ridiative correction and vacuum polarization factors"
-    printf "\n\t%-9s  %-40s\n" "0.4.35"   "[ROUND3: DDPIPI] Get shape -- get shape of D1(2420)"
-    printf "\n\t%-9s  %-40s\n" "0.4.36"   "[ROUND3: DDPIPI] Get samples -- get samples used for RM(D) fit"
-    printf "\n\t%-9s  %-40s\n" "0.4.37"   "[ROUND3: DDPIPI] Fit distributions -- perform RM(D) fit"
-    printf "\n\t%-9s  %-40s\n" "0.4.38"   "[ROUND3: DDPIPI] Fit distributions -- fit to RM(Dpipi)"
-    printf "\n\t%-9s  %-40s\n" "0.4.39"   "[ROUND3: DDPIPI] Calculate numbers -- calculate cross sections"
-    printf "\n\t%-9s  %-40s\n" "0.4.40"   "[ROUND3: DDPIPI] Calculate numbers -- format cross section outputs"
-    printf "\n\t%-9s  %-40s\n" "0.4.41"   "[ROUND3: DDPIPI] Draw figures -- draw cross sections"
-    printf "\n\t%-9s  %-40s\n" "0.4.42"   "[ROUND3: DDPIPI] Draw figures -- draw cross section differences between iterations"
     
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -428,6 +410,7 @@ case $option in
     0.4.1) echo "Get samples -- synthesizing samples..."
            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data
            ./synthesizeData_703p01.sh
+           ./synthesizeData_705.sh
            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc
            ./synthesizeD1_2420_703p01.sh
            ./synthesizeD_D_PI_PI_703p01.sh
@@ -435,7 +418,7 @@ case $option in
            ./synthesizeX_3842_703p01.sh
            ;;
 
-    0.4.2) echo "Get samples -- extracting useful info: raw and signal @703p01..."
+    0.4.2) echo "Get samples -- extracting useful info: raw and signal..."
            mkdir -p scripts/ana/sel
            cd scripts/ana/sel
            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana" ]; then
@@ -447,46 +430,83 @@ case $option in
            rm -rf jobs.err
            mkdir jobs.out
            mkdir jobs.err
+
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_703p01.sh .
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_703p01 .
            echo "#!/bin/bash" > Data_Sub_703p01
            echo "./getInfoData_703p01.sh" >> Data_Sub_703p01
            chmod u+x Data_Sub_703p01
            hep_sub -g physics Data_Sub_703p01 -o jobs.out -e jobs.err
+
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoD1_2420_703p01.sh .
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420_Base_703p01 .
            echo "#!/bin/bash" > D1_2420_Sub_703p01
            echo "./getInfoD1_2420_703p01.sh" >> D1_2420_Sub_703p01
            chmod u+x D1_2420_Sub_703p01
            hep_sub -g physics D1_2420_Sub_703p01 -o jobs.out -e jobs.err
+
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoD_D_PI_PI_703p01.sh .
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D_D_PI_PI_Base_703p01 .
            echo "#!/bin/bash" > D_D_PI_PI_Sub_703p01
            echo "./getInfoDDPIPI_703p01.sh" >> D_D_PI_PI_Sub_703p01
            chmod u+x D_D_PI_PI_Sub_703p01
            hep_sub -g physics D_D_PI_PI_Sub_703p01 -o jobs.out -e jobs.err
+
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfopsipp_703p01.sh .
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp_Base_703p01 .
            echo "#!/bin/bash" > psipp_Sub_703p01
            echo "./getInfopsipp_703p01.sh" >> psipp_Sub_703p01
            chmod u+x psipp_Sub_703p01
            hep_sub -g physics psipp_Sub_703p01 -o jobs.out -e jobs.err
+
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoX_3842_703p01.sh .
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/X_3842_Base_703p01 .
            echo "#!/bin/bash" > X_3842_Sub_703p01
            echo "./getInfoX_3842_703p01.sh" >> X_3842_Sub_703p01
            chmod u+x X_3842_Sub_703p01
            hep_sub -g physics X_3842_Sub_703p01 -o jobs.out -e jobs.err
+
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_705.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_705 .
+           echo "#!/bin/bash" > Data_Sub_705
+           echo "./getInfoData_705.sh" >> Data_Sub_705
+           chmod u+x Data_Sub_705
+           hep_sub -g physics Data_Sub_705 -o jobs.out -e jobs.err
+
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoD1_2420_705.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420_Base_705 .
+           echo "#!/bin/bash" > D1_2420_Sub_705
+           echo "./getInfoD1_2420_705.sh" >> D1_2420_Sub_705
+           chmod u+x D1_2420_Sub_705
+           hep_sub -g physics D1_2420_Sub_705 -o jobs.out -e jobs.err
+
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoD_D_PI_PI_705.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D_D_PI_PI_Base_705 .
+           echo "#!/bin/bash" > D_D_PI_PI_Sub_705
+           echo "./getInfoDDPIPI_705.sh" >> D_D_PI_PI_Sub_705
+           chmod u+x D_D_PI_PI_Sub_705
+           hep_sub -g physics D_D_PI_PI_Sub_705 -o jobs.out -e jobs.err
+
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfopsipp_705.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp_Base_705 .
+           echo "#!/bin/bash" > psipp_Sub_705
+           echo "./getInfopsipp_705.sh" >> psipp_Sub_705
+           chmod u+x psipp_Sub_705
+           hep_sub -g physics psipp_Sub_705 -o jobs.out -e jobs.err
            ;;
 
-    0.4.3) echo "Get samples -- applying cuts @703p01..."
+    0.4.3) echo "Get samples -- applying cuts..."
            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data
            ./applyCutsData_703p01.sh
+           ./applyCutsData_705.sh
            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc
            ./applyCutsD1_2420_703p01.sh
            ./applyCutsD_D_PI_PI_703p01.sh
            ./applyCutspsipp_703p01.sh
            ./applyCutsX_3842_703p01.sh
+           ./applyCutsD1_2420_705.sh
+           ./applyCutsD_D_PI_PI_705.sh
+           ./applyCutspsipp_705.sh
            ;;
 
     0.4.4) echo "[D1_2420 & psi(3770)] Draw figures -- studying RM(D) in fitting region(RM(Dpipi) signal and sideband region)..."
@@ -499,16 +519,19 @@ case $option in
     0.4.5) echo "[D1_2420 & psi(3770)] Get shape -- getting shape of D1(2420)..."
            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
            ./getShape_703p01.sh
+           ./getShape_705.sh
            ;;
 
     0.4.6) echo "[D1_2420 & psi(3770)] Get samples -- getting samples used for RM(D) fit..."
            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
            ./convertROOT_703p01.sh
+           ./convertROOT_705.sh
            ;;
 
     0.4.7) echo "[D1_2420 & psi(3770)] Fit distributions -- performing RM(D) fit..."
            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
            ./fitRMD_703p01.sh round0
+           ./fitRMD_705.sh round0
            ;;
 
     0.4.8) echo "[X_3842] Draw figures -- studying RM(pipi) in fitting region..."
@@ -522,12 +545,15 @@ case $option in
            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
            rm -rf $HOME/bes/DDPIPI/v0.2/python/txts/significance_likelihood_4*
            ./fitRMpipi_703p01.sh
+           ./fitRMpipi_705.sh
            ;;
 
     0.4.10) echo "[X_3842] Calculate numbers -- calculating significance and upper limit number of X(3842)..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./calSignificance_703p01.sh
             ./calUpperLimit_703p01.sh
+            ./calSignificance_705.sh
+            ./calUpperLimit_705.sh
             ;;
 
     0.4.11) echo "[DDPIPI] Draw figures -- studying RM(Dpipi) in Kpipi signal and sideband region..."
@@ -543,11 +569,13 @@ case $option in
     0.4.12) echo "[DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./fitRMDpipi_703p01.sh round0
+            ./fitRMDpipi_705.sh round0
             ;;
 
     0.4.13) echo "[DDPIPI] Calculate numbers -- calculating cross sections..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./calXS_703p01.sh round0
+            ./calXS_705.sh round0
             ;;
 
     0.4.14) echo "[DDPIPI] Calculate numbers -- formatting cross section outputs..."
@@ -563,31 +591,37 @@ case $option in
     0.4.16) echo "[ROUND1: DDPIPI] Get factor -- getting ridiative correction and vacuum polarization factors..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420
             ./getFactorD1_2420_703p01.sh round1
+            ./getFactorD1_2420_705.sh round1
             ;;
 
     0.4.17) echo "[ROUND1: DDPIPI] Get shape -- getting shape of D1(2420)..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./getShape_703p01.sh
+            ./getShape_705.sh
             ;;
 
     0.4.18) echo "[ROUND1: DDPIPI] Get samples -- getting samples used for RM(D) fit..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./convertROOT_703p01.sh
+            ./convertROOT_705.sh
             ;;
 
     0.4.19) echo "[ROUND1: DDPIPI] Fit distributions -- performing RM(D) fit..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./fitRMD_703p01.sh round1
+            ./fitRMD_705.sh round1
             ;;
 
     0.4.20) echo "[ROUND1: DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./fitRMDpipi_703p01.sh round1
+            ./fitRMDpipi_705.sh round1
             ;;
 
     0.4.21) echo "[ROUND1: DDPIPI] Calculate numbers -- calculating cross sections..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./calXS_703p01.sh round1
+            ./calXS_705.sh round1
             ;;
 
     0.4.22) echo "[ROUND1: DDPIPI] Calculate numbers -- formatting cross section outputs..."
@@ -601,102 +635,6 @@ case $option in
             ;;
 
     0.4.24) echo "[ROUND1: DDPIPI] Draw figures -- drawing cross section differences between iterations..."
-            cd python
-            python plot_xs_diff.py DDPIPI
-            python plot_xs_diff.py D1_2420
-            python plot_xs_diff.py psipp
-            python plot_xs_diff.py total
-            ;;
-
-    0.4.25) echo "[ROUND2: DDPIPI] Get factor -- getting ridiative correction and vacuum polarization factors..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420
-            ./getFactorD1_2420_703p01.sh round2
-            ;;
-
-    0.4.26) echo "[ROUND2: DDPIPI] Get shape -- getting shape of D1(2420)..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./getShape_703p01.sh
-            ;;
-
-    0.4.27) echo "[ROUND2: DDPIPI] Get samples -- getting samples used for RM(D) fit..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./convertROOT_703p01.sh
-            ;;
-
-    0.4.28) echo "[ROUND2: DDPIPI] Fit distributions -- performing RM(D) fit..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./fitRMD_703p01.sh round2
-            ;;
-
-    0.4.29) echo "[ROUND2: DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./fitRMDpipi_703p01.sh round2
-            ;;
-
-    0.4.30) echo "[ROUND2: DDPIPI] Calculate numbers -- calculating cross sections..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./calXS_703p01.sh round2
-            ;;
-
-    0.4.31) echo "[ROUND2: DDPIPI] Calculate numbers -- formatting cross section outputs..."
-            cd python
-            python format_xs.py round2
-            ;;
-
-    0.4.32) echo "[ROUND2: DDPIPI] Draw figures -- drawing cross sections..."
-            cd python
-            python plot_xs.py total round2
-            ;;
-
-    0.4.33) echo "[ROUND2: DDPIPI] Draw figures -- drawing cross section differences between iterations..."
-            cd python
-            python plot_xs_diff.py DDPIPI
-            python plot_xs_diff.py D1_2420
-            python plot_xs_diff.py psipp
-            python plot_xs_diff.py total
-            ;;
-
-    0.4.34) echo "[ROUND3: DDPIPI] Get factor -- getting ridiative correction and vacuum polarization factors..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420
-            ./getFactorD1_2420_703p01.sh round3
-            ;;
-
-    0.4.35) echo "[ROUND3: DDPIPI] Get shape -- getting shape of D1(2420)..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./getShape_703p01.sh
-            ;;
-
-    0.4.36) echo "[ROUND3: DDPIPI] Get samples -- getting samples used for RM(D) fit..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./convertROOT_703p01.sh
-            ;;
-
-    0.4.37) echo "[ROUND3: DDPIPI] Fit distributions -- performing RM(D) fit..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./fitRMD_703p01.sh round3
-            ;;
-
-    0.4.38) echo "[ROUND3: DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./fitRMDpipi_703p01.sh round3
-            ;;
-
-    0.4.39) echo "[ROUND3: DDPIPI] Calculate numbers -- calculating cross sections..."
-            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./calXS_703p01.sh round3
-            ;;
-
-    0.4.40) echo "[ROUND3: DDPIPI] Calculate numbers -- formatting cross section outputs..."
-            cd python
-            python format_xs.py round3
-            ;;
-
-    0.4.41) echo "[ROUND3: DDPIPI] Draw figures -- drawing cross sections..."
-            cd python
-            python plot_xs.py total round3
-            ;;
-
-    0.4.42) echo "[ROUND3: DDPIPI] Draw figures -- drawing cross section differences between iterations..."
             cd python
             python plot_xs_diff.py DDPIPI
             python plot_xs_diff.py D1_2420

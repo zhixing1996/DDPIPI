@@ -153,10 +153,6 @@ def shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins):
                         continue
                 if not (CHI2_KF < chi2_kf(ecms)):
                     continue
-                if (m_pipi > 0.491036 and m_pipi < 0.503471 and ctau_svf > 0.5):
-                    continue
-                if (m_Dpi0 > 2.0082 and m_Dpi0 < 2.01269):
-                    continue
                 h_list[i+j].Fill(rm_D, wight)
                 h_list[i+j].Fill(rm_Dmiss, wight)
             print 'filling ' + str(i + j) + 'th histogram of D1(2420)...'

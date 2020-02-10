@@ -12,7 +12,7 @@ usage() {
     printf "\nOPTIONS\n"
 
     printf "\n\t%-9s  %-40s\n" "0.1"    "[run on data reconstructed @703p01]"
-    printf "\n\t%-9s  %-40s\n" "0.1.1"  "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.1.1"  "Single D tag -- run on data"
 
     printf "\n\t%-9s  %-40s\n" "0.2"    "[run on signal MC of psi(4260)->X(3842)PIPI(PHSP), X(3842)->DD(PHSP) reconstructed @703p01]" 
     printf "\n\t%-9s  %-40s\n" "0.2.1"  "Simulation & Reconstruction -- generate signal MC sample"
@@ -31,76 +31,91 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.5.2"  "Single D tag -- run on signal MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.6"    "[run on inclusive MC (qqbar) @4360MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.6.1"  "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.6.1"  "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.7"    "[run on inclusive MC (qqbar) @4420MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.7.1"  "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.7.1"  "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.8"    "[run on inclusive MC (qqbar) @4600MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.8.1"  "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.8.1"  "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.9"    "[run on inclusive MC (open harm) @4360MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.9.1"  "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.9.1"  "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.10"   "[run on inclusive MC (open harm) @4420MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.10.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.10.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.11"   "[run on inclusive MC (open harm) @4600MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.11.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.11.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.12"   "[run on inclusive MC (bhabha) @4360MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.12.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.12.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.13"   "[run on inclusive MC (dimu) @4360MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.13.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.13.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.14"   "[run on inclusive MC (ditau) @4360MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.14.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.14.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.15"   "[run on inclusive MC (digamma) @4360MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.15.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.15.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.16"   "[run on inclusive MC (twogamma) @4360MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.16.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.16.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.17"   "[run on inclusive MC (ISR) @4360MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.17.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.17.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.18"   "[run on inclusive MC (gammaXYZ) @4360MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.18.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.18.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.19"   "[run on inclusive MC (hadrons) @4360MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.19.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.19.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.20"   "[run on inclusive MC (bhabha) @4420MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.20.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.20.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.21"   "[run on inclusive MC (dimu) @4420MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.21.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.21.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.22"   "[run on inclusive MC (ditau) @4420MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.22.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.22.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.23"   "[run on inclusive MC (digamma) @4420MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.23.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.23.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.24"   "[run on inclusive MC (bhabha) @4600MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.24.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.24.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.25"   "[run on inclusive MC (dimu) @4600MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.25.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.25.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.26"   "[run on inclusive MC (ditau) @4600MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.26.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.26.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.27"   "[run on inclusive MC (digamma) @4600MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.27.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.27.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.28"   "[run on inclusive MC (twogamma) @4600MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.28.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.28.1" "Single D tag -- run on inclusive MC sample"
 
     printf "\n\t%-9s  %-40s\n" "0.29"   "[run on inclusive MC (LL) @4600MeV]"
-    printf "\n\t%-9s  %-40s\n" "0.29.1" "Single D tag -- inclusive MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.29.1" "Single D tag -- run on inclusive MC sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.30"   "[run on data reconstructed @705]"
+    printf "\n\t%-9s  %-40s\n" "0.30.1" "Single D tag -- data"
+
+    printf "\n\t%-9s  %-40s\n" "0.31"   "[run on signal MC of psi(4260)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) reconstructed @705]" 
+    printf "\n\t%-9s  %-40s\n" "0.31.1" "Simulation & Reconstruction -- generate signal MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.31.2" "Single D tag -- run on signal MC sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.32"   "[run on signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @705]"
+    printf "\n\t%-9s  %-40s\n" "0.32.1" "Simulation & Reconstruction -- generate signal MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.32.2" "Single D tag -- run on signal MC sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.33"   "[run on signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @705]"
+    printf "\n\t%-9s  %-40s\n" "0.33.1" "Simulation & Reconstruction -- generate signal MC sample"
+    printf "\n\t%-9s  %-40s\n" "0.33.2" "Single D tag -- run on signal MC sample"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -1003,4 +1018,74 @@ case $option in
             ./subAna.sh incMC_inclusive_LL_4600
             ;;
 
+    # ------------------------------------
+    #  0.30 run on data reconstructed @705
+    # ------------------------------------
+
+    0.30) echo "data reconstructed @705..."
+          echo "--> Patch: 705"
+          echo "--> LXSLC: lxslc6"
+          ;;
+
+    0.30.1) echo "Single D tag -- run on data sample..."
+            cd scripts/gen_script/gen_data
+            ./subData_705.sh
+            ;;
+
+    # -------------------------------------------------------------------------------------------
+    #  0.31 signal MC of psi(4260)->D_1(2420)D(PHSP), D_1(2420)->DPIPI(HELAMP) reconstructed @705
+    # -------------------------------------------------------------------------------------------
+    
+    0.31) echo "signal MC of psi(4260)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) reconstructed @705..."
+          echo "--> Process: psi(4260)->D1_(2420)D, D1_(2420)->DPIPI"
+          echo "--> Generation mode: psi(4260)->D1_(2420)D PHSH; D1_(2420)->DPIPI HELAMP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+          ;;
+
+    0.31.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
+            cd scripts/gen_script/gen_mc/D1_2420
+            ./subSimRec_D1_2420_705.sh
+            ;;
+
+    0.31.2) echo "Single D tag -- run on signal MC sample..."
+            cd scripts/gen_script/gen_mc/D1_2420
+            ./subAna_D1_2420_705.sh
+            ;;
+
+    # ----------------------------------------------------------------------------------------
+    #  0.32 signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @705
+    # ----------------------------------------------------------------------------------------
+
+    0.32) echo "signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @705..."
+          echo "--> Process: psi(4260)->psi(3770)PIPI, psi(3770)->DD"
+          echo "--> Generation mode: psi(4260)->psi(3770)PIPI PHSH; psi(3770)->DD VSS; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+          ;;
+
+    0.32.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
+            cd scripts/gen_script/gen_mc/psipp
+            ./subSimRec_psipp_705.sh
+            ;;
+
+    0.32.2) echo "Single D tag -- run on signal MC sample..."
+            cd scripts/gen_script/gen_mc/psipp
+            ./subAna_psipp_705.sh
+            ;;
+
+    # -------------------------------------------------------------
+    #  0.33 signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @705
+    # -------------------------------------------------------------
+    
+    0.33) echo "signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @705..."
+          echo "--> Process: psi(4260)->DDPIPI"
+          echo "--> Generation mode: psi(4260)->DDPIPI PHSH; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+          ;;
+
+    0.33.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
+            cd scripts/gen_script/gen_mc/DDPIPI
+            ./subSimRec_D_D_PI_PI_705.sh
+            ;;
+
+    0.33.2) echo "Single D tag -- run on signal MC sample..."
+            cd scripts/gen_script/gen_mc/DDPIPI
+            ./subAna_D_D_PI_PI_705.sh
+            ;;
 esac

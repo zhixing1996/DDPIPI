@@ -140,10 +140,10 @@ def scale_factor(ecms, mode):
         lum = 543.9
         if mode == 'D1_2420':
             XS = 41.8*BR
-            Evt = 500000.0
+            Evt = 50000.0
         if mode == 'psipp':
             XS = 17.3*BR
-            Evt = 500000.0
+            Evt = 50000.0
         if mode == 'DD':
             XS = 10600.0
             Evt = 17200000.0
@@ -178,10 +178,10 @@ def scale_factor(ecms, mode):
         lum = 46.80 + 1043.9
         if mode == 'D1_2420':
             XS = 65.4*BR
-            Evt = 500000.0
+            Evt = 100000.0
         if mode == 'psipp':
             XS = 23.8*BR
-            Evt = 500000.0
+            Evt = 100000.0
         if mode == 'DD':
             XS = 10200.0
             Evt = 40300000.0
@@ -204,10 +204,10 @@ def scale_factor(ecms, mode):
         lum = 586.9
         if mode == 'D1_2420':
             XS = 27.7*BR
-            Evt = 500000.0
+            Evt = 50000.0
         if mode == 'psipp':
             XS = 7.2*BR
-            Evt = 500000.0
+            Evt = 50000.0
         if mode == 'DD':
             XS = 7800.0
             Evt = 12000000.0*1.5
@@ -239,9 +239,9 @@ def scale_factor(ecms, mode):
 def width(ecms):
     WIDTH = 999.
     if int(ecms) == 4360:
-        WIDTH = 0.018648
+        WIDTH = 0.021238
     if int(ecms) == 4420:
-        WIDTH = 0.019166
+        WIDTH = 0.021238
     if int(ecms) == 4600:
         WIDTH = 0.021238
     if not (int(ecms) == 4360 or int(ecms) == 4420 or int(ecms) == 4600):
@@ -252,9 +252,9 @@ def width(ecms):
 def window(ecms):
     WINDOW = 999.
     if int(ecms) == 4360:
-        WINDOW = 0.0146666666667
+        WINDOW = 0.018
     if int(ecms) == 4420:
-        WINDOW = 0.0146666666667
+        WINDOW = 0.018
     if int(ecms) == 4600:
         WINDOW = 0.018
     if not (int(ecms) == 4360 or int(ecms) == 4420 or int(ecms) == 4600):
@@ -265,13 +265,13 @@ def window(ecms):
 def chi2_kf(ecms):
     CHI2_KF = 999.
     if int(ecms) == 4360:
-        CHI2_KF = 25.
+        CHI2_KF = 20.
     if int(ecms) == 4420:
-        CHI2_KF = 15.
+        CHI2_KF = 20.
     if int(ecms) == 4600:
-        CHI2_KF = 15.
+        CHI2_KF = 20.
     if not (int(ecms) == 4360 or int(ecms) == 4420 or int(ecms) == 4600):
-        CHI2_KF = 25.
+        CHI2_KF = 20.
     return CHI2_KF
 
 # parameter of rm(Dpipi) fit
@@ -283,73 +283,97 @@ def param_rm_Dpipi(ecms):
         MEAN_UP = 1.875
         MEAN_LOW = 1.866
         SIGMA_UP = 0.02
-    if int(ecms == 4200):
+    elif int(ecms == 4200):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
         SIGMA_UP = 0.012
-    if int(ecms == 4210):
-        MEAN_UP = 1.872
-        MEAN_LOW = 1.865
-        SIGMA_UP = 0.015
-    if int(ecms == 4220):
+    elif int(ecms == 4210):
+        MEAN_UP = 1.871
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.008
+    elif int(ecms == 4220):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
         SIGMA_UP = 0.01
-    if int(ecms == 4230):
+    elif int(ecms == 4230):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
         SIGMA_UP = 0.0095
-    if int(ecms == 4237):
-        MEAN_UP = 1.875
-        MEAN_LOW = 1.867
-        SIGMA_UP = 0.01
-    if int(ecms == 4245):
-        MEAN_UP = 1.873
-        MEAN_LOW = 1.867
-        SIGMA_UP = 0.01
-    if int(ecms == 4246):
-        MEAN_UP = 1.875
-        MEAN_LOW = 1.867
-        SIGMA_UP = 0.012
-    if int(ecms == 4260):
-        MEAN_UP = 1.874
+    elif int(ecms == 4237):
+        MEAN_UP = 1.872
         MEAN_LOW = 1.867
         SIGMA_UP = 0.008
-    if int(ecms == 4270):
+    elif int(ecms == 4245):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
-        SIGMA_UP = 0.01
-    if int(ecms == 4280):
-        MEAN_UP = 1.872
-        MEAN_LOW = 1.865
-        SIGMA_UP = 0.01
-    if int(ecms == 4310):
-        MEAN_UP = 1.876
+        SIGMA_UP = 0.008
+    elif int(ecms == 4246):
+        MEAN_UP = 1.875
         MEAN_LOW = 1.867
         SIGMA_UP = 0.012
-    if int(ecms == 4360):
+    elif int(ecms == 4260):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
-        SIGMA_UP = 0.02
-    elif int(ecms == 4390):
+        SIGMA_UP = 0.01
+    elif int(ecms == 4270):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.01
+    elif int(ecms == 4280):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.008
+    elif int(ecms == 4290):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.008
+    elif int(ecms == 4310):
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.865
+        SIGMA_UP = 0.01
+    elif int(ecms == 4315):
+        MEAN_UP = 1.876
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.01
+    elif int(ecms == 4340):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.01
+    elif int(ecms == 4360):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.015
+    elif int(ecms == 4380):
         MEAN_UP = 1.874
         MEAN_LOW = 1.868
         SIGMA_UP = 0.012
-    elif int(ecms == 4420):
-        MEAN_UP = 1.873
-        MEAN_LOW = 1.867
-        SIGMA_UP = 0.011
-    elif int(ecms == 4470):
-        MEAN_UP = 1.875
+    elif int(ecms == 4390):
+        MEAN_UP = 1.874
+        MEAN_LOW = 1.868
+        SIGMA_UP = 0.01
+    elif int(ecms == 4400):
+        MEAN_UP = 1.872
         MEAN_LOW = 1.865
+        SIGMA_UP = 0.008
+    elif int(ecms == 4420):
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.01
+    elif int(ecms == 4440):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.009
+    elif int(ecms == 4470):
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
         SIGMA_UP = 0.01
     elif int(ecms == 4530):
-        MEAN_UP = 1.874
-        MEAN_LOW = 1.865
-        SIGMA_UP = 0.014
+        MEAN_UP = 1.872
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.01
     elif int(ecms == 4600):
         MEAN_UP = 1.873
-        MEAN_LOW = 1.866
+        MEAN_LOW = 1.865
         SIGMA_UP = 0.012
     return MEAN_UP, MEAN_LOW, SIGMA_UP
 
@@ -360,64 +384,88 @@ def num_rm_D(ecms):
     N_DDPIPI = 9999999
     if int(ecms == 4190):
         N_D1_2420 = 0
-        N_PSIPP = 100
-        N_DDPIPI = 100
-    if int(ecms == 4200):
+        N_PSIPP = 200
+        N_DDPIPI = 300
+    elif int(ecms == 4200):
         N_D1_2420 = 0
-        N_PSIPP = 100
-        N_DDPIPI = 100
-    if int(ecms == 4210):
+        N_PSIPP = 300
+        N_DDPIPI = 300
+    elif int(ecms == 4210):
         N_D1_2420 = 0
-        N_PSIPP = 100
-        N_DDPIPI = 200
-    if int(ecms == 4220):
+        N_PSIPP = 200
+        N_DDPIPI = 500
+    elif int(ecms == 4220):
         N_D1_2420 = 0
         N_PSIPP = 500
         N_DDPIPI = 500
-    if int(ecms == 4230):
+    elif int(ecms == 4230):
         N_D1_2420 = 0
         N_PSIPP = 500
         N_DDPIPI = 500
-    if int(ecms == 4237):
+    elif int(ecms == 4237):
         N_D1_2420 = 0
         N_PSIPP = 500
         N_DDPIPI = 500
-    if int(ecms == 4245):
+    elif int(ecms == 4245):
         N_D1_2420 = 0
         N_PSIPP = 500
         N_DDPIPI = 300
-    if int(ecms == 4246):
+    elif int(ecms == 4246):
         N_D1_2420 = 0
         N_PSIPP = 500
-        N_DDPIPI = 300
-    if int(ecms == 4260):
-        N_D1_2420 = 0
-        N_PSIPP = 500
-        N_DDPIPI = 500
-    if int(ecms == 4270):
+        N_DDPIPI = 700
+    elif int(ecms == 4260):
         N_D1_2420 = 0
         N_PSIPP = 500
         N_DDPIPI = 500
-    if int(ecms == 4280):
+    elif int(ecms == 4270):
+        N_D1_2420 = 0
+        N_PSIPP = 500
+        N_DDPIPI = 500
+    elif int(ecms == 4280):
         N_D1_2420 = 0
         N_PSIPP = 200
         N_DDPIPI = 200
-    if int(ecms == 4310):
+    elif int(ecms == 4290):
+        N_D1_2420 = 500
+        N_PSIPP = 500
+        N_DDPIPI = 500
+    elif int(ecms == 4310):
         N_D1_2420 = 1000
         N_PSIPP = 1000
         N_DDPIPI = 400
-    if int(ecms == 4360):
+    elif int(ecms == 4315):
+        N_D1_2420 = 500
+        N_PSIPP = 500
+        N_DDPIPI = 500
+    elif int(ecms == 4340):
+        N_D1_2420 = 5000
+        N_PSIPP = 600
+        N_DDPIPI = 600
+    elif int(ecms == 4360):
         N_D1_2420 = 5000
         N_PSIPP = 1000
         N_DDPIPI = 1000
+    elif int(ecms == 4380):
+        N_D1_2420 = 2000
+        N_PSIPP = 600
+        N_DDPIPI = 300
     elif int(ecms == 4390):
         N_D1_2420 = 500
         N_PSIPP = 200
         N_DDPIPI = 100
+    elif int(ecms == 4400):
+        N_D1_2420 = 2000
+        N_PSIPP = 1000
+        N_DDPIPI = 300
     elif int(ecms == 4420):
         N_D1_2420 = 5000
         N_PSIPP = 5000
-        N_DDPIPI = 1000
+        N_DDPIPI = 5000
+    elif int(ecms == 4440):
+        N_D1_2420 = 2000
+        N_PSIPP = 1000
+        N_DDPIPI = 300
     elif int(ecms == 4470):
         N_D1_2420 = 1000
         N_PSIPP = 1000
@@ -434,8 +482,6 @@ def num_rm_D(ecms):
 
 # luminosity
 def luminosity(ecms):
-    if int(ecms) == 4090:
-        LUM = 52.86
     if int(ecms) == 4190:
         LUM = 570.03
     if int(ecms) == 4200:
@@ -458,14 +504,26 @@ def luminosity(ecms):
         LUM = 531.1
     if int(ecms) == 4280:
         LUM = 175.7
+    if int(ecms) == 4290:
+        LUM = 500.
     if int(ecms) == 4310:
         LUM = 45.08
+    if int(ecms) == 4315:
+        LUM = 500.
+    if int(ecms) == 4340:
+        LUM = 500.
     if int(ecms) == 4360:
         LUM = 539.84
+    if int(ecms) == 4380:
+        LUM = 500.
     if int(ecms) == 4390:
         LUM = 55.57
+    if int(ecms) == 4400:
+        LUM = 500.
     if int(ecms) == 4420:
         LUM = 44.67 + 1028.89
+    if int(ecms) == 4440:
+        LUM = 570.
     if int(ecms) == 4470:
         LUM = 111.09
     if int(ecms) == 4530:
@@ -479,10 +537,6 @@ def param_rm_D(ecms):
     LOW = 999.
     UP = 999.
     BINS = 999
-    if int(ecms) == 4090:
-        LOW = 2.15
-        UP = 2.33
-        BINS = int((UP - LOW)/0.002)
     if int(ecms) == 4190:
         LOW = 2.15
         UP = 2.33
@@ -527,30 +581,54 @@ def param_rm_D(ecms):
         LOW = 2.18
         UP = 2.41
         BINS = int((UP - LOW)/0.002)
+    if int(ecms) == 4290:
+        LOW = 2.25
+        UP = 2.419
+        BINS = 300
     if int(ecms) == 4310:
         LOW = 2.21
-        UP = 2.49
-        BINS = 400
+        UP = 2.44
+        BINS = 350
+    if int(ecms) == 4315:
+        LOW = 2.25
+        UP = 2.4425
+        BINS = 300
+    if int(ecms) == 4340:
+        LOW = 2.25
+        UP = 2.47
+        BINS = 350
     if int(ecms) == 4360:
         LOW = 2.18
         UP = 2.49
         BINS = 300
+    if int(ecms) == 4380:
+        LOW = 2.25
+        UP = 2.505
+        BINS = 400
     if int(ecms) == 4390:
         LOW = 2.28
         UP = 2.52
         BINS = 300
+    if int(ecms) == 4400:
+        LOW = 2.25
+        UP = 2.53
+        BINS = 400
     if int(ecms) == 4420:
         LOW = 2.14
         UP = 2.55
         BINS = 300
+    if int(ecms) == 4440:
+        LOW = 2.3
+        UP = 2.57
+        BINS = 450
     if int(ecms) == 4470:
         LOW = 2.18
         UP = 2.60
         BINS = 400
     if int(ecms) == 4530:
-        LOW = 2.2
-        UP = 2.66
-        BINS = 400
+        LOW = 2.3
+        UP = 2.6
+        BINS = 500
     if int(ecms) == 4600:
         LOW = 2.22
         UP = 2.732

@@ -172,6 +172,8 @@ def fit(path, ecms, mode, patch):
     f_sig.write(out)
     f_sig.close()
 
+    raw_input('enter anything to end...')
+
 def main():
     args = sys.argv[1:]
     if len(args)<3:
