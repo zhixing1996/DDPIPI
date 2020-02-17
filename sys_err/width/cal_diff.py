@@ -43,7 +43,7 @@ def sys_err(patch):
     path_xs_new = './txts/xs_total_' + patch + '.txt'
     f_xs_new = open(path_xs_new, 'r')
     lines_xs_new = f_xs_new.readlines()
-    path_sys_err = './txts/sys_err.txt'
+    path_sys_err = './txts/sys_err_width.txt'
     f_sys_err = open(path_sys_err, 'w')
 
     for line_xs_old, line_xs_new in zip(lines_xs_old, lines_xs_new):
@@ -60,7 +60,7 @@ def sys_err(patch):
             diff = 0.
         else:
             diff = abs((xs_new - xs_old)/xs_old)
-        out = str(ecms) + ' ' + str(round(diff*100, 3)) + '\n'
+        out = str(ecms) + '\t' + str(round(diff*100, 1)) + '\n'
         f_sys_err.write(out)
 
     f_sys_err.close()

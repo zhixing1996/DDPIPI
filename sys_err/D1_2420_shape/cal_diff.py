@@ -43,7 +43,7 @@ def sys_err(patch):
     path_xs_new = './txts/xs_total_' + patch + '.txt'
     f_xs_new = open(path_xs_new, 'r')
     lines_xs_new = f_xs_new.readlines()
-    path_sys_err = './txts/sys_err_window.txt'
+    path_sys_err = './txts/sys_err_D1_2420_shape.txt'
     f_sys_err = open(path_sys_err, 'w')
 
     for line_xs_old, line_xs_new in zip(lines_xs_old, lines_xs_new):
@@ -56,7 +56,7 @@ def sys_err(patch):
         rs_xs_new = filter(None, rs_xs_new.split(' '))
         xs_new = float(rs_xs_new[1])
         xs_err_new = float(rs_xs_new[2])
-        if xs_old == 0:
+        if xs_old == 0 or xs_new == 0:
             diff = 0.
         else:
             diff = abs((xs_new - xs_old)/xs_old)
