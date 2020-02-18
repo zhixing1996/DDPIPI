@@ -139,40 +139,95 @@ def fit(path, ecms, mode, patch):
     d = RooRealVar('c', 'c', 0, -99, 99)
     bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
 
+    if mode == 'upper_limit':
+        if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530):
+            print str(ecms) + ' MeV\'s sigma is larger than 5 sigma, no need to calculate upper limit!'
+            sys.exit()
+        f_DDPIPI = TFile('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
+        t_DDPIPI = f_DDPIPI.Get('save')
+        cut = ''
+        h_DDPIPI = TH1F('h_DDPIPI', '', xbins, xmin, xmax)
+        t_DDPIPI.Project('h_DDPIPI', 'rm_Dpipi', cut)
+        hist_DDPIPI = RooDataHist('hist_DDPIPI', 'hist_DDPIPI', RooArgList(rm_Dpipi), h_DDPIPI)
+        pdf_DDPIPI = RooHistPdf('pdf_DDPIPI', 'pdf_DDPIPI', RooArgSet(rm_Dpipi), hist_DDPIPI, 2)
+        mean = RooRealVar('mean', 'mean', 0)
+        sigma = RooRealVar('sigma', 'sigma', 0.00123)
+        gauss = RooGaussian('gauss', 'guass', rm_Dpipi, mean, sigma)
+        rm_Dpipi.setBins(xbins, 'cache')
+        sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_DDPIPI, gauss)
+        
+        param_bkg, step_size, step_n = upl_rm_Dpipi(ecms)
+        a = RooRealVar('a', 'a', param_bkg)
+        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
+
     # event number
-    nsig = RooRealVar('nsig', 'nsig', 100, 0, 500000)
+    num_low, num_up = num_rm_Dpipi(ecms)
+    nsig = RooRealVar('nsig', 'nsig', 100, num_low, num_up)
     nbkg = RooRealVar('nbkg', 'nbkg', 80, 0, 500000)
 
     # fit model
-    model = RooAddPdf('model', 'sigpdf + bkgpdf', RooArgList(sigpdf, bkgpdf), RooArgList(nsig, nbkg))
-    model.fitTo(data)
+    if mode == 'data' or mode == 'D1_2420' or mode == 'psipp' or mode == 'DDPIPI' or mode == 'upper_limit':
+        model = RooAddPdf('model', 'sigpdf + bkgpdf', RooArgList(sigpdf, bkgpdf), RooArgList(nsig, nbkg))
+        results = model.fitTo(data, RooFit.Save())
+    if mode == 'none_sig':
+        model = RooAddPdf('model', 'bkgpdf', RooArgList(bkgpdf), RooArgList(nbkg))
+        results = model.fitTo(data, RooFit.Save())
 
-    # plot results
-    xframe = rm_Dpipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
-    data.plotOn(xframe)
-    model.plotOn(xframe)
-    model.plotOn(xframe, RooFit.Components('gauss1'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
-    model.plotOn(xframe, RooFit.Components('gauss2'), RooFit.LineColor(kYellow), RooFit.LineWidth(2), RooFit.LineStyle(1))
-    model.plotOn(xframe, RooFit.Components('bkgpdf'), RooFit.LineColor(kGreen), RooFit.LineWidth(2), RooFit.LineStyle(1))
-    xtitle = 'RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})(GeV)'
-    content = (xmax - xmin)/xbins * 1000
-    ytitle = 'Events/%.1f MeV'%content
-    set_xframe_style(xframe, xtitle, ytitle)
-    xframe.Draw()
+    if mode == 'data' or mode == 'D1_2420' or mode == 'psipp' or mode == 'DDPIPI' or mode == 'none_sig':
+        # plot results
+        xframe = rm_Dpipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
+        data.plotOn(xframe)
+        model.plotOn(xframe)
+        model.plotOn(xframe, RooFit.Components('gauss1'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
+        model.plotOn(xframe, RooFit.Components('gauss2'), RooFit.LineColor(kYellow), RooFit.LineWidth(2), RooFit.LineStyle(1))
+        model.plotOn(xframe, RooFit.Components('bkgpdf'), RooFit.LineColor(kGreen), RooFit.LineWidth(2), RooFit.LineStyle(1))
+        xtitle = 'RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})(GeV)'
+        content = (xmax - xmin)/xbins * 1000
+        ytitle = 'Events/%.1f MeV'%content
+        set_xframe_style(xframe, xtitle, ytitle)
+        xframe.Draw()
 
-    if not os.path.exists('./figs/'):
-        os.makedirs('./figs/')
-    mbc.SaveAs('./figs/fit_rm_Dpipi_' + str(ecms) + '_' + mode + '.pdf')
+        if not os.path.exists('./figs/'):
+            os.makedirs('./figs/')
+        mbc.SaveAs('./figs/fit_rm_Dpipi_' + str(ecms) + '_' + mode + '.pdf')
 
-    if not os.path.exists('./txts/'):
-        os.makedirs('./txts/')
-    path_sig = './txts/' + mode + '_signal_events_'+ str(ecms) +'_' + patch + '.txt'
-    f_sig = open(path_sig, 'w')
-    out = str(nsig.getVal()) + ' ' + str(nsig.getError()) + '\n'
-    f_sig.write(out)
-    f_sig.close()
+        if not os.path.exists('./txts/'):
+            os.makedirs('./txts/')
+        path_sig = './txts/' + mode + '_signal_events_'+ str(ecms) +'_' + patch + '.txt'
+        f_sig = open(path_sig, 'w')
+        out = str(nsig.getVal()) + ' ' + str(nsig.getError()) + '\n'
+        f_sig.write(out)
+        f_sig.close()
+        if mode == 'data' or mode == 'none_sig':
+            path_out = './txts/significance_likelihood_total_' + str(ecms) + '.txt'
+            f_out = open(path_out, 'a')
+            # -log(L) minimum
+            sig_out = str(results.minNll()) + '\n'
+            f_out.write(sig_out)
+            f_out.close()
 
-    raw_input('enter anything to end...')
+    if mode == 'upper_limit':
+        offset = False
+        offsetValue = 0.
+        if not os.path.exists('./txts/'):
+            os.makedirs('./txts/')
+
+        path_out = './txts/upper_limit_likelihood_total_'+ str(ecms) +'.txt'
+        f_out = open(path_out, 'w')
+
+        for i in xrange(step_n):
+            nsignal = i * step_size
+            nsig.setVal(nsignal)
+            nsig.setConstant()
+            results = model.fitTo(data, RooFit.Save())
+            if not offset:
+                offsetValue = results.minNll()
+                offset = True
+            line = str(nsignal) + ' ' + str(TMath.Exp(offsetValue - results.minNll())) + '\n'
+            f_out.write(line)
+        f_out.close()
+
+    # raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]
@@ -183,7 +238,7 @@ def main():
     patch = args[2]
 
     path = []
-    if mode == 'data':
+    if mode == 'data' or mode == 'none_sig' or mode == 'upper_limit':
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
     if mode == 'D1_2420':
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_raw_before.root')

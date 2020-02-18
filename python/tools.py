@@ -275,6 +275,16 @@ def chi2_kf(ecms):
     return CHI2_KF
 
 # parameter of rm(Dpipi) fit
+def num_rm_Dpipi(ecms):
+    if ecms == 4190:
+        NUM_LOW = 0
+        NUM_UP = 50000
+    else:
+        NUM_LOW = 0
+        NUM_UP = 500000
+    return NUM_LOW, NUM_UP
+
+# parameter of rm(Dpipi) fit
 def param_rm_Dpipi(ecms):
     MEAN_UP = 999.
     MEAN_LOW = 999.
@@ -376,6 +386,61 @@ def param_rm_Dpipi(ecms):
         MEAN_LOW = 1.865
         SIGMA_UP = 0.012
     return MEAN_UP, MEAN_LOW, SIGMA_UP
+
+# upper limit parameter of rm(Dpipi) fit
+def upl_rm_Dpipi(ecms):
+    PARAM_BKG = 999.
+    STEP_SIZE = 999.
+    STEP_N = 999.
+    if int(ecms == 4190):
+        PARAM_BKG = -1.00344e+00
+        STEP_SIZE = 0.1
+        STEP_N = 600
+    elif int(ecms == 4200):
+        PARAM_BKG = -9.69253e-01
+        STEP_SIZE = 0.1
+        STEP_N = 600
+    elif int(ecms == 4210):
+        PARAM_BKG = -9.57997e-01
+        STEP_SIZE = 0.1
+        STEP_N = 1200
+    elif int(ecms == 4220):
+        PARAM_BKG = -9.05634e-01
+        STEP_SIZE = 0.1
+        STEP_N = 1500
+    elif int(ecms == 4230):
+        PARAM_BKG = -8.82550e-01
+        STEP_SIZE = 1
+        STEP_N = 500
+    elif int(ecms == 4237):
+        PARAM_BKG = -8.17887e-01
+        STEP_SIZE = 0.1
+        STEP_N = 2000
+    elif int(ecms == 4245):
+        PARAM_BKG = -7.80923e-01
+        STEP_SIZE = 0.1
+        STEP_N = 500
+    elif int(ecms == 4246):
+        PARAM_BKG = -8.05249e-01 
+        STEP_SIZE = 1
+        STEP_N = 500
+    elif int(ecms == 4270):
+        PARAM_BKG = 1.63352e-07
+        STEP_SIZE = 1
+        STEP_N = 350
+    elif int(ecms == 4280):
+        PARAM_BKG = -7.75574e-01
+        STEP_SIZE = 0.1
+        STEP_N = 1500
+    elif int(ecms == 4310):
+        PARAM_BKG = -6.35878e-01
+        STEP_SIZE = 0.1
+        STEP_N = 1500
+    elif int(ecms == 4530):
+        PARAM_BKG = -1.80799e-01
+        STEP_SIZE = 1
+        STEP_N = 500
+    return PARAM_BKG, STEP_SIZE, STEP_N
 
 # parameter of rm(D) fit
 def num_rm_D(ecms):

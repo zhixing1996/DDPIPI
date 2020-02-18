@@ -59,7 +59,7 @@ NAME
     fit_rm_pipi.py
 
 SYNOPSIS
-    ./fit_rm_pipi.py [ecms] [mode] (mode = sig or none_sig)
+    ./fit_rm_pipi.py [ecms] [mode] (mode = sig, none_sig or upper_limit)
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -174,7 +174,7 @@ def fit(path, ecms, xmin, xmax, xbins, mode, step_size, step_n):
         if not os.path.exists('./txts/'):
             os.makedirs('./txts/')
 
-        path_out = './txts/significance_likelihood_' + str(ecms) + '.txt'
+        path_out = './txts/significance_likelihood_X_3842_' + str(ecms) + '.txt'
         f_out = open(path_out, 'a')
         # -log(L) minimum
         out = str(results.minNll()) + '\n'
@@ -187,7 +187,7 @@ def fit(path, ecms, xmin, xmax, xbins, mode, step_size, step_n):
         if not os.path.exists('./txts/'):
             os.makedirs('./txts/')
 
-        path_out = './txts/upper_limit_likelihood_'+ str(ecms) +'.txt'
+        path_out = './txts/upper_limit_likelihood_X_3842_'+ str(ecms) +'.txt'
         f_out = open(path_out, 'w')
 
         for i in xrange(step_n):

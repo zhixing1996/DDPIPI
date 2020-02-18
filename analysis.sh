@@ -65,6 +65,7 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.4.22"   "[ROUND1: DDPIPI] Calculate numbers -- format cross section outputs"
     printf "\n\t%-9s  %-40s\n" "0.4.23"   "[ROUND1: DDPIPI] Draw figures -- draw cross sections"
     printf "\n\t%-9s  %-40s\n" "0.4.24"   "[ROUND1: DDPIPI] Draw figures -- draw cross section differences between iterations"
+    printf "\n\t%-9s  %-40s\n" "0.4.25"   "[DDPIPI] Calculate numbers -- calculate significance and upper limit number of total DDPIPI"
     
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -550,10 +551,10 @@ case $option in
 
     0.4.10) echo "[X_3842] Calculate numbers -- calculating significance and upper limit number of X(3842)..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./calSignificance_703p01.sh
-            ./calUpperLimit_703p01.sh
-            ./calSignificance_705.sh
-            ./calUpperLimit_705.sh
+            ./calSignificance_X_3842_703p01.sh
+            ./calUpperLimit_X_3842_703p01.sh
+            ./calSignificance_X_3842_705.sh
+            ./calUpperLimit_X_3842_705.sh
             ;;
 
     0.4.11) echo "[DDPIPI] Draw figures -- studying RM(Dpipi) in Kpipi signal and sideband region..."
@@ -640,6 +641,13 @@ case $option in
             python plot_xs_diff.py D1_2420
             python plot_xs_diff.py psipp
             python plot_xs_diff.py total
+            ;;
+
+    0.4.25) echo "[DDPIPI] Calculate numbers -- calculating significance and upper limit number of total DDPIPI..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./calSignificance_total_703p01.sh
+            ./calSignificance_total_705.sh
+            ./calUpperLimit_total_703p01.sh
             ;;
 
 esac
