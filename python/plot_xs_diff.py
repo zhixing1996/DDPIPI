@@ -123,13 +123,13 @@ def main(mode):
     grerr_3_to_4.SetLineColor(4)
     grerr_3_to_4.SetMarkerStyle(20)
     if mode == 'total':
-        grerr_0_to_1.GetYaxis().SetRangeUser(-0.3, 0.4)
+        grerr_0_to_1.GetYaxis().SetRangeUser(-0.8, 0.4)
         grerr_0_to_1.Draw('ALP')
         grerr_1_to_2.Draw('LP')
         grerr_2_to_3.Draw('LP')
         grerr_3_to_4.Draw('LP')
     if mode == 'D1_2420':
-        grerr_0_to_1.GetYaxis().SetRangeUser(-1.4, 1.4)
+        grerr_0_to_1.GetYaxis().SetRangeUser(-1.9, 1.4)
         grerr_0_to_1.Draw('ALP')
         grerr_1_to_2.Draw('LP')
         grerr_2_to_3.Draw('LP')

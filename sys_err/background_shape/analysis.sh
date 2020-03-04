@@ -32,18 +32,18 @@ case $option in
     #  0.1 Get systerm uncertainties
     # ------------------------------
 
-    0.2) echo "Getting systerm uncertainties..."
+    0.1) echo "Getting systerm uncertainties..."
          echo "--> Samples: data, signal MC, PHSP MC"
          echo "--> Selection Algorithm Version: DDecayAlg-00-00-03"
          ;;
 
-    0.2.1) echo "Fit distributions -- fitting recoiling mass of Dpipi..."
+    0.1.1) echo "Fit distributions -- fitting recoiling mass of Dpipi..."
            cd scripts/ana
            ./fitRMDpipi_703p01.sh round4
            ./fitRMDpipi_705.sh round4
            ;;
 
-    0.2.2) echo "Calculate numbers -- calculating cross section of DDpipi and systerm uncertainties..."
+    0.1.2) echo "Calculate numbers -- calculating cross section of DDpipi and systerm uncertainties..."
            cd scripts/ana
            ./calXS_703p01.sh round4
            ./calXS_705.sh round4

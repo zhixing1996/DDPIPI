@@ -138,21 +138,41 @@ def fit(path, ecms, mode, patch):
     c = RooRealVar('c', 'c', 0, -99, 99)
     d = RooRealVar('c', 'c', 0, -99, 99)
     bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
+    if ecms == 4380:
+        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
 
     # event number
-    nsig = RooRealVar('nsig', 'nsig', 100, 0, 500000)
+    num_low, num_up = num_rm_Dpipi(ecms)
+    nsig = RooRealVar('nsig', 'nsig', 100, num_low, num_up)
     nbkg = RooRealVar('nbkg', 'nbkg', 80, 0, 500000)
 
     # fit model
     model = RooAddPdf('model', 'sigpdf + bkgpdf', RooArgList(sigpdf, bkgpdf), RooArgList(nsig, nbkg))
-    model.fitTo(data)
+    if (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4237 or ecms == 4245 or ecms == 4270 or ecms == 4280) and mode == 'data':
+        f_DDPIPI = TFile('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
+        t_DDPIPI = f_DDPIPI.Get('save')
+        cut = ''
+        h_DDPIPI = TH1F('h_DDPIPI', '', xbins, xmin, xmax)
+        t_DDPIPI.Project('h_DDPIPI', 'rm_Dpipi', cut)
+        hist_DDPIPI = RooDataHist('hist_DDPIPI', 'hist_DDPIPI', RooArgList(rm_Dpipi), h_DDPIPI)
+        pdf_DDPIPI = RooHistPdf('pdf_DDPIPI', 'pdf_DDPIPI', RooArgSet(rm_Dpipi), hist_DDPIPI, 2)
+        mean = RooRealVar('mean', 'mean', 0)
+        sigma = RooRealVar('sigma', 'sigma', 2.48272e-04)
+        gauss = RooGaussian('gauss', 'guass', rm_Dpipi, mean, sigma)
+        rm_Dpipi.setBins(xbins, 'cache')
+        sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_DDPIPI, gauss)
+        model = RooAddPdf('model', 'sigpdf + bkgpdf', RooArgList(sigpdf, bkgpdf), RooArgList(nsig, nbkg))
+    results = model.fitTo(data, RooFit.Save())
 
     # plot results
     xframe = rm_Dpipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
     data.plotOn(xframe)
     model.plotOn(xframe)
-    model.plotOn(xframe, RooFit.Components('gauss1'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
-    model.plotOn(xframe, RooFit.Components('gauss2'), RooFit.LineColor(kYellow), RooFit.LineWidth(2), RooFit.LineStyle(1))
+    if not ((ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4237 or ecms == 4245 or ecms == 4270 or ecms == 4280) and mode == 'data'):
+        model.plotOn(xframe, RooFit.Components('gauss1'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
+        model.plotOn(xframe, RooFit.Components('gauss2'), RooFit.LineColor(kYellow), RooFit.LineWidth(2), RooFit.LineStyle(1))
+    else:
+        model.plotOn(xframe, RooFit.Components('sigpdf'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
     model.plotOn(xframe, RooFit.Components('bkgpdf'), RooFit.LineColor(kGreen), RooFit.LineWidth(2), RooFit.LineStyle(1))
     xtitle = 'RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})(GeV)'
     content = (xmax - xmin)/xbins * 1000
@@ -183,7 +203,7 @@ def main():
     patch = args[2]
 
     path = []
-    if mode == 'data':
+    if mode == 'data' or mode == 'none_sig' or mode == 'upper_limit':
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
     if mode == 'D1_2420':
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_raw_before.root')

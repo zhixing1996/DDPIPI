@@ -38,7 +38,7 @@ DATE
     December 2019
 \n''')
 
-def set_graph_style(gr, xtitle, ytitle):
+def set_graph_style(gr, xtitle, ytitle, xmin, xmax):
     gr.GetXaxis().SetNdivisions(509)
     gr.GetYaxis().SetNdivisions(504)
     gr.SetLineWidth(2)
@@ -51,6 +51,7 @@ def set_graph_style(gr, xtitle, ytitle):
     gr.GetYaxis().SetLabelOffset(0.01)
     gr.GetXaxis().SetTitle(xtitle)
     gr.GetXaxis().CenterTitle()
+    gr.GetXaxis().SetRangeUser(xmin, xmax)
     gr.GetYaxis().SetTitle(ytitle)
     gr.GetYaxis().CenterTitle()
     gr.SetMarkerStyle(8)
@@ -64,7 +65,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def upper_limit(step_size, path, FILE, ecms, mode, arrow_top):
+def upper_limit(step_size, path, FILE, ecms, mode, n_offset):
     try:
         f = open(path, 'r')
     except:
@@ -77,9 +78,8 @@ def upper_limit(step_size, path, FILE, ecms, mode, arrow_top):
 
     lines = f.readlines()
     N = len(lines)
-    max = N*step_size
+    max = n_offset + N*step_size
     count = 0
-    ymax = 0
     likelihood = array('d', N*[0.])
     nsignal = array('d', N*[0.])
     for line in lines:
@@ -87,15 +87,13 @@ def upper_limit(step_size, path, FILE, ecms, mode, arrow_top):
         rs = filter(None, rs.split(" "))
         nsignal[count] = float(rs[0])
         likelihood[count] = float(rs[1])
-        if ymax < likelihood:
-            ymax = likelihood
         count += 1
     gr = TGraph(N, nsignal, likelihood)
 
     par = array('d', 6*[0.])
-    g1 = TF1('g1', 'gaus', 0, max)
-    g2 = TF1('g2', 'gaus', 0, max)
-    f_gauss = TF1('f_gauss', 'gaus(0)+gaus(3)', 0, max)
+    g1 = TF1('g1', 'gaus', n_offset, max)
+    g2 = TF1('g2', 'gaus', n_offset, max)
+    f_gauss = TF1('f_gauss', 'gaus(0)+gaus(3)', n_offset, max)
     gr.Fit(g1, 'R')
     gr.Fit(g2, 'R+')
     par1 = g1.GetParameters()
@@ -106,15 +104,17 @@ def upper_limit(step_size, path, FILE, ecms, mode, arrow_top):
     gr.Fit(f_gauss, 'R+')
     xtitle = 'yields'
     ytitle = 'normalized likehood value'
-    set_graph_style(gr, xtitle, ytitle)
+    xmin = n_offset
+    xmax = max
+    set_graph_style(gr, xtitle, ytitle, xmin, xmax)
     gr.Draw('ALP')
 
-    max_prob = f_gauss.Integral(0, max)
+    max_prob = f_gauss.Integral(n_offset, max)
     print 'Maximum Probility: ' + str(max_prob)
 
     for i in xrange(N):
         n_upl = i * step_size
-        prob_ = f_gauss.Integral(0, n_upl)
+        prob_ = f_gauss.Integral(n_offset, n_upl)
         prob =prob_/max_prob
         if prob >= 0.9:
             print 'prob >= 0.9 , N = ' + str(n_upl)
@@ -166,8 +166,8 @@ def upper_limit(step_size, path, FILE, ecms, mode, arrow_top):
             ISR_psipp = float(rs_xs[9])
             ISR_DDPIPI = float(rs_xs[10])
             VP = float(rs_xs[11])
-            lum = float(rs_xs[15])
-            Br = float(rs_xs[16])/100.
+            lum = float(rs_xs[12])
+            Br = float(rs_xs[13])/100.
             if omega_D1_2420 == 0:
                 flag_D1_2420 = 0
                 eff_ISR_D1_2420 = 1
@@ -214,9 +214,8 @@ def main():
             print str(ecms) + ' MeV\'s sigma is larger than 5 sigma, no need to calculate upper limit!'
             sys.exit()
         FILE = './txts/xs_info_' + str(ecms) + '_read_round4.txt'
-        temp, step_size, temp = upl_rm_Dpipi(ecms)
-    arrow_top = 0.3
-    upper_limit(step_size, path, FILE, ecms, mode, arrow_top)
+        n_offset, step_size, temp = upl_rm_Dpipi(ecms)
+    upper_limit(step_size, path, FILE, ecms, mode, n_offset)
 
 if __name__ == '__main__':
     main()

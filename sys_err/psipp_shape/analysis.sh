@@ -16,8 +16,7 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.1.3" "Single D tag -- run on psipp MC sample(@703p01)"
     printf "\n\t%-9s  %-40s\n" "0.1.4" "Single D tag -- run on psipp MC sample(@705)"
     printf "\n\t%-9s  %-40s\n" "0.1.5" "Get samples -- extracte useful info: signal region and sideband region, ISR factors"
-    printf "\n\t%-9s  %-40s\n" "0.1.6" "Get samples -- apply cuts: data"
-    printf "\n\t%-9s  %-40s\n" "0.1.7" "Get samples -- apply cuts: MC"
+    printf "\n\t%-9s  %-40s\n" "0.1.6" "Get samples -- apply cuts: psipp MC"
 
     printf "\n\t%-9s  %-40s\n" "0.2"   "[Get system uncertainties]"
     printf "\n\t%-9s  %-40s\n" "0.2.1" "Get samples -- convert root files"
@@ -70,26 +69,18 @@ case $option in
 
     0.1.5) echo "Get samples -- extracting useful info: signal region and sideband region, ISR factors..."
            cd scripts/mc
+           ./synthesizepsipp_703p01.sh
+           ./synthesizepsipp_705.sh
            ./getInfopsipp_703p01.sh
            ./getInfopsipp_705.sh
-           ./getFactorpsipp_703p01.sh
-           ./getFactorpsipp_705.sh
+           ./getFactorpsipp_703p01.sh round4
+           ./getFactorpsipp_705.sh round4
            ;;
 
-    0.1.6) echo "Get samples -- applying cuts: data..."
-           cd scripts/data
-           ./applyCutsData_703p01.sh
-           ./applyCutsData_705.sh
-           ;;
-
-    0.1.7) echo "Get samples -- applying cuts: MC..."
+    0.1.6) echo "Get samples -- applying cuts: psipp MC..."
            cd scripts/mc
-           ./applyCutsD1_2420_703p01.sh
-           ./applyCutsD1_2420_705.sh
            ./applyCutspsipp_703p01.sh
            ./applyCutspsipp_705.sh
-           ./applyCutsD_D_PI_PI_703p01.sh
-           ./applyCutsD_D_PI_PI_705.sh
            ;;
 
     # ------------------------------

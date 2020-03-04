@@ -21,7 +21,7 @@ NAME
     get_factor.py
 
 SYNOPSIS
-    ./get_shape.py [file_in] [ecms] [mode] [patch]
+    ./get_factor.py [file_in] [ecms] [mode] [patch]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>

@@ -176,9 +176,9 @@ def fit(ecms, patch, path, shape, root):
 
     n_D1_2420 = 0.
     eff_D1_2420 = 0.
+    ISR_D1_2420 = 1.
+    VP_D1_2420 = 1.
     xs_D1_2420 = 0.
-    ISR_D1_2420 = 0.
-    VP_D1_2420 = 0.
     xserr_D1_2420 = 0.
     if ecms >= 4290:
         n_D1_2420 = n2420.getVal()
@@ -209,9 +209,9 @@ def fit(ecms, patch, path, shape, root):
 
     n_psipp = 0.
     eff_psipp = 0.
+    ISR_psipp = 1.
+    VP_psipp = 1.
     xs_psipp = 0.
-    ISR_psipp = 0.
-    VP_psipp = 0.
     xserr_psipp = 0.
     if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420:
         eff_psipp = entries_psipp_root/100000.
@@ -232,9 +232,9 @@ def fit(ecms, patch, path, shape, root):
 
     n_DDPIPI = 0.
     eff_DDPIPI = 0.
+    ISR_DDPIPI = 1.
+    VP_DDPIPI = 1.
     xs_DDPIPI = 0.
-    ISR_DDPIPI = 0.
-    VP_DDPIPI = 0.
     xserr_DDPIPI = 0.
     if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420:
         eff_DDPIPI = entries_DDPIPI_root/100000.
@@ -257,18 +257,48 @@ def fit(ecms, patch, path, shape, root):
         os.makedirs('./txts/')
     path_out = './txts/fit_rm_D_' + str(ecms) + '_' + patch + '.txt'
     f_out = open(path_out, 'w')
-    line = '& @' + str(ecms) + 'MeV& ' + str(int(n_D1_2420)) + '& ' + str(int(npsipp.getVal())) + '& ' + str(int(nDDPIPI.getVal())) 
-    line += '& ' + str(round(eff_D1_2420*100, 2)) + '\%& ' + str(round(eff_psipp*100, 2)) + '\%& ' + str(round(eff_DDPIPI*100, 2)) + '\%& '
-    line += str(lum) + '& ' + str(Br*100) + '\%& ' + str(round(xs_D1_2420, 2)) + '& ' + str(round(xs_psipp, 2)) + '& ' + str(round(xs_DDPIPI, 2)) + '& ' + str(round(xserr_D1_2420, 2)) + '& ' + str(round(xserr_psipp, 2)) + '& ' + str(round(xserr_DDPIPI, 2)) + '& \\\\\n'
+    line = '& @' + str(ecms) + 'MeV&\n' 
+    if ecms >= 4290:
+        line += str(int(n_D1_2420)) + ' \pm '+ str(int(n2420.getError()))  + '&\n' 
+    else:
+        line += str(0) + ' \pm ' + str(0) + '\&\n'
+    line += str(int(npsipp.getVal())) + ' \pm ' + str(int(npsipp.getError())) + '&\n' 
+    line += str(int(nDDPIPI.getVal())) + ' \pm ' + str(int(nDDPIPI.getError())) + '\&\n'
+    line += str(round(eff_D1_2420*100, 2)) + '\%&\n' 
+    line += str(round(eff_psipp*100, 2)) + '\%&\n' 
+    line += str(round(eff_DDPIPI*100, 2)) + '\%&\n' 
+    line += str(round(VP_psipp, 2)) + '\n'
+    line += str(lum) + '&\n' 
+    line += str(Br*100) + '\%&\n' 
+    line += str(round(xs_D1_2420, 2)) + ' \pm ' + str(round(xserr_D1_2420, 2)) + '&\n' 
+    line += str(round(xs_psipp, 2)) + ' \pm ' + str(round(xserr_psipp, 2)) + '&\n' 
+    line += str(round(xs_DDPIPI, 2)) + '\pm ' + str(round(xserr_DDPIPI, 2)) + '&\n'
+    line += str(round(xs_D1_2420 + xs_psipp + xs_DDPIPI, 2)) + '\pm ' + str(round((xserr_D1_2420**2 + xserr_psipp**2 + xserr_DDPIPI**2)**0.5, 2)) + '&\n'
     f_out.write(line)
     f_out.close()
 
     path_out_read = './txts/fit_rm_D_' + str(ecms) + '_read_' + patch + '.txt'
     f_out_read = open(path_out_read, 'w')
     N_tot = n_D1_2420 + npsipp.getVal() + nDDPIPI.getVal()
-    line_read = str(ecms) + ' ' + str(round(n_D1_2420/N_tot, 2)) + ' ' + str(round(npsipp.getVal()/N_tot, 2)) + ' ' + str(round(nDDPIPI.getVal()/N_tot, 2))
-    line_read += ' ' + str(round(xs_D1_2420, 2)) + ' ' + str(round(xs_psipp, 2)) + ' ' + str(round(xs_DDPIPI, 2))
-    line_read += ' ' + str(round(ISR_D1_2420, 2)) + ' ' + str(round(ISR_psipp, 2)) + ' ' + str(round(ISR_DDPIPI, 2)) + ' ' + str(round(VP_DDPIPI, 2)) + ' ' + str(round(xserr_D1_2420, 2)) + ' ' + str(round(xserr_psipp, 2)) + ' ' + str(round(xserr_DDPIPI, 2))
+    line_read = str(ecms) + ' ' 
+    line_read += str(round(n_D1_2420/N_tot, 2)) + ' ' 
+    line_read += str(round(npsipp.getVal()/N_tot, 2)) + ' ' 
+    line_read += str(round(nDDPIPI.getVal()/N_tot, 2)) + ' ' 
+    line_read += str(round(eff_D1_2420, 2)) + ' ' 
+    line_read += str(round(eff_psipp, 2)) + ' ' 
+    line_read += str(round(eff_DDPIPI, 2)) + ' '
+    line_read += str(round(ISR_D1_2420, 2)) + ' ' 
+    line_read += str(round(ISR_psipp, 2)) + ' ' 
+    line_read += str(round(ISR_DDPIPI, 2)) + ' ' 
+    line_read += str(round(VP_DDPIPI, 2)) + ' ' 
+    line_read += str(lum) + ' ' 
+    line_read += str(Br) + ' ' 
+    line_read += str(round(xs_D1_2420, 2)) + ' ' 
+    line_read += str(round(xs_psipp, 2)) + ' ' 
+    line_read += str(round(xs_DDPIPI, 2)) + ' ' 
+    line_read += str(round(xserr_D1_2420, 2)) + ' ' 
+    line_read += str(round(xserr_psipp, 2)) + ' ' 
+    line_read += str(round(xserr_DDPIPI, 2)) + ' ' 
     line_read += '\n'
     f_out_read.write(line_read)
     f_out_read.close()
@@ -319,7 +349,7 @@ def fit(ecms, patch, path, shape, root):
         os.makedirs('./figs/')
     c.SaveAs(canvas_name)
 
-    raw_input('Enter anything to end...')
+    # raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]

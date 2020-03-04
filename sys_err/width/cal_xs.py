@@ -71,22 +71,22 @@ def xs(ecms, patch, data_path, D1_2420_path, psipp_path, DDPIPI_path):
         omega_D1_2420 = float(rs_factor[1])
         omega_psipp = float(rs_factor[2])
         omega_DDPIPI = float(rs_factor[3])
-        xs_D1_2420 = float(rs_factor[4])
-        xs_psipp = float(rs_factor[5])
-        xs_DDPIPI = float(rs_factor[6])
-        xserr_D1_2420 = float(rs_factor[-3])
-        xserr_psipp = float(rs_factor[-2])
-        xserr_DDPIPI = float(rs_factor[-1])
+        eff_D1_2420 = float(rs_factor[4])
+        eff_psipp = float(rs_factor[5])
+        eff_DDPIPI = float(rs_factor[6])
+        ISR_D1_2420 = float(rs_factor[7])
+        ISR_psipp = float(rs_factor[8])
+        ISR_DDPIPI = float(rs_factor[9])
+        VP = float(rs_factor[10])
+        lum = float(rs_factor[11])
+        Br = float(rs_factor[12])
+        xs_D1_2420 = float(rs_factor[13])
+        xs_psipp = float(rs_factor[14])
+        xs_DDPIPI = float(rs_factor[15])
+        xserr_D1_2420 = float(rs_factor[16])
+        xserr_psipp = float(rs_factor[17])
+        xserr_DDPIPI = float(rs_factor[18])
 
-    Br = 0.0938
-    lum = luminosity(ecms)
-    ISR_D1_2420 = 1.
-    ISR_psipp = 1.
-    ISR_DDPIPI = 1.
-    VP = 1.
-    eff_ISR_D1_2420 = 0.
-    eff_ISR_psipp = 0.
-    eff_ISR_DDPIPI = 0.
     if omega_D1_2420 == 0:
         flag_D1_2420 = 0
         eff_ISR_D1_2420 = 1
@@ -109,13 +109,6 @@ def xs(ecms, patch, data_path, D1_2420_path, psipp_path, DDPIPI_path):
     xs_err = flag_psipp*Err_data/(2*eff_ISR_psipp*Br*lum) + flag_DDPIPI*Err_data/(2*eff_ISR_DDPIPI*Br*lum) + flag_D1_2420*Err_data/(2*eff_ISR_D1_2420*Br*lum)
 
     if not patch == 'round0':
-        for line_factor in lines_factor:
-            rs_factor = line_factor.rstrip('\n')
-            rs_factor = filter(None, rs_factor.split(' '))
-            ISR_D1_2420 = float(rs_factor[7])
-            ISR_psipp = float(rs_factor[8])
-            ISR_DDPIPI = float(rs_factor[9])
-            VP = float(rs_factor[10])
         if omega_D1_2420 == 0:
             flag_D1_2420 = 0
             eff_ISR_D1_2420 = 1
@@ -142,23 +135,48 @@ def xs(ecms, patch, data_path, D1_2420_path, psipp_path, DDPIPI_path):
     path_xs = './txts/xs_info_' + str(ecms) + '_' + patch + '.txt'
 
     f_xs = open(path_xs, 'w')
-    out = '& @'  + str(ecms) + 'MeV& ' + str(int(N_data))
-    out += '& ' + str(round(eff_D1_2420*100, 2)) + '\%& ' + str(round(eff_psipp*100, 2)) + '\%& ' + str(round(eff_DDPIPI*100, 2)) + '\%'
-    out += '& ' + str(round(omega_D1_2420, 2)) + '& ' + str(round(omega_psipp, 2)) + '& ' + str(round(omega_DDPIPI, 2))
-    out += '& ' + str(round(ISR_D1_2420, 2)) + '& ' + str(round(ISR_psipp, 2)) + '& ' + str(round(ISR_DDPIPI, 2)) + "& " + str(round(VP, 2))
-    out += '& ' + str(lum) + '& ' + str(Br*100) + '\%& ' + str(round(xs, 2)) + '\pm' + str(round(xs_err, 2)) + '&\\\\\n'
+    out = '& @' + str(ecms) + 'MeV&\n'
+    out += str(int(N_data)) + '&\n'
+    out += str(round(eff_D1_2420*100, 2)) + '\%&\n'
+    out += str(round(eff_psipp*100, 2)) + '\%&\n'
+    out += str(round(eff_DDPIPI*100, 2)) + '\%&\n'
+    out += str(round(omega_D1_2420, 2)) + '&\n'
+    out += str(round(omega_psipp, 2)) + '&\n'
+    out += str(round(omega_DDPIPI, 2)) + '&\n'
+    out += str(round(ISR_D1_2420, 2)) + '&\n' 
+    out += str(round(ISR_psipp, 2)) + '&\n'
+    out += str(round(ISR_DDPIPI, 2)) + '&\n'
+    out += str(round(VP, 2)) + '&\n'
+    out += str(lum) + '&\n'
+    out += str(Br*100) + '\%&\n'
+    out += str(round(xs, 2)) + '\pm' + str(round(xs_err, 2)) + '&\n'
     f_xs.write(out)
     f_xs.close()
 
     path_xs_read = './txts/xs_info_' + str(ecms) + '_read_' + patch + '.txt'
     f_xs_read = open(path_xs_read, 'w')
-    out_read = str(ecms) + ' ' + str(int(N_data))
-    out_read += ' ' + str(round(eff_D1_2420*100, 2)) + ' ' + str(round(eff_psipp*100, 2)) + ' ' + str(round(eff_DDPIPI*100, 2))
-    out_read += ' ' + str(round(omega_D1_2420, 2)) + ' ' + str(round(omega_psipp, 2)) + ' ' + str(round(omega_DDPIPI, 2))
-    out_read += ' ' + str(round(ISR_D1_2420, 2)) + ' ' + str(round(ISR_psipp, 2)) + ' ' + str(round(ISR_DDPIPI, 2)) + ' ' + str(round(VP, 2))
-    out_read += ' ' + str(round(xs_D1_2420, 2)) + ' ' + str(round(xs_psipp, 2)) + ' ' + str(round(xs_DDPIPI, 2))
-    out_read += ' ' + str(lum) + ' ' + str(Br*100) + ' ' + str(round(xs, 2)) + ' ' + str(round(xs_err, 2))
-    out_read += ' ' + str(round(xserr_D1_2420, 2)) + ' ' + str(round(xserr_psipp, 2)) + ' ' + str(round(xserr_DDPIPI, 2))
+    out_read = str(ecms) + ' '
+    out_read += str(int(N_data)) + ' '
+    out_read += str(round(eff_D1_2420*100, 2)) + ' '
+    out_read += str(round(eff_psipp*100, 2)) + ' '
+    out_read += str(round(eff_DDPIPI*100, 2)) + ' '
+    out_read += str(round(omega_D1_2420, 2)) + ' '
+    out_read += str(round(omega_psipp, 2)) + ' '
+    out_read += str(round(omega_DDPIPI, 2)) + ' '
+    out_read += str(round(ISR_D1_2420, 2)) + ' '
+    out_read += str(round(ISR_psipp, 2)) + ' '
+    out_read += str(round(ISR_DDPIPI, 2)) + ' '
+    out_read += str(round(VP, 2)) + ' '
+    out_read += str(lum) + ' ' 
+    out_read += str(Br*100) + ' '
+    out_read += str(round(xs, 2)) + ' '
+    out_read += str(round(xs_err, 2)) + ' '
+    out_read += str(round(xs_D1_2420, 2)) + ' '
+    out_read += str(round(xs_psipp, 2)) + ' '
+    out_read += str(round(xs_DDPIPI, 2)) + ' '
+    out_read += str(round(xserr_D1_2420, 2)) + ' '
+    out_read += str(round(xserr_psipp, 2)) + ' '
+    out_read += str(round(xserr_DDPIPI, 2))
     out_read += '\n'
     f_xs_read.write(out_read)
     f_xs_read.close()

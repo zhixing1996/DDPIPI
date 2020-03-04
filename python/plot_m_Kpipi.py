@@ -45,11 +45,11 @@ def set_histo_style(h, xtitle, ytitle):
     h.SetLineWidth(2)
     h.SetStats(0)
     h.SetStats(0)
-    h.GetXaxis().SetTitleSize(0.04)
-    h.GetXaxis().SetTitleOffset(1.3)
+    h.GetXaxis().SetTitleSize(0.06)
+    h.GetXaxis().SetTitleOffset(1.2)
     h.GetXaxis().SetLabelOffset(0.01)
-    h.GetYaxis().SetTitleSize(0.04)
-    h.GetYaxis().SetTitleOffset(1.5)
+    h.GetYaxis().SetTitleSize(0.06)
+    h.GetYaxis().SetTitleOffset(1.2)
     h.GetYaxis().SetLabelOffset(0.01)
     h.GetXaxis().SetTitle(xtitle)
     h.GetXaxis().CenterTitle()
@@ -105,7 +105,7 @@ if __name__ == '__main__':
         leg_title = '(a)'
         xmin = 1.84
         xmax = 1.89
-        xbins = 20
+        xbins = 25
         plot(data_path, leg_title, ecms, xmin, xmax, xbins)
 
     if int(ecms) == 4420:
@@ -113,7 +113,7 @@ if __name__ == '__main__':
         leg_title = '(b)'
         xmin = 1.84
         xmax = 1.89
-        xbins = 20
+        xbins = 25
         plot(data_path, leg_title, ecms, xmin, xmax, xbins)
 
     if int(ecms) == 4600:
@@ -121,5 +121,5 @@ if __name__ == '__main__':
         leg_title = '(c)'
         xmin = 1.84
         xmax = 1.89
-        xbins = 20
+        xbins = 25
         plot(data_path, leg_title, ecms, xmin, xmax, xbins)

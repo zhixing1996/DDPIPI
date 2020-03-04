@@ -35,7 +35,7 @@ DATE
 
 def set_legend(legend, h1, h2, title):
     legend.AddEntry(h1, 'data')
-    legend.AddEntry(h2, 'X(3842)#pi^{+}#pi^{-}')
+    legend.AddEntry(h2, 'D_{1}(2420)D')
     legend.SetHeader(title)
     legend.SetBorderSize(0)
     legend.SetFillColor(0)
@@ -109,7 +109,8 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax):
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
     
-    h_sigMC.Scale(h_data.GetEntries()/h_sigMC.GetEntries()/2)
+    # h_sigMC.Scale(h_data.GetEntries()/h_sigMC.GetEntries()/2)
+    h_sigMC.Scale(scale_factor(ecms, 'D1_2420'))
     h_data.Draw('ep')
     h_sigMC.Draw('same')
 
@@ -130,21 +131,21 @@ if __name__ == '__main__':
 
     if int(ecms) == 4360:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
-        sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4360/sigMC_X_3842_4360_signal.root'
-        leg_title = '(b)'
+        sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root'
+        leg_title = '(a)'
         ymax = 250
         plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
     if int(ecms) == 4420:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
-        sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4420/sigMC_X_3842_4420_signal.root'
+        sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root'
         leg_title = '(b)'
         ymax = 700
         plot(data_path, sigMC_path, leg_title, ecms, ymax)
 
     if int(ecms) == 4600:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
-        sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/4600/sigMC_X_3842_4600_signal.root'
-        leg_title = '(b)'
+        sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root'
+        leg_title = '(c)'
         ymax = 400
         plot(data_path, sigMC_path, leg_title, ecms, ymax)

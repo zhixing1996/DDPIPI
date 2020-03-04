@@ -74,11 +74,11 @@ def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle, ymax):
     h2.SetLineWidth(2)
     h1.SetStats(0)
     h2.SetStats(0)
-    h1.GetXaxis().SetTitleSize(0.04)
-    h1.GetXaxis().SetTitleOffset(1.3)
+    h1.GetXaxis().SetTitleSize(0.06)
+    h1.GetXaxis().SetTitleOffset(1.15)
     h1.GetXaxis().SetLabelOffset(0.01)
-    h1.GetYaxis().SetTitleSize(0.04)
-    h1.GetYaxis().SetTitleOffset(1.5)
+    h1.GetYaxis().SetTitleSize(0.06)
+    h1.GetYaxis().SetTitleOffset(1.15)
     h1.GetYaxis().SetLabelOffset(0.01)
     h1.GetXaxis().SetTitle(xtitle)
     h1.GetXaxis().CenterTitle()
@@ -182,20 +182,20 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root')
-            ymax = 110
+            ymax = 70
             xmin = 3.7
             xmax = 4.1
-            xbins = 160
+            xbins = 200
         if mode == 'after':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_after.root')
-            ymax = 110
+            ymax = 70
             xmin = 3.7
             xmax = 4.1
-            xbins = 160
+            xbins = 200
         if mode == 'X_3842':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_after.root')
@@ -218,20 +218,20 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root')
-            ymax = 110
+            ymax = 130
             xmin = 3.7
             xmax = 4.1
-            xbins = 160
+            xbins = 200
         if mode == 'after':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_after.root')
-            ymax = 110
+            ymax = 130
             xmin = 3.7
             xmax = 4.1
-            xbins = 160
+            xbins = 200
         if mode == 'X_3842':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_after.root')
@@ -243,8 +243,8 @@ if __name__ == '__main__':
             xmax = 3.9
             xbins = 40
         leg_title = '(b)'
-        runNolow = 36773
-        runNoup = 38140
+        runNolow = -999999
+        runNoup = 999999
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax, mode)
 
     if int(ecms) == 4600:

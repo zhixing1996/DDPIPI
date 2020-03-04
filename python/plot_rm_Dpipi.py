@@ -84,11 +84,11 @@ def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle, ymax):
     h2.SetLineWidth(2)
     h1.SetStats(0)
     h2.SetStats(0)
-    h1.GetXaxis().SetTitleSize(0.04)
-    h1.GetXaxis().SetTitleOffset(1.3)
+    h1.GetXaxis().SetTitleSize(0.06)
+    h1.GetXaxis().SetTitleOffset(1.2)
     h1.GetXaxis().SetLabelOffset(0.01)
-    h1.GetYaxis().SetTitleSize(0.04)
-    h1.GetYaxis().SetTitleOffset(1.5)
+    h1.GetYaxis().SetTitleSize(0.06)
+    h1.GetYaxis().SetTitleOffset(1.2)
     h1.GetYaxis().SetLabelOffset(0.01)
     h1.GetXaxis().SetTitle(xtitle)
     h1.GetXaxis().CenterTitle()
@@ -195,7 +195,7 @@ if __name__ == '__main__':
             leg_title = '(a)'
             xmin = 1.8
             xmax = 2.2
-            xbins = 160
+            xbins = 200
             ymax = 600
         if mode == 'signal':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw_before.root')
@@ -206,7 +206,7 @@ if __name__ == '__main__':
             leg_title = '(a)'
             xmin = 1.75
             xmax = 1.95
-            xbins = 80
+            xbins = 100
             ymax = 600
         runNolow = 30616
         runNoup = 31279
@@ -223,7 +223,7 @@ if __name__ == '__main__':
             leg_title = '(b)'
             xmin = 1.8
             xmax = 2.2
-            xbins = 160
+            xbins = 200
             ymax = 1500
         if mode == 'signal':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw_before.root')
@@ -234,10 +234,10 @@ if __name__ == '__main__':
             leg_title = '(b)'
             xmin = 1.75
             xmax = 1.95
-            xbins = 80
+            xbins = 100
             ymax = 1500
-        runNolow = 36773
-        runNoup = 38140
+        runNolow = -999999
+        runNoup = 999999
         plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, mode, ymax)
 
     path = []
@@ -262,7 +262,7 @@ if __name__ == '__main__':
             leg_title = '(c)'
             xmin = 1.75
             xmax = 1.95
-            xbins = 50
+            xbins = 100
             ymax = 700
         runNolow = 35227
         runNoup = 35743
