@@ -349,7 +349,7 @@ def fit(ecms, patch, path, shape, root):
         os.makedirs('./figs/')
     c.SaveAs(canvas_name)
 
-    # raw_input('Enter anything to end...')
+    raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]

@@ -247,7 +247,7 @@ def fit(path, ecms, mode, patch):
             f_out.write(line)
         f_out.close()
 
-    # raw_input('enter anything to end...')
+    raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]

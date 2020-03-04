@@ -196,7 +196,7 @@ def upper_limit(step_size, path, FILE, ecms, mode, n_offset):
         f_out.write(out)
         f_out.close()
 
-    # raw_input('Enter anything to end...')
+    raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]
