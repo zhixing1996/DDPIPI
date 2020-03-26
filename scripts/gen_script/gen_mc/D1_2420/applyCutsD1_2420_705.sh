@@ -17,10 +17,21 @@ do
     cd $HOME/bes/DDPIPI/v0.2/python
     rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/*before*.root
     rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/*after*.root
+    ROOT_PATH=/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0
+
     echo "Begininning of $PARAM_0!"
-    python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/sigMC_D1_2420_$PARAM_0\_raw.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/sigMC_D1_2420_$PARAM_0\_raw_before.root $PARAM_0 before raw_signal
+
+    python apply_cuts.py $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_before.root $PARAM_0 before raw_signal
     echo "STD signal of $PARAM_0 is done!"
-    python apply_cuts.py /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/sigMC_D1_2420_$PARAM_0\_signal.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/sigMC_D1_2420_$PARAM_0\_after.root $PARAM_0 after STDDmiss_signal
+
+    python apply_cuts.py $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_signal.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_after.root $PARAM_0 after STDDmiss_signal
     echo "STDDmiss signal of $PARAM_0 is done!"
+
+    rm -rf $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sideband_before.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandlow_before.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandup_before.root
+    python apply_cuts.py $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandlow.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandlow_before.root $PARAM_0 before raw_sidebandlow
+    python apply_cuts.py $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandup.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandup_before.root $PARAM_0 before raw_sidebandup
+    hadd $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sideband_before.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandlow_before.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandup_before.root
+    echo "raw sideband of $PARAM_0 is done!"
+
     echo "$PARAM_0 is done!"
 done

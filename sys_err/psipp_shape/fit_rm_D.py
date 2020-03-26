@@ -116,7 +116,7 @@ def fit(ecms, patch, path, shape, root):
         logging.info('sideband('+str(ecms)+') entries :'+str(entries_sideband))
         logging.info('psipp('+str(ecms)+') entries :'+str(entries_psipp))
         logging.info('DDPIPI('+str(ecms)+') entries :'+str(entries_DDPIPI))
-        if ecms >= 4290:
+        if ecms > 4290:
             f_D1_2420 = TFile(shape[0], 'READ')
             f_D1_2420_root = TFile(root[2], 'READ')
             t_D1_2420_root = f_D1_2420_root.Get('save')
@@ -130,7 +130,7 @@ def fit(ecms, patch, path, shape, root):
 
     rm_D = RooRealVar('rm_D', 'rm_D', xmin, xmax)
     N_D1_2420, N_PSIPP, N_DDPIPI = num_rm_D(ecms)
-    if ecms >= 4290:
+    if ecms > 4290:
         n2420 = RooRealVar('n2420', 'n2420', 500, 0, N_D1_2420)
     nsideband = RooRealVar('nsideband', 'nsideband', int(entries_sideband/2.))
     npsipp = RooRealVar('npsipp', 'npsipp', 0, N_PSIPP)
@@ -155,7 +155,7 @@ def fit(ecms, patch, path, shape, root):
     pdf_DDPIPI = RooHistPdf('pdf_DDPIPI', 'pdf_DDPIPI', RooArgSet(rm_D), hist_DDPIPI, 2)
 
     canvas_name = './figs/canvas_rm_D_' + str(0) + '_' +str(0) + '_' + str(ecms) + '.pdf'
-    if ecms >= 4290:
+    if ecms > 4290:
         pdf_name = 'h_' + str(0) + '_' + str(0)
         h_D1_2420 = f_D1_2420.Get(pdf_name)
         pdf_name = 'Covpdf_D1_2420_' + str(ecms) + '_' + str(0) + '_' + str(0)
@@ -180,7 +180,7 @@ def fit(ecms, patch, path, shape, root):
     VP_D1_2420 = 1.
     xs_D1_2420 = 0.
     xserr_D1_2420 = 0.
-    if ecms >= 4290:
+    if ecms > 4290:
         n_D1_2420 = n2420.getVal()
         if ecms == 4420:
             eff_D1_2420 = entries_D1_2420_root/100000.
@@ -258,7 +258,7 @@ def fit(ecms, patch, path, shape, root):
     path_out = './txts/fit_rm_D_' + str(ecms) + '_' + patch + '.txt'
     f_out = open(path_out, 'w')
     line = '& @' + str(ecms) + 'MeV&\n' 
-    if ecms >= 4290:
+    if ecms > 4290:
         line += str(int(n_D1_2420)) + ' \pm '+ str(int(n2420.getError()))  + '&\n' 
     else:
         line += str(0) + ' \pm ' + str(0) + '\&\n'
@@ -279,11 +279,11 @@ def fit(ecms, patch, path, shape, root):
 
     path_out_read = './txts/fit_rm_D_' + str(ecms) + '_read_' + patch + '.txt'
     f_out_read = open(path_out_read, 'w')
-    N_tot = n_D1_2420 + npsipp.getVal() + nDDPIPI.getVal()
+    xs_tot = xs_D1_2420 + xs_psipp + xs_DDPIPI
     line_read = str(ecms) + ' ' 
-    line_read += str(round(n_D1_2420/N_tot, 2)) + ' ' 
-    line_read += str(round(npsipp.getVal()/N_tot, 2)) + ' ' 
-    line_read += str(round(nDDPIPI.getVal()/N_tot, 2)) + ' ' 
+    line_read += str(round(xs_D1_2420/xs_tot, 2)) + ' ' 
+    line_read += str(round(xs_psipp/xs_tot, 2)) + ' ' 
+    line_read += str(round(xs_DDPIPI/xs_tot, 2)) + ' ' 
     line_read += str(round(eff_D1_2420, 2)) + ' ' 
     line_read += str(round(eff_psipp, 2)) + ' ' 
     line_read += str(round(eff_DDPIPI, 2)) + ' '
@@ -314,7 +314,7 @@ def fit(ecms, patch, path, shape, root):
     set_xframe_style(xframe, xtitle, ytitle)
     set_data.plotOn(xframe, RooFit.MarkerSize(1), RooFit.LineWidth(1))
     model.plotOn(xframe, RooFit.Components('pdf_sideband'), RooFit.LineColor(kGreen), RooFit.FillStyle(1001), RooFit.FillColor(3), RooFit.LineColor(3), RooFit.VLines(), RooFit.DrawOption('F'))
-    if ecms >= 4290:
+    if ecms > 4290:
         covpdf_name = 'Covpdf_D1_2420_' + str(ecms) + '_' + str(0) + '_' + str(0)
         model.plotOn(xframe, RooFit.Components(covpdf_name), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(kDashed))
     model.plotOn(xframe, RooFit.Components('pdf_psipp'), RooFit.LineColor(kBlue), RooFit.LineWidth(2), RooFit.LineStyle(kDashed))
@@ -324,7 +324,7 @@ def fit(ecms, patch, path, shape, root):
     name = []
     name.append('Data')
     name.append('Backgrounds')
-    if ecms >= 4290:
+    if ecms > 4290:
         name.append('D_{1}(2420)^{+}D^{-}')
     name.append('#psi(3770)#pi^{+}#pi^{-}')
     name.append('D^{+}D^{-}#pi^{+}#pi^{-}')
@@ -349,7 +349,7 @@ def fit(ecms, patch, path, shape, root):
         os.makedirs('./figs/')
     c.SaveAs(canvas_name)
 
-    raw_input('Enter anything to end...')
+    # raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]
@@ -361,18 +361,18 @@ def main():
     path = []
     shape = []
     root = []
-    if ecms >= 4290:
+    if ecms > 4290:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_fit.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_sideband_fit.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sys_err/psipp_shape/sigMC_psipp_'+str(ecms)+'_fit.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_fit.root')
-        shape.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_'+str(ecms)+'.root')
+        shape.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/SHAPE_D1_2420_'+str(ecms)+'.root')
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sys_err/psipp_shape/sigMC_psipp_'+str(ecms)+'_after.root')
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_after.root')
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/sigMC_D1_2420_'+str(ecms)+'_after.root')
         fit(ecms, patch, path, shape, root)
 
-    if ecms < 4290:
+    if ecms <= 4290:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_fit.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_sideband_fit.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sys_err/psipp_shape/sigMC_psipp_'+str(ecms)+'_fit.root')

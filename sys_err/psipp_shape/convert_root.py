@@ -83,7 +83,6 @@ def main():
     path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sys_err/psipp_shape/sigMC_psipp_' + str(ecms) + '_fit.root')
     mode.append('psipp')
     convert(path_in, path_out, mode, ecms)
-    convert(path_in, path_out, mode, ecms)
 
 if __name__ == '__main__':
     main()

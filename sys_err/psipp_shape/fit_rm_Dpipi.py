@@ -68,6 +68,12 @@ DATE
     November 2019
 \n''')
 
+def set_pavetext(pt):
+    pt.SetFillStyle(0)
+    pt.SetBorderSize(0)
+    pt.SetTextAlign(10)
+    pt.SetTextSize(0.04)
+
 def set_xframe_style(xframe, xtitle, ytitle):
     xframe.GetXaxis().SetTitle(xtitle)
     xframe.GetXaxis().SetTitleSize(0.06)
@@ -99,7 +105,7 @@ def set_canvas_style(mbc):
     mbc.SetBottomMargin(0.15)
     mbc.SetGrid()
 
-def fit(path, ecms, mode, patch):
+def fit(path, shape_path, ecms, mode, patch):
     try:
         f_data = TFile(path[0])
         t_data = f_data.Get('save')
@@ -122,63 +128,78 @@ def fit(path, ecms, mode, patch):
     data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
 
     # signal
-    mean_up, mean_low, sigma_up = param_rm_Dpipi(ecms)
-    mean1 = RooRealVar('mean1', 'mean of gaussian', 1.86965, mean_low, mean_up)
-    sigma1 = RooRealVar('sigma1', 'sigma of gaussian', 0.001, 0, sigma_up)
-    gauss1 = RooGaussian('gauss1', 'gaussian', rm_Dpipi, mean1, sigma1)
-    mean2 = RooRealVar('mean2', 'mean of gaussian', 1.86965, mean_low, mean_up)
-    sigma2 = RooRealVar('sigma2', 'sigma of gaussian', 0.001, 0, sigma_up)
-    gauss2 = RooGaussian('gauss2', 'gaussian', rm_Dpipi, mean2, sigma2)
-    frac = RooRealVar('frac', 'fraction od two gaussian', 0.5, 0., 2.)
-    sigpdf = RooAddPdf('sigpdf', 'signal pdf', RooArgList(gauss1, gauss2), RooArgList(frac))
+    f_shape = TFile(shape_path, 'READ')
+    h_shape = f_shape.Get('h_hist')
+    h_signal = RooDataHist('h_shape', 'h_shape', RooArgList(rm_Dpipi), h_shape)
+    pdf_signal = RooHistPdf('pdf_signal', 'pdf_signal', RooArgSet(rm_Dpipi), h_signal, 0)
+    mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.003, 0.003)
+    if ecms == 4230 or ecms == 4290 or ecms == 4315 or ecms == 4340 or ecms == 4380 or ecms == 4390 or ecms == 4400 or ecms == 4420 or ecms == 4440 or ecms == 4600:
+        mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.005, 0.005)
+    sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, 0.003)
+    if ecms == 4245:
+        sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, 0.005)
+    gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
+    rm_Dpipi.setBins(xbins, 'cache')
+    sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_signal, gauss)
+
+    if mode == 'D1_2420' or mode == 'DDPIPI' or mode == 'psipp':
+        mean_up, mean_low, sigma_up = param_rm_Dpipi(ecms)
+        mean1 = RooRealVar('mean1', 'mean of gaussian', 1.86965, mean_low, mean_up)
+        sigma1 = RooRealVar('sigma1', 'sigma of gaussian', 0.001, 0, sigma_up)
+        gauss1 = RooGaussian('gauss1', 'gaussian', rm_Dpipi, mean1, sigma1)
+        mean2 = RooRealVar('mean2', 'mean of gaussian', 1.86965, mean_low, mean_up)
+        sigma2 = RooRealVar('sigma2', 'sigma of gaussian', 0.001, 0, sigma_up)
+        gauss2 = RooGaussian('gauss2', 'gaussian', rm_Dpipi, mean2, sigma2)
+        frac = RooRealVar('frac', 'fraction od two gaussian', 0.5, 0., 2.)
+        sigpdf = RooAddPdf('sigpdf', 'signal pdf', RooArgList(gauss1, gauss2), RooArgList(frac))
 
     # background
     a = RooRealVar('a', 'a', 0, -99, 99)
     b = RooRealVar('b', 'b', 0, -99, 99)
     c = RooRealVar('c', 'c', 0, -99, 99)
     d = RooRealVar('c', 'c', 0, -99, 99)
-    bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
-    if ecms == 4380:
-        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
+    bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
+    ndf = 6
+    if ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4260 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4360 or ecms == 4390 or ecms == 4470 or ecms == 4600:
+        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
+        ndf = 5
+    if ecms == 4290 or ecms == 4315 or ecms == 4340 or ecms == 4400:
+        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
+        ndf = 5
 
     # event number
-    num_low, num_up = num_rm_Dpipi(ecms)
-    nsig = RooRealVar('nsig', 'nsig', 100, num_low, num_up)
+    nsig = RooRealVar('nsig', 'nsig', 100, -500000, 500000)
     nbkg = RooRealVar('nbkg', 'nbkg', 80, 0, 500000)
 
     # fit model
     model = RooAddPdf('model', 'sigpdf + bkgpdf', RooArgList(sigpdf, bkgpdf), RooArgList(nsig, nbkg))
-    if (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4237 or ecms == 4245 or ecms == 4270 or ecms == 4280) and mode == 'data':
-        f_DDPIPI = TFile('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
-        t_DDPIPI = f_DDPIPI.Get('save')
-        cut = ''
-        h_DDPIPI = TH1F('h_DDPIPI', '', xbins, xmin, xmax)
-        t_DDPIPI.Project('h_DDPIPI', 'rm_Dpipi', cut)
-        hist_DDPIPI = RooDataHist('hist_DDPIPI', 'hist_DDPIPI', RooArgList(rm_Dpipi), h_DDPIPI)
-        pdf_DDPIPI = RooHistPdf('pdf_DDPIPI', 'pdf_DDPIPI', RooArgSet(rm_Dpipi), hist_DDPIPI, 2)
-        mean = RooRealVar('mean', 'mean', 0)
-        sigma = RooRealVar('sigma', 'sigma', 2.48272e-04)
-        gauss = RooGaussian('gauss', 'guass', rm_Dpipi, mean, sigma)
-        rm_Dpipi.setBins(xbins, 'cache')
-        sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_DDPIPI, gauss)
-        model = RooAddPdf('model', 'sigpdf + bkgpdf', RooArgList(sigpdf, bkgpdf), RooArgList(nsig, nbkg))
+    if mode == 'none_sig':
+        model = RooAddPdf('model', 'bkgpdf', RooArgList(bkgpdf), RooArgList(nbkg))
     results = model.fitTo(data, RooFit.Save())
+
 
     # plot results
     xframe = rm_Dpipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
     data.plotOn(xframe)
     model.plotOn(xframe)
-    if not ((ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4237 or ecms == 4245 or ecms == 4270 or ecms == 4280) and mode == 'data'):
-        model.plotOn(xframe, RooFit.Components('gauss1'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
-        model.plotOn(xframe, RooFit.Components('gauss2'), RooFit.LineColor(kYellow), RooFit.LineWidth(2), RooFit.LineStyle(1))
-    else:
-        model.plotOn(xframe, RooFit.Components('sigpdf'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
+    model.plotOn(xframe, RooFit.Components('sigpdf'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
     model.plotOn(xframe, RooFit.Components('bkgpdf'), RooFit.LineColor(kGreen), RooFit.LineWidth(2), RooFit.LineStyle(1))
     xtitle = 'RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})(GeV)'
     content = (xmax - xmin)/xbins * 1000
     ytitle = 'Events/%.1f MeV'%content
     set_xframe_style(xframe, xtitle, ytitle)
     xframe.Draw()
+
+    if not (mode == 'D1_2420' or mode == 'DDPIPI' or mode == 'psipp'):
+        fr = model.fitTo(data, RooFit.Extended(kTRUE), RooFit.Save(kTRUE))
+        curve = xframe.getObject(1)
+        histo = xframe.getObject(0)
+        pt_title = '#chi^{2}/ndf = ' +  str(round(curve.chiSquare(histo, ndf)*ndf, 2)) + '/' + str(ndf) + '=' + str(round(curve.chiSquare(histo, ndf), 2))
+        pt = TPaveText(0.6, 0.8, 0.85, 0.85, "BRNDC")
+        set_pavetext(pt)
+        pt.Draw()
+        pt.AddText(pt_title)
+        print 'chi2 vs ndf = ' + str(curve.chiSquare(histo, ndf))
 
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
@@ -192,7 +213,19 @@ def fit(path, ecms, mode, patch):
     f_sig.write(out)
     f_sig.close()
 
-    raw_input('enter anything to end...')
+    if mode == 'data':
+        path_param = './txts/param_'+ str(ecms) +'_' + patch + '.txt'
+        f_param = open(path_param, 'w')
+        param = str(ndf) + ' '
+        param += str(a.getVal()) + ' '
+        if ndf == 6:
+            param += str(b.getVal()) + ' '
+        param += str(mean.getVal()) + ' '
+        param += str(sigma.getVal()) + ' '
+        f_param.write(param)
+        f_param.close()
+
+    # raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]
@@ -203,15 +236,14 @@ def main():
     patch = args[2]
 
     path = []
-    if mode == 'data' or mode == 'none_sig' or mode == 'upper_limit':
+    shape_path = ''
+    if mode == 'data':
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
-    if mode == 'D1_2420':
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_raw_before.root')
+        shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/psipp_shape/shape_' + str(ecms) + '_mixed.root'
     if mode == 'psipp':
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sys_err/psipp_shape/sigMC_psipp_' + str(ecms) + '_raw_before.root')
-    if mode == 'DDPIPI':
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
-    fit(path, ecms, mode, patch)
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/' + str(mode) + '/' + str(ecms) + '/sys_err/psipp_shape/sigMC_' + str(mode) + '_' + str(ecms) + '_raw_before.root')
+        shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
+    fit(path, shape_path, ecms, mode, patch)
 
 if __name__ == '__main__':
     main()

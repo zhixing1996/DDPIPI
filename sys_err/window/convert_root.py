@@ -78,7 +78,7 @@ def main():
     path_in = []
     path_out = []
     mode = []
-    if ecms >= 4290:
+    if ecms > 4290:
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/sys_err/window/data_' + str(ecms) + '_after.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/sys_err/window/data_' + str(ecms) + '_sideband.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sys_err/window/sigMC_D1_2420_' + str(ecms) + '_after.root')
@@ -96,7 +96,7 @@ def main():
         mode.append('DDPIPI')
         convert(path_in, path_out, mode, ecms)
 
-    if ecms < 4290:
+    if ecms <= 4290:
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/sys_err/window/data_' + str(ecms) + '_after.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/sys_err/window/data_' + str(ecms) + '_sideband.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sys_err/window/sigMC_psipp_' + str(ecms) + '_after.root')

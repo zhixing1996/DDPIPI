@@ -22,7 +22,7 @@ do
         continue
     fi
     threshold=4290
-    if [[ $PARAM_0 -ge $threshold ]]; then
+    if [[ $PARAM_0 -gt $threshold ]]; then
         echo "Begininning of $PARAM_0!"
         cd $HOME/bes/DDPIPI/v0.2/sys_err/width
         python get_shape.py $PARAM_0 D1_2420_signal

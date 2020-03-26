@@ -84,7 +84,7 @@ def format(patch):
         out += '& ' + str(lum) + '& ' + str(Br*100) + '\%& ' + str(xs) + '\pm' + str(xs_err) + '&\\\\\n'
         f_xs.write(out)
 
-        if ecm >= 4290:
+        if ecm > 4290:
             if xserr_D1_2420 > 9999.:
                 xserr_D1_2420 = 0.
             out_D1_2420 = str(ecm/1000.) + ' ' + str(xs_D1_2420) + ' ' + str(xserr_D1_2420) + '\n'

@@ -481,7 +481,6 @@ def save_raw(f_in, cms, t, region):
             pD += pshower
         pPip = TLorentzVector(0,0,0,0)
         pPim = TLorentzVector(0,0,0,0)
-        count = 0;
         for iTrk1 in range(t_std.n_othertrks):
             if t_std.rawp4_otherMdcKaltrk[iTrk1*7+4] != 1:
                 continue

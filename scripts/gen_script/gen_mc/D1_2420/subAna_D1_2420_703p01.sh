@@ -23,7 +23,7 @@ do
     rm -rf sigMC_D1_2420_D_HELAMP_$PARAM_0*txt
     cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
     cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-    ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/dst sigMC D1_2420_D HELAMP D1_2420 $PARAM_0 10
+    ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/dst sigMC D1_2420_D HELAMP D1_2420 $PARAM_0 2
     cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
     rm -rf *boss*
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/rootfile/*root

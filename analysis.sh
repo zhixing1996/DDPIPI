@@ -432,12 +432,12 @@ case $option in
            mkdir jobs.out
            mkdir jobs.err
 
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_703p01.sh .
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_703p01 .
-           # echo "#!/bin/bash" > Data_Sub_703p01
-           # echo "./getInfoData_703p01.sh" >> Data_Sub_703p01
-           # chmod u+x Data_Sub_703p01
-           # hep_sub -g physics Data_Sub_703p01 -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_703p01.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_703p01 .
+           echo "#!/bin/bash" > Data_Sub_703p01
+           echo "./getInfoData_703p01.sh" >> Data_Sub_703p01
+           chmod u+x Data_Sub_703p01
+           hep_sub -g physics Data_Sub_703p01 -o jobs.out -e jobs.err
 
            # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/getInfoD1_2420_703p01.sh .
            # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420_Base_703p01 .

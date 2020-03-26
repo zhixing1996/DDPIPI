@@ -23,16 +23,8 @@ do
     fi
     cd $HOME/bes/DDPIPI/v0.2/sys_err/psipp_shape
     echo "Begininning of $PARAM_0!"
-    thresh=4290
-    if [ $PARAM_0 -ge $thresh ]; then
-        python fit_rm_Dpipi.py $PARAM_0 data $PATCH
-        python fit_rm_Dpipi.py $PARAM_0 D1_2420 $PATCH
-        python fit_rm_Dpipi.py $PARAM_0 psipp $PATCH
-        python fit_rm_Dpipi.py $PARAM_0 DDPIPI $PATCH
-    else 
-        python fit_rm_Dpipi.py $PARAM_0 data $PATCH
-        python fit_rm_Dpipi.py $PARAM_0 psipp $PATCH
-        python fit_rm_Dpipi.py $PARAM_0 DDPIPI $PATCH
-    fi
+    python fit_rm_Dpipi.py $PARAM_0 data $PATCH
+    python fit_rm_Dpipi_sideband.py $PARAM_0 $PATCH
+    python fit_rm_Dpipi.py $PARAM_0 psipp $PATCH
     echo "$PARAM_0 is done!"
 done

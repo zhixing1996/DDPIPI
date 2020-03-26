@@ -41,6 +41,7 @@ def set_graph_style(gr, xtitle, ytitle):
     gr.GetXaxis().SetTitleSize(0.04)
     gr.GetXaxis().SetTitleOffset(1.3)
     gr.GetXaxis().SetLabelOffset(0.01)
+    gr.GetXaxis().SetRangeUser(4.17, 4.70)
     gr.GetYaxis().SetTitleSize(0.04)
     gr.GetYaxis().SetTitleOffset(1.5)
     gr.GetYaxis().SetLabelOffset(0.01)
@@ -61,9 +62,10 @@ def set_canvas_style(mbc):
 
 def draw(mode, patch):
     if mode == 'DDPIPI' or mode == 'psipp' or mode == 'total':
-        N = 18 + 6 # 18: 703p01, 6: 705
+        N = 19 + 10 # 19: 703p01, 10: 705
     if mode == 'D1_2420':
-        N = 7 + 6 # 7: 703p01, 6: 705
+        N = 19 + 10 # 19: 703p01, 10: 705
+        # N = 8 + 9 # 8: 703p01, 9: 705
     ecms = array('f', N*[0])
     ecms_err = array('f', N*[0])
     xs = array('f', N*[0])

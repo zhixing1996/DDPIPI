@@ -169,16 +169,16 @@ def main():
     cms = TLorentzVector(0.011*ecms/1000., 0, 0, ecms/1000.)
     if mode == 'D1_2420_signal':
         path_in = '/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/rootfile/sigMC_D1_2420_'+str(ecms)+'.root'
-        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/window/shape_D1_2420_'+str(ecms)+'_signal.root'
+        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/window/SHAPE_D1_2420_'+str(ecms)+'_signal.root'
         shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins)
     if mode == 'D1_2420_sideband':
         path_in = '/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/rootfile/sigMC_D1_2420_'+str(ecms)+'.root'
-        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/window/shape_D1_2420_'+str(ecms)+'_sideband.root'
+        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/window/SHAPE_D1_2420_'+str(ecms)+'_sideband.root'
         shape_D1_2420_raw(path_in, path_out, ecms, cms, mode, xmin, xmax, xbins)
     if mode == 'D1_2420':
-        path_signal = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/window/shape_D1_2420_'+str(ecms)+'_signal.root'
-        path_sideband = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/window/shape_D1_2420_'+str(ecms)+'_sideband.root'
-        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/window/shape_D1_2420_'+str(ecms)+'.root'
+        path_signal = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/window/SHAPE_D1_2420_'+str(ecms)+'_signal.root'
+        path_sideband = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/window/SHAPE_D1_2420_'+str(ecms)+'_sideband.root'
+        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/window/SHAPE_D1_2420_'+str(ecms)+'.root'
         shape_D1_2420_hist(path_signal, path_sideband, path_out, xmin, xmax, xbins)
 
 if __name__ == '__main__':

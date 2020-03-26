@@ -29,7 +29,7 @@ NAME
     upper_limit.py
 
 SYNOPSIS
-    ./significance.py [ecms] [mode]
+    ./upper_limit.py [ecms] [mode] [patch]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -65,7 +65,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def upper_limit(step_size, path, FILE, ecms, mode, n_offset):
+def upper_limit(step_size, path, FILE, ecms, mode, n_offset, patch):
     try:
         f = open(path, 'r')
     except:
@@ -170,23 +170,23 @@ def upper_limit(step_size, path, FILE, ecms, mode, n_offset):
             Br = float(rs_xs[13])/100.
             if omega_D1_2420 == 0:
                 flag_D1_2420 = 0
-                eff_ISR_D1_2420 = 1
+                eff_ISR_VP_D1_2420 = 1
             else:
                 flag_D1_2420 = 1
-                eff_ISR_D1_2420 = eff_D1_2420*ISR_D1_2420/omega_D1_2420
+                eff_ISR_VP_D1_2420 = eff_D1_2420*ISR_D1_2420*omega_D1_2420*VP
             if omega_psipp == 0:
                 flag_psipp = 0
-                eff_ISR_psipp = 1
+                eff_ISR_VP_psipp = 1
             else:
                 flag_psipp = 1
-                eff_ISR_psipp = eff_psipp*ISR_psipp/omega_psipp
+                eff_ISR_VP_psipp = eff_psipp*ISR_psipp*omega_psipp*VP
             if omega_DDPIPI == 0:
                 flag_DDPIPI = 0
-                eff_ISR_DDPIPI = 1
+                eff_ISR_VP_DDPIPI = 1
             else:
                 flag_DDPIPI = 1
-                eff_ISR_DDPIPI = eff_DDPIPI*ISR_DDPIPI/omega_DDPIPI
-            xs = flag_psipp*n_upl/(2*eff_ISR_psipp*Br*lum*VP) + flag_DDPIPI*n_upl/(2*eff_ISR_DDPIPI*Br*lum*VP) + flag_D1_2420*n_upl/(2*eff_ISR_D1_2420*Br*lum*VP)
+                eff_ISR_VP_DDPIPI = eff_DDPIPI*ISR_DDPIPI*omega_DDPIPI*VP
+            xs = n_upl/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
 
         if not os.path.exists('./txts/'): 
             os.makedirs('./txts/')
@@ -196,26 +196,27 @@ def upper_limit(step_size, path, FILE, ecms, mode, n_offset):
         f_out.write(out)
         f_out.close()
 
-    raw_input('Enter anything to end...')
+    # raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]
-    if len(args)<2:
+    if len(args)<3:
         return usage()
     ecms = int(args[0])
     mode = args[1]
+    patch = args[2]
 
     path = './txts/upper_limit_likelihood_' + mode + '_' + str(ecms) + '.txt'
     if mode == 'X_3842':
         FILE = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/' + str(ecms) + '/sigMC_X_3842_' + str(ecms) + '_after.root'
         step_size = 0.1
     if mode == 'total':
-        if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530):
+        if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530):
             print str(ecms) + ' MeV\'s sigma is larger than 5 sigma, no need to calculate upper limit!'
             sys.exit()
-        FILE = './txts/xs_info_' + str(ecms) + '_read_round4.txt'
+        FILE = './txts/xs_info_' + str(ecms) + '_read_' + patch + '.txt'
         n_offset, step_size, temp = upl_rm_Dpipi(ecms)
-    upper_limit(step_size, path, FILE, ecms, mode, n_offset)
+    upper_limit(step_size, path, FILE, ecms, mode, n_offset, patch)
 
 if __name__ == '__main__':
     main()

@@ -23,7 +23,7 @@ do
     rm -rf sigMC_psipp_PI_PI_VSS_$PARAM_0*txt
     cp -rf $HOME/bes/DDPIPI/v0.2/sys_err/psipp_shape/make_mc.py ./
     cp -rf $HOME/bes/DDPIPI/v0.2/sys_err/psipp_shape/tools.py ./
-    ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/dst sigMC psipp_PI_PI VSS psipp $PARAM_0 10
+    ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/dst sigMC psipp_PI_PI VSS psipp $PARAM_0 2
     cp -rf $HOME/bes/DDPIPI/v0.2/sys_err/psipp_shape/scripts/mc/psipp/subAna.sh ./
     rm -rf *boss*
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp/rootfile/*root

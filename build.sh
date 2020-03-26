@@ -45,4 +45,10 @@ case $option in
        gmake
        ;;
 
+    4) echo "Building DDecay analyzer: DDecayAlg-00-00-04..."
+       rm -rf Analysis/Physics/DDecayAlg/DDecayAlg-00-00-04/x86_*/
+       cd Analysis/Physics/DDecayAlg/DDecayAlg-00-00-04/cmt
+       cmt config
+       gmake
+       ;;
 esac

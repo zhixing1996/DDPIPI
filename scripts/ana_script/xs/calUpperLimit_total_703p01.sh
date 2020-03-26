@@ -24,6 +24,6 @@ do
     cd $HOME/bes/DDPIPI/v0.2/python
     echo "Begininning of $PARAM_0!"
     python fit_rm_Dpipi.py $PARAM_0 upper_limit $PATCH
-    python upper_limit.py $PARAM_0 total
+    python upper_limit.py $PARAM_0 total $PATCH
     echo "$PARAM_0 is done!"
 done

@@ -26,10 +26,20 @@ do
     cd $HOME/bes/DDPIPI/v0.2/python
     rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/*signal*.root
     rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/*raw*.root
-    echo "Begininning of $PARAM_0!"
-    python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/rootfile/sigMC_psipp_$PARAM_0\.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sigMC_psipp_$PARAM_0\_signal.root $PARAM_3 STDDmiss_signal
+    ROOT_PATH=/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0
+    FILE_PATH=/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/rootfile
+    echo "Begining of $PARAM_0!"
+
+    python get_info.py $FILE_PATH/sigMC_psipp_$PARAM_0\.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_signal.root $PARAM_3 STDDmiss_signal
     echo "STDDmiss of $PARAM_0 is done!"
-    python get_info.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/rootfile/sigMC_psipp_$PARAM_0\.root /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sigMC_psipp_$PARAM_0\_raw.root $PARAM_3 raw_signal
+
+    python get_info.py $FILE_PATH/sigMC_psipp_$PARAM_0\.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw.root $PARAM_3 raw_signal
     echo "STD of $PARAM_0 is done!"
+
+    rm -rf $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandlow.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandup.root
+    python get_info.py $FILE_PATH/sigMC_psipp_$PARAM_0\.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandlow.root $PARAM_3 raw_sidebandlow
+    python get_info.py $FILE_PATH/sigMC_psipp_$PARAM_0\.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandup.root $PARAM_3 raw_sidebandup
+    echo "STD sideband of $PARAM_0 is done!"
+
     echo "$PARAM_0 is done!"
 done

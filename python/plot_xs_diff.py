@@ -32,11 +32,12 @@ DATE
     December 2019
 \n''')
 
-def set_legend(legend, gr1, gr2, gr3, gr4):
+# def set_legend(legend, gr1, gr2, gr3, gr4):
+def set_legend(legend, gr1, gr2, gr3):
     legend.AddEntry(gr1, 'ini. #rightarrow 1th', 'lp')
     legend.AddEntry(gr2, '1th  #rightarrow 2nd', 'lp')
     legend.AddEntry(gr3, '2nd  #rightarrow 3rd', 'lp')
-    legend.AddEntry(gr4, '3rd  #rightarrow 4th', 'lp')
+    # legend.AddEntry(gr4, '3rd  #rightarrow 4th', 'lp')
     legend.SetBorderSize(0)
     legend.SetFillColor(0)
     legend.SetLineColor(0)
@@ -103,13 +104,13 @@ def main(mode):
     grerr_0_to_1 = cal_diff('round0', 'round1', mode)
     grerr_1_to_2 = cal_diff('round1', 'round2', mode)
     grerr_2_to_3 = cal_diff('round2', 'round3', mode)
-    grerr_3_to_4 = cal_diff('round3', 'round4', mode)
+    # grerr_3_to_4 = cal_diff('round3', 'round4', mode)
     xtitle = 'E_{cms}(GeV)'
     ytitle = '#Delta#sigma^{dress}/#sigma^{dress}(pb)'
     set_graph_style(grerr_0_to_1, xtitle, ytitle)
     set_graph_style(grerr_1_to_2, xtitle, ytitle)
     set_graph_style(grerr_2_to_3, xtitle, ytitle)
-    set_graph_style(grerr_3_to_4, xtitle, ytitle)
+    # set_graph_style(grerr_3_to_4, xtitle, ytitle)
     grerr_0_to_1.SetMarkerColor(2)
     grerr_0_to_1.SetLineColor(2)
     grerr_0_to_1.SetMarkerStyle(20)
@@ -119,36 +120,37 @@ def main(mode):
     grerr_2_to_3.SetMarkerColor(3)
     grerr_2_to_3.SetLineColor(3)
     grerr_2_to_3.SetMarkerStyle(20)
-    grerr_3_to_4.SetMarkerColor(4)
-    grerr_3_to_4.SetLineColor(4)
-    grerr_3_to_4.SetMarkerStyle(20)
+    # grerr_3_to_4.SetMarkerColor(4)
+    # grerr_3_to_4.SetLineColor(4)
+    # grerr_3_to_4.SetMarkerStyle(20)
     if mode == 'total':
-        grerr_0_to_1.GetYaxis().SetRangeUser(-0.8, 0.4)
+        grerr_0_to_1.GetYaxis().SetRangeUser(-1.5, 3.0)
         grerr_0_to_1.Draw('ALP')
         grerr_1_to_2.Draw('LP')
         grerr_2_to_3.Draw('LP')
-        grerr_3_to_4.Draw('LP')
+        # grerr_3_to_4.Draw('LP')
     if mode == 'D1_2420':
         grerr_0_to_1.GetYaxis().SetRangeUser(-1.9, 1.4)
         grerr_0_to_1.Draw('ALP')
         grerr_1_to_2.Draw('LP')
         grerr_2_to_3.Draw('LP')
-        grerr_3_to_4.Draw('LP')
+        # grerr_3_to_4.Draw('LP')
     if mode == 'psipp':
         grerr_0_to_1.GetYaxis().SetRangeUser(-2.2, 1.8)
         grerr_0_to_1.Draw('ALP')
         grerr_1_to_2.Draw('LP')
         grerr_2_to_3.Draw('LP')
-        grerr_3_to_4.Draw('LP')
+        # grerr_3_to_4.Draw('LP')
     if mode == 'DDPIPI':
         grerr_0_to_1.GetYaxis().SetRangeUser(-5.1, 2.2)
         grerr_0_to_1.Draw('ALP')
         grerr_1_to_2.Draw('LP')
         grerr_2_to_3.Draw('LP')
-        grerr_3_to_4.Draw('LP')
+        # grerr_3_to_4.Draw('LP')
 
     legend = TLegend(0.7, 0.8, 0.8, 0.88)
-    set_legend(legend, grerr_0_to_1, grerr_1_to_2, grerr_2_to_3, grerr_3_to_4)
+    # set_legend(legend, grerr_0_to_1, grerr_1_to_2, grerr_2_to_3, grerr_3_to_4)
+    set_legend(legend, grerr_0_to_1, grerr_1_to_2, grerr_2_to_3)
     legend.Draw()
 
     if not os.path.exists('./figs/'):

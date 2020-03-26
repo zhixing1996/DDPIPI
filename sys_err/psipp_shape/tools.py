@@ -29,6 +29,26 @@ def search(allfile, root, target):
                 allfile.append(path)
     return allfile
 
+def group_files_by_num(name_list, num_total):
+    groups = []
+    group = []
+    num_sum = 0
+
+    for name in name_list:
+        if int(num_sum) < int(num_total):
+            group.append(name)
+            num_sum = num_sum + 1
+        else:
+            groups.append(group)
+            group = []
+            num_sum = 0
+            group.append(name)
+            num_sum = num_sum + 1
+
+        if name == name_list[-1]:
+            groups.append(group)    
+    return groups
+
 # width for M(Kpipi)
 def width(ecms):
     WIDTH = 999.
@@ -46,19 +66,13 @@ def width(ecms):
 def window(ecms):
     WINDOW = 999.
     if int(ecms) == 4360:
-        WINDOW = 0.018
+        WINDOW = 0.017
     if int(ecms) == 4420:
-        WINDOW = 0.018
+        WINDOW = 0.017
     if int(ecms) == 4600:
-        WINDOW = 0.018
+        WINDOW = 0.017
     if not (int(ecms) == 4360 or int(ecms) == 4420 or int(ecms) == 4600):
-        WINDOW = 0.018
-        if (int(ecms) == 4340 or int(ecms) == 4440):
-            WINDOW = 0.014
-        if (int(ecms) == 4380 or int(ecms) == 4390):
-            WINDOW = 0.013
-        if (int(ecms) == 4400):
-            WINDOW = 0.015
+        WINDOW = 0.017
     return WINDOW
 
 # chi2 of kinematic fit(missing method)
@@ -75,34 +89,6 @@ def chi2_kf(ecms):
     return CHI2_KF
 
 # parameter of rm(Dpipi) fit
-def num_rm_Dpipi(ecms):
-    if ecms == 4190:
-        NUM_LOW = -50000
-        NUM_UP = 50000
-    elif ecms == 4200:
-        NUM_LOW = -50000
-        NUM_UP = 50000
-    elif ecms == 4210:
-        NUM_LOW = -50000
-        NUM_UP = 50000
-    elif ecms == 4237:
-        NUM_LOW = -50000
-        NUM_UP = 50000
-    elif ecms == 4245:
-        NUM_LOW = -50000
-        NUM_UP = 50000
-    elif ecms == 4270:
-        NUM_LOW = -50000
-        NUM_UP = 50000
-    elif ecms == 4280:
-        NUM_LOW = -50000
-        NUM_UP = 50000
-    else:
-        NUM_LOW = 0
-        NUM_UP = 500000
-    return NUM_LOW, NUM_UP
-
-# parameter of rm(Dpipi) fit
 def param_rm_Dpipi(ecms):
     MEAN_UP = 999.
     MEAN_LOW = 999.
@@ -116,12 +102,12 @@ def param_rm_Dpipi(ecms):
         MEAN_LOW = 1.867
         SIGMA_UP = 0.01
     elif int(ecms == 4210):
-        MEAN_UP = 1.872
+        MEAN_UP = 1.873
         MEAN_LOW = 1.867
         SIGMA_UP = 0.01
     elif int(ecms == 4220):
-        MEAN_UP = 1.872
-        MEAN_LOW = 1.865
+        MEAN_UP = 1.875
+        MEAN_LOW = 1.867
         SIGMA_UP = 0.01
     elif int(ecms == 4230):
         MEAN_UP = 1.872
@@ -160,33 +146,33 @@ def param_rm_Dpipi(ecms):
         MEAN_LOW = 1.865
         SIGMA_UP = 0.01
     elif int(ecms == 4315):
-        MEAN_UP = 1.872
+        MEAN_UP = 1.875
         MEAN_LOW = 1.867
         SIGMA_UP = 0.01
     elif int(ecms == 4340):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
-        SIGMA_UP = 0.01
+        SIGMA_UP = 0.008
     elif int(ecms == 4360):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
         SIGMA_UP = 0.008
     elif int(ecms == 4380):
         MEAN_UP = 1.872
-        MEAN_LOW = 1.868
-        SIGMA_UP = 0.01
+        MEAN_LOW = 1.867
+        SIGMA_UP = 0.015
     elif int(ecms == 4390):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
-        SIGMA_UP = 0.01
+        SIGMA_UP = 0.008
     elif int(ecms == 4400):
         MEAN_UP = 1.872
-        MEAN_LOW = 1.865
+        MEAN_LOW = 1.867
         SIGMA_UP = 0.01
     elif int(ecms == 4420):
-        MEAN_UP = 1.872
+        MEAN_UP = 1.875
         MEAN_LOW = 1.867
-        SIGMA_UP = 0.012
+        SIGMA_UP = 0.01
     elif int(ecms == 4440):
         MEAN_UP = 1.872
         MEAN_LOW = 1.865
@@ -198,7 +184,7 @@ def param_rm_Dpipi(ecms):
     elif int(ecms == 4530):
         MEAN_UP = 1.872
         MEAN_LOW = 1.867
-        SIGMA_UP = 0.01
+        SIGMA_UP = 0.008
     elif int(ecms == 4600):
         MEAN_UP = 1.875
         MEAN_LOW = 1.865
@@ -311,15 +297,15 @@ def num_rm_D(ecms):
 # luminosity
 def luminosity(ecms):
     if int(ecms) == 4190:
-        LUM = 570.03
+        LUM = 526.7 + 43.33
     if int(ecms) == 4200:
         LUM = 526.0
     if int(ecms) == 4210:
-        LUM = 572.05
+        LUM = 517.1 + 54.95
     if int(ecms) == 4220:
-        LUM = 569.2
+        LUM = 514.6 + 54.60
     if int(ecms) == 4230:
-        LUM = 1100.94
+        LUM = 44.54 + 1056.4
     if int(ecms) == 4237:
         LUM = 530.3
     if int(ecms) == 4245:
@@ -415,8 +401,8 @@ def param_rm_D(ecms):
         BINS = 300
     if int(ecms) == 4310:
         LOW = 2.21
-        UP = 2.44
-        BINS = 350
+        UP = 2.49
+        BINS = 400
     if int(ecms) == 4315:
         LOW = 2.25
         UP = 2.4425
@@ -454,9 +440,9 @@ def param_rm_D(ecms):
         UP = 2.60
         BINS = 400
     if int(ecms) == 4530:
-        LOW = 2.3
-        UP = 2.6
-        BINS = 500
+        LOW = 2.2
+        UP = 2.66
+        BINS = 400
     if int(ecms) == 4600:
         LOW = 2.22
         UP = 2.732

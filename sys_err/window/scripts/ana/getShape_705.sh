@@ -14,7 +14,7 @@ do
     PARAM_4=${arr[4]} # luminosity
     PARAM_5=${arr[5]} # dst path
     threshold=4290
-    if [[ $PARAM_0 -ge $threshold ]]; then
+    if [[ $PARAM_0 -gt $threshold ]]; then
         echo "Begininning of $PARAM_0!"
         cd $HOME/bes/DDPIPI/v0.2/sys_err/window
         python get_shape.py $PARAM_0 D1_2420_signal

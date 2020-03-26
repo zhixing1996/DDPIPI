@@ -110,13 +110,11 @@ def fit(mode, patch):
 
     xs_path = 'txts/xs_' + mode + '_' + patch + '.txt'
     if mode == 'D1_2420':
-        xs_func, xs_pars = '[0] * TMath::Gaus(x, [1], [2]) + [3] * TMath::Gaus(x, [4], [5]) + [6] * x + [7]', array('d', [6., 4.375, 0.1, 0.1, 4.53, 0.1, 0.1, 0.1])
+        xs_func, xs_pars = '[0] * TMath::Gaus(x, [1], [2]) + [3] * TMath::Gaus(x, [4], [5]) + [6] * x + [7]', array('d', [6., 4.36, 0.1, 0.1, 4.53, 0.1, 0.1, 0.1])
     if mode == 'psipp':
         xs_func, xs_pars = '[0] * TMath::Gaus(x, [1], [2]) + [3] * x * x + [4] * x + [5]', array('d', [0.1, 4.42, 0.1, 0.03, 0.1, 0.1, 0.1])
-        # xs_func, xs_pars = '[0] * TMath::Gaus(x, [1], [2]) + [3] * x', array('d', [0.1, 4.42, 0.1, 0.03, 0.1])
     if mode == 'DDPIPI':
-        xs_func, xs_pars = '[0] * TMath::Gaus(x, [1], [2]) + [3] * TMath::BreitWigner(x, [4], [5]) + [6]', array('d', [0.1, 4.4, 0.05, 0.1, 4.4, 0.05, 0.1])
-        # xs_func, xs_pars = '[0] * TMath::Exp([1] * x) + [2] * x + [3]', array('d', [0.3, 0.3, 0.3, 0.3])
+        xs_func, xs_pars = '[0] * TMath::Gaus(x, [1], [2]) + [3] * TMath::BreitWigner(x, [4], [5]) + [6]', array('d', [0.1, 4.31, 0.05, 0.1, 4.45, 0.05, 0.1])
     if mode == 'total':
         xs_func, xs_pars = '[0] * TMath::BreitWigner(x, [1], [2]) + [3] * TMath::BreitWigner(x, [4], [5]) + [6] * TMath::Gaus(x, [7], [8])', array('d', [0.1, 4.39, 0.096, 0.1, 4.455, 1.1, 0.1, 4.415, 2.2])
 
@@ -141,12 +139,12 @@ def fit(mode, patch):
     f_out = open(path_out, 'w')
 
     if mode == 'D1_2420':
-        xs_f = TF1('xs_f', xs_func, 4.280, 4.610)
+        xs_f = TF1('xs_f', xs_func, 4.290, 4.700)
         xs_f.SetParameters(xs_pars)
         xs_f.SetParName(0, 'par[0] of 1st Gauss\t')
         xs_f.SetParLimits(0, 5., 50.)
         xs_f.SetParName(1, 'mean of 1st Gauss\t')
-        xs_f.SetParLimits(1, 4.37, 4.38)
+        xs_f.SetParLimits(1, 4.35, 4.38)
         xs_f.SetParName(2, 'width of 1st Gauss\t')
         xs_f.SetParLimits(2, 0.1 - 0.1, 0.1 + 0.05)
         xs_f.SetParName(3, 'par[0] of 2nd Gauss\t')
@@ -154,7 +152,7 @@ def fit(mode, patch):
         xs_f.SetParName(4, 'mean of 2nd Gauss\t')
         xs_f.SetParLimits(4, 4.5, 4.55)
         xs_f.SetParName(5, 'width of 2nd Gauss\t')
-        xs_f.SetParLimits(5, 0.1 - 0.05, 0.1 + 0.05)
+        xs_f.SetParLimits(5, 0.1 - 0.1, 0.1 + 0.1)
         xs_f.SetParName(6, 'par[0] of pol\t')
         xs_f.SetParLimits(6, -10., 10.)
         xs_f.SetParName(7, 'par[1] of pol\t')
@@ -164,24 +162,22 @@ def fit(mode, patch):
         set_graph_style(grerr, xtitle, ytitle)
         grerr.Fit(xs_f)
         grerr.Draw('ap')
-        for i in xrange(int((4.610 - 4.280)/0.001)):
-            ecm = 4.280 + i * 0.001
+        for i in xrange(int((4.700 - 4.290)/0.001)):
+            ecm = 4.290 + (i + 1) * 0.001
             xs_ecm = xs_f.Eval(ecm)
-            if xs_ecm < 0:
-                xs_ecm = 0.01
             out = str(ecm) + ' ' + str(xs_ecm) + '\n'
             f_out.write(out)
         f_out.close()
 
     if mode == 'psipp':
-        xs_f = TF1('xs_f', xs_func, 4.180, 4.610)
+        xs_f = TF1('xs_f', xs_func, 4.180, 4.700)
         xs_f.SetParameters(xs_pars)
         xs_f.SetParName(0, 'par[0] of 1st Gauss\t')
         xs_f.SetParLimits(0, -99., 99.)
         xs_f.SetParName(1, 'mean of 1st Gauss\t')
         xs_f.SetParLimits(1, 4.415, 4.425)
         xs_f.SetParName(2, 'width of 1st Gauss\t')
-        xs_f.SetParLimits(2, 0.1 - 0.1, 0.14)
+        xs_f.SetParLimits(2, 0.1 - 0.1, 0.04)
         xs_f.SetParName(3, 'par[0] of pol\t')
         xs_f.SetParLimits(3, -10., 10.)
         xs_f.SetParName(4, 'par[1] of pol\t')
@@ -193,50 +189,38 @@ def fit(mode, patch):
         set_graph_style(grerr, xtitle, ytitle)
         grerr.Fit(xs_f)
         grerr.Draw('ap')
-        for i in xrange(int((4.610 - 4.180)/0.001)):
-            ecm = 4.180 + i * 0.001
+        for i in xrange(int((4.700 - 4.180)/0.001)):
+            ecm = 4.18 + (i + 1) * 0.001
             xs_ecm = xs_f.Eval(ecm)
-            if xs_ecm < 0:
-                xs_ecm = 0.01
             out = str(ecm) + ' ' + str(xs_ecm) + '\n'
             f_out.write(out)
         f_out.close()
 
     if mode == 'DDPIPI':
-        xs_f = TF1('xs_f', xs_func, 4.180, 4.610)
+        xs_f = TF1('xs_f', xs_func, 4.180, 4.700)
         xs_f.SetParameters(xs_pars)
         xs_f.SetParName(0, 'par[0] of 1st Gauss\t')
-        xs_f.SetParLimits(0, -10., 10.)
+        xs_f.SetParLimits(0, 2., 10.)
         xs_f.SetParName(1, 'mean of 1st Gauss\t')
-        xs_f.SetParLimits(1, 4.36, 4.44)
+        xs_f.SetParLimits(1, 4.31, 4.31)
         xs_f.SetParName(2, 'width of 1st Gauss\t')
-        xs_f.SetParLimits(2, 0.1 - 0.1, 0.1 + 0.05)
-        xs_f.SetParName(3, 'par[0] of 1st B-W\t')
-        xs_f.SetParLimits(3, -10., 10.)
-        xs_f.SetParName(4, 'mean of 1st B-W\t')
-        xs_f.SetParLimits(4, 4.36, 4.44)
-        xs_f.SetParName(5, 'width of 1st B-W\t')
-        xs_f.SetParLimits(5, 0.1 - 0.05, 0.1 + 0.05)
+        xs_f.SetParLimits(2, 0., 0.2)
+        xs_f.SetParName(3, 'par[0] of 2nd Gauss\t')
+        xs_f.SetParLimits(3, 0., 10.)
+        xs_f.SetParName(4, 'mean of 2nd Gauss\t')
+        xs_f.SetParLimits(4, 4.44, 4.48)
+        xs_f.SetParName(5, 'width of 2nd Gauss\t')
+        xs_f.SetParLimits(5, 0., 0.15)
         xs_f.SetParName(6, 'par[0] of pol\t')
         xs_f.SetParLimits(6, -10., 10.)
-        # xs_f.SetParName(0, 'par[0] of Exp\t')
-        # xs_f.SetParLimits(0, -10., 10.)
-        # xs_f.SetParName(1, 'par[1] of Exp\t')
-        # xs_f.SetParLimits(1, -10., 10.)
-        # xs_f.SetParName(2, 'par[0] of pol\t')
-        # xs_f.SetParLimits(2, -40., 20.)
-        # xs_f.SetParName(3, 'par[1] of pol\t')
-        # xs_f.SetParLimits(3, -40., 20.)
         xtitle = '#sqrt{s}(GeV)'
         ytitle = '#sigma^{dress}(e^{+}e^{-}#rightarrowD^{+}D^{-}#pi^{+}#pi^{-})(PHSP)(pb)'
         set_graph_style(grerr, xtitle, ytitle)
         grerr.Fit(xs_f)
         grerr.Draw('ap')
-        for i in xrange(int((4.610 - 4.180)/0.001)):
-            ecm = 4.180 + i * 0.001
+        for i in xrange(int((4.700 - 4.180)/0.001)):
+            ecm = 4.18 + (i + 1) * 0.001
             xs_ecm = xs_f.Eval(ecm)
-            if xs_ecm < 0:
-                xs_ecm = 0.01
             out = str(ecm) + ' ' + str(xs_ecm) + '\n'
             f_out.write(out)
         f_out.close()
