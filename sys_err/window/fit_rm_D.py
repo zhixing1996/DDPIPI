@@ -257,23 +257,26 @@ def fit(ecms, patch, path, shape, root):
         os.makedirs('./txts/')
     path_out = './txts/fit_rm_D_' + str(ecms) + '_' + patch + '.txt'
     f_out = open(path_out, 'w')
-    line = '& @' + str(ecms) + 'MeV&\n' 
+    line = '@' + str(ecms) + 'MeV\n' 
     if ecms > 4290:
-        line += str(int(n_D1_2420)) + ' \pm '+ str(int(n2420.getError()))  + '&\n' 
+        line += str(int(n_D1_2420)) + ' $\pm$ '+ str(int(n2420.getError()))  + '\n' 
     else:
-        line += str(0) + ' \pm ' + str(0) + '\&\n'
-    line += str(int(npsipp.getVal())) + ' \pm ' + str(int(npsipp.getError())) + '&\n' 
-    line += str(int(nDDPIPI.getVal())) + ' \pm ' + str(int(nDDPIPI.getError())) + '\&\n'
-    line += str(round(eff_D1_2420*100, 2)) + '\%&\n' 
-    line += str(round(eff_psipp*100, 2)) + '\%&\n' 
-    line += str(round(eff_DDPIPI*100, 2)) + '\%&\n' 
+        line += str(0) + ' $\pm$ ' + str(0) + '\n'
+    line += str(int(npsipp.getVal())) + ' $\pm$ ' + str(int(npsipp.getError())) + '\n' 
+    line += str(int(nDDPIPI.getVal())) + ' $\pm$ ' + str(int(nDDPIPI.getError())) + '\n'
+    line += str(round(eff_D1_2420*100, 2)) + '\%\n' 
+    line += str(round(eff_psipp*100, 2)) + '\%\n' 
+    line += str(round(eff_DDPIPI*100, 2)) + '\%\n' 
+    line += str(round(ISR_D1_2420, 2)) + '\n' 
+    line += str(round(ISR_psipp, 2)) + '\n' 
+    line += str(round(ISR_DDPIPI, 2)) + '\n' 
     line += str(round(VP_psipp, 2)) + '\n'
-    line += str(lum) + '&\n' 
-    line += str(Br*100) + '\%&\n' 
-    line += str(round(xs_D1_2420, 2)) + ' \pm ' + str(round(xserr_D1_2420, 2)) + '&\n' 
-    line += str(round(xs_psipp, 2)) + ' \pm ' + str(round(xserr_psipp, 2)) + '&\n' 
-    line += str(round(xs_DDPIPI, 2)) + '\pm ' + str(round(xserr_DDPIPI, 2)) + '&\n'
-    line += str(round(xs_D1_2420 + xs_psipp + xs_DDPIPI, 2)) + '\pm ' + str(round((xserr_D1_2420**2 + xserr_psipp**2 + xserr_DDPIPI**2)**0.5, 2)) + '&\n'
+    line += str(Br*100) + '\%\n' 
+    line += str(lum) + '\n' 
+    line += str(round(xs_D1_2420, 2)) + ' $\pm$ ' + str(round(xserr_D1_2420, 2)) + '\n' 
+    line += str(round(xs_psipp, 2)) + ' $\pm$ ' + str(round(xserr_psipp, 2)) + '\n' 
+    line += str(round(xs_DDPIPI, 2)) + ' $\pm$ ' + str(round(xserr_DDPIPI, 2)) + '\n'
+    line += str(round(xs_D1_2420 + xs_psipp + xs_DDPIPI, 2)) + ' $\pm$ ' + str(round((xserr_D1_2420**2 + xserr_psipp**2 + xserr_DDPIPI**2)**0.5, 2)) + '\n'
     f_out.write(line)
     f_out.close()
 

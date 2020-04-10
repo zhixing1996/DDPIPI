@@ -133,7 +133,7 @@ def fit(path, shape_path, ecms, mode, patch):
     h_signal = RooDataHist('h_shape', 'h_shape', RooArgList(rm_Dpipi), h_shape)
     pdf_signal = RooHistPdf('pdf_signal', 'pdf_signal', RooArgSet(rm_Dpipi), h_signal, 0)
     mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.003, 0.003)
-    if ecms == 4290 or ecms == 4315 or ecms == 4340 or ecms == 4380 or ecms == 4390 or ecms == 4400 or ecms == 4420 or ecms == 4440 or ecms == 4600:
+    if ecms == 4290 or ecms == 4340 or ecms == 4380 or ecms == 4390 or ecms == 4400 or ecms == 4420 or ecms == 4440 or ecms == 4600:
         mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.005, 0.005)
     if ecms == 4237:
         mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.007, 0.007)

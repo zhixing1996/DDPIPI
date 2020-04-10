@@ -29,7 +29,7 @@ NAME
     opt_chi2_kf.py
 
 SYNOPSIS
-    ./opt_chi2_kf.py [ecms]
+    ./opt_chi2_kf.py [ecms] [mode]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -70,7 +70,7 @@ def set_histo_style(h, xtitle, ytitle):
     h.SetMarkerSize(0.65)
     h.SetLineColor(1)
 
-def cal_significance(t1, t2, t3, t4, N, step, ecms):
+def cal_significance(t1, t2, t3, t4, N, step, ecms, xtitle):
     ymax = 0
     NEntry = 0
     B1_list = []
@@ -131,7 +131,6 @@ def cal_significance(t1, t2, t3, t4, N, step, ecms):
             NEntry = i
     xmin = step
     xmax = N*step
-    xtitle = '#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})'
     ytitle = '#frac{S}{#sqrt{S+B}}'
     h_FOM = TH2F('h_FOM', 'FOM', N, xmin, xmax, N, 0, ymax + 5)
     set_histo_style(h_FOM, xtitle, ytitle)
@@ -146,7 +145,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top):
+def plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top, xtitle, mode):
     try:
         f_incMC1 = TFile(path[0])
         f_incMC2 = TFile(path[1])
@@ -173,7 +172,7 @@ def plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
     xbins = 100
     step = 100/xbins
 
-    h_FOM, ientry = cal_significance(t_incMC1, t_incMC2, t_sigMC1, t_sigMC2, xbins, step, ecms)
+    h_FOM, ientry = cal_significance(t_incMC1, t_incMC2, t_sigMC1, t_sigMC2, xbins, step, ecms, xtitle)
     h_FOM.Draw()
     
     if not os.path.exists('./figs/'):
@@ -188,58 +187,101 @@ def plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
     pt.Draw()
     pt.AddText(pt_title)
 
-    range = 'chi2 of kinematic fit of D^{+}D_{miss}#pi^{+}#pi^{+}: ' + str(arrow_right)
+    range = 'chi2 of kinematic fit: ' + str(arrow_right)
     print range
 
     mbc.Update()
-    mbc.SaveAs('./figs/opt_chi2_kf_'+str(ecms)+'.pdf')
+    mbc.SaveAs('./figs/opt_chi2_kf_'+str(ecms)+'_'+mode+'.pdf')
 
     raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]
-    if len(args)<1:
+    if len(args)<2:
         return usage()
     ecms = args[0]
+    mode = args[1]
 
     path = []
     if int(ecms) == 4360:
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_signal.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_signal.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_signal.root')
-        pt_title = '(a)'
-        arrow_left = 20
-        arrow_right = 20
-        arrow_bottom = 0
-        arrow_top = 15
-        plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
+        if mode == 'STD':
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_raw.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_raw.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw.root')
+            pt_title = '(a)'
+            arrow_left = 20
+            arrow_right = 20
+            arrow_bottom = 0
+            arrow_top = 15
+            xtitle = '#chi^{2}(K^{-}#pi^{+}#pi^{+})'
+            plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top, xtitle, mode)
+        if mode == 'STDDmiss':
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_signal.root')
+            pt_title = '(a)'
+            arrow_left = 20
+            arrow_right = 20
+            arrow_bottom = 0
+            arrow_top = 14
+            xtitle = '#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})'
+            plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top, xtitle, mode)
 
     path = []
     if int(ecms) == 4420:
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_signal.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_signal.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_signal.root')
-        pt_title = '(b)'
-        arrow_left = 15
-        arrow_right = 15
-        arrow_bottom = 0
-        arrow_top = 25
-        plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
+        if mode == 'STD':
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_raw.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_raw.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw.root')
+            pt_title = '(b)'
+            arrow_left = 20
+            arrow_right = 20
+            arrow_bottom = 0
+            arrow_top = 25
+            xtitle = '#chi^{2}(K^{-}#pi^{+}#pi^{+})'
+            plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top, xtitle, mode)
+        if mode == 'STDDmiss':
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_signal.root')
+            pt_title = '(b)'
+            arrow_left = 15
+            arrow_right = 15
+            arrow_bottom = 0
+            arrow_top = 25
+            xtitle = '#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})'
+            plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top, xtitle, mode)
 
     path = []
     if int(ecms) == 4600:
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_signal.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_signal.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root')
-        pt_title = '(c)'
-        arrow_left = 15
-        arrow_right = 15
-        arrow_bottom = 0
-        arrow_top = 9
-        plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
+        if mode == 'STD':
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_raw.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_raw.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw.root')
+            pt_title = '(c)'
+            arrow_left = 10
+            arrow_right = 10
+            arrow_bottom = 0
+            arrow_top = 10
+            xtitle = '#chi^{2}(K^{-}#pi^{+}#pi^{+})'
+            plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top, xtitle, mode)
+        if mode == 'STDDmiss':
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root')
+            path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_signal.root')
+            pt_title = '(c)'
+            arrow_left = 15
+            arrow_right = 15
+            arrow_bottom = 0
+            arrow_top = 9
+            xtitle = '#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})'
+            plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top, xtitle, mode)
 
 if __name__ == '__main__':
     main()

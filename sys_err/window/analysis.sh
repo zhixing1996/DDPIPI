@@ -18,8 +18,9 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.2.1" "Get shapes -- get D1_2420 shapes"
     printf "\n\t%-9s  %-40s\n" "0.2.2" "Get samples -- convert root files"
     printf "\n\t%-9s  %-40s\n" "0.2.3" "Fit distributions -- fit recoiling mass of D + Dmiss"
-    printf "\n\t%-9s  %-40s\n" "0.2.4" "Fit distributions -- fit recoiling mass of Dpipi"
-    printf "\n\t%-9s  %-40s\n" "0.2.5" "Calculate numbers -- calculate cross section of DDpipi and systerm uncertainties"
+    printf "\n\t%-9s  %-40s\n" "0.2.4" "Get shapes -- mix MC shapes"
+    printf "\n\t%-9s  %-40s\n" "0.2.5" "Fit distributions -- fit recoiling mass of Dpipi"
+    printf "\n\t%-9s  %-40s\n" "0.2.6" "Calculate numbers -- calculate cross section of DDpipi and systerm uncertainties"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -87,13 +88,19 @@ case $option in
            ./fitRMD_705.sh round4
            ;;
 
-    0.2.4) echo "Fit distributions -- fitting recoiling mass of Dpipi..."
+    0.2.4) echo "Get shapes -- mixing MC shapes..."
+           cd scripts/mc
+           ./mixMC_703p01.sh round4
+           ./mixMC_705.sh round4
+           ;;
+
+    0.2.5) echo "Fit distributions -- fitting recoiling mass of Dpipi..."
            cd scripts/ana
            ./fitRMDpipi_703p01.sh round4
            ./fitRMDpipi_705.sh round4
            ;;
 
-    0.2.5) echo "Calculate numbers -- calculating cross section of DDpipi and systerm uncertainties..."
+    0.2.6) echo "Calculate numbers -- calculating cross section of DDpipi and systerm uncertainties..."
            cd scripts/ana
            ./calXS_703p01.sh round4
            ./calXS_705.sh round4

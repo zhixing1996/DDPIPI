@@ -656,7 +656,6 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
 
     // loop over the dtag list
     for (; dtag_iter != dtag_iter_end; dtag_iter++) {
-        // std::cout << "Recording..., run: " << runNo << ", evt: " << evtNo << std::endl;
         // whether to use pid
         Ncut0++;
         if (m_pid) {
@@ -1621,10 +1620,10 @@ int DDecayAlg::MatchMC(HepLorentzVector &p4, std::string MODE) {
             if (MODE == "D_tag" && (fabs(pid_mom) != 411 && (pid_mom != 310 && fabs(pid_grandmom) != 411)) && (pid_mom != 111 && fabs(pid_grandmom) != 411)) {
                 return 0;
             }
-            if (MODE == "pi_solo" && (pid_mom == 9020443 || pid_mom == 9030443 || pid_mom == 90022 || pid_mom == 80022)) {
+            if (MODE == "pi_solo" && (pid_mom == 9020443 || pid_mom == 9030443 || pid_mom == 90022 || pid_mom == 80022 || fabs(pid_mom) == 10413)) {
                 return 1;
             } 
-            if (MODE == "pi_solo" && (pid_mom != 9020443 || pid_mom != 9030443 || pid_mom != 90022 || pid_mom != 80022)) {
+            if (MODE == "pi_solo" && (pid_mom != 9020443 || pid_mom != 9030443 || pid_mom != 90022 || pid_mom != 80022 || fabs(pid_mom) != 10413)) {
                 return 0;
             }
         }
@@ -1778,6 +1777,7 @@ double DDecayAlg::ECMS(int runNo) {
     else if (runNo >= 31281 && runNo <= 31325) return 4.3874;
     else if (runNo >= 36245 && runNo <= 36393) return 4.4671;
     else if (runNo >= 36398 && runNo <= 36588) return 4.5271;
+    else if (runNo >= 36603 && runNo <= 36699) return 4.5745;
     else if (runNo >= 59163 && runNo <= 59573) return 4.12848;
     else if (runNo >= 59574 && runNo <= 59896) return 4.15744;
     else if (runNo >= 59902 && runNo <= 60363) return 4.28788;
@@ -1860,7 +1860,11 @@ double DDecayAlg::ECMS(int runNo) {
     else if (runNo >= 35041 && runNo <= 35059) return 4.5700;
     else if (runNo >= 35060 && runNo <= 35081) return 4.5800;
     else if (runNo >= 35099 && runNo <= 35116) return 4.5900;
-    else return -999;
+    else if (runNo >= 63075 && runNo <= 63515) return 4.6260;
+    else if (runNo >= 63516 && runNo <= 63715) return 4.6400;
+    else if (runNo >= 63718 && runNo <= 63852) return 4.6600;
+    else if (runNo >= 63867 && runNo <= 63888) return 4.6800;
+    else return 999.;
 }
 
 void DDecayAlg::recordVariables() {

@@ -24,7 +24,7 @@ NAME
     plot_chi2_kf.py
 
 SYNOPSIS
-    ./plot_chi2_kf.py [ecms]
+    ./plot_chi2_kf.py [ecms] [mode]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -79,7 +79,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, sigMC_path, leg_title, ecms, ymax):
+def plot(data_path, sigMC_path, leg_title, ecms, ymax, xtitle, mode):
     try:
         f_data = TFile(data_path)
         f_sigMC = TFile(sigMC_path)
@@ -88,7 +88,7 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax):
         entries_data = t_data.GetEntries()
         entries_sigMC = t_sigMC.GetEntries()
         logging.info('data entries :'+str(entries_data))
-        logging.info('signal MC(X(3842)) entries :'+str(entries_sigMC))
+        logging.info('signal MC(D1_2420) entries :'+str(entries_sigMC))
     except:
         logging.error(data_path+' or '+sigMC_path+' is invalid!')
         sys.exit()
@@ -99,7 +99,6 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax):
     xmax = 100
     xbins = 100
     ytitle = 'Events'
-    xtitle = "#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})"
     h_data = TH1F('data', 'data', xbins, xmin, xmax)
     h_sigMC = TH1F('sigMC', 'sigMC', xbins, xmin, xmax)
 
@@ -109,7 +108,6 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax):
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
     
-    # h_sigMC.Scale(h_data.GetEntries()/h_sigMC.GetEntries()/2)
     h_sigMC.Scale(scale_factor(ecms, 'D1_2420'))
     h_data.Draw('ep')
     h_sigMC.Draw('same')
@@ -118,34 +116,62 @@ def plot(data_path, sigMC_path, leg_title, ecms, ymax):
     set_legend(legend, h_data, h_sigMC, leg_title)
     legend.Draw()
 
-    mbc.SaveAs('./figs/chi2_kf_'+str(ecms)+'.pdf')
+    mbc.SaveAs('./figs/chi2_kf_'+str(ecms)+'_'+mode+'.pdf')
 
     raw_input('Enter anything to end...')
 
 if __name__ == '__main__':
     args = sys.argv[1:]
-    if len(args)<1:
+    if len(args)<2:
         usage()
         sys.exit()
     ecms = args[0]
+    mode = args[1]
 
     if int(ecms) == 4360:
-        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
-        sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root'
-        leg_title = '(a)'
-        ymax = 250
-        plot(data_path, sigMC_path, leg_title, ecms, ymax)
+        if mode == 'STD':
+            data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw.root'
+            sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw.root'
+            leg_title = '(a)'
+            ymax = 500
+            xtitle = "#chi^{2}(K^{-}#pi^{+}#pi^{+})"
+            plot(data_path, sigMC_path, leg_title, ecms, ymax, xtitle, mode)
+        if mode == 'STDDmiss':
+            data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_signal.root'
+            sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_signal.root'
+            leg_title = '(a)'
+            ymax = 250
+            xtitle = "#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})"
+            plot(data_path, sigMC_path, leg_title, ecms, ymax, xtitle, mode)
 
     if int(ecms) == 4420:
-        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
-        sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root'
-        leg_title = '(b)'
-        ymax = 700
-        plot(data_path, sigMC_path, leg_title, ecms, ymax)
+        if mode == 'STD':
+            data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw.root'
+            sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw.root'
+            leg_title = '(b)'
+            ymax = 1000
+            xtitle = "#chi^{2}(K^{-}#pi^{+}#pi^{+})"
+            plot(data_path, sigMC_path, leg_title, ecms, ymax, xtitle, mode)
+        if mode == 'STDDmiss':
+            data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_signal.root'
+            sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_signal.root'
+            leg_title = '(b)'
+            ymax = 700
+            xtitle = "#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})"
+            plot(data_path, sigMC_path, leg_title, ecms, ymax, xtitle, mode)
 
     if int(ecms) == 4600:
-        data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
-        sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root'
-        leg_title = '(c)'
-        ymax = 400
-        plot(data_path, sigMC_path, leg_title, ecms, ymax)
+        if mode == 'STD':
+            data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw.root'
+            sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw.root'
+            leg_title = '(c)'
+            ymax = 700
+            xtitle = "#chi^{2}(K^{-}#pi^{+}#pi^{+})"
+            plot(data_path, sigMC_path, leg_title, ecms, ymax, xtitle, mode)
+        if mode == 'STDDmiss':
+            data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_signal.root'
+            sigMC_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_signal.root'
+            leg_title = '(c)'
+            ymax = 400
+            xtitle = "#chi^{2}(D^{+}D_{missing}#pi^{+}_{0}#pi^{-}_{0})"
+            plot(data_path, sigMC_path, leg_title, ecms, ymax, xtitle, mode)

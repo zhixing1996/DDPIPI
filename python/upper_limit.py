@@ -211,7 +211,7 @@ def main():
         FILE = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/X_3842/' + str(ecms) + '/sigMC_X_3842_' + str(ecms) + '_after.root'
         step_size = 0.1
     if mode == 'total':
-        if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530):
+        if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530 or ecms == 4575):
             print str(ecms) + ' MeV\'s sigma is larger than 5 sigma, no need to calculate upper limit!'
             sys.exit()
         FILE = './txts/xs_info_' + str(ecms) + '_read_' + patch + '.txt'

@@ -47,7 +47,7 @@ def format(patch):
     path_xs_total = './txts/xs_total_' + patch + '.txt'
     f_xs_total = open(path_xs_total, 'w')
 
-    ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4600]
+    ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600]
     for ecm in ecms:
         xs_info_path = './txts/xs_info_' + str(ecm) + '_read_' + patch + '.txt'
         f_xs_info = open(xs_info_path, 'r')

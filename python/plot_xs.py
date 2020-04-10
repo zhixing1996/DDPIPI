@@ -62,10 +62,10 @@ def set_canvas_style(mbc):
 
 def draw(mode, patch):
     if mode == 'DDPIPI' or mode == 'psipp' or mode == 'total':
-        N = 19 + 10 # 19: 703p01, 10: 705
+        N = 19 + 6 # 19: 703p01, 6: 705
     if mode == 'D1_2420':
-        N = 19 + 10 # 19: 703p01, 10: 705
-        # N = 8 + 9 # 8: 703p01, 9: 705
+        N = 19 + 6 # 19: 703p01, 6: 705
+    sys_err = array('f', N*[0])
     ecms = array('f', N*[0])
     ecms_err = array('f', N*[0])
     xs = array('f', N*[0])
@@ -75,8 +75,24 @@ def draw(mode, patch):
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
 
+    if mode == 'total':
+        path_sys_err = '../sys_err/sum/txts/sys_err_total.txt'
+        f_sys_err = open(path_sys_err, 'r')
+        sys_err_lines = f_sys_err.readlines()
+        count = 0
+        for sys_err_line in sys_err_lines:
+            sys_err_rs = sys_err_line.rstrip('\n')
+            sys_err_rs = filter(None, sys_err_rs.split('\t'))
+            sys_err[count] = float(sys_err_rs[1])/100.
+            count += 1
+
     f = open(path, 'r')
     lines = f.readlines()
+    if mode == 'total':
+        if not os.path.exists('./txts/'):
+            os.makedirs('./txts/')
+        path_out = './txts/xs_total_err_' + patch + '.txt'
+        f_out = open(path_out, 'w')
     count = 0
     for line in lines:
         rs = line.rstrip('\n')
@@ -85,7 +101,12 @@ def draw(mode, patch):
         ecms_err[count] = 0.0022
         xs[count] = float(rs[1])
         xs_err[count] = float(rs[2])
+        if mode == 'total':
+            xs_err[count] = sqrt(pow(float(rs[2]), 2) + pow(float(rs[1])*sys_err[count], 2))
+            out = str(round(ecms[count], 2)) + '\t' + str(round(xs[count], 2)) + ' $\pm$ ' + str(round(float(rs[2]), 2)) + ' $\pm$ ' + str(round(float(rs[1])*sys_err[count], 2)) + '\n'
+            f_out.write(out)
         count += 1
+    f_out.close()
 
     grerr = TGraphErrors(N, ecms, xs, ecms_err, xs_err)
     xtitle = 'E_{cms}(GeV)'

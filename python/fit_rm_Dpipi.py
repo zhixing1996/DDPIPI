@@ -137,6 +137,8 @@ def fit(path, shape_path, ecms, mode, patch):
         mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.005, 0.005)
     if ecms == 4237:
         mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.007, 0.007)
+    if ecms == 4260 or ecms == 4237:
+        mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.002, 0.002)
     sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, 0.003)
     if ecms == 4245 or ecms == 4620:
         sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, 0.005)
@@ -170,7 +172,7 @@ def fit(path, shape_path, ecms, mode, patch):
         ndf = 5
 
     if mode == 'upper_limit':
-        if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530):
+        if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530 or ecms == 4575):
             print str(ecms) + ' MeV\'s sigma is larger than 5 sigma, no need to calculate upper limit!'
             sys.exit()
 

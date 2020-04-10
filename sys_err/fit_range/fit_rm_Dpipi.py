@@ -123,7 +123,7 @@ def fit(path, shape_path, ecms, mode, patch):
 
     xmin = 1.75 + 0.04
     xmax = 1.95
-    xbins = 100
+    xbins = 80
     rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
     data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
 
@@ -135,7 +135,7 @@ def fit(path, shape_path, ecms, mode, patch):
     mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.003, 0.003)
     if ecms == 4290 or ecms == 4315 or ecms == 4340 or ecms == 4380 or ecms == 4390 or ecms == 4400 or ecms == 4420 or ecms == 4440 or ecms == 4600:
         mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.005, 0.005)
-    if ecms == 4237:
+    if ecms == 42377:
         mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.007, 0.007)
     sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, 0.003)
     if ecms == 4245:
