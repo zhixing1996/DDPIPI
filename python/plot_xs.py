@@ -62,9 +62,11 @@ def set_canvas_style(mbc):
 
 def draw(mode, patch):
     if mode == 'DDPIPI' or mode == 'psipp' or mode == 'total':
-        N = 19 + 6 # 19: 703p01, 6: 705
+        N = 19 + 6 + 5 - 5 # 19: 703p01, 6: 705, 4: 705 above 4600
+        # N = 19 + 6 + 5 # 19: 703p01, 6: 705, 4: 705 above 4600
     if mode == 'D1_2420':
-        N = 19 + 6 # 19: 703p01, 6: 705
+        N = 19 + 6 + 5 - 5 # 19: 703p01, 6: 705, 4: 705 above 4600
+        # N = 19 + 6 + 5 # 19: 703p01, 6: 705, 4: 705 above 4600
     sys_err = array('f', N*[0])
     ecms = array('f', N*[0])
     ecms_err = array('f', N*[0])
@@ -102,11 +104,11 @@ def draw(mode, patch):
         xs[count] = float(rs[1])
         xs_err[count] = float(rs[2])
         if mode == 'total':
-            xs_err[count] = sqrt(pow(float(rs[2]), 2) + pow(float(rs[1])*sys_err[count], 2))
-            out = str(round(ecms[count], 2)) + '\t' + str(round(xs[count], 2)) + ' $\pm$ ' + str(round(float(rs[2]), 2)) + ' $\pm$ ' + str(round(float(rs[1])*sys_err[count], 2)) + '\n'
+            out = str(round(ecms[count], 2)) + '\t' + str(round(xs[count], 2)) + ' $\pm$ ' + str(fabs(round(float(rs[2]), 2))) + ' $\pm$ ' + str(fabs(round(float(rs[1])*sys_err[count], 2))) + '\n'
             f_out.write(out)
         count += 1
-    f_out.close()
+    if mode == 'total':
+        f_out.close()
 
     grerr = TGraphErrors(N, ecms, xs, ecms_err, xs_err)
     xtitle = 'E_{cms}(GeV)'
@@ -119,7 +121,7 @@ def draw(mode, patch):
     if mode == 'total':
         ytitle = '#sigma(e^{+}e^{-}#rightarrowD^{+}D^{-}#pi^{+}#pi^{-})(pb)'
     set_graph_style(grerr, xtitle, ytitle)
-    grerr.Draw('ALP')
+    grerr.Draw('AP')
 
     mbc.Update()
 

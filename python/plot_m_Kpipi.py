@@ -9,7 +9,7 @@ __created__ = "[2019-11-06 Tue 09:14]"
 
 import ROOT
 from ROOT import TCanvas, gStyle, TTree, THStack
-from ROOT import TFile, TH1F, TLegend, TArrow
+from ROOT import TFile, TH1F, TLegend, TArrow, TPaveText
 import sys, os
 import logging
 from math import *
@@ -32,6 +32,12 @@ AUTHOR
 DATE
     November 2019
 \n''')
+
+def set_pavetext(pt):
+    pt.SetFillStyle(0)
+    pt.SetBorderSize(0)
+    pt.SetTextAlign(10)
+    pt.SetTextSize(0.06)
 
 def rawm_D_fill(t, h):
     for ientry in xrange(t.GetEntries()):
@@ -64,7 +70,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(data_path, leg_title, ecms, xmin, xmax, xbins):
+def plot(data_path, pt_title, ecms, xmin, xmax, xbins):
     try:
         f_data = TFile(data_path)
         t_data = f_data.Get('save')
@@ -89,6 +95,11 @@ def plot(data_path, leg_title, ecms, xmin, xmax, xbins):
     
     h_data.Draw('E1')
 
+    pt = TPaveText(0.7, 0.8, 0.85, 0.85, "BRNDC")
+    set_pavetext(pt)
+    pt.Draw()
+    pt.AddText(pt_title)
+
     mbc.SaveAs('./figs/m_Kpipi_'+str(ecms)+'.pdf')
 
     raw_input('Enter anything to end...')
@@ -102,24 +113,24 @@ if __name__ == '__main__':
 
     if int(ecms) == 4360:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4360/data_4360_raw.root'
-        leg_title = '(a)'
+        pt_title = '(a)'
         xmin = 1.84
         xmax = 1.89
         xbins = 25
-        plot(data_path, leg_title, ecms, xmin, xmax, xbins)
+        plot(data_path, pt_title, ecms, xmin, xmax, xbins)
 
     if int(ecms) == 4420:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4420/data_4420_raw.root'
-        leg_title = '(b)'
+        pt_title = '(b)'
         xmin = 1.84
         xmax = 1.89
         xbins = 25
-        plot(data_path, leg_title, ecms, xmin, xmax, xbins)
+        plot(data_path, pt_title, ecms, xmin, xmax, xbins)
 
     if int(ecms) == 4600:
         data_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/data/4600/data_4600_raw.root'
-        leg_title = '(c)'
+        pt_title = '(c)'
         xmin = 1.84
         xmax = 1.89
         xbins = 25
-        plot(data_path, leg_title, ecms, xmin, xmax, xbins)
+        plot(data_path, pt_title, ecms, xmin, xmax, xbins)

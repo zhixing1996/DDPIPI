@@ -57,8 +57,7 @@ def cal_diff():
     LIST.sort(key = lambda x:x[0], reverse = False)
     for ecm, sys_errs in LIST:
         sys_err = reduce(lambda x, y: x+y, (map(lambda x: x ** 2, sys_errs)))
-        print ecm, sys_errs, sqrt(sys_err)
-        out = str(ecm) + '\t' + str(round(sqrt(sys_err), 2)) + '\n'
+        out = str(ecm) + '\t' + str(round(sqrt(sys_err), 1)) + '\n'
         f_sys_err.write(out)
     f_sys_err.close()
 

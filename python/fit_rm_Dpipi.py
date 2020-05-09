@@ -163,13 +163,13 @@ def fit(path, shape_path, ecms, mode, patch):
     c = RooRealVar('c', 'c', 0, -99, 99)
     d = RooRealVar('c', 'c', 0, -99, 99)
     bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
-    ndf = 6
+    n_free = 6
     if ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4260 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4360 or ecms == 4390 or ecms == 4470 or ecms == 4600:
         bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
-        ndf = 5
+        n_free = 5
     if ecms == 4290 or ecms == 4315 or ecms == 4340 or ecms == 4400 or ecms == 4575 or ecms == 4620 or ecms == 4640 or ecms == 4660 or ecms == 4680:
         bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
-        ndf = 5
+        n_free = 5
 
     if mode == 'upper_limit':
         if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530 or ecms == 4575):
@@ -199,16 +199,40 @@ def fit(path, shape_path, ecms, mode, patch):
         set_xframe_style(xframe, xtitle, ytitle)
         xframe.Draw()
 
-        if not (mode == 'D1_2420' or mode == 'DDPIPI' or mode == 'psipp' or mode == 'none_sig'):
+        if not (mode == 'D1_2420' or mode == 'DDPIPI' or mode == 'psipp' or mode == 'none_sig' or mode == 'MC'):
             fr = model.fitTo(data, RooFit.Extended(kTRUE), RooFit.Save(kTRUE))
             curve = xframe.getObject(1)
             histo = xframe.getObject(0)
-            pt_title = '#chi^{2}/ndf = ' +  str(round(curve.chiSquare(histo, ndf)*ndf, 2)) + '/' + str(ndf) + '=' + str(round(curve.chiSquare(histo, ndf), 2))
-            pt = TPaveText(0.6, 0.8, 0.85, 0.85, "BRNDC")
+            chi2_tot, nbin, ytot, avg, eyl, eyh = 0, 0, 0, 0, 0, 0
+            x = array('d', 999*[0])
+            y = array('d', 999*[0])
+            for i in xrange(xbins):
+                histo.GetPoint(i, x, y)
+                exl = histo.GetEXlow()[i]
+                exh = histo.GetEXhigh()[i]
+                avg += curve.average(x[0] - exl, x[0] + exh)
+                ytot += y[0]
+                eyl += histo.GetEYlow()[i]  * histo.GetEYlow()[i]
+                eyh += histo.GetEYhigh()[i] * histo.GetEYhigh()[i]
+                if ytot >= 7:
+                    if ytot > avg:
+                        pull = (ytot - avg)/sqrt(eyl)
+                    else:
+                        pull = (ytot - avg)/sqrt(eyh)
+                    chi2_tot += pull * pull
+                    nbin += 1
+                    ytot, avg, eyl, eyh = 0, 0, 0, 0
+            pt = TPaveText(0.65, 0.65, 0.75, 0.8, "BRNDC")
             set_pavetext(pt)
             pt.Draw()
+            pt_title = str(ecms) + ' MeV: '
             pt.AddText(pt_title)
-            print 'chi2 vs ndf = ' + str(curve.chiSquare(histo, ndf))
+            n_param = results.floatParsFinal().getSize()
+            pt_title = '#chi^{2}/ndf = '
+            pt.AddText(pt_title)
+            pt_title = str(round(chi2_tot, 2)) + '/' + str(nbin - n_param -1) + '=' + str(round(chi2_tot/(nbin - n_param -1), 2))
+            pt.AddText(pt_title)
+            print 'chi2 vs ndf = ' + str(round(chi2_tot/(nbin - n_param -1), 2))
 
         if not os.path.exists('./figs/'):
             os.makedirs('./figs/')
@@ -222,16 +246,43 @@ def fit(path, shape_path, ecms, mode, patch):
         f_sig.write(out)
         f_sig.close()
         if mode == 'data':
+            path_sig_tot = './txts/' + mode + '_signal_events_total_' + patch + '.txt'
+            f_sig_tot = open(path_sig_tot, 'a')
+            out_tot = str(ecms) + '\t' + str(int(nsig.getVal())) + '\t' + str(int(nsig.getError())) + '\n'
+            f_sig_tot.write(out_tot)
+            f_sig_tot.close()
+        if mode == 'data':
             path_param = './txts/param_'+ str(ecms) +'_' + patch + '.txt'
             f_param = open(path_param, 'w')
-            param = str(ndf) + ' '
+            param = str(n_free) + ' '
             param += str(a.getVal()) + ' '
-            if ndf == 6:
+            if n_free == 6:
                 param += str(b.getVal()) + ' '
             param += str(mean.getVal()) + ' '
             param += str(sigma.getVal()) + ' '
             f_param.write(param)
             f_param.close()
+
+        if mode == 'data' or mode == 'MC':
+            signal_low = 1.86965 - window(ecms)/2.
+            signal_up = 1.86965 + window(ecms)/2.
+            rm_Dpipi.setRange('srange', signal_low, signal_up)
+            rm_Dpipi.setRange('allrange', xmin, xmax)
+            nsrange = sigpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('srange'))
+            nallrange = sigpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('allrange'))
+            n_signal = nsrange.getVal()/nallrange.getVal() * (nsig.getVal())
+            n_all = nsig.getVal()
+            n_signal_err = nsrange.getVal()/nallrange.getVal() * (nsig.getError())
+            n_all_err = nsig.getError()
+            factor = n_signal/n_all
+            factor_err = sqrt(n_signal_err**2/n_signal**2 + n_all_err**2/n_all**2)
+            print 'factor = n(signal) / n(all) = ' + str(round(factor, 4)) + '+/-' + str(round(factor_err, 4))
+            path_factor = './txts/factor_rm_Dpipi_' + str(ecms) + '_' + mode + '_' + patch + '.txt'
+            f_factor = open(path_factor, 'w')
+            out = str(round(factor, 4)) + ' ' + str(round(factor_err, 4)) + '\n'
+            f_factor.write(out)
+            f_factor.close()
+
         if mode == 'data' or mode == 'none_sig':
             path_out = './txts/significance_likelihood_total_' + str(ecms) + '.txt'
             f_out = open(path_out, 'a')
@@ -276,6 +327,9 @@ def main():
     shape_path = ''
     if mode == 'data' or mode == 'none_sig' or mode == 'upper_limit':
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
+        shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
+    if mode == 'MC':
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sigMC_mixed_window_' + str(ecms) + '.root')
         shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
     if mode == 'sideband':
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_sideband_before.root')

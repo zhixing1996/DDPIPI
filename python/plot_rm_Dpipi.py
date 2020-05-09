@@ -168,7 +168,11 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, mode, ymax
     hs.Draw('same')
     h_data.Draw('sameE1')
 
-    legend = TLegend(0.55, 0.7, 0.8, 0.85)
+    if mode == 'before':
+        legend = TLegend(0.5, 0.6, 0.8, 0.85)
+    if mode == 'signal':
+        legend = TLegend(0.2, 0.6, 0.5, 0.85)
+        leg_title = str(ecms) + ' MeV'
     set_legend(legend, h_data, h_incMC1, h_incMC2, h_sigMC1, h_sigMC2, leg_title)
     legend.Draw()
 

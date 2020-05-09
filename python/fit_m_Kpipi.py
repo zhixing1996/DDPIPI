@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-Fit to invariant mass of pipi
+Fit to invariant mass of Kpipi
 """
 
 __author__ = "Maoqiang JING <jingmq@ihep.ac.cn>"
 __copyright__ = "Copyright (c) Maoqiang JING"
-__created__ = "[2019-11-26 Tue 15:41]"
+__created__ = "[2020-04-17 Fri 21:09]"
 
 import math
 from array import array
@@ -56,23 +56,17 @@ gStyle.SetPadTickY(0)
 def usage():
     sys.stdout.write('''
 NAME
-    fit_m_pipi.py
+    fit_m_Kpipi.py
 
 SYNOPSIS
-    ./fit_m_pipi.py [ecms]
+    ./fit_m_Kpipi.py [ecms] [mode] [patch]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
 
 DATE
-    November 2019
+    April 2020
 \n''')
-
-def set_legend(legend, title):
-    legend.SetHeader(title)
-    legend.SetBorderSize(0)
-    legend.SetFillColor(0)
-    legend.SetLineColor(0)
 
 def set_xframe_style(xframe, xtitle, ytitle):
     xframe.GetXaxis().SetTitle(xtitle)
@@ -85,13 +79,13 @@ def set_xframe_style(xframe, xtitle, ytitle):
     xframe.GetYaxis().SetNdivisions(504)
     xframe.GetYaxis().SetTitleSize(0.06)
     xframe.GetYaxis().SetLabelSize(0.06)
-    xframe.GetYaxis().SetTitleOffset(1.0)
+    xframe.GetYaxis().SetTitleOffset(1.1)
     xframe.GetYaxis().SetLabelOffset(0.008)
     xframe.GetYaxis().SetTitle(ytitle)
     xframe.GetYaxis().CenterTitle()
 
 def set_pad_style(pad):
-    pad.SetLeftMargin(0.15)
+    pad.SetLeftMargin(0.35)
     pad.SetRightMargin(0.15)
     pad.SetTopMargin(0.1)
     pad.SetBottomMargin(0.15)
@@ -105,14 +99,14 @@ def set_canvas_style(mbc):
     mbc.SetBottomMargin(0.15)
     mbc.SetGrid()
 
-def fit(path, ecms, leg_title):
+def fit(path, ecms, mode, patch):
     try:
         f_data = TFile(path[0])
         t_data = f_data.Get('save')
         entries_data = t_data.GetEntries()
-        logging.info('data entries :'+str(entries_data))
+        logging.info('Entries :'+str(entries_data))
     except:
-        logging.error('File paths are invalid!')
+        logging.error(path[0] + ' is invalid!')
 
     mbc = TCanvas('mbc', 'mbc', 1000, 700)
     set_canvas_style(mbc)
@@ -121,74 +115,89 @@ def fit(path, ecms, leg_title):
     set_pad_style(pad)
     pad.Draw()
 
-    xmin = 0.48
-    xmax = 0.52
-    xbins = 40
-    m_pipi = RooRealVar('m_pipi', 'm_pipi', xmin, xmax)
-    data = RooDataSet('data', 'dataset', t_data, RooArgSet(m_pipi))
+    xmin = 1.82
+    xmax = 1.92
+    xbins = 50
+    m_Kpipi = RooRealVar('rawm_D', 'rawm_D', xmin, xmax)
+    data = RooDataSet('data', 'dataset', t_data, RooArgSet(m_Kpipi))
 
     # signal
-    mean = RooRealVar('mean', 'mean of gaussian', 0.497, 0.49, 0.51)
-    sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, 0.2)
-    gauss = RooGaussian('gauss', 'gaussian', m_pipi, mean, sigma)
+    mean_up, mean_low, sigma_up = param_m_Kpipi(ecms)
+    mean = RooRealVar('mean', 'mean of gaussian', 1.86965, mean_low, mean_up)
+    sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up)
+    gauss = RooGaussian('gauss', 'gaussian', m_Kpipi, mean, sigma)
 
     # background
     a = RooRealVar('a', 'a', 0, -99, 99)
     b = RooRealVar('b', 'b', 0, -99, 99)
     c = RooRealVar('c', 'c', 0, -99, 99)
-    bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', m_pipi, RooArgList(a, b))
+    d = RooRealVar('c', 'c', 0, -99, 99)
+    bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', m_Kpipi, RooArgList(a))
 
     # event number
-    nsig = RooRealVar('nsig', 'nsig', 500, 0, 100000)
-    nbkg = RooRealVar('nbkg', 'nbkg', 1000, 0, 100000)
+    nsig = RooRealVar('nsig', 'nsig', 100, -5000000, 5000000)
+    nbkg = RooRealVar('nbkg', 'nbkg', 80, 0, 5000000)
 
     # fit model
-    model = RooAddPdf('model', 'gauss+bkgpdf', RooArgList(gauss, bkgpdf), RooArgList(nsig, nbkg))
-    model.fitTo(data)
+    model = RooAddPdf('model', 'gauss + bkgpdf', RooArgList(gauss, bkgpdf), RooArgList(nsig, nbkg))
+    results = model.fitTo(data, RooFit.Save())
 
     # plot results
-    xframe = m_pipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
+    xframe = m_Kpipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
     data.plotOn(xframe)
     model.plotOn(xframe)
     model.plotOn(xframe, RooFit.Components('gauss'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
     model.plotOn(xframe, RooFit.Components('bkgpdf'), RooFit.LineColor(kGreen), RooFit.LineWidth(2), RooFit.LineStyle(1))
-    xtitle = 'M(#pi^{+}_{0}#pi^{-}_{0})(GeV)'
+    xtitle = 'M(K^{-}#pi^{+}#pi^{+})(GeV)'
     content = (xmax - xmin)/xbins * 1000
     ytitle = 'Events/%.1f MeV'%content
     set_xframe_style(xframe, xtitle, ytitle)
     xframe.Draw()
-    range = 'Mass Region: [' + str(mean.getVal() - 3*sigma.getVal()) + ', ' + str(mean.getVal() + 3*sigma.getVal()) + ']'
-    print range
 
-    legend = TLegend(0.7, 0.7, 0.8, 0.8)
-    set_legend(legend, leg_title)
-    legend.Draw()
+    signal_low = 1.86965 - width(ecms)/2.
+    signal_up = 1.86965 + width(ecms)/2.
+    m_Kpipi.setRange('srange', signal_low, signal_up)
+    m_Kpipi.setRange('allrange', xmin, xmax)
+    nsrange = gauss.createIntegral(RooArgSet(m_Kpipi), RooFit.NormSet(RooArgSet(m_Kpipi)), RooFit.Range('srange'))
+    nallrange = gauss.createIntegral(RooArgSet(m_Kpipi), RooFit.NormSet(RooArgSet(m_Kpipi)), RooFit.Range('allrange'))
+    n_signal = nsrange.getVal()/nallrange.getVal() * (nsig.getVal())
+    n_all = nsig.getVal()
+    n_signal_err = nsrange.getVal()/nallrange.getVal() * (nsig.getError())
+    n_all_err = nsig.getError()
+
+    factor = n_signal/n_all
+    factor_err = sqrt(n_signal_err**2/n_signal**2 + n_all_err**2/n_all**2)
+    print 'factor = n(signal) / n(all) = ' + str(round(factor, 4)) + '+/-' + str(round(factor_err, 4))
 
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
+    mbc.SaveAs('./figs/fit_m_Kpipi_' + str(ecms) + '_' + mode + '.pdf')
 
-    mbc.SaveAs('./figs/fit_m_pipi_'+str(ecms)+'.pdf')
+    if not os.path.exists('./txts/'):
+        os.makedirs('./txts/')
+    path_factor = './txts/factor_m_Kpipi_' + str(ecms) + '_' + mode + '_' + patch + '.txt'
+    f_factor = open(path_factor, 'w')
+    out = str(round(factor, 4)) + ' ' + str(round(factor_err, 4)) + '\n'
+    f_factor.write(out)
+    f_factor.close()
 
-    raw_input('Enter anything to end...')
+    # raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]
-    if len(args)<1:
+    if len(args)<3:
         return usage()
     ecms = int(args[0])
+    mode = args[1]
+    patch = args[2]
 
     path = []
-    path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_before.root')
-    leg_title = ''
-    if ecms == 4360:
-        leg_title = '(a)'
-    elif ecms == 4420:
-        leg_title = '(b)'
-    elif ecms == 4600:
-        leg_title = '(c)'
-    else:
-        leg_title = str(ecms) + ' MeV'
-    fit(path, ecms, leg_title)
+    if mode == 'data':
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw.root')
+        fit(path, ecms, mode, patch)
+    if mode == 'MC':
+        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sigMC_mixed_width_' + str(ecms) + '.root')
+        fit(path, ecms, mode, patch)
 
 if __name__ == '__main__':
     main()

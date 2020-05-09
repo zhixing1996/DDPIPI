@@ -42,7 +42,7 @@ def set_pavetext(pt):
     pt.SetFillStyle(0)
     pt.SetBorderSize(0)
     pt.SetTextAlign(10)
-    pt.SetTextSize(0.04)
+    pt.SetTextSize(0.06)
 
 def set_arrow(arrow):
     arrow.SetLineWidth(0)
@@ -56,10 +56,10 @@ def set_histo_style(h, xtitle, ytitle):
     h.SetLineWidth(2)
     h.SetStats(0)
     h.SetStats(0)
-    h.GetXaxis().SetTitleSize(0.04)
+    h.GetXaxis().SetTitleSize(0.06)
     h.GetXaxis().SetTitleOffset(1.4)
     h.GetXaxis().SetLabelOffset(0.01)
-    h.GetYaxis().SetTitleSize(0.04)
+    h.GetYaxis().SetTitleSize(0.06)
     h.GetYaxis().SetTitleOffset(1.5)
     h.GetYaxis().SetLabelOffset(0.01)
     h.GetXaxis().SetTitle(xtitle)

@@ -20,7 +20,7 @@ usage() {
 
     printf "\n\t%-9s  %-40s\n" "0.2"   "[Get system uncertainties]"
     printf "\n\t%-9s  %-40s\n" "0.2.1" "Get samples -- convert root files"
-    printf "\n\t%-9s  %-40s\n" "0.2.2" "Fit distributions -- fit recoiling mass of D + Dmiss"
+    printf "\n\t%-9s  %-40s\n" "0.2.2" "Fit distributions -- simultaneous fit recoiling mass of D + Dmiss and recoiling mass of pipi"
     printf "\n\t%-9s  %-40s\n" "0.2.3" "Get shapes -- mix MC shapes"
     printf "\n\t%-9s  %-40s\n" "0.2.4" "Fit distributions -- fit recoiling mass of Dpipi"
     printf "\n\t%-9s  %-40s\n" "0.2.5" "Calculate numbers -- calculate cross section of DDpipi and systerm uncertainties"
@@ -99,10 +99,10 @@ case $option in
            ./convertROOT_705.sh
            ;;
 
-    0.2.2) echo "Fit distributions -- fitting recoiling mass of D + Dmiss..."
+    0.2.2) echo "Fit distributions -- simultaneous fitting recoiling mass of D + Dmiss and recoiling mass of pipi..."
            cd scripts/ana
-           ./fitRMD_703p01.sh round4
-           ./fitRMD_705.sh round4
+           ./simul_fit_703p01.sh round4
+           ./simul_fit_705.sh round4
            ;;
 
     0.2.3) echo "Get shapes -- mixing MC shapes..."

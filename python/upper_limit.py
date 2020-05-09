@@ -38,6 +38,12 @@ DATE
     December 2019
 \n''')
 
+def set_pavetext(pt):
+    pt.SetFillStyle(0)
+    pt.SetBorderSize(0)
+    pt.SetTextAlign(10)
+    pt.SetTextSize(0.04)
+
 def set_graph_style(gr, xtitle, ytitle, xmin, xmax):
     gr.GetXaxis().SetNdivisions(509)
     gr.GetYaxis().SetNdivisions(504)
@@ -126,6 +132,12 @@ def upper_limit(step_size, path, FILE, ecms, mode, n_offset, patch):
     arrow.SetLineColor(kRed)
     arrow.SetLineWidth(3)
     arrow.Draw()
+
+    pt = TPaveText(0.7, 0.8, 0.95, 0.85, "BRNDC")
+    set_pavetext(pt)
+    pt.Draw()
+    pt_title = str(ecms) + ' MeV'
+    pt.AddText(pt_title)
 
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')

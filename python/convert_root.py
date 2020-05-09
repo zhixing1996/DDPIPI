@@ -49,19 +49,26 @@ def convert(path_in, path_out, mode, ecms):
         t_out = TTree('save', 'save')
 
         m_rm_D = array('d', [999.])
+        m_rm_pipi = array('d', [999.])
         t_out.Branch('rm_D', m_rm_D, 'm_rm_D/D')
+        t_out.Branch('rm_pipi', m_rm_pipi, 'm_rm_pipi/D')
 
-        low, up, temp = param_rm_D(ecms)
+        rm_D_low, rm_D_up, temp = param_rm_D(ecms)
+        rm_pipi_low, rm_pipi_up = param_rm_pipi(ecms)
         nentries = t_in.GetEntries()
         for ientry in xrange(nentries):
             t_in.GetEntry(ientry)
-            if t_in.m_rm_D < low or t_in.m_rm_D > up:
+            if t_in.m_rm_D < rm_D_low or t_in.m_rm_D > rm_D_up:
                 continue
-            if t_in.m_rm_Dmiss < low or t_in.m_rm_Dmiss > up:
+            if t_in.m_rm_Dmiss < rm_D_low or t_in.m_rm_Dmiss > rm_D_up:
+                continue
+            if t_in.m_rm_pipi < rm_pipi_low or t_in.m_rm_pipi > rm_pipi_up:
                 continue
             m_rm_D[0] = t_in.m_rm_D
+            m_rm_pipi[0] = t_in.m_rm_pipi
             t_out.Fill()
             m_rm_D[0] = t_in.m_rm_Dmiss
+            m_rm_pipi[0] = t_in.m_rm_pipi
             t_out.Fill()
 
         f_out.cd()

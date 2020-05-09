@@ -46,6 +46,7 @@ def sys_err(patch):
     path_sys_err = './txts/sys_err_background_shape.txt'
     f_sys_err = open(path_sys_err, 'w')
 
+    diff_max = -999.
     for line_xs_old, line_xs_new in zip(lines_xs_old, lines_xs_new):
         rs_xs_old = line_xs_old.rstrip('\n')
         rs_xs_old = filter(None, rs_xs_old.split(' '))
@@ -60,7 +61,12 @@ def sys_err(patch):
             diff = 0.
         else:
             diff = abs((xs_new - xs_old)/xs_old)
-        out = str(ecms) + '\t' + str(round(diff*100, 1)) + '\n'
+        if diff > diff_max and (ecms == 4.4 or ecms == 4.42 or ecms == 4.44):
+            diff_max = diff
+
+    ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600]
+    for ecm in ecms:
+        out = str(ecm/1000.) + '\t' + str(round(diff_max*100, 1)) + '\n'
         f_sys_err.write(out)
 
     f_sys_err.close()

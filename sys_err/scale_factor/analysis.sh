@@ -12,7 +12,7 @@ usage() {
 
     printf "\n\t%-9s  %-40s\n" "0.1"   "[Get system uncertainties]"
     printf "\n\t%-9s  %-40s\n" "0.1.1" "Fit distributions -- fit recoiling mass of Dpipi"
-    printf "\n\t%-9s  %-40s\n" "0.1.2" "Fit distributions -- fit recoiling mass of D/Dmiss"
+    printf "\n\t%-9s  %-40s\n" "0.1.2" "Fit distributions -- simultaneous fit recoiling mass of D/Dmiss and recoiling mass of pipi"
     printf "\n\t%-9s  %-40s\n" "0.1.3" "Calculate numbers -- calculate cross section of DDpipi and systerm uncertainties"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
@@ -44,10 +44,10 @@ case $option in
            ./fitRMDpipi_705.sh round4
            ;;
 
-    0.1.2) echo "Fit distributions -- fitting recoiling mass of D/Dmiss..."
+    0.1.2) echo "Fit distributions -- simultaneous fitting recoiling mass of D/Dmiss and recoiling mass of pipi..."
            cd scripts/ana
-           ./fitRMD_703p01.sh round4
-           ./fitRMD_705.sh round4
+           ./simul_fit_703p01.sh round4
+           ./simul_fit_705.sh round4
            ;;
 
     0.1.3) echo "Calculate numbers -- calculating cross section of DDpipi and systerm uncertainties..."

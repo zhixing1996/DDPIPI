@@ -68,6 +68,12 @@ DATE
     March 2020
 \n''')
 
+def set_pavetext(pt):
+    pt.SetFillStyle(0)
+    pt.SetBorderSize(0)
+    pt.SetTextAlign(10)
+    pt.SetTextSize(0.04)
+
 def set_xframe_style(xframe, xtitle, ytitle):
     xframe.GetXaxis().SetTitle(xtitle)
     xframe.GetXaxis().SetTitleSize(0.06)
@@ -143,9 +149,9 @@ def fit(path, shape_path, ecms, patch):
     pdf_signal = RooHistPdf('pdf_signal', 'pdf_signal', RooArgSet(rm_Dpipi), h_signal, 0)
     mean = RooRealVar('mean', 'mean of gaussian', mean_val)
     sigma = RooRealVar('sigma', 'sigma of gaussian', sigma_val)
-    if ecms == 4440:
-        mean = RooRealVar('mean', 'mean of gaussian', mean_val, 0., 0.005)
-        sigma = RooRealVar('sigma', 'sigma of gaussian', sigma_val, 0., 0.015)
+    # if ecms == 4440:
+    #     mean = RooRealVar('mean', 'mean of gaussian', mean_val, 0., 0.005)
+    #     sigma = RooRealVar('sigma', 'sigma of gaussian', sigma_val, 0., 0.015)
     gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
     rm_Dpipi.setBins(xbins, 'cache')
     sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_signal, gauss)
@@ -179,6 +185,12 @@ def fit(path, shape_path, ecms, patch):
     set_xframe_style(xframe, xtitle, ytitle)
     xframe.Draw()
 
+    pt = TPaveText(0.7, 0.8, 0.95, 0.85, "BRNDC")
+    set_pavetext(pt)
+    pt.Draw()
+    pt_title = str(ecms) + ' MeV'
+    pt.AddText(pt_title)
+
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
     mbc.SaveAs('./figs/fit_rm_Dpipi_' + str(ecms) + '_sideband.pdf')
@@ -190,6 +202,11 @@ def fit(path, shape_path, ecms, patch):
     out = str(nsig.getVal()) + ' ' + str(nsig.getError()) + '\n'
     f_sig.write(out)
     f_sig.close()
+    path_sig_tot = './txts/sideband_signal_events_total_' + patch + '.txt'
+    f_sig_tot = open(path_sig_tot, 'a')
+    out_tot = str(ecms) + '\t' + str(int(nsig.getVal())) + '\t' + str(int(nsig.getError())) + '\n'
+    f_sig_tot.write(out_tot)
+    f_sig_tot.close()
 
     # raw_input('enter anything to end...')
 

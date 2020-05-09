@@ -68,6 +68,12 @@ DATE
     November 2019
 \n''')
 
+def set_legend(legend, title):
+    legend.SetHeader(title)
+    legend.SetBorderSize(0)
+    legend.SetFillColor(0)
+    legend.SetLineColor(0)
+
 def set_xframe_style(xframe, xtitle, ytitle):
     xframe.GetXaxis().SetTitle(xtitle)
     xframe.GetXaxis().SetTitleSize(0.06)
@@ -99,7 +105,7 @@ def set_canvas_style(mbc):
     mbc.SetBottomMargin(0.15)
     mbc.SetGrid()
 
-def fit(path, ecms):
+def fit(path, ecms, leg_title):
     try:
         f_data = TFile(path[0])
         t_data = f_data.Get('save')
@@ -116,7 +122,7 @@ def fit(path, ecms):
     pad.Draw()
 
     xmin = 2.006
-    xmax = 2.016
+    xmax = 2.02
     xbins = 40
     m_Dpi0 = RooRealVar('m_Dpi0', 'm_Dpi0', xmin, xmax)
     data = RooDataSet('data', 'dataset', t_data, RooArgSet(m_Dpi0))
@@ -157,6 +163,10 @@ def fit(path, ecms):
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
 
+    legend = TLegend(0.7, 0.7, 0.8, 0.8)
+    set_legend(legend, leg_title)
+    legend.Draw()
+
     mbc.SaveAs('./figs/fit_m_Dpi0_'+str(ecms)+'.pdf')
 
     raw_input('Enter anything to end...')
@@ -169,7 +179,16 @@ def main():
 
     path = []
     path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_before.root')
-    fit(path, ecms)
+    leg_title = ''
+    if ecms == 4360:
+        leg_title = '(a)'
+    elif ecms == 4420:
+        leg_title = '(b)'
+    elif ecms == 4600:
+        leg_title = '(c)'
+    else:
+        leg_title = str(ecms) + ' MeV'
+    fit(path, ecms, leg_title)
 
 if __name__ == '__main__':
     main()

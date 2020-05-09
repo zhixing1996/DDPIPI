@@ -185,104 +185,104 @@ def num_rm_D(ecms):
     N_DDPIPI = 9999999
     if int(ecms == 4190):
         N_D1_2420 = 0
-        N_PSIPP = 100
-        N_DDPIPI = 100
+        N_PSIPP = 1000
+        N_DDPIPI = 1000
     if int(ecms == 4200):
         N_D1_2420 = 0
-        N_PSIPP = 100
-        N_DDPIPI = 100
+        N_PSIPP = 1000
+        N_DDPIPI = 1000
     if int(ecms == 4210):
         N_D1_2420 = 0
-        N_PSIPP = 100
-        N_DDPIPI = 200
+        N_PSIPP = 1000
+        N_DDPIPI = 2000
     if int(ecms == 4220):
         N_D1_2420 = 0
-        N_PSIPP = 500
-        N_DDPIPI = 500
+        N_PSIPP = 5000
+        N_DDPIPI = 5000
     if int(ecms == 4230):
         N_D1_2420 = 0
-        N_PSIPP = 500
-        N_DDPIPI = 500
+        N_PSIPP = 5000
+        N_DDPIPI = 5000
     if int(ecms == 4237):
         N_D1_2420 = 0
-        N_PSIPP = 500
-        N_DDPIPI = 500
+        N_PSIPP = 5000
+        N_DDPIPI = 5000
     if int(ecms == 4245):
         N_D1_2420 = 0
-        N_PSIPP = 500
-        N_DDPIPI = 300
+        N_PSIPP = 5000
+        N_DDPIPI = 3000
     if int(ecms == 4246):
         N_D1_2420 = 0
-        N_PSIPP = 500
-        N_DDPIPI = 300
+        N_PSIPP = 5000
+        N_DDPIPI = 3000
     if int(ecms == 4260):
         N_D1_2420 = 0
-        N_PSIPP = 500
-        N_DDPIPI = 500
+        N_PSIPP = 5000
+        N_DDPIPI = 5000
     if int(ecms == 4270):
         N_D1_2420 = 0
-        N_PSIPP = 500
-        N_DDPIPI = 500
+        N_PSIPP = 5000
+        N_DDPIPI = 5000
     if int(ecms == 4280):
         N_D1_2420 = 0
-        N_PSIPP = 200
-        N_DDPIPI = 200
+        N_PSIPP = 2000
+        N_DDPIPI = 2000
     elif int(ecms == 4290):
         N_D1_2420 = 0
-        N_PSIPP = 1000
-        N_DDPIPI = 1000
+        N_PSIPP = 10000
+        N_DDPIPI = 10000
     elif int(ecms == 4310):
-        N_D1_2420 = 1000
-        N_PSIPP = 1000
-        N_DDPIPI = 400
+        N_D1_2420 = 10000
+        N_PSIPP = 10000
+        N_DDPIPI = 4000
     elif int(ecms == 4315):
-        N_D1_2420 = 500
-        N_PSIPP = 500
-        N_DDPIPI = 500
+        N_D1_2420 = 5000
+        N_PSIPP = 5000
+        N_DDPIPI = 5000
     elif int(ecms == 4340):
-        N_D1_2420 = 1200
-        N_PSIPP = 2000
-        N_DDPIPI = 2000
+        N_D1_2420 = 12000
+        N_PSIPP = 20000
+        N_DDPIPI = 20000
     elif int(ecms == 4360):
-        N_D1_2420 = 5000
-        N_PSIPP = 1000
-        N_DDPIPI = 1000
+        N_D1_2420 = 50000
+        N_PSIPP = 10000
+        N_DDPIPI = 10000
     elif int(ecms == 4380):
-        N_D1_2420 = 4000
-        N_PSIPP = 2000
-        N_DDPIPI = 2000
+        N_D1_2420 = 40000
+        N_PSIPP = 20000
+        N_DDPIPI = 20000
     elif int(ecms == 4390):
-        N_D1_2420 = 500
-        N_PSIPP = 200
-        N_DDPIPI = 100
+        N_D1_2420 = 50000
+        N_PSIPP = 20000
+        N_DDPIPI = 10000
     elif int(ecms == 4400):
-        N_D1_2420 = 2000
-        N_PSIPP = 1000
-        N_DDPIPI = 1000
+        N_D1_2420 = 20000
+        N_PSIPP = 10000
+        N_DDPIPI = 10000
     elif int(ecms == 4420):
-        N_D1_2420 = 5000
-        N_PSIPP = 5000
-        N_DDPIPI = 5000
+        N_D1_2420 = 50000
+        N_PSIPP = 50000
+        N_DDPIPI = 50000
     elif int(ecms == 4440):
-        N_D1_2420 = 5000
-        N_PSIPP = 3000
-        N_DDPIPI = 3000
+        N_D1_2420 = 50000
+        N_PSIPP = 30000
+        N_DDPIPI = 30000
     elif int(ecms == 4470):
-        N_D1_2420 = 1000
-        N_PSIPP = 1000
-        N_DDPIPI = 1000
+        N_D1_2420 = 10000
+        N_PSIPP = 10000
+        N_DDPIPI = 10000
     elif int(ecms == 4530):
-        N_D1_2420 = 500
-        N_PSIPP = 500
-        N_DDPIPI = 500
-    elif int(ecms == 4575):
         N_D1_2420 = 5000
         N_PSIPP = 5000
         N_DDPIPI = 5000
+    elif int(ecms == 4575):
+        N_D1_2420 = 50000
+        N_PSIPP = 50000
+        N_DDPIPI = 50000
     elif int(ecms == 4600):
-        N_D1_2420 = 3000
-        N_PSIPP = 3000
-        N_DDPIPI = 3000
+        N_D1_2420 = 30000
+        N_PSIPP = 30000
+        N_DDPIPI = 30000
     elif int(ecms == 4620):
         N_D1_2420 = 5000
         N_PSIPP = 5000
@@ -489,3 +489,99 @@ def param_rm_D(ecms):
         UP = 2.85
         BINS = 400
     return LOW, UP, BINS
+
+# range of RM(pipi)
+def param_rm_pipi(ecms):
+    LOW = 999.
+    UP = 999.
+    if int(ecms) == 4190:
+        LOW = 3.72
+        UP = 3.89
+    if int(ecms) == 4200:
+        LOW = 3.73
+        UP = 3.89
+    if int(ecms) == 4210:
+        LOW = 3.72
+        UP = 3.89
+    if int(ecms) == 4220:
+        LOW = 3.72
+        UP = 3.91
+    if int(ecms) == 4230:
+        LOW = 3.73
+        UP = 3.91
+    if int(ecms) == 4237:
+        LOW = 3.72
+        UP = 3.93
+    if int(ecms) == 4245:
+        LOW = 3.72
+        UP = 3.94
+    if int(ecms) == 4246:
+        LOW = 3.72
+        UP = 3.90
+    if int(ecms) == 4260:
+        LOW = 3.72
+        UP = 3.96
+    if int(ecms) == 4270:
+        LOW = 3.72
+        UP = 3.95
+    if int(ecms) == 4280:
+        LOW = 3.72
+        UP = 3.95
+    if int(ecms) == 4290:
+        LOW = 3.73
+        UP = 3.95
+    if int(ecms) == 4310:
+        LOW = 3.73
+        UP = 3.93
+    if int(ecms) == 4315:
+        LOW = 3.73
+        UP = 3.92
+    if int(ecms) == 4340:
+        LOW = 3.72
+        UP = 4.0
+    if int(ecms) == 4360:
+        LOW = 3.74
+        UP = 4.03
+    if int(ecms) == 4380:
+        LOW = 3.72
+        UP = 4.07
+    if int(ecms) == 4390:
+        LOW = 3.7
+        UP = 4.07
+    if int(ecms) == 4400:
+        LOW = 3.7
+        UP = 4.08
+    if int(ecms) == 4420:
+        LOW = 3.72
+        UP = 4.11
+    if int(ecms) == 4440:
+        LOW = 3.7
+        UP = 4.08
+    if int(ecms) == 4470:
+        LOW = 3.7
+        UP = 4.14
+    if int(ecms) == 4530:
+        LOW = 3.7
+        UP = 4.18
+    if int(ecms) == 4575:
+        LOW = 3.7
+        UP = 4.20
+    if int(ecms) == 4600:
+        LOW = 3.73
+        UP = 4.22
+    if int(ecms) == 4620:
+        LOW = 3.73
+        UP = 4.22
+    if int(ecms) == 4640:
+        LOW = 3.72
+        UP = 4.31
+    if int(ecms) == 4660:
+        LOW = 3.73
+        UP = 4.2
+    if int(ecms) == 4680:
+        LOW = 3.72
+        UP = 4.2
+    if int(ecms) == 4700:
+        LOW = 3.73
+        UP = 4.2
+    return LOW, UP

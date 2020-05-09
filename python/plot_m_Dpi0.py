@@ -45,27 +45,22 @@ def set_legend(legend, h1, h2, h3, h4, h5, title):
     legend.SetFillColor(0)
     legend.SetLineColor(0)
 
-def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5, runNolow, runNoup):
+def rm_pipi_fill(t1, t2, t3, t4, t5, h1, h2, h3, h4, h5):
     for ientry1 in xrange(t1.GetEntries()):
         t1.GetEntry(ientry1)
-        if fabs(t1.m_runNo) >= runNolow and fabs(t1.m_runNo) <= runNoup:
-            h1.Fill(t1.m_m_Dpi0)
+        h1.Fill(t1.m_m_Dpi0)
     for ientry2 in xrange(t2.GetEntries()):
         t2.GetEntry(ientry2)
-        if fabs(t2.m_runNo) >= runNolow and fabs(t2.m_runNo) <= runNoup:
-            h2.Fill(t2.m_m_Dpi0)
+        h2.Fill(t2.m_m_Dpi0)
     for ientry3 in xrange(t3.GetEntries()):
         t3.GetEntry(ientry3)
-        if fabs(t3.m_runNo) >= runNolow and fabs(t3.m_runNo) <= runNoup:
-            h3.Fill(t3.m_m_Dpi0)
+        h3.Fill(t3.m_m_Dpi0)
     for ientry4 in xrange(t4.GetEntries()):
         t4.GetEntry(ientry4)
-        if fabs(t4.m_runNo) >= runNolow and fabs(t4.m_runNo) <= runNoup:
-            h4.Fill(t4.m_m_Dpi0)
+        h4.Fill(t4.m_m_Dpi0)
     for ientry5 in xrange(t5.GetEntries()):
         t5.GetEntry(ientry5)
-        if fabs(t5.m_runNo) >= runNolow and fabs(t5.m_runNo) <= runNoup:
-            h5.Fill(t5.m_m_Dpi0)
+        h5.Fill(t5.m_m_Dpi0)
 
 def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle, ymax):
     h1.GetXaxis().SetNdivisions(509)
@@ -74,11 +69,11 @@ def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle, ymax):
     h2.SetLineWidth(2)
     h1.SetStats(0)
     h2.SetStats(0)
-    h1.GetXaxis().SetTitleSize(0.04)
-    h1.GetXaxis().SetTitleOffset(1.3)
+    h1.GetXaxis().SetTitleSize(0.06)
+    h1.GetXaxis().SetTitleOffset(1.)
     h1.GetXaxis().SetLabelOffset(0.01)
-    h1.GetYaxis().SetTitleSize(0.04)
-    h1.GetYaxis().SetTitleOffset(1.5)
+    h1.GetYaxis().SetTitleSize(0.06)
+    h1.GetYaxis().SetTitleOffset(1.)
     h1.GetYaxis().SetLabelOffset(0.01)
     h1.GetXaxis().SetTitle(xtitle)
     h1.GetXaxis().CenterTitle()
@@ -98,7 +93,7 @@ def set_canvas_style(mbc):
     mbc.SetTopMargin(0.1)
     mbc.SetBottomMargin(0.15)
 
-def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax):
+def plot(path, leg_title, ecms, xmin, xmax, xbins, ymax):
     try:
         f_data = TFile(path[0])
         f_incMC1 = TFile(path[1])
@@ -136,7 +131,7 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax):
     h_sigMC2 = TH1F('sigMC2', 'signal MC: psi(3770)', xbins, xmin, float(xmax))
     
     set_histo_style(h_data, h_incMC1, h_incMC2, h_sigMC1, h_sigMC2, xtitle, ytitle, ymax)
-    rm_pipi_fill(t_data, t_incMC1, t_incMC2, t_sigMC1, t_sigMC2, h_data, h_incMC1, h_incMC2, h_sigMC1, h_sigMC2, runNolow, runNoup)
+    rm_pipi_fill(t_data, t_incMC1, t_incMC2, t_sigMC1, t_sigMC2, h_data, h_incMC1, h_incMC2, h_sigMC1, h_sigMC2)
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
@@ -158,7 +153,7 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax):
     hs.Draw('same')
     h_data.Draw('sameE1')
 
-    legend = TLegend(0.55, 0.6, 0.8, 0.75)
+    legend = TLegend(0.5, 0.45, 0.8, 0.8)
     set_legend(legend, h_data, h_incMC1, h_incMC2, h_sigMC1, h_sigMC2, leg_title)
     legend.Draw()
 
@@ -185,9 +180,7 @@ if __name__ == '__main__':
         xmax = 2.018
         xbins = 75
         ymax = 60
-        runNolow = 30616
-        runNoup = 31279
-        plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax)
+        plot(path, leg_title, ecms, xmin, xmax, xbins, ymax)
 
     path = []
     if int(ecms) == 4420:
@@ -200,10 +193,8 @@ if __name__ == '__main__':
         xmin = 2.004
         xmax = 2.018
         xbins = 75
-        ymax = 70
-        runNolow = 36773
-        runNoup = 38140
-        plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax)
+        ymax = 80
+        plot(path, leg_title, ecms, xmin, xmax, xbins, ymax)
 
     path = []
     if int(ecms) == 4600:
@@ -216,7 +207,5 @@ if __name__ == '__main__':
         xmin = 2.004
         xmax = 2.018
         xbins = 75
-        ymax = 30
-        runNolow = 35227
-        runNoup = 35743
-        plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax)
+        ymax = 40
+        plot(path, leg_title, ecms, xmin, xmax, xbins, ymax)

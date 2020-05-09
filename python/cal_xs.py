@@ -92,24 +92,44 @@ def xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_p
         xserr_psipp = float(rs_factor[17])
         xserr_DDPIPI = float(rs_factor[18])
 
+    mKpipi_data = open('./txts/factor_m_Kpipi_' + str(ecms) + '_data_' + patch + '.txt', 'r')
+    lines_mKpipi_data = mKpipi_data.readlines()
+    for line_mKpipi_data in lines_mKpipi_data:
+        rs_mKpipi_data = line_mKpipi_data.rstrip('\n')
+        rs_mKpipi_data = filter(None, rs_mKpipi_data.split(" "))
+        mKpipi_data = float(float(rs_mKpipi_data[0]))
+        mKpipi_data_err = float(float(rs_mKpipi_data[1]))
+
+    mKpipi_MC = open('./txts/factor_m_Kpipi_' + str(ecms) + '_MC_' + patch + '.txt', 'r')
+    lines_mKpipi_MC = mKpipi_MC.readlines()
+    for line_mKpipi_MC in lines_mKpipi_MC:
+        rs_mKpipi_MC = line_mKpipi_MC.rstrip('\n')
+        rs_mKpipi_MC = filter(None, rs_mKpipi_MC.split(" "))
+        mKpipi_MC = float(float(rs_mKpipi_MC[0]))
+        mKpipi_MC_err = float(float(rs_mKpipi_MC[1]))
+
+    factor_mKpipi = 1.
+    if (fabs(mKpipi_MC - mKpipi_data)) > 0.01:
+        factor_mKpipi = mKpipi_data/mKpipi_MC
+
     if omega_D1_2420 == 0:
         flag_D1_2420 = 0
         eff_ISR_VP_D1_2420 = 1
     else:
         flag_D1_2420 = 1
-        eff_ISR_VP_D1_2420 = eff_D1_2420*omega_D1_2420
+        eff_ISR_VP_D1_2420 = eff_D1_2420*omega_D1_2420*factor_mKpipi
     if omega_psipp == 0:
         flag_psipp = 0
         eff_ISR_VP_psipp = 1
     else:
         flag_psipp = 1
-        eff_ISR_VP_psipp = eff_psipp*omega_psipp
+        eff_ISR_VP_psipp = eff_psipp*omega_psipp*factor_mKpipi
     if omega_DDPIPI == 0:
         flag_DDPIPI = 0
         eff_ISR_VP_DDPIPI = 1
     else:
         flag_DDPIPI = 1
-        eff_ISR_VP_DDPIPI = eff_DDPIPI*omega_DDPIPI
+        eff_ISR_VP_DDPIPI = eff_DDPIPI*omega_DDPIPI*factor_mKpipi
     xs = (N_data - N_sideband/2.)/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
     xs_err = (sqrt(Err_data*Err_data + (Err_sideband/2.)*(Err_sideband/2.)))/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
 
@@ -119,19 +139,19 @@ def xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_p
             eff_ISR_VP_D1_2420 = 1
         else:
             flag_D1_2420 = 1
-            eff_ISR_VP_D1_2420 = eff_D1_2420*ISR_D1_2420*omega_D1_2420*VP
+            eff_ISR_VP_D1_2420 = eff_D1_2420*ISR_D1_2420*omega_D1_2420*VP*factor_mKpipi
         if omega_psipp == 0:
             flag_psipp = 0
             eff_ISR_VP_psipp = 1
         else:
             flag_psipp = 1
-            eff_ISR_VP_psipp = eff_psipp*ISR_psipp*omega_psipp*VP
+            eff_ISR_VP_psipp = eff_psipp*ISR_psipp*omega_psipp*VP*factor_mKpipi
         if omega_DDPIPI == 0:
             flag_DDPIPI = 0
             eff_ISR_VP_DDPIPI = 1
         else:
             flag_DDPIPI = 1
-            eff_ISR_VP_DDPIPI = eff_DDPIPI*ISR_DDPIPI*omega_DDPIPI*VP
+            eff_ISR_VP_DDPIPI = eff_DDPIPI*ISR_DDPIPI*omega_DDPIPI*VP*factor_mKpipi
         xs = (N_data - N_sideband/2.)/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
         xs_err = (sqrt(Err_data*Err_data + (Err_sideband/2.)*(Err_sideband/2.)))/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
 
@@ -143,6 +163,7 @@ def xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_p
     out = '@' + str(ecms) + 'MeV\n'
     out += str(int(N_data)) + ' $\pm$ ' + str(int(Err_data)) + '\n'
     out += str(int(N_sideband)) + ' $\pm$ ' + str(int(Err_sideband)) + '\n'
+    out += str(round(factor_mKpipi, 4)) + '\n'
     out += str(round(eff_D1_2420*100, 2)) + '\%\n'
     out += str(round(eff_psipp*100, 2)) + '\%\n'
     out += str(round(eff_DDPIPI*100, 2)) + '\%\n'

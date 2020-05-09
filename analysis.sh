@@ -47,24 +47,26 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.4.4"    "[D1_2420 & psi(3770)] Draw figures -- study RM(D) in fitting region(RM(Dpipi) signal and sideband region)"
     printf "\n\t%-9s  %-40s\n" "0.4.5"    "[D1_2420 & psi(3770)] Get shape -- get shape of D1(2420)"
     printf "\n\t%-9s  %-40s\n" "0.4.6"    "[D1_2420 & psi(3770)] Get samples -- get samples used for RM(D) fit"
-    printf "\n\t%-9s  %-40s\n" "0.4.7"    "[D1_2420 & psi(3770)] Fit distributions -- perform RM(D) fit"
+    printf "\n\t%-9s  %-40s\n" "0.4.7"    "[D1_2420 & psi(3770)] Fit distributions -- perform RM(D) and RM(pipi) simultaneous fit"
     printf "\n\t%-9s  %-40s\n" "0.4.8"    "[DDPIPI] Draw figures -- study RM(Dpipi) in Kpipi signal and sideband region"
-    printf "\n\t%-9s  %-40s\n" "0.4.9"    "[DDPIPI] Get shape -- get shape of D1(2420)"
+    printf "\n\t%-9s  %-40s\n" "0.4.9"    "[DDPIPI] Get shape -- mix MC shape"
     printf "\n\t%-9s  %-40s\n" "0.4.10"   "[DDPIPI] Fit distributions -- fit to RM(Dpipi)"
-    printf "\n\t%-9s  %-40s\n" "0.4.11"   "[DDPIPI] Calculate numbers -- calculate cross sections"
-    printf "\n\t%-9s  %-40s\n" "0.4.12"   "[DDPIPI] Calculate numbers -- format cross section outputs"
-    printf "\n\t%-9s  %-40s\n" "0.4.13"   "[DDPIPI] Draw figures -- draw cross sections"
-    printf "\n\t%-9s  %-40s\n" "0.4.14"   "[ROUND1: DDPIPI] Get factor -- get ridiative correction and vacuum polarization factors"
-    printf "\n\t%-9s  %-40s\n" "0.4.15"   "[ROUND1: DDPIPI] Get shape -- get shape of D1(2420)"
-    printf "\n\t%-9s  %-40s\n" "0.4.16"   "[ROUND1: DDPIPI] Get samples -- get samples used for RM(D) fit"
-    printf "\n\t%-9s  %-40s\n" "0.4.17"   "[ROUND1: DDPIPI] Fit distributions -- perform RM(D) fit"
-    printf "\n\t%-9s  %-40s\n" "0.4.18"   "[ROUND1: DDPIPI] Get shape -- get shape of D1(2420)"
-    printf "\n\t%-9s  %-40s\n" "0.4.19"   "[ROUND1: DDPIPI] Fit distributions -- fit to RM(Dpipi)"
-    printf "\n\t%-9s  %-40s\n" "0.4.20"   "[ROUND1: DDPIPI] Calculate numbers -- calculate cross sections"
-    printf "\n\t%-9s  %-40s\n" "0.4.21"   "[ROUND1: DDPIPI] Calculate numbers -- format cross section outputs"
-    printf "\n\t%-9s  %-40s\n" "0.4.22"   "[ROUND1: DDPIPI] Draw figures -- draw cross sections"
-    printf "\n\t%-9s  %-40s\n" "0.4.23"   "[ROUND1: DDPIPI] Draw figures -- draw cross section differences between iterations"
-    printf "\n\t%-9s  %-40s\n" "0.4.24"   "[DDPIPI] Calculate numbers -- calculate significance and upper limit number of total DDPIPI"
+    printf "\n\t%-9s  %-40s\n" "0.4.11"   "[DDPIPI] Fit distributions -- fit to MM(Kpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.4.12"   "[DDPIPI] Calculate numbers -- calculate cross sections"
+    printf "\n\t%-9s  %-40s\n" "0.4.13"   "[DDPIPI] Calculate numbers -- format cross section outputs"
+    printf "\n\t%-9s  %-40s\n" "0.4.14"   "[DDPIPI] Draw figures -- draw cross sections"
+    printf "\n\t%-9s  %-40s\n" "0.4.15"   "[ROUND1: D1_2420 & psi(3770)] Get factor -- get ridiative correction and vacuum polarization factors"
+    printf "\n\t%-9s  %-40s\n" "0.4.16"   "[ROUND1: D1_2420 & psi(3770)] Get shape -- get shape of D1(2420)"
+    printf "\n\t%-9s  %-40s\n" "0.4.17"   "[ROUND1: D1_2420 & psi(3770)] Get samples -- get samples used for RM(D) fit"
+    printf "\n\t%-9s  %-40s\n" "0.4.18"   "[ROUND1: D1_2420 & psi(3770)] Fit distributions -- perform RM(D) and RM(pipi) simultaneous fit"
+    printf "\n\t%-9s  %-40s\n" "0.4.19"   "[ROUND1: DDPIPI] Get shape -- mix MC shape"
+    printf "\n\t%-9s  %-40s\n" "0.4.20"   "[ROUND1: DDPIPI] Fit distributions -- fit to RM(Dpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.4.21"   "[ROUND1: DDPIPI] Fit distributions -- fit to MM(Kpipi)"
+    printf "\n\t%-9s  %-40s\n" "0.4.22"   "[ROUND1: DDPIPI] Calculate numbers -- calculate cross sections"
+    printf "\n\t%-9s  %-40s\n" "0.4.23"   "[ROUND1: DDPIPI] Calculate numbers -- format cross section outputs"
+    printf "\n\t%-9s  %-40s\n" "0.4.24"   "[ROUND1: DDPIPI] Draw figures -- draw cross sections"
+    printf "\n\t%-9s  %-40s\n" "0.4.25"   "[ROUND1: DDPIPI] Draw figures -- draw cross section differences between iterations"
+    printf "\n\t%-9s  %-40s\n" "0.4.26"   "[DDPIPI] Calculate numbers -- calculate significance and upper limit number of total DDPIPI"
     
     printf "\n\t%-9s  %-40s\n" "0.5"      "[Measurement of X(3842) Cross Section]"
     printf "\n\t%-9s  %-40s\n" "0.5.1"    "Get samples -- synthesize samples"
@@ -542,10 +544,10 @@ case $option in
            ./convertROOT_705.sh
            ;;
 
-    0.4.7) echo "[D1_2420 & psi(3770)] Fit distributions -- performing RM(D) fit..."
+    0.4.7) echo "[D1_2420 & psi(3770)] Fit distributions -- performing RM(D) and RM(pipi) simultaneous fit..."
            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-           ./fitRMD_703p01.sh round0
-           ./fitRMD_705.sh round0
+           ./simul_fit_703p01.sh round0
+           ./simul_fit_705.sh round0
            ;;
 
     0.4.8) echo "[DDPIPI] Draw figures -- studying RM(Dpipi) in Kpipi signal and sideband region..."
@@ -571,76 +573,92 @@ case $option in
             ./fitRMDpipi_705.sh round0
             ;;
 
-    0.4.11) echo "[DDPIPI] Calculate numbers -- calculating cross sections..."
+    0.4.11) echo "[DDPIPI] Fit distributions -- fitting to M(Kpipi)..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./mixROOT_703p01.sh round0
+            ./mixROOT_705.sh round0
+            ./factorMKpipi_703p01.sh round0
+            ./factorMKpipi_705.sh round0
+            ;;
+
+    0.4.12) echo "[DDPIPI] Calculate numbers -- calculating cross sections..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./calXS_703p01.sh round0
             ./calXS_705.sh round0
             ;;
 
-    0.4.12) echo "[DDPIPI] Calculate numbers -- formatting cross section outputs..."
+    0.4.13) echo "[DDPIPI] Calculate numbers -- formatting cross section outputs..."
             cd python
             python format_xs.py round0
             ;;
 
-    0.4.13) echo "[DDPIPI] Draw figures -- drawing cross sections..."
+    0.4.14) echo "[DDPIPI] Draw figures -- drawing cross sections..."
             cd python
             python plot_xs.py total round0
             ;;
 
-    0.4.14) echo "[ROUND1: DDPIPI] Get factor -- getting ridiative correction and vacuum polarization factors..."
+    0.4.15) echo "[ROUND1: D1_2420 & psi(3770)] Get factor -- getting ridiative correction and vacuum polarization factors..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420
             ./getFactorD1_2420_703p01.sh round1
             ./getFactorD1_2420_705.sh round1
             ;;
 
-    0.4.15) echo "[ROUND1: DDPIPI] Get shape -- getting shape of D1(2420)..."
+    0.4.16) echo "[ROUND1: D1_2420 & psi(3770)] Get shape -- getting shape of D1(2420)..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./getShape_703p01.sh
             ./getShape_705.sh
             ;;
 
-    0.4.16) echo "[ROUND1: DDPIPI] Get samples -- getting samples used for RM(D) fit..."
+    0.4.17) echo "[ROUND1: D1_2420 & psi(3770)] Get samples -- getting samples used for RM(D) fit..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./convertROOT_703p01.sh
             ./convertROOT_705.sh
             ;;
 
-    0.4.17) echo "[ROUND1: DDPIPI] Fit distributions -- performing RM(D) fit..."
+    0.4.18) echo "[ROUND1: D1_2420 & psi(3770)] Fit distributions -- performing RM(D) and RM(pipi) simultaneous fit..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
-            ./fitRMD_703p01.sh round1
-            ./fitRMD_705.sh round1
+            ./simul_fit_703p01.sh round1
+            ./simul_fit_705.sh round1
             ;;
 
-    0.4.18) echo "[ROUND1: DDPIPI] Get shape -- mixing MC shapes..."
+    0.4.19) echo "[ROUND1: DDPIPI] Get shape -- mixing MC shapes..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc
             cd mix
             ./mixMC_703p01.sh round1
             ./mixMC_705.sh round1
             ;;
 
-    0.4.19) echo "[ROUND1: DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
+    0.4.20) echo "[ROUND1: DDPIPI] Fit distributions -- fitting to RM(Dpipi)..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./fitRMDpipi_703p01.sh round1
             ./fitRMDpipi_705.sh round1
             ;;
 
-    0.4.20) echo "[ROUND1: DDPIPI] Calculate numbers -- calculating cross sections..."
+    0.4.21) echo "[ROUND1: DDPIPI] Fit distributions -- fitting to M(Kpipi)..."
+            cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
+            ./mixROOT_703p01.sh round1
+            ./mixROOT_705.sh round1
+            ./factorMKpipi_703p01.sh round1
+            ./factorMKpipi_705.sh round1
+            ;;
+
+    0.4.22) echo "[ROUND1: DDPIPI] Calculate numbers -- calculating cross sections..."
             cd $HOME/bes/DDPIPI/v0.2/scripts/ana_script/xs
             ./calXS_703p01.sh round1
             ./calXS_705.sh round1
             ;;
 
-    0.4.21) echo "[ROUND1: DDPIPI] Calculate numbers -- formatting cross section outputs..."
+    0.4.23) echo "[ROUND1: DDPIPI] Calculate numbers -- formatting cross section outputs..."
             cd python
             python format_xs.py round1
             ;;
 
-    0.4.22) echo "[ROUND1: DDPIPI] Draw figures -- drawing cross sections..."
+    0.4.24) echo "[ROUND1: DDPIPI] Draw figures -- drawing cross sections..."
             cd python
             python plot_xs.py total round1
             ;;
 
-    0.4.23) echo "[ROUND1: DDPIPI] Draw figures -- drawing cross section differences between iterations..."
+    0.4.25) echo "[ROUND1: DDPIPI] Draw figures -- drawing cross section differences between iterations..."
             cd python
             python plot_xs_diff.py DDPIPI
             python plot_xs_diff.py D1_2420
@@ -648,7 +666,7 @@ case $option in
             python plot_xs_diff.py total
             ;;
 
-    0.4.24) echo "[DDPIPI] Calculate numbers -- calculating significance and upper limit number of total DDPIPI..."
+    0.4.26) echo "[DDPIPI] Calculate numbers -- calculating significance and upper limit number of total DDPIPI..."
             rm -rf $HOME/bes/DDPIPI/v0.2/python/txts/significance_*.txt
             rm -rf $HOME/bes/DDPIPI/v0.2/python/txts/upper_limit_likelihood_total_*.txt
             rm -rf $HOME/bes/DDPIPI/v0.2/python/txts/xs_upper_limit_total.txt

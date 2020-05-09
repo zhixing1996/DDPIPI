@@ -158,7 +158,7 @@ def plot(path, leg_title, ecms, xmin, xmax, xbins, runNolow, runNoup, ymax, mode
     hs.Draw('same')
     h_data.Draw('sameE1')
 
-    legend = TLegend(0.55, 0.6, 0.8, 0.75)
+    legend = TLegend(0.5, 0.6, 0.8, 0.85)
     set_legend(legend, h_data, h_incMC1, h_incMC2, h_sigMC1, h_sigMC2, leg_title)
     legend.Draw()
 

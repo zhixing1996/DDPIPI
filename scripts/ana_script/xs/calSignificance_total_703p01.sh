@@ -22,6 +22,7 @@ do
         continue
     fi
     cd $HOME/bes/DDPIPI/v0.2/python
+    rm -rf ./txts/significance_total.txt
     echo "Begininning of $PARAM_0!"
     python fit_rm_Dpipi.py $PARAM_0 data $PATCH
     python fit_rm_Dpipi.py $PARAM_0 none_sig $PATCH

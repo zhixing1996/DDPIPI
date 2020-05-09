@@ -21,17 +21,8 @@ do
     if [[ $PARAM_0 == *$shortbar2* ]]; then
         continue
     fi
-    cd $HOME/bes/DDPIPI/v0.2/python
-    rm ./txts/data_signal_events_total_${PATCH}.txt -rf
-    rm ./txts/sideband_signal_events_total_${PATCH}.txt -rf
     echo "Begininning of $PARAM_0!"
-    thresh=4290
-    if [ $PARAM_0 -gt $thresh ]; then
-        python fit_rm_Dpipi.py $PARAM_0 D1_2420 $PATCH
-    fi
-    python fit_rm_Dpipi.py $PARAM_0 data $PATCH
-    python fit_rm_Dpipi.py $PARAM_0 psipp $PATCH
-    python fit_rm_Dpipi.py $PARAM_0 DDPIPI $PATCH
-    python fit_rm_Dpipi_sideband.py $PARAM_0 $PATCH
+    cd $HOME/bes/DDPIPI/v0.2/sys_err/window
+    python simul_fit.py $PARAM_0 $PATCH
     echo "$PARAM_0 is done!"
 done
