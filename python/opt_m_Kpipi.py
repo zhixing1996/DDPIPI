@@ -56,11 +56,11 @@ def set_histo_style(h, xtitle, ytitle):
     h.SetLineWidth(2)
     h.SetStats(0)
     h.SetStats(0)
-    h.GetXaxis().SetTitleSize(0.06)
-    h.GetXaxis().SetTitleOffset(1.4)
+    h.GetXaxis().SetTitleSize(0.05)
+    h.GetXaxis().SetTitleOffset(1.15)
     h.GetXaxis().SetLabelOffset(0.01)
-    h.GetYaxis().SetTitleSize(0.06)
-    h.GetYaxis().SetTitleOffset(1.5)
+    h.GetYaxis().SetTitleSize(0.05)
+    h.GetYaxis().SetTitleOffset(1.15)
     h.GetYaxis().SetLabelOffset(0.01)
     h.GetXaxis().SetTitle(xtitle)
     h.GetXaxis().CenterTitle()
@@ -180,9 +180,23 @@ def plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
 
-    arrow_left = ientry*step + step
-    arrow_right = ientry*step + step
-    arrow_bottom = 0.
+    # arrow_left = ientry*step + step
+    # arrow_right = ientry*step + step
+    if int(ecms) == 4360:
+        arrow_left = 0.0075
+        arrow_right = 0.0075
+        arrow_top = 9.
+        arrow_bottom = 0.
+    if int(ecms) == 4420:
+        arrow_left = 0.0075
+        arrow_right = 0.0075
+        arrow_top = 14.
+        arrow_bottom = 0.
+    if int(ecms) == 4600:
+        arrow_left = 0.0075
+        arrow_right = 0.0075
+        arrow_top = 7.
+        arrow_bottom = 0.
     arrow = TArrow(arrow_left, arrow_bottom, arrow_right, arrow_top, 0.01,'>')
     set_arrow(arrow)
     arrow.Draw()

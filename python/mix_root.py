@@ -46,7 +46,7 @@ def mix(path_in, path_out, mode, ecms, patch):
         omega[2] = float(rs_factor[3])
 
     n = 0
-    if ecms <= 4290:
+    if ecms <= 4311:
         n += 1
     f_out = TFile(path_out[0], 'RECREATE')
     t_out = TTree('save', 'save')
@@ -75,7 +75,7 @@ def mix(path_in, path_out, mode, ecms, patch):
     print '--> End of processing file: ' + path_out[0]
 
     n = 0
-    if ecms <= 4290:
+    if ecms <= 4311:
         n += 1
     f_out = TFile(path_out[1], 'RECREATE')
     t_out = TTree('save', 'save')
@@ -113,7 +113,7 @@ def main():
     path_in = []
     path_out = []
     mode = []
-    if ecms > 4290:
+    if ecms > 4311:
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_raw.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw.root')
@@ -127,7 +127,7 @@ def main():
         mode.append('DDPIPI')
         mix(path_in, path_out, mode, ecms, patch)
 
-    if ecms <= 4290:
+    if ecms <= 4311:
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw.root')
         path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sigMC_mixed_width_' + str(ecms) + '.root')

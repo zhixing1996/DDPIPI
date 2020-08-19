@@ -46,7 +46,7 @@ def mix(path_in, path_out, ecms, xmin, xmax, xbins, patch):
     f_out = TFile(path_out, 'RECREATE')
     h_shape = TH1F('h_hist', '', xbins, xmin, xmax)
     n = 0
-    if ecms <= 4290:
+    if ecms <= 4311:
         n += 1
     for i in xrange(len(path_in)):
         try:
@@ -160,13 +160,13 @@ def main():
     if mode == 'MC_mix':
         path_in = []
         path_out = []
-        if ecms > 4290:
+        if ecms > 4311:
             path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D1_2420_' + str(ecms) + '.root')
             path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_psipp_' + str(ecms) + '.root')
             path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D_D_PI_PI_' + str(ecms) + '.root')
             path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
             mix(path_in, path_out, ecms, xmin, xmax, xbins, patch)
-        if ecms <= 4290:
+        if ecms <= 4311:
             path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_psipp_' + str(ecms) + '.root')
             path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D_D_PI_PI_' + str(ecms) + '.root')
             path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'

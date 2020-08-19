@@ -56,11 +56,11 @@ def set_histo_style(h, xtitle, ytitle):
     h.SetLineWidth(2)
     h.SetStats(0)
     h.SetStats(0)
-    h.GetXaxis().SetTitleSize(0.04)
-    h.GetXaxis().SetTitleOffset(1.4)
+    h.GetXaxis().SetTitleSize(0.05)
+    h.GetXaxis().SetTitleOffset(1.15)
     h.GetXaxis().SetLabelOffset(0.01)
-    h.GetYaxis().SetTitleSize(0.04)
-    h.GetYaxis().SetTitleOffset(1.5)
+    h.GetYaxis().SetTitleSize(0.05)
+    h.GetYaxis().SetTitleOffset(1.15)
     h.GetYaxis().SetLabelOffset(0.01)
     h.GetXaxis().SetTitle(xtitle)
     h.GetXaxis().CenterTitle()
@@ -99,10 +99,15 @@ def cal_significance(t1, t2, t3, t4, N, step, ecms):
     S1_list = []
     S2_list = []
     S_list = []
+    factor = 1.
+    if int(ecms) == 4600:
+        factor = 2.0
+    if int(ecms) == 4420:
+        factor = 1.8
     print 'Start of sigMC1...'
     for i in xrange(N):
         S1 = 0
-        for j in xrange(int(t3.GetEntries()*scale_factor(ecms, 'D1_2420'))):
+        for j in xrange(int(t3.GetEntries()*scale_factor(ecms, 'D1_2420')*factor)):
             t3.GetEntry(j)
             if fabs(t3.m_rm_Dpipi - 1.86965) < (step + i*step) and fabs(t3.m_rawm_D - 1.86965) < width(ecms)/2.:
                 S1 = S1 + 1
@@ -111,7 +116,7 @@ def cal_significance(t1, t2, t3, t4, N, step, ecms):
     print 'Start of sigMC2...'
     for i in xrange(N):
         S2 = 0
-        for j in xrange(int(t4.GetEntries()*scale_factor(ecms, 'psipp'))):
+        for j in xrange(int(t4.GetEntries()*scale_factor(ecms, 'psipp')*factor)):
             t4.GetEntry(j)
             if fabs(t4.m_rm_Dpipi - 1.86965) < (step + i*step) and fabs(t4.m_rawm_D - 1.86965) < width(ecms)/2.:
                 S2 = S2 + 1
@@ -170,7 +175,7 @@ def plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
-    xbins = 150
+    xbins = 100
     M_Dplus = 1.86965
     step = (1.91965 - M_Dplus)/xbins
 
@@ -180,9 +185,24 @@ def plot(path, pt_title, ecms, arrow_left, arrow_bottom, arrow_right, arrow_top)
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
 
-    arrow_left = ientry*step + step
-    arrow_right = ientry*step + step
-    arrow_bottom = 0.
+    # arrow_left = ientry*step + step
+    # arrow_right = ientry*step + step
+    # arrow_bottom = 0.
+    if int(ecms) == 4360:
+        arrow_left = 0.01333/2.
+        arrow_right = 0.01333/2.
+        arrow_top = 15.
+        arrow_bottom = 0.
+    if int(ecms) == 4420:
+        arrow_left = 0.01333/2.
+        arrow_right = 0.01333/2.
+        arrow_top = 29.
+        arrow_bottom = 0.
+    if int(ecms) == 4600:
+        arrow_left = 0.01333/2.
+        arrow_right = 0.01333/2.
+        arrow_top = 9.
+        arrow_bottom = 0.
     arrow = TArrow(arrow_left, arrow_bottom, arrow_right, arrow_top, 0.01,'>')
     set_arrow(arrow)
     arrow.Draw()

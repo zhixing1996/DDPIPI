@@ -1,5 +1,5 @@
-#ifndef Physics_Analysis_DDecayAlg_H
-#define Physics_Analysis_DDecayAlg_H 
+#ifndef Physics_Analysis_DDecay_H
+#define Physics_Analysis_DDecay_H 
 
 #include "GaudiKernel/Algorithm.h"
 #include "GaudiKernel/DeclareFactoryEntries.h"
@@ -55,10 +55,10 @@ typedef std::vector<HepLorentzVector> Vp4;
 typedef std::vector<int> Vint;
 typedef std::vector<WTrackParameter> VWTrkPara;
 
-class DDecayAlg : public Algorithm {
+class DDecay : public Algorithm {
 
     public:
-        DDecayAlg(const std::string& name, ISvcLocator* pSvcLocator);
+        DDecay(const std::string& name, ISvcLocator* pSvcLocator);
         StatusCode initialize();
         StatusCode execute();
         StatusCode finalize();  
@@ -68,6 +68,7 @@ class DDecayAlg : public Algorithm {
         bool m_isMonteCarlo;
         bool m_pid;
         bool m_debug;
+        double m_Ecms;
 
         // judgement variables
         bool stat_DTagTool;
@@ -267,12 +268,17 @@ class DDecayAlg : public Algorithm {
         NTuple::Array<double> m_p4_Dm_X3842_STDDmiss;
         NTuple::Item<int> m_Id_Dp_STDDmiss;
         NTuple::Item<int> m_Id_Dm_STDDmiss;
+        NTuple::Array<double> m_p4_piplus_truth;
+        NTuple::Array<double> m_p4_piminus_truth;
+        NTuple::Array<double> m_p4_Dplus_truth;
+        NTuple::Array<double> m_p4_Dminus_truth;
 
         // functions
         void clearVariables();
         void recordVariables();
         void recordVariables_STDDmiss();
         void saveAllMcTruthInfo();
+        bool saveTruth();
         void saveDststMcTruthInfo();
         void savePsi_3770McTruthInfo();
         void saveX_3842McTruthInfo();

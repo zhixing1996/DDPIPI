@@ -447,38 +447,38 @@ case $option in
                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana ./jobs_ana
            fi
            cd jobs_ana
-           rm -rf jobs.out
-           rm -rf jobs.err
-           mkdir jobs.out
-           mkdir jobs.err
+           # rm -rf jobs.out
+           # rm -rf jobs.err
+           mkdir -p jobs.out
+           mkdir -p jobs.err
 
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_703p01.sh .
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_703p01 .
-           echo "#!/bin/bash" > Data_Sub_703p01
-           echo "./getInfoData_703p01.sh" >> Data_Sub_703p01
-           chmod u+x Data_Sub_703p01
-           hep_sub -g physics Data_Sub_703p01 -o jobs.out -e jobs.err
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_703p01.sh .
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_703p01 .
+           # echo "#!/bin/bash" > Data_Sub_703p01
+           # echo "./getInfoData_703p01.sh" >> Data_Sub_703p01
+           # chmod u+x Data_Sub_703p01
+           # hep_sub -g physics Data_Sub_703p01 -o jobs.out -e jobs.err
 
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/getInfoD1_2420_703p01.sh .
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/D1_2420_Base_703p01 .
-           echo "#!/bin/bash" > D1_2420_Sub_703p01
-           echo "./getInfoD1_2420_703p01.sh" >> D1_2420_Sub_703p01
-           chmod u+x D1_2420_Sub_703p01
-           hep_sub -g physics D1_2420_Sub_703p01 -o jobs.out -e jobs.err
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/getInfoD1_2420_703p01.sh .
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/D1_2420_Base_703p01 .
+           # echo "#!/bin/bash" > D1_2420_Sub_703p01
+           # echo "./getInfoD1_2420_703p01.sh" >> D1_2420_Sub_703p01
+           # chmod u+x D1_2420_Sub_703p01
+           # hep_sub -g physics D1_2420_Sub_703p01 -o jobs.out -e jobs.err
 
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/getInfoD_D_PI_PI_703p01.sh .
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/DDPIPI_Base_703p01 .
-           echo "#!/bin/bash" > D_D_PI_PI_Sub_703p01
-           echo "./getInfoDDPIPI_703p01.sh" >> D_D_PI_PI_Sub_703p01
-           chmod u+x D_D_PI_PI_Sub_703p01
-           hep_sub -g physics D_D_PI_PI_Sub_703p01 -o jobs.out -e jobs.err
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/getInfoD_D_PI_PI_703p01.sh .
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/DDPIPI_Base_703p01 .
+           # echo "#!/bin/bash" > D_D_PI_PI_Sub_703p01
+           # echo "./getInfoDDPIPI_703p01.sh" >> D_D_PI_PI_Sub_703p01
+           # chmod u+x D_D_PI_PI_Sub_703p01
+           # hep_sub -g physics D_D_PI_PI_Sub_703p01 -o jobs.out -e jobs.err
 
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/getInfopsipp_703p01.sh .
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/psipp_Base_703p01 .
-           echo "#!/bin/bash" > psipp_Sub_703p01
-           echo "./getInfopsipp_703p01.sh" >> psipp_Sub_703p01
-           chmod u+x psipp_Sub_703p01
-           hep_sub -g physics psipp_Sub_703p01 -o jobs.out -e jobs.err
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/getInfopsipp_703p01.sh .
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/psipp_Base_703p01 .
+           # echo "#!/bin/bash" > psipp_Sub_703p01
+           # echo "./getInfopsipp_703p01.sh" >> psipp_Sub_703p01
+           # chmod u+x psipp_Sub_703p01
+           # hep_sub -g physics psipp_Sub_703p01 -o jobs.out -e jobs.err
 
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_705.sh .
            cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_705 .
@@ -487,26 +487,26 @@ case $option in
            chmod u+x Data_Sub_705
            hep_sub -g physics Data_Sub_705 -o jobs.out -e jobs.err
 
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/getInfoD1_2420_705.sh .
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/D1_2420_Base_705 .
-           echo "#!/bin/bash" > D1_2420_Sub_705
-           echo "./getInfoD1_2420_705.sh" >> D1_2420_Sub_705
-           chmod u+x D1_2420_Sub_705
-           hep_sub -g physics D1_2420_Sub_705 -o jobs.out -e jobs.err
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/getInfoD1_2420_705.sh .
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/D1_2420_Base_705 .
+           # echo "#!/bin/bash" > D1_2420_Sub_705
+           # echo "./getInfoD1_2420_705.sh" >> D1_2420_Sub_705
+           # chmod u+x D1_2420_Sub_705
+           # hep_sub -g physics D1_2420_Sub_705 -o jobs.out -e jobs.err
 
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/getInfoD_D_PI_PI_705.sh .
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/DDPIPI_Base_705 .
-           echo "#!/bin/bash" > D_D_PI_PI_Sub_705
-           echo "./getInfoDDPIPI_705.sh" >> D_D_PI_PI_Sub_705
-           chmod u+x D_D_PI_PI_Sub_705
-           hep_sub -g physics D_D_PI_PI_Sub_705 -o jobs.out -e jobs.err
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/getInfoD_D_PI_PI_705.sh .
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/DDPIPI_Base_705 .
+           # echo "#!/bin/bash" > D_D_PI_PI_Sub_705
+           # echo "./getInfoDDPIPI_705.sh" >> D_D_PI_PI_Sub_705
+           # chmod u+x D_D_PI_PI_Sub_705
+           # hep_sub -g physics D_D_PI_PI_Sub_705 -o jobs.out -e jobs.err
 
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/getInfopsipp_705.sh .
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/psipp_Base_705 .
-           echo "#!/bin/bash" > psipp_Sub_705
-           echo "./getInfopsipp_705.sh" >> psipp_Sub_705
-           chmod u+x psipp_Sub_705
-           hep_sub -g physics psipp_Sub_705 -o jobs.out -e jobs.err
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/getInfopsipp_705.sh .
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/psipp_Base_705 .
+           # echo "#!/bin/bash" > psipp_Sub_705
+           # echo "./getInfopsipp_705.sh" >> psipp_Sub_705
+           # chmod u+x psipp_Sub_705
+           # hep_sub -g physics psipp_Sub_705 -o jobs.out -e jobs.err
            ;;
 
     0.4.3) echo "Get samples -- applying cuts..."

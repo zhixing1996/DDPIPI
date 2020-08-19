@@ -18,13 +18,14 @@ NAME
     make_mc.py 
 
 SYNOPSIS
-    ./make_mc.py [dst_path] [sample] [decay] [mode] [type] [ecms] [dst_num]
+    ./make_mc.py [dst_path] [sample] [decay] [mode] [type] [ecms] [cms] [dst_num]
     [dst_path]: dst file path
     [sample]: sigMC, incMC, data or others
     [decay]: decay chain, such as X_3842_PI_PI for e+e- -> X(3842)PI+PI-
     [mode]: generation mode
     [type]: X_3842, D1_2420, psi_3770 or others, for inclusive MC the same as mode
     [ecms]: energy point
+    [cms]: c.m. energy
     [dst_num]: number of dst files in one jobOption file
 
 AUTHOR 
@@ -37,7 +38,7 @@ DATE
     
 def main():
     args = sys.argv[1:]
-    if len(args) < 7:
+    if len(args) < 8:
         return usage()
     
     dst_path = args[0]
@@ -46,7 +47,8 @@ def main():
     mode = args[3]
     type = args[4]
     ecms = args[5]
-    dst_num = args[6]
+    cms = args[6]
+    dst_num = args[7]
     sys.stdout.write('Scanning %s...\n' %dst_path)
 
     dst_list = []
@@ -63,6 +65,7 @@ def main():
         f.write('#include "$DTAGALGROOT/share/jobOptions_dTag.txt"\n')
         f.write('#include "$DDECAYALGROOT/share/jobOptions_DDecay.txt"\n')
         f.write('#include "$MEASUREDECMSSVCROOT/share/anaOptions.txt"\n')
+        f.write('DDecay.Ecms = '+str(float(cms)/1000.)+';\n')
         f.write('\n')
         f.write('DTag.NeutralDReconstruction  = true;\n')
         f.write('DTag.ChargedDReconstruction  = true;\n')

@@ -15,4 +15,21 @@ do
     cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/rootfile
     rm -rf sigMC_psipp_$PARAM_0\.root
     hadd sigMC_psipp_$PARAM_0\.root *.root
+    cd ../..
+    shortbar1="-1"
+    shortbar2="-2"
+    if [[ $PARAM_0 == *$shortbar1* ]]; then
+        dir=$(echo $PARAM_0 | sed 's/-1//g')/rootfile
+        mkdir -p $dir
+        mv /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/rootfile/sigMC_psipp_$PARAM_0\.root ./$dir
+    fi
+    if [[ $PARAM_0 == *$shortbar2* ]]; then
+        dir=$(echo $PARAM_0 | sed 's/-2//g')/rootfile
+        mkdir -p $dir
+        mv /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/rootfile/sigMC_psipp_$PARAM_0\.root ./$dir
+        cd $dir
+        VAR=$(echo $PARAM_0 | sed 's/-2//g')
+        rm -rf sigMC_psipp_$VAR\.root
+        hadd sigMC_psipp_$VAR\.root sigMC_psipp_$VAR-1.root sigMC_psipp_$VAR-2.root
+    fi
 done

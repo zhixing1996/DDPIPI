@@ -27,23 +27,24 @@ int Ncut0, Ncut1, Ncut2, Ncut3, Ncut4, Ncut5, Ncut6, Ncut7, Ncut8, Ncut9, Ncut10
 VertexFit * vtxfit = VertexFit::instance();
 KinematicFit * kmfit = KinematicFit::instance();
 
-DECLARE_ALGORITHM_FACTORY( DDecayAlg )
+DECLARE_ALGORITHM_FACTORY( DDecay )
 DECLARE_FACTORY_ENTRIES( DDecayAlg ) {
-    DECLARE_ALGORITHM( DDecayAlg );
+    DECLARE_ALGORITHM( DDecay );
 }
 
 LOAD_FACTORY_ENTRIES( DDecayAlg )
 
-DDecayAlg::DDecayAlg(const std::string& name, ISvcLocator* pSvcLocator) :
+DDecay::DDecay(const std::string& name, ISvcLocator* pSvcLocator) :
 	Algorithm(name, pSvcLocator) {
         m_DModes.push_back(200);
         declareProperty("DMode", m_DModes);
         declareProperty("IsMonteCarlo", m_isMonteCarlo = true);
         declareProperty("UsePID", m_pid = true);
         declareProperty("Debug", m_debug = false);
+        declareProperty("Ecms", m_Ecms = 4.600);
 }
 
-StatusCode DDecayAlg::initialize() {
+StatusCode DDecay::initialize() {
     MsgStream log(msgSvc(), name());
     log << MSG::INFO << ">>>>>>> in initialize()" << endmsg;
 
@@ -190,6 +191,10 @@ StatusCode DDecayAlg::initialize() {
             status = m_tuple2->addItem("p4_Dm_X3842", 4, m_p4_Dm_X3842_STDDmiss);
             status = m_tuple2->addItem("DpId", m_Id_Dp_STDDmiss);
             status = m_tuple2->addItem("DmId", m_Id_Dm_STDDmiss);
+            status = m_tuple2->addItem("p4_piplus_truth", 4, m_p4_piplus_truth);
+            status = m_tuple2->addItem("p4_piminus_truth", 4, m_p4_piminus_truth);
+            status = m_tuple2->addItem("p4_Dplus_truth", 4, m_p4_Dplus_truth);
+            status = m_tuple2->addItem("p4_Dminus_truth", 4, m_p4_Dminus_truth);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple2) << endmsg;
@@ -201,7 +206,7 @@ StatusCode DDecayAlg::initialize() {
     return StatusCode::SUCCESS;
 }
 
-StatusCode DDecayAlg::execute() {
+StatusCode DDecay::execute() {
     MsgStream log(msgSvc(), name());
     log << MSG::INFO << "in execute()" << endreq;
 
@@ -239,7 +244,7 @@ StatusCode DDecayAlg::execute() {
     return StatusCode::SUCCESS;
 }
 
-StatusCode DDecayAlg::finalize() {
+StatusCode DDecay::finalize() {
     std::cout << "Ncut0: " << Ncut0 << std::endl;
     std::cout << "Ncut1: " << Ncut1 << std::endl;
     std::cout << "Ncut2: " << Ncut2 << std::endl;
@@ -260,7 +265,7 @@ StatusCode DDecayAlg::finalize() {
     return StatusCode::SUCCESS;
 }
 
-void DDecayAlg::clearVariables() {
+void DDecay::clearVariables() {
     // common info
     runNo = 0;
     evtNo = 0;
@@ -389,7 +394,7 @@ void DDecayAlg::clearVariables() {
     stat_fitpi0_STDDmiss = false;
 }
 
-void DDecayAlg::saveAllMcTruthInfo() {
+void DDecay::saveAllMcTruthInfo() {
     SmartDataPtr<Event::McParticleCol> mcParticleCol(eventSvc(), "/Event/MC/McParticleCol");
     if (!mcParticleCol) {
         std::cout << "Could not retreive McParticleCol" << std::endl;
@@ -424,7 +429,7 @@ void DDecayAlg::saveAllMcTruthInfo() {
     }
 }
 
-void DDecayAlg::saveDststMcTruthInfo() {
+void DDecay::saveDststMcTruthInfo() {
     SmartDataPtr<Event::McParticleCol> mcParticleCol(eventSvc(), "/Event/MC/McParticleCol");
     Event::McParticleCol::iterator iter_Dststmc = mcParticleCol->begin();
     int num_D=0, num_pion=0, num_Dstst=0, num_others=0;
@@ -467,7 +472,7 @@ void DDecayAlg::saveDststMcTruthInfo() {
     if (m_debug) std::cout << " DststD truth information 2:  " << p4_pip[3] << "  " << p4_D1[3] << "  " << p4_D2[3] << "  " <<p4_Dstst[3] << std::endl;
 }
 
-void DDecayAlg::savePsi_3770McTruthInfo() {
+void DDecay::savePsi_3770McTruthInfo() {
     SmartDataPtr<Event::McParticleCol> mcParticleCol(eventSvc(), "/Event/MC/McParticleCol");
     Event::McParticleCol::iterator iter_Psimc = mcParticleCol->begin();
     int num_Dp=0,num_Dm=0, num_pip=0, num_pim=0, num_psip=0, num_others;
@@ -504,7 +509,7 @@ void DDecayAlg::savePsi_3770McTruthInfo() {
     if (m_debug) std::cout << " recording Psippp truth information 2:  " << p4_pip_psi[3] << "  " << p4_pim_psi[3] << "  " << p4_psi[3] << "  " << p4_Dp_psi[3] << "  " << p4_Dm_psi[3] << std::endl;
 }
 
-void DDecayAlg::saveDpDmMcTruthInfo() {
+void DDecay::saveDpDmMcTruthInfo() {
     SmartDataPtr<Event::McParticleCol> mcParticleCol(eventSvc(), "/Event/MC/McParticleCol");
     Event::McParticleCol::iterator iter_DpDmmc = mcParticleCol->begin();
     for (; iter_DpDmmc != mcParticleCol->end(); iter_DpDmmc++) {
@@ -549,7 +554,7 @@ void DDecayAlg::saveDpDmMcTruthInfo() {
     }
 }
 
-void DDecayAlg::saveX_3842McTruthInfo() {
+void DDecay::saveX_3842McTruthInfo() {
     SmartDataPtr<Event::McParticleCol> mcParticleCol(eventSvc(), "/Event/MC/McParticleCol");
     Event::McParticleCol::iterator iter_X3842mc = mcParticleCol->begin();
     int num_Dp=0,num_Dm=0, num_pip=0, num_pim=0, num_X3842=0, num_others;
@@ -586,7 +591,7 @@ void DDecayAlg::saveX_3842McTruthInfo() {
     if (m_debug) std::cout << " recording X(3842) truth information 2:  " << p4_pip_X3842[3] << "  " << p4_pim_X3842[3] << "  " << p4_X3842[3] << "  " << p4_Dp_X3842[3] << "  " << p4_Dm_X3842[3] << std::endl;
 }
 
-bool DDecayAlg::useDTagTool() {
+bool DDecay::useDTagTool() {
     DTagTool dtagTool; // before running this program, DTagTool have running, and the suited D candidates have been tagged
     if (m_pid) dtagTool.setPID(true); // all the combinations of tracks have been tested, the suited D candidantes among them have been tagged "true", others have been tagged "false"
     if (dtagTool.isDTagListEmpty()) {
@@ -613,7 +618,7 @@ bool DDecayAlg::useDTagTool() {
     else return false;
 }
 
-bool DDecayAlg::tagSingleD() {
+bool DDecay::tagSingleD() {
     VWTrkPara vwtrkpara_charge, vwtrkpara_photon;
     for (int i = 0; i < m_DModes.size(); i++) {
         mode = m_DModes[i];
@@ -641,7 +646,7 @@ bool DDecayAlg::tagSingleD() {
     else return false;
 }
 
-bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon) {
+bool DDecay::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon) {
     // Accessing DTagList
     SmartDataPtr<EvtRecDTagCol> evtRecDTagCol(eventSvc(), EventModel::EvtRec::EvtRecDTagCol);
     if (!evtRecDTagCol) {
@@ -678,27 +683,27 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
         double mD_low = 0.;
         double mD_up = 0.;
         if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
-            DELTAM = 0.018648/2.;
+            DELTAM = 0.0075*2/2;
             mD_low = M_Dplus - 4.* DELTAM;
             mD_up = M_Dplus + 4.* DELTAM;
         }
         else if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
-            DELTAM = 0.019166/2.;
+            DELTAM = 0.0075*2/2.;
             mD_low = M_Dplus - 4.* DELTAM;
             mD_up = M_Dplus + 4.* DELTAM;
         }
         else if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
-            DELTAM = 0.021238/2.;
+            DELTAM = 0.0075*2/2.;
             mD_low = M_Dplus - 4.* DELTAM;
             mD_up = M_Dplus + 4.* DELTAM;
         }
         else {
-            DELTAM = 0.021238/2.;
+            DELTAM = 0.0075*2/2.;
             mD_low = M_Dplus - 4.* DELTAM;
             mD_up = M_Dplus + 4.* DELTAM;
         }
         if (m_debug) {
-            std::cout << "M(Kpipi) range: [" << mD_low << ", " << mD_up << "]" << std::endl;
+            std::cout << "M(Kpipi) sidebandlow and sidebandup: " << mD_low << ", " << mD_up << std::endl;
         }
         if (fabs((*dtag_iter)->mass() - mDcand) > 0.07) {
             continue;
@@ -833,7 +838,7 @@ bool DDecayAlg::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_phot
     else return false;
 }
 
-double DDecayAlg::fitVertex(VWTrkPara &vwtrkpara, VertexParameter &birth) {
+double DDecay::fitVertex(VWTrkPara &vwtrkpara, VertexParameter &birth) {
     VertexParameter vxpar;
     Hep3Vector xorigin(0,0,0);
     HepSymMatrix Exorigin(3,0); // error matrix
@@ -854,7 +859,7 @@ double DDecayAlg::fitVertex(VWTrkPara &vwtrkpara, VertexParameter &birth) {
     return vf_chi2;
 }
 
-bool DDecayAlg::fitSecondVertex_STDDmiss(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus) {
+bool DDecay::fitSecondVertex_STDDmiss(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus) {
     m_chi2_svf_STDDmiss = 999.;
     m_L_svf_STDDmiss = 999.;
     m_Lerr_svf_STDDmiss = 99.;
@@ -911,7 +916,7 @@ bool DDecayAlg::fitSecondVertex_STDDmiss(VWTrkPara &vwtrkpara_piplus, VWTrkPara 
     return true;
 }
 
-double DDecayAlg::fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth) {
+double DDecay::fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth) {
     kmfit->init();
     // kmfit->setEspread(0.0011);
     kmfit->setBeamPosition(birth.vx());
@@ -960,7 +965,7 @@ double DDecayAlg::fitKM(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon
     return kf_chi2;
 }
 
-double DDecayAlg::fitKM_low(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth, double mD_low) {
+double DDecay::fitKM_low(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth, double mD_low) {
     kmfit->init();
     // kmfit->setEspread(0.0011);
     kmfit->setBeamPosition(birth.vx());
@@ -1009,7 +1014,7 @@ double DDecayAlg::fitKM_low(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_ph
     return kf_chi2;
 }
 
-double DDecayAlg::fitKM_up(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth, double mD_up) {
+double DDecay::fitKM_up(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth, double mD_up) {
     kmfit->init();
     // kmfit->setEspread(0.0011);
     kmfit->setBeamPosition(birth.vx());
@@ -1058,7 +1063,7 @@ double DDecayAlg::fitKM_up(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_pho
     return kf_chi2;
 }
 
-double DDecayAlg::fitKM_STDDmiss(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth) {
+double DDecay::fitKM_STDDmiss(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth) {
     kmfit->init();
     // kmfit->setEspread(0.0011);
     kmfit->setBeamPosition(birth.vx());
@@ -1086,22 +1091,7 @@ double DDecayAlg::fitKM_STDDmiss(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpa
     for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
-    if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
-        cms = 4.358;
-    }
-    else if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
-        cms = 4.416;
-    }
-    else if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
-        cms = 4.600;
-    }
-    else {
-        cms = ECMS(fabs(runNo));
-    }
-    if (cms < 0) {
-        std::cout << "runNo " << fabs(runNo) << " missed, please check..." << std::endl; 
-        return -999;
-    }
+    cms = m_Ecms;
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
     kmfit->AddMissTrack(count++, M_Dplus);
@@ -1132,7 +1122,7 @@ double DDecayAlg::fitKM_STDDmiss(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpa
     return kf_chi2;
 }
 
-double DDecayAlg::fitKM_STDDmiss_low(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double sidebandlow_mean) {
+double DDecay::fitKM_STDDmiss_low(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double sidebandlow_mean) {
     kmfit->init();
     // kmfit->setEspread(0.0011);
     kmfit->setBeamPosition(birth.vx());
@@ -1160,22 +1150,7 @@ double DDecayAlg::fitKM_STDDmiss_low(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwt
     for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
-    if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
-        cms = 4.358;
-    }
-    else if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
-        cms = 4.416;
-    }
-    else if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
-        cms = 4.600;
-    }
-    else {
-        cms = ECMS(fabs(runNo));
-    }
-    if (cms < 0) {
-        std::cout << "runNo " << fabs(runNo) << "missed, please check..." << std::endl; 
-        return -999;
-    }
+    cms = m_Ecms;
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
     kmfit->AddMissTrack(count++, sidebandlow_mean);
@@ -1206,7 +1181,7 @@ double DDecayAlg::fitKM_STDDmiss_low(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwt
     return kf_chi2;
 }
 
-double DDecayAlg::fitKM_STDDmiss_up(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double sidebandup_mean) {
+double DDecay::fitKM_STDDmiss_up(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double sidebandup_mean) {
     kmfit->init();
     // kmfit->setEspread(0.0011);
     kmfit->setBeamPosition(birth.vx());
@@ -1234,22 +1209,7 @@ double DDecayAlg::fitKM_STDDmiss_up(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
     for (int i = 0; i < (Pi0list.size()/2); i++) kmfit->AddResonance(n_res++, M_Pi0, n_trkD + i*2, n_trkD + i*2 + 1); // the last two variales: two gamma tracks
     kmfit->AddResonance(n_res++, mDcand, D1list);
     double cms = 0;
-    if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
-        cms = 4.358;
-    }
-    else if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
-        cms = 4.416;
-    }
-    else if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
-        cms = 4.600;
-    }
-    else {
-        cms = ECMS(fabs(runNo));
-    }
-    if (cms < 0) {
-        std::cout << "runNo " << fabs(runNo) << "missed, please check..." << std::endl; 
-        return -999;
-    }
+    cms = m_Ecms;
     kmfit->AddTrack(count++, vwtrkpara_piplus[n_piplus]);
     kmfit->AddTrack(count++, vwtrkpara_piminus[n_piminus]);
     kmfit->AddMissTrack(count++, sidebandup_mean);
@@ -1280,7 +1240,7 @@ double DDecayAlg::fitKM_STDDmiss_up(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtr
     return kf_chi2;
 }
 
-bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth) {
+bool DDecay::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth) {
     SmartRefVector<EvtRecTrack> othertracks = (*dtag_iter)->otherTracks();
     SmartDataPtr<EvtRecEvent> evtRecEvent(eventSvc(), "/Event/EvtRec/EvtRecEvent");
     if (m_debug) std::cout << " total charged tracks : " << evtRecEvent->totalCharged() << std::endl;
@@ -1409,10 +1369,10 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
             double sidebandup_up = 0;
             double low = 0;
             double up = 0;
-            if (fabs(runNo) >= 30616 && fabs(runNo) <= 31279) {
-                cms = 4.358;
-                signal_low = M_Dplus - 0.0146666666667/2.;
-                signal_up = M_Dplus + 0.0146666666667/2.;
+            if (m_Ecms == 4.35826) {
+                cms = m_Ecms;
+                signal_low = M_Dplus - 0.01333/2.;
+                signal_up = M_Dplus + 0.01333/2.;
                 sidebandup_low = signal_up + (signal_up - signal_low);
                 sidebandup_up = sidebandup_low + (signal_up - signal_low);
                 sidebandlow_up = signal_low - (signal_up - signal_low);
@@ -1420,10 +1380,10 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 low = 1.6;
                 up = 2.0;
             }
-            else if ((fabs(runNo) >= 31327 && fabs(runNo) <= 31390) || (fabs(runNo) >= 36773 && fabs(runNo) <= 38140)) {
-                cms = 4.416;
-                signal_low = M_Dplus - 0.0146666666667/2.;
-                signal_up = M_Dplus + 0.0146666666667/2.;
+            else if (m_Ecms == 4.41558) {
+                cms = m_Ecms;
+                signal_low = M_Dplus - 0.01333/2.;
+                signal_up = M_Dplus + 0.01333/2.;
                 sidebandup_low = signal_up + (signal_up - signal_low);
                 sidebandup_up = sidebandup_low + (signal_up - signal_low);
                 sidebandlow_up = signal_low - (signal_up - signal_low);
@@ -1431,10 +1391,10 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 low = 1.6;
                 up = 2.0;
             }
-            else if (fabs(runNo) >= 35227 && fabs(runNo) <= 36213) {
-                cms = 4.600;
-                signal_low = M_Dplus - 0.018/2.;
-                signal_up = M_Dplus + 0.018/2.;
+            else if (m_Ecms == 4.59953) {
+                cms = m_Ecms;
+                signal_low = M_Dplus - 0.01333/2.;
+                signal_up = M_Dplus + 0.01333/2.;
                 sidebandup_low = signal_up + (signal_up - signal_low);
                 sidebandup_up = sidebandup_low + (signal_up - signal_low);
                 sidebandlow_up = signal_low - (signal_up - signal_low);
@@ -1443,9 +1403,9 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 up = 2.0;
             }
             else {
-                cms = ECMS(fabs(runNo));
-                signal_low = M_Dplus - 0.018/2.;
-                signal_up = M_Dplus + 0.018/2.;
+                cms = m_Ecms;
+                signal_low = M_Dplus - 0.01333/2.;
+                signal_up = M_Dplus + 0.01333/2.;
                 sidebandup_low = signal_up + (signal_up - signal_low);
                 sidebandup_up = sidebandup_low + (signal_up - signal_low);
                 sidebandlow_up = signal_low - (signal_up - signal_low);
@@ -1480,110 +1440,111 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
                 chi2_kf_STDDmiss_up = fitKM_STDDmiss_up(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, sidebandup_mean);
             }
             if (m_debug) std::cout << "Start recording region info if passed the requirement" << std::endl;
-             if (fabs(chi2_kf_STDDmiss) < 9999.) {
-                 SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
-                 for (int k = 0; k < n_trkD; k++) {
-                     RecMdcKalTrack* KalTrk = Dtrks[k]->mdcKalTrack();
-                     if (dtagTool.isKaon(Dtrks[k])) {
-                         KalTrk->setPidType(RecMdcKalTrack::kaon);
-                         for (int l = 0; l < 4; l++) m_rawp4_Dtrk_STDDmiss[k][l] = KalTrk->p4(mass[3])[l];
-                         m_rawp4_Dtrk_STDDmiss[k][4] = KalTrk->charge();
-                         m_rawp4_Dtrk_STDDmiss[k][5] = 3;
-                     } else {
-                         KalTrk->setPidType(RecMdcKalTrack::pion);
-                         for (int l = 0; l < 4; l++) m_rawp4_Dtrk_STDDmiss[k][l] = KalTrk->p4(mass[2])[l];
-                         m_rawp4_Dtrk_STDDmiss[k][4] = KalTrk->charge();
-                         m_rawp4_Dtrk_STDDmiss[k][5] = 2;
-                     }
-                     for (int l = 0; l < 4; l++) {
-                         m_p4_Dtrkold_STDDmiss[k][l] = m_p4_Dtrk[k][l];
-                     }
-                 }
-                 SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
-                 for(int k = 0; k < Dshws.size(); k++) {
-                     RecEmcShower *gTrk = Dshws[k]->emcShower();
-                     Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
-                     Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
-                     Gm_Mom.setMag(gTrk->energy());
-                     HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
-                     for (int l = 0; l < 4; l++) m_rawp4_Dshw_STDDmiss[k][l] = Gm_p4[l];
-                     for (int l = 0; l < 4; l++) {
-                         m_p4_Dshwold_STDDmiss[k][l] = m_p4_Dshw[k][l];
-                     }
-                 }
-                 charge_left_STDDmiss = 0;
-                 m_charge_left_STDDmiss = 0;
-                 for (int k = 0; k < othertracks.size(); k++) {
-                     if (k != i && k != j) charge_left_STDDmiss += m_rawp4_otherMdcKaltrk[k][4];
-                 }
-                 // to find the good pions and kaons
-                 m_n_othertrks_STDDmiss = 0;
-                 for (int k = 0; k < othertracks.size(); k++) {
-                     if (k != i && k != j) {
-                         if (!(dtagTool.isGoodTrack(othertracks[k]))) continue;
-                         Ncut8++;
-                         if (dtagTool.isPion(othertracks[k])) {
-                             RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
-                             RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
-                             mdcKalTrk->setPidType(RecMdcKalTrack::pion);
-                             for (int m = 0; m < 4; m++) {
-                                 m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][m] = mdcTrk->p4(mass[2])[m];
-                                 m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][m] = mdcKalTrk->p4(mass[2])[m];
-                             }
-                             m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][4] = mdcTrk->chi2();
-                             m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][5] = mdcTrk->stat(); // stat: status
-                             m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][4] = mdcKalTrk->charge();
-                             m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][5] = 2;
-                         }
-                         if (dtagTool.isKaon(othertracks[k])) {
-                             RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
-                             RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
-                             mdcKalTrk->setPidType(RecMdcKalTrack::kaon);
-                             for (int m = 0; m < 4; m++) {
-                                 m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][m] = mdcTrk->p4(mass[2])[m];
-                                 m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][m] = mdcKalTrk->p4(mass[3])[m];
-                             }
-                             m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][4] = mdcTrk->chi2();
-                             m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][5] = mdcTrk->stat(); // stat: status
-                             m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][4] = mdcKalTrk->charge();
-                             m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][5] = 3;
-                         }
-                         m_n_othertrks_STDDmiss++;
-                         if (m_n_othertrks_STDDmiss >= 20) continue;
-                         Ncut9++;
-                     }
-                 }
-                 RecMdcKalTrack *Piplus = othertracks[i]->mdcKalTrack();
-                 for (int k = 0; k < 4; k++) {
-                     m_rawp4_tagPiplus_STDDmiss[k] = Piplus->p4(mass[2])[k];
-                 }
-                 RecMdcKalTrack *Piminus = othertracks[j]->mdcKalTrack();
-                 for (int k = 0; k < 4; k++) {
-                     m_rawp4_tagPiminus_STDDmiss[k] = Piminus->p4(mass[2])[k];
-                 }
-                 SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
-                 // to find the good photons in the othershowers list
-                 VWTrkPara vwtrkpara_photons_STDDmiss;
-                 vwtrkpara_photons_STDDmiss.clear();
-                 m_n_othershws_STDDmiss = 0;
-                 for (int k = 0; k < othershowers.size(); k++) {
-                     if (!(dtagTool.isGoodShower(othershowers[k]))) continue;
-                     Ncut10++;
-                     RecEmcShower *gTrk = othershowers[k]->emcShower();
-                     Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
-                     Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
-                     Gm_Mom.setMag(gTrk->energy());
-                     HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
-                     for (int m = 0; m < 4; m++) m_rawp4_othershw_STDDmiss[m_n_othershws_STDDmiss][m] = Gm_p4[m];
-                     m_n_othershws_STDDmiss++;
-                     if (m_n_othershws_STDDmiss >= 50) continue;
-                     Ncut11++;
-                     vwtrkpara_photons_STDDmiss.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE()));
-                 }
-                 stat_fitpi0_STDDmiss = fitpi0_STDDmiss(vwtrkpara_photons_STDDmiss, birth, pD);
-                 if (!stat_fitpi0_STDDmiss && m_debug) std::cout << "Cannot find enough gamma to reconstruct pi0 for signal!" << std::endl;
-                 recordVariables_STDDmiss();
-             }
+            if (fabs(chi2_kf_STDDmiss) < 9999.) {
+                SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
+                for (int k = 0; k < n_trkD; k++) {
+                    RecMdcKalTrack* KalTrk = Dtrks[k]->mdcKalTrack();
+                    if (dtagTool.isKaon(Dtrks[k])) {
+                        KalTrk->setPidType(RecMdcKalTrack::kaon);
+                        for (int l = 0; l < 4; l++) m_rawp4_Dtrk_STDDmiss[k][l] = KalTrk->p4(mass[3])[l];
+                        m_rawp4_Dtrk_STDDmiss[k][4] = KalTrk->charge();
+                        m_rawp4_Dtrk_STDDmiss[k][5] = 3;
+                    } else {
+                        KalTrk->setPidType(RecMdcKalTrack::pion);
+                        for (int l = 0; l < 4; l++) m_rawp4_Dtrk_STDDmiss[k][l] = KalTrk->p4(mass[2])[l];
+                        m_rawp4_Dtrk_STDDmiss[k][4] = KalTrk->charge();
+                        m_rawp4_Dtrk_STDDmiss[k][5] = 2;
+                    }
+                    for (int l = 0; l < 4; l++) {
+                        m_p4_Dtrkold_STDDmiss[k][l] = m_p4_Dtrk[k][l];
+                    }
+                }
+                SmartRefVector<EvtRecTrack> Dshws = (*dtag_iter)->showers();
+                for(int k = 0; k < Dshws.size(); k++) {
+                    RecEmcShower *gTrk = Dshws[k]->emcShower();
+                    Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
+                    Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
+                    Gm_Mom.setMag(gTrk->energy());
+                    HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
+                    for (int l = 0; l < 4; l++) m_rawp4_Dshw_STDDmiss[k][l] = Gm_p4[l];
+                    for (int l = 0; l < 4; l++) {
+                        m_p4_Dshwold_STDDmiss[k][l] = m_p4_Dshw[k][l];
+                    }
+                }
+                charge_left_STDDmiss = 0;
+                m_charge_left_STDDmiss = 0;
+                for (int k = 0; k < othertracks.size(); k++) {
+                    if (k != i && k != j) charge_left_STDDmiss += m_rawp4_otherMdcKaltrk[k][4];
+                }
+                // to find the good pions and kaons
+                m_n_othertrks_STDDmiss = 0;
+                for (int k = 0; k < othertracks.size(); k++) {
+                    if (k != i && k != j) {
+                        if (!(dtagTool.isGoodTrack(othertracks[k]))) continue;
+                        Ncut8++;
+                        if (dtagTool.isPion(othertracks[k])) {
+                            RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
+                            RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
+                            mdcKalTrk->setPidType(RecMdcKalTrack::pion);
+                            for (int m = 0; m < 4; m++) {
+                                m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][m] = mdcTrk->p4(mass[2])[m];
+                                m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][m] = mdcKalTrk->p4(mass[2])[m];
+                            }
+                            m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][4] = mdcTrk->chi2();
+                            m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][5] = mdcTrk->stat(); // stat: status
+                            m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][4] = mdcKalTrk->charge();
+                            m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][5] = 2;
+                        }
+                        if (dtagTool.isKaon(othertracks[k])) {
+                            RecMdcTrack *mdcTrk = othertracks[k]->mdcTrack();
+                            RecMdcKalTrack *mdcKalTrk = othertracks[k]->mdcKalTrack();
+                            mdcKalTrk->setPidType(RecMdcKalTrack::kaon);
+                            for (int m = 0; m < 4; m++) {
+                                m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][m] = mdcTrk->p4(mass[2])[m];
+                                m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][m] = mdcKalTrk->p4(mass[3])[m];
+                            }
+                            m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][4] = mdcTrk->chi2();
+                            m_rawp4_otherMdctrk_STDDmiss[m_n_othertrks_STDDmiss][5] = mdcTrk->stat(); // stat: status
+                            m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][4] = mdcKalTrk->charge();
+                            m_rawp4_otherMdcKaltrk_STDDmiss[m_n_othertrks_STDDmiss][5] = 3;
+                        }
+                        m_n_othertrks_STDDmiss++;
+                        if (m_n_othertrks_STDDmiss >= 20) continue;
+                        Ncut9++;
+                    }
+                }
+                RecMdcKalTrack *Piplus = othertracks[i]->mdcKalTrack();
+                for (int k = 0; k < 4; k++) {
+                    m_rawp4_tagPiplus_STDDmiss[k] = Piplus->p4(mass[2])[k];
+                }
+                RecMdcKalTrack *Piminus = othertracks[j]->mdcKalTrack();
+                for (int k = 0; k < 4; k++) {
+                    m_rawp4_tagPiminus_STDDmiss[k] = Piminus->p4(mass[2])[k];
+                }
+                SmartRefVector<EvtRecTrack> othershowers = (*dtag_iter)->otherShowers();
+                // to find the good photons in the othershowers list
+                VWTrkPara vwtrkpara_photons_STDDmiss;
+                vwtrkpara_photons_STDDmiss.clear();
+                m_n_othershws_STDDmiss = 0;
+                for (int k = 0; k < othershowers.size(); k++) {
+                    if (!(dtagTool.isGoodShower(othershowers[k]))) continue;
+                    Ncut10++;
+                    RecEmcShower *gTrk = othershowers[k]->emcShower();
+                    Hep3Vector Gm_Vec(gTrk->x(), gTrk->y(), gTrk->z());
+                    Hep3Vector Gm_Mom = Gm_Vec - birth.vx();
+                    Gm_Mom.setMag(gTrk->energy());
+                    HepLorentzVector Gm_p4(Gm_Mom, gTrk->energy());
+                    for (int m = 0; m < 4; m++) m_rawp4_othershw_STDDmiss[m_n_othershws_STDDmiss][m] = Gm_p4[m];
+                    m_n_othershws_STDDmiss++;
+                    if (m_n_othershws_STDDmiss >= 50) continue;
+                    Ncut11++;
+                    vwtrkpara_photons_STDDmiss.push_back(WTrackParameter(gTrk->position(), Gm_p4, gTrk->dphi(), gTrk->dtheta(), gTrk->dE()));
+                }
+                stat_fitpi0_STDDmiss = fitpi0_STDDmiss(vwtrkpara_photons_STDDmiss, birth, pD);
+                if (!stat_fitpi0_STDDmiss && m_debug) std::cout << "Cannot find enough gamma to reconstruct pi0 for signal!" << std::endl;
+                if (runNo < 0 && m_isMonteCarlo) saveTruth();
+                recordVariables_STDDmiss();
+            }
         }
     }
     if (m_debug) std::cout << " recorded " << m_n_othertrks << " other charged good tracks " << std::endl;
@@ -1591,7 +1552,7 @@ bool DDecayAlg::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_
     else return true;
 }
 
-int DDecayAlg::MatchMC(HepLorentzVector &p4, std::string MODE) {
+int DDecay::MatchMC(HepLorentzVector &p4, std::string MODE) {
     SmartDataPtr<Event::McParticleCol> mcParticleCol(eventSvc(), "/Event/MC/McParticleCol");
     if (!mcParticleCol) {
         return -999;
@@ -1620,10 +1581,10 @@ int DDecayAlg::MatchMC(HepLorentzVector &p4, std::string MODE) {
             if (MODE == "D_tag" && (fabs(pid_mom) != 411 && (pid_mom != 310 && fabs(pid_grandmom) != 411)) && (pid_mom != 111 && fabs(pid_grandmom) != 411)) {
                 return 0;
             }
-            if (MODE == "pi_solo" && (pid_mom == 9020443 || pid_mom == 9030443 || pid_mom == 90022 || pid_mom == 80022 || fabs(pid_mom) == 10413)) {
+            if (MODE == "pi_solo" && (pid_mom == 9020443 || pid_mom == 9030443 || pid_mom == 90022 || pid_mom == 80022 || fabs(pid_mom) == 10413 || (fabs(pid_mom) == 211 && fabs(pid_grandmom) == 211))) {
                 return 1;
             } 
-            if (MODE == "pi_solo" && (pid_mom != 9020443 || pid_mom != 9030443 || pid_mom != 90022 || pid_mom != 80022 || fabs(pid_mom) != 10413)) {
+            if (MODE == "pi_solo" && (pid_mom != 9020443 || pid_mom != 9030443 || pid_mom != 90022 || pid_mom != 80022 || fabs(pid_mom) != 10413 || (fabs(pid_mom) == 211 && fabs(pid_grandmom) == 211))) {
                 return 0;
             }
         }
@@ -1631,7 +1592,56 @@ int DDecayAlg::MatchMC(HepLorentzVector &p4, std::string MODE) {
     return 0;
 }
 
-bool DDecayAlg::saveOthershws() {
+bool DDecay::saveTruth() {
+    SmartDataPtr<Event::McParticleCol> mcParticleCol(eventSvc(), "/Event/MC/McParticleCol");
+    if (!mcParticleCol) {
+        return false;
+    } else {
+        Event::McParticleCol::iterator iter_mc = mcParticleCol->begin();
+        Event::McParticle* cand_particle;
+        for (; iter_mc != mcParticleCol->end(); iter_mc++) {
+            if (!(*iter_mc)->decayFromGenerator())  continue;
+            double pid_cand = (*iter_mc)->particleProperty();
+            if (!(pid_cand == 211 || pid_cand == -211 || pid_cand == 411 || pid_cand == -411)) continue;
+            cand_particle = (*iter_mc);
+            Event::McParticle mom = cand_particle->mother();
+            int pid_mom = mom.particleProperty();
+            Event::McParticle grandmom = mom.mother();
+            int pid_grandmom = grandmom.particleProperty();
+            if ((fabs(pid_cand) == 211 && fabs(pid_mom) == 211) || (fabs(pid_cand) == 211 && fabs(pid_mom) == 10413)) {
+                if (pid_cand == 211) {
+                    m_p4_piplus_truth[0] = cand_particle->initialFourMomentum().px();
+                    m_p4_piplus_truth[1] = cand_particle->initialFourMomentum().py();
+                    m_p4_piplus_truth[2] = cand_particle->initialFourMomentum().pz();
+                    m_p4_piplus_truth[3] = cand_particle->initialFourMomentum().e();
+                }
+                if (pid_cand == -211) {
+                    m_p4_piminus_truth[0] = cand_particle->initialFourMomentum().px();
+                    m_p4_piminus_truth[1] = cand_particle->initialFourMomentum().py();
+                    m_p4_piminus_truth[2] = cand_particle->initialFourMomentum().pz();
+                    m_p4_piminus_truth[3] = cand_particle->initialFourMomentum().e();
+                }
+            } 
+            if ((fabs(pid_cand) == 411 && fabs(pid_mom) == 411) || (fabs(pid_cand) == 411 && fabs(pid_mom) == 30443) || (fabs(pid_cand) == 411 && fabs(pid_mom) == 10413)) {
+                if (pid_cand == 411) {
+                    m_p4_Dplus_truth[0] = cand_particle->initialFourMomentum().px();
+                    m_p4_Dplus_truth[1] = cand_particle->initialFourMomentum().py();
+                    m_p4_Dplus_truth[2] = cand_particle->initialFourMomentum().pz();
+                    m_p4_Dplus_truth[3] = cand_particle->initialFourMomentum().e();
+                }
+                if (pid_cand == -411) {
+                    m_p4_Dminus_truth[0] = cand_particle->initialFourMomentum().px();
+                    m_p4_Dminus_truth[1] = cand_particle->initialFourMomentum().py();
+                    m_p4_Dminus_truth[2] = cand_particle->initialFourMomentum().pz();
+                    m_p4_Dminus_truth[3] = cand_particle->initialFourMomentum().e();
+                }
+            }
+        }
+        return true;
+    }
+}
+
+bool DDecay::saveOthershws() {
     HepLorentzVector pD;
     pD.setPx(0.);
     pD.setPy(0.);
@@ -1680,7 +1690,7 @@ bool DDecayAlg::saveOthershws() {
     else return true;
 }
 
-bool DDecayAlg::fitpi0(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
+bool DDecay::fitpi0(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
     m_n_pi0 = 0;
     for (int i = 0; i < 4; i++) {
         m_p4_pi0_save[i] = -999.;
@@ -1717,7 +1727,7 @@ bool DDecayAlg::fitpi0(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, Hep
     return true;
 }
 
-bool DDecayAlg::fitpi0_STDDmiss(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
+bool DDecay::fitpi0_STDDmiss(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD) {
     m_n_pi0_STDDmiss = 0;
     for (int i = 0; i < 4; i++) {
         m_p4_pi0_save_STDDmiss[i] = -999.;
@@ -1754,7 +1764,7 @@ bool DDecayAlg::fitpi0_STDDmiss(VWTrkPara &vwtrkpara_photons, VertexParameter &b
     return true;
 }
 
-double DDecayAlg::ECMS(int runNo) {
+double DDecay::ECMS(int runNo) {
     if (runNo >= 33659 && runNo <= 33719) return 4.08545;
     else if (runNo >= 47543 && runNo <= 48170) return 4.1888;
     else if (runNo >= 30372 && runNo <= 30437) return 4.1886;
@@ -1860,14 +1870,20 @@ double DDecayAlg::ECMS(int runNo) {
     else if (runNo >= 35041 && runNo <= 35059) return 4.5700;
     else if (runNo >= 35060 && runNo <= 35081) return 4.5800;
     else if (runNo >= 35099 && runNo <= 35116) return 4.5900;
-    else if (runNo >= 63075 && runNo <= 63515) return 4.6260;
-    else if (runNo >= 63516 && runNo <= 63715) return 4.6400;
-    else if (runNo >= 63718 && runNo <= 63852) return 4.6600;
-    else if (runNo >= 63867 && runNo <= 63888) return 4.6800;
+    // else if (runNo >= 63075 && runNo <= 63515) return 4.6260;
+    // else if (runNo >= 63516 && runNo <= 63715) return 4.6400;
+    // else if (runNo >= 63718 && runNo <= 63852) return 4.6600;
+    // else if (runNo >= 63867 && runNo <= 64015) return 4.6800;
+    // else if (runNo >= 64028 && runNo <= 64289) return 4.7000;
+    else if (runNo >= 35227 && runNo <= 35473) return 4.6260;
+    else if (runNo >= 35474 && runNo <= 35720) return 4.6400;
+    else if (runNo >= 35721 && runNo <= 35967) return 4.6600;
+    else if (runNo >= 35968 && runNo <= 36113) return 4.6800;
+    else if (runNo >= 36114 && runNo <= 36213) return 4.7000;
     else return 999.;
 }
 
-void DDecayAlg::recordVariables() {
+void DDecay::recordVariables() {
     m_runNo = runNo;
     m_evtNo = evtNo;
     m_flag1 = flag1;
@@ -1935,7 +1951,7 @@ void DDecayAlg::recordVariables() {
     if (m_debug) std::cout << " entry in ntuple is filled for " << mode << std::endl;
 }
 
-void DDecayAlg::recordVariables_STDDmiss() {
+void DDecay::recordVariables_STDDmiss() {
     m_runNo_STDDmiss = runNo;
     m_evtNo_STDDmiss = evtNo;
     m_flag1_STDDmiss = flag1;

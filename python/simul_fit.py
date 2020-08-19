@@ -116,7 +116,7 @@ def fit(ecms, patch, path, shape, root):
         logging.info('sideband('+str(ecms)+') entries :'+str(entries_sideband))
         logging.info('psipp('+str(ecms)+') entries :'+str(entries_psipp))
         logging.info('DDPIPI('+str(ecms)+') entries :'+str(entries_DDPIPI))
-        if ecms > 4290:
+        if ecms > 4311:
             shape_D1_2420 = TFile(shape[0], 'READ')
             f_D1_2420_root = TFile(root[2], 'READ')
             t_D1_2420_root = f_D1_2420_root.Get('save')
@@ -131,17 +131,19 @@ def fit(ecms, patch, path, shape, root):
     
     # model for RM(D/Dmiss)
     xmin_rm_D, xmax_rm_D, temp = param_rm_D(ecms)
-    xbins_rm_D = int((xmax_rm_D - xmin_rm_D)/0.002)
+    if ecms <= 4600:
+        xbins_rm_D = int((xmax_rm_D - xmin_rm_D)/0.002)
+    else:
+        xbins_rm_D = int((xmax_rm_D - xmin_rm_D)/0.005)
 
     rm_D = RooRealVar('rm_D', 'rm_D', xmin_rm_D, xmax_rm_D)
     rm_D.setRange('signal', xmin_rm_D, xmax_rm_D)
     N_D1_2420, N_PSIPP, N_DDPIPI = num_rm_D(ecms)
-    if ecms > 4290:
+    if ecms > 4311:
         n2420 = RooRealVar('n2420', 'n2420', 500, 0, N_D1_2420)
     nsideband = RooRealVar('nsideband', 'nsideband', int(entries_sideband/2.))
     npsipp = RooRealVar('npsipp', 'npsipp', 0, N_PSIPP)
     nDDPIPI = RooRealVar('nDDPIPI', 'nDDPIPI', 0, N_DDPIPI)
-
     h_sideband_rm_D = TH1F('h_sideband_rm_D', '', xbins_rm_D, xmin_rm_D, xmax_rm_D)
     h_psipp_rm_D = TH1F('h_psipp_rm_D', '', xbins_rm_D, xmin_rm_D, xmax_rm_D)
     h_DDPIPI_rm_D = TH1F('h_DDPIPI_rm_D', '', xbins_rm_D, xmin_rm_D, xmax_rm_D)
@@ -162,7 +164,10 @@ def fit(ecms, patch, path, shape, root):
 
     # model for RM(pipi)
     xmin_rm_pipi, xmax_rm_pipi = param_rm_pipi(ecms)
-    xbins_rm_pipi = int((xmax_rm_pipi - xmin_rm_pipi)/0.002)
+    if ecms <= 4600:
+        xbins_rm_pipi = int((xmax_rm_pipi - xmin_rm_pipi)/0.002)
+    else:
+        xbins_rm_pipi = int((xmax_rm_pipi - xmin_rm_pipi)/0.005)
 
     rm_pipi = RooRealVar('rm_pipi', 'rm_pipi', xmin_rm_pipi, xmax_rm_pipi)
     rm_pipi.setRange('signal', xmin_rm_pipi, xmax_rm_pipi)
@@ -191,7 +196,7 @@ def fit(ecms, patch, path, shape, root):
     covpdf_psipp = RooFFTConvPdf('covpdf_psipp', 'covpdf_psipp', rm_pipi, pdf_psipp_rm_pipi, gauss_rm_pipi)
 
     # model for RM(D/Dmiss)
-    if ecms > 4290:
+    if ecms > 4311:
         pdf_name = 'h_' + str(0) + '_' + str(0)
         h_D1_2420_rm_D = shape_D1_2420.Get(pdf_name)
         pdf_name = 'Covpdf_D1_2420_' + str(ecms) + '_' + str(0) + '_' + str(0)
@@ -207,7 +212,7 @@ def fit(ecms, patch, path, shape, root):
         model_rm_D = RooAddPdf('model_rm_D', 'model_rm_D', RooArgList(pdf_sideband_rm_D, pdf_psipp_rm_D, pdf_DDPIPI_rm_D), RooArgList(nsideband, npsipp, nDDPIPI))
 
     # model for RM(pipi)
-    if ecms > 4290:
+    if ecms > 4311:
         h_D1_2420_rm_pipi = TH1F('h_D1_2420_rm_pipi', '', xbins_rm_pipi, xmin_rm_pipi, xmax_rm_pipi)
         cut = ''
         t_D1_2420.Project('h_D1_2420_rm_pipi', 'rm_pipi', cut)
@@ -241,9 +246,9 @@ def fit(ecms, patch, path, shape, root):
     VP_D1_2420 = 1.
     xs_D1_2420 = 0.
     xserr_D1_2420 = 0.
-    if ecms > 4290:
+    if ecms > 4311:
         n_D1_2420 = n2420.getVal()
-        if ecms == 4420:
+        if ecms == 4420 or ecms == 4680:
             eff_D1_2420 = entries_D1_2420_root/100000.
             if not patch == 'round0':
                 f_D1_2420_factor = open('./txts/factor_info_' + str(ecms) + '_D1_2420_' + patch + '.txt', 'r')
@@ -274,7 +279,7 @@ def fit(ecms, patch, path, shape, root):
     VP_psipp = 1.
     xs_psipp = 0.
     xserr_psipp = 0.
-    if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420:
+    if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420 or ecms == 4680:
         eff_psipp = entries_psipp_root/100000.
     else:
         eff_psipp = entries_psipp_root/50000.
@@ -297,7 +302,7 @@ def fit(ecms, patch, path, shape, root):
     VP_DDPIPI = 1.
     xs_DDPIPI = 0.
     xserr_DDPIPI = 0.
-    if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420:
+    if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420 or ecms == 4680:
         eff_DDPIPI = entries_DDPIPI_root/100000.
     else:
         eff_DDPIPI = entries_DDPIPI_root/50000.
@@ -319,7 +324,7 @@ def fit(ecms, patch, path, shape, root):
     path_out = './txts/fit_rm_D_' + str(ecms) + '_' + patch + '.txt'
     f_out = open(path_out, 'w')
     line = '@' + str(ecms) + 'MeV\n' 
-    if ecms > 4290:
+    if ecms > 4311:
         line += str(int(n_D1_2420)) + ' $\pm$ '+ str(int(n2420.getError()))  + '\n' 
     else:
         line += str(0) + ' $\pm$ ' + str(0) + '\n'
@@ -381,7 +386,7 @@ def fit(ecms, patch, path, shape, root):
     combData.plotOn(frame_rm_D, RooFit.Cut('sample==sample::rm_D'))
     sim_pdf.plotOn(frame_rm_D, RooFit.Slice(sample, 'rm_D'), RooFit.ProjWData(RooArgSet(sample), combData), RooFit.LineColor(kBlack), RooFit.LineWidth(3))
     sim_pdf.plotOn(frame_rm_D, RooFit.Slice(sample, 'rm_D'), RooFit.Components('pdf_sideband_rm_D'), RooFit.ProjWData(RooArgSet(sample), combData), RooFit.LineColor(kGreen), RooFit.FillStyle(1001), RooFit.FillColor(3), RooFit.LineColor(3), RooFit.VLines(), RooFit.DrawOption('F'))
-    if ecms > 4290:
+    if ecms > 4311:
         sim_pdf.plotOn(frame_rm_D, RooFit.Slice(sample, 'rm_D'), RooFit.Components(pdf_name), RooFit.ProjWData(RooArgSet(sample), combData), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(kDashed))
     sim_pdf.plotOn(frame_rm_D, RooFit.Slice(sample, 'rm_D'), RooFit.Components('pdf_psipp_rm_D'), RooFit.ProjWData(RooArgSet(sample), combData), RooFit.LineColor(kBlue), RooFit.LineWidth(2), RooFit.LineStyle(kDashed))
     sim_pdf.plotOn(frame_rm_D, RooFit.Slice(sample, 'rm_D'), RooFit.Components('pdf_DDPIPI_rm_D'), RooFit.ProjWData(RooArgSet(sample), combData), RooFit.LineColor(kYellow), RooFit.LineWidth(2), RooFit.LineStyle(kDashed))
@@ -390,7 +395,7 @@ def fit(ecms, patch, path, shape, root):
     name.append('Data')
     name.append('Total Fit')
     name.append('Backgrounds')
-    if ecms > 4290:
+    if ecms > 4311:
         name.append('D_{1}(2420)^{+}D^{-}')
     name.append('#psi(3770)#pi^{+}#pi^{-}')
     name.append('D^{+}D^{-}#pi^{+}#pi^{-}')
@@ -421,7 +426,7 @@ def fit(ecms, patch, path, shape, root):
     combData.plotOn(frame_rm_pipi, RooFit.Cut('sample==sample::rm_pipi'))
     sim_pdf.plotOn(frame_rm_pipi, RooFit.Slice(sample, 'rm_pipi'), RooFit.ProjWData(RooArgSet(sample), combData), RooFit.LineColor(kBlack), RooFit.LineWidth(3))
     sim_pdf.plotOn(frame_rm_pipi, RooFit.Slice(sample, 'rm_pipi'), RooFit.Components('pdf_sideband_rm_pipi'), RooFit.ProjWData(RooArgSet(sample), combData), RooFit.LineColor(kGreen), RooFit.FillStyle(1001), RooFit.FillColor(3), RooFit.LineColor(3), RooFit.VLines(), RooFit.DrawOption('F'))
-    if ecms > 4290:
+    if ecms > 4311:
         sim_pdf.plotOn(frame_rm_pipi, RooFit.Slice(sample, 'rm_pipi'), RooFit.Components('pdf_D1_2420_rm_pipi'), RooFit.ProjWData(RooArgSet(sample), combData), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(kDashed))
     sim_pdf.plotOn(frame_rm_pipi, RooFit.Slice(sample, 'rm_pipi'), RooFit.Components('covpdf_psipp'), RooFit.ProjWData(RooArgSet(sample), combData), RooFit.LineColor(kBlue), RooFit.LineWidth(2), RooFit.LineStyle(kDashed))
     sim_pdf.plotOn(frame_rm_pipi, RooFit.Slice(sample, 'rm_pipi'), RooFit.Components('pdf_DDPIPI_rm_pipi'), RooFit.ProjWData(RooArgSet(sample), combData), RooFit.LineColor(kYellow), RooFit.LineWidth(2), RooFit.LineStyle(kDashed))
@@ -430,7 +435,7 @@ def fit(ecms, patch, path, shape, root):
     name.append('Data')
     name.append('Total Fit')
     name.append('Backgrounds')
-    if ecms > 4290:
+    if ecms > 4311:
         name.append('D_{1}(2420)^{+}D^{-}')
     name.append('#psi(3770)#pi^{+}#pi^{-}')
     name.append('D^{+}D^{-}#pi^{+}#pi^{-}')
@@ -469,7 +474,7 @@ def main():
     path = []
     shape = []
     root = []
-    if ecms > 4290:
+    if ecms > 4311:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_fit.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_sideband_fit.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_fit.root')
@@ -479,27 +484,9 @@ def main():
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_after.root')
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_after.root')
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/sigMC_D1_2420_'+str(ecms)+'_after.root')
-        if ecms > 4600 and not ecms == 4660:
-            root = []
-            path[2] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_fit.root'
-            path[3] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/sigMC_D_D_PI_PI_4600_fit.root'
-            path[4] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_fit.root'
-            shape[0] = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/SHAPE_D1_2420_4600.root'
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root')
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/sigMC_D_D_PI_PI_4600_after.root')
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_after.root')
-        if ecms == 4660:
-            root = []
-            path[2] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_fit.root'
-            path[3] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/sigMC_D_D_PI_PI_4600_fit.root'
-            path[4] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_fit.root'
-            shape[0] = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/SHAPE_D1_2420_4600.root'
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root')
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/sigMC_D_D_PI_PI_4600_after.root')
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_after.root')
         fit(ecms, patch, path, shape, root)
 
-    if ecms <= 4290:
+    if ecms <= 4311:
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_fit.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_sideband_fit.root')
         path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_fit.root')

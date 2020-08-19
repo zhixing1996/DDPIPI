@@ -49,7 +49,7 @@ def xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_p
         rs_DDPIPI = filter(None, rs_DDPIPI.split(" "))
         N_DDPIPI = float(float(rs_DDPIPI[0]))
 
-    if (ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420):
+    if (ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420 or ecms == 4680):
         eff_psipp = N_psipp/100000.
         eff_DDPIPI = N_DDPIPI/100000.
     else:
@@ -58,14 +58,14 @@ def xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_p
 
     N_D1_2420 = 0.
     eff_D1_2420 = 0.
-    if ecms > 4290:
+    if ecms > 4311:
         f_D1_2420 = open(D1_2420_path, 'r')
         lines_D1_2420 = f_D1_2420.readlines()
         for line_D1_2420 in lines_D1_2420:
             rs_D1_2420 = line_D1_2420.rstrip('\n')
             rs_D1_2420 = filter(None, rs_D1_2420.split(" "))
             N_D1_2420 = float(float(rs_D1_2420[0]))
-        if ecms == 4420:
+        if ecms == 4420 or ecms == 4680:
             eff_D1_2420 = N_D1_2420/100000.
         else:
             eff_D1_2420 = N_D1_2420/50000.
@@ -217,7 +217,7 @@ if __name__ == '__main__':
         logging.error('python cal_xs.py [ecms] [patch]')
         sys.exit()
 
-    if ecms <= 4290:
+    if ecms <= 4311:
         data_path = './txts/data_signal_events_' + str(ecms) + '_' + patch + '.txt'
         sideband_path = './txts/sideband_signal_events_' + str(ecms) + '_' + patch + '.txt'
         psipp_path = './txts/psipp_signal_events_' + str(ecms) + '_' + patch + '.txt'
@@ -225,7 +225,7 @@ if __name__ == '__main__':
         DDPIPI_path = './txts/DDPIPI_signal_events_' + str(ecms) + '_' + patch + '.txt'
         xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_path)
 
-    if ecms > 4290:
+    if ecms > 4311:
         data_path = './txts/data_signal_events_' + str(ecms) + '_' + patch + '.txt'
         sideband_path = './txts/sideband_signal_events_' + str(ecms) + '_' + patch + '.txt'
         psipp_path = './txts/psipp_signal_events_' + str(ecms) + '_' + patch + '.txt'

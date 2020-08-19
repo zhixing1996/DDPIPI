@@ -14,9 +14,17 @@ do
     PARAM_2=${arr[2]} # ruNo up
     PARAM_3=${arr[3]} # float energy poit
     PARAM_4=${arr[4]} # luminosity
+    shortbar1="-1"
+    shortbar2="-2"
+    if [[ $PARAM_0 == *$shortbar1* ]]; then
+        PARAM_0=$(echo $PARAM_0 | sed 's/-1//g')
+    fi
+    if [[ $PARAM_0 == *$shortbar2* ]]; then
+        continue
+    fi
     echo "Begininning of $PARAM_0!"
     cd $HOME/bes/DDPIPI/v0.2/python
-    threshold=4290
+    threshold=4311
     if [[ $PARAM_0 -gt $threshold ]]; then
         python mix_mc.py $PARAM_0 MC_signal D1_2420 $PATCH
         python mix_mc.py $PARAM_0 MC_sideband D1_2420 $PATCH

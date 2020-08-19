@@ -1,5 +1,5 @@
 ApplicationMgr.DLLs += {"DDecayAlg"};
-ApplicationMgr.TopAlg +={ "DDecayAlg" };
+ApplicationMgr.TopAlg +={ "DDecay" };
 
 DTag.NeutralDReconstruction  = true;
 DTag.ChargedDReconstruction  = true;

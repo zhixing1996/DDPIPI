@@ -13,9 +13,17 @@ do
     PARAM_3=${arr[3]} # float energy poit
     PARAM_4=${arr[4]} # luminosity
     PARAM_5=${arr[5]} # dst path
+    shortbar1="-1"
+    shortbar2="-2"
+    if [[ $PARAM_0 == *$shortbar1* ]]; then
+        PARAM_0=$(echo $PARAM_0 | sed 's/-1//g')
+    fi
+    if [[ $PARAM_0 == *$shortbar2* ]]; then
+        continue
+    fi
     cd $HOME/bes/DDPIPI/v0.2/python
     echo "Begininning of $PARAM_0!"
-    thresh=4290
+    thresh=4311
     if [ $PARAM_0 -gt $thresh ]; then
         python fit_rm_Dpipi.py $PARAM_0 D1_2420 $PATCH
     fi

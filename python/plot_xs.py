@@ -62,11 +62,11 @@ def set_canvas_style(mbc):
 
 def draw(mode, patch):
     if mode == 'DDPIPI' or mode == 'psipp' or mode == 'total':
-        N = 19 + 6 + 5 - 5 # 19: 703p01, 6: 705, 4: 705 above 4600
-        # N = 19 + 6 + 5 # 19: 703p01, 6: 705, 4: 705 above 4600
+        # N = 19 + 6 + 5 - 5 # 19: 703p01, 6: 705, 4: 705 above 4600
+        N = 19 + 6 + 6 # 19: 703p01, 6: 705, 4: 705 above 4600
     if mode == 'D1_2420':
-        N = 19 + 6 + 5 - 5 # 19: 703p01, 6: 705, 4: 705 above 4600
-        # N = 19 + 6 + 5 # 19: 703p01, 6: 705, 4: 705 above 4600
+        # N = 19 + 6 + 5 - 5 # 18: 703p01, 6: 705, 4: 705 above 4600
+        N = 19 + 6 + 6 # 18: 703p01, 6: 705, 4: 705 above 4600
     sys_err = array('f', N*[0])
     ecms = array('f', N*[0])
     ecms_err = array('f', N*[0])

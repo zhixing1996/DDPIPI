@@ -20,7 +20,7 @@ do
     if [[ $PARAM_0 == *$shortbar2* ]]; then
         continue
     fi
-    threshold=4290
+    threshold=4311
     if [[ $PARAM_0 -gt $threshold ]]; then
         echo "Begininning of $PARAM_0!"
         cd $HOME/bes/DDPIPI/v0.2/python

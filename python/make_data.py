@@ -17,7 +17,7 @@ NAME
     make_data.py 
 
 SYNOPSIS
-    ./make_data.py [dst_path] [runNo_low] [runNo_up] [ecms]
+    ./make_data.py [dst_path] [runNo_low] [runNo_up] [ecms] [cms]
 
 AUTHOR 
     Maoqiang JING <jingmq@ihep.ac.cn> 
@@ -29,12 +29,13 @@ DATE
     
 def main():
     args = sys.argv[1:]
-    if len(args) < 3:
+    if len(args) < 5:
         return usage()
     dst_path = args[0]
     runNo_low = args[1]
     runNo_up = args[2]
     ecms = args[3]
+    cms = args[4]
     sys.stdout.write('Scanning %s...\n' %dst_path)
 
     for runNo in range(int(runNo_low), int(runNo_up) + 1):
@@ -50,6 +51,7 @@ def main():
             f.write('#include "$DTAGALGROOT/share/jobOptions_dTag.txt"\n')
             f.write('#include "$DDECAYALGROOT/share/jobOptions_DDecay.txt"\n')
             f.write('#include "$MEASUREDECMSSVCROOT/share/anaOptions.txt"\n')
+            f.write('DDecay.Ecms = '+str(float(cms)/1000.)+';\n')
             f.write('\n')
             f.write('DTag.NeutralDReconstruction  = true;\n')
             f.write('DTag.ChargedDReconstruction  = true;\n')

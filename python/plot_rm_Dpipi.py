@@ -95,7 +95,7 @@ def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle, ymax):
     h1.GetYaxis().SetTitle(ytitle)
     h1.GetYaxis().CenterTitle()
     h1.GetYaxis().SetRangeUser(0, ymax)
-    h1.SetFillColor(1)
+    h1.SetLineColor(1)
     h2.SetFillColor(2)
     h3.SetFillColor(3)
     h4.SetFillColor(4)

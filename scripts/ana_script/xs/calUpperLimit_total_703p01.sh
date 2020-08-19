@@ -1,5 +1,6 @@
 #!/bin/sh
 PATCH=$1
+rm -rf $HOME/bes/DDPIPI/v0.2/python/txts/xs_upper_limit_total.txt
 cat ECMS_Base_703p01 | while read line
 do
     str=$line
@@ -22,7 +23,6 @@ do
         continue
     fi
     cd $HOME/bes/DDPIPI/v0.2/python
-    rm -rf ./txts/xs_upper_limit_total.txt
     echo "Begininning of $PARAM_0!"
     python fit_rm_Dpipi.py $PARAM_0 upper_limit $PATCH
     python upper_limit.py $PARAM_0 total $PATCH

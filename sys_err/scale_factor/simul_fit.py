@@ -463,7 +463,7 @@ def fit(ecms, patch, path, shape, root):
     canvas_name = './figs/simul_fit_' + str(ecms) + '.pdf'
     c.SaveAs(canvas_name)
 
-    # raw_input('Enter anything to end...')
+    raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]
@@ -485,24 +485,6 @@ def main():
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_after.root')
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_after.root')
         root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/sigMC_D1_2420_'+str(ecms)+'_after.root')
-        if ecms > 4600 and not ecms == 4660:
-            root = []
-            path[2] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_fit.root'
-            path[3] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/sigMC_D_D_PI_PI_4600_fit.root'
-            path[4] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_fit.root'
-            shape[0] = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/SHAPE_D1_2420_4600.root'
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root')
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/sigMC_D_D_PI_PI_4600_after.root')
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_after.root')
-        if ecms == 4660:
-            root = []
-            path[2] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_fit.root'
-            path[3] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/sigMC_D_D_PI_PI_4600_fit.root'
-            path[4] = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_fit.root'
-            shape[0] = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/SHAPE_D1_2420_4600.root'
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root')
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4600/sigMC_D_D_PI_PI_4600_after.root')
-            root.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_after.root')
         fit(ecms, patch, path, shape, root)
 
     if ecms <= 4290:

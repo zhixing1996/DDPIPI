@@ -1,5 +1,7 @@
 #!/bin/sh
 PATCH=$1
+rm $HOME/bes/DDPIPI/v0.2/python/txts/data_signal_events_total_${PATCH}.txt -rf
+rm $HOME/bes/DDPIPI/v0.2/python/txts/sideband_signal_events_total_${PATCH}.txt -rf
 cat ECMS_Base_703p01 | while read line
 do
     str=$line
@@ -22,10 +24,8 @@ do
         continue
     fi
     cd $HOME/bes/DDPIPI/v0.2/python
-    rm ./txts/data_signal_events_total_${PATCH}.txt -rf
-    rm ./txts/sideband_signal_events_total_${PATCH}.txt -rf
     echo "Begininning of $PARAM_0!"
-    thresh=4290
+    thresh=4311
     if [ $PARAM_0 -gt $thresh ]; then
         python fit_rm_Dpipi.py $PARAM_0 D1_2420 $PATCH
     fi

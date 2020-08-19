@@ -149,7 +149,8 @@ def fit(path, shape_path, ecms, mode, patch):
     b = RooRealVar('b', 'b', 0, -99, 99)
     c = RooRealVar('c', 'c', 0, -99, 99)
     d = RooRealVar('c', 'c', 0, -99, 99)
-    bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
+    # bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
+    bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
     ndf = 6
 
     # event number
@@ -197,7 +198,11 @@ def fit(path, shape_path, ecms, mode, patch):
     n_sidebandlow = nsbrangel.getVal() 
     n_sidebandup = nsbrangeh.getVal()
 
+    rm_Dpipi.setRange('all', xmin, xmax)
+    nall = bkgpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('all'))
+    n_all = nall.getVal()
     scale_factor = n_signal/(n_sidebandlow + n_sidebandup)
+    print n_signal*nbkg.getVal()/n_all, nbkg.getVal()*n_sidebandlow/n_all, nbkg.getVal()*n_sidebandup/n_all
     print 'scale_factor = n(signal) / n(sideband) = ' + str(scale_factor)
     print 'chi2 vs ndf = ' + str(curve.chiSquare(histo, ndf))
 
@@ -213,7 +218,7 @@ def fit(path, shape_path, ecms, mode, patch):
     f_factor.write(out)
     f_factor.close()
 
-    # raw_input('enter anything to end...')
+    raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]

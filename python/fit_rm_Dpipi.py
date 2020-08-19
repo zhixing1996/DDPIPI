@@ -142,20 +142,12 @@ def fit(path, shape_path, ecms, mode, patch):
     sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, 0.003)
     if ecms == 4245 or ecms == 4620:
         sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, 0.005)
+    if ecms == 4600:
+        mean = RooRealVar('mean', 'mean of gaussian', 0.001, -0.002, 0.002)
+        sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, -0.003, 0.003)
     gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
     rm_Dpipi.setBins(xbins, 'cache')
     sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_signal, gauss)
-
-    if mode == 'D1_2420' or mode == 'DDPIPI' or mode == 'psipp':
-        mean_up, mean_low, sigma_up = param_rm_Dpipi(ecms)
-        mean1 = RooRealVar('mean1', 'mean of gaussian', 1.86965, mean_low, mean_up)
-        sigma1 = RooRealVar('sigma1', 'sigma of gaussian', 0.001, 0, sigma_up)
-        gauss1 = RooGaussian('gauss1', 'gaussian', rm_Dpipi, mean1, sigma1)
-        mean2 = RooRealVar('mean2', 'mean of gaussian', 1.86965, mean_low, mean_up)
-        sigma2 = RooRealVar('sigma2', 'sigma of gaussian', 0.001, 0, sigma_up)
-        gauss2 = RooGaussian('gauss2', 'gaussian', rm_Dpipi, mean2, sigma2)
-        frac = RooRealVar('frac', 'fraction od two gaussian', 0.5, 0., 2.)
-        sigpdf = RooAddPdf('sigpdf', 'signal pdf', RooArgList(gauss1, gauss2), RooArgList(frac))
 
     # background
     a = RooRealVar('a', 'a', 0, -99, 99)

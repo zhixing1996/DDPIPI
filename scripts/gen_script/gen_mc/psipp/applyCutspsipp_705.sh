@@ -13,6 +13,14 @@ do
     PARAM_4=${arr[4]} # luminosity
     PARAM_5=${arr[5]} # dst path
     WORKAREA=/besfs/users/$USER/bes/DDPIPI/v0.2
+    shortbar1="-1"
+    shortbar2="-2"
+    if [[ $PARAM_0 == *$shortbar1* ]]; then
+        PARAM_0=$(echo $PARAM_0 | sed 's/-1//g')
+    fi
+    if [[ $PARAM_0 == *$shortbar2* ]]; then
+        continue
+    fi
     mkdir -p $WORKAREA/sigMC/psipp/$PARAM_0
     cd $HOME/bes/DDPIPI/v0.2/python
     rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/*before*.root

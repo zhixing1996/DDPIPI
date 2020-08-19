@@ -11,7 +11,7 @@ usage() {
     printf "\n\t%5-5s\n" "./build.sh [OPTION]"
     printf "\n\t%-5s  %-40s\n" "1" "Build DDecay analyzer: DDecayAlg-00-00-01: Repeat Yi Zheng's work"
     printf "\n\t%-5s  %-40s\n" "2" "Build DDecay analyzer: DDecayAlg-00-00-02: Add missing D track"
-    printf "\n\t%-5s  %-40s\n" "3" "Build DDecay analyzer: DDecayAlg-00-00-02: Background study"
+    printf "\n\t%-5s  %-40s\n" "3" "Build DDecay analyzer: DDecayAlg-00-00-03: Background study"
     printf "\n\n"
 }
 

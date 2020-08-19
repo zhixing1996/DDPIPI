@@ -13,6 +13,14 @@ do
     PARAM_4=${arr[4]} # luminosity
     PARAM_5=${arr[5]} # dst path
     WORKAREA=/besfs/users/$USER/bes/DDPIPI/v0.2
+    shortbar1="-1"
+    shortbar2="-2"
+    if [[ $PARAM_0 == *$shortbar1* ]]; then
+        PARAM_0=$(echo $PARAM_0 | sed 's/-1//g')
+    fi
+    if [[ $PARAM_0 == *$shortbar2* ]]; then
+        continue
+    fi
     mkdir -p $WORKAREA/data/$PARAM_0
     cd $HOME/bes/DDPIPI/v0.2/python
     rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/data/$PARAM_0/*before*.root
@@ -36,7 +44,7 @@ do
     python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_raw_sidebandlow.root $ROOT_PATH/data_$PARAM_0\_raw_sidebandlow_before.root $PARAM_0 before raw_sidebandlow
     python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_raw_sidebandup.root $ROOT_PATH/data_$PARAM_0\_raw_sidebandup_before.root $PARAM_0 before raw_sidebandup
     hadd $ROOT_PATH/data_$PARAM_0\_raw_sideband_before.root $ROOT_PATH/data_$PARAM_0\_raw_sidebandlow_before.root $ROOT_PATH/data_$PARAM_0\_raw_sidebandup_before.root
-    echo "STD sideband of $PARAM_0 is done!"
+    echo "raw sideband of $PARAM_0 is done!"
 
     echo "$PARAM_0 is done!"
 done

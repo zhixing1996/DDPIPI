@@ -20,13 +20,17 @@ import ROOT
 def window(ecms):
     WINDOW = 999.
     if int(ecms) == 4360:
-        WINDOW = 0.017
+        # WINDOW = 0.017
+        WINDOW = 0.01333
     if int(ecms) == 4420:
-        WINDOW = 0.017
+        # WINDOW = 0.017
+        WINDOW = 0.01333
     if int(ecms) == 4600:
-        WINDOW = 0.017
+        # WINDOW = 0.017
+        WINDOW = 0.01333
     if not (int(ecms) == 4360 or int(ecms) == 4420 or int(ecms) == 4600):
-        WINDOW = 0.017
+        # WINDOW = 0.017
+        WINDOW = 0.01333
     return WINDOW
 
 # parameter of rm(Dpipi) fit

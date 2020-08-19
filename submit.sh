@@ -177,7 +177,15 @@ case $option in
 
     0.3.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
            cd scripts/gen_script/gen_mc/D1_2420
-           ./subSimRec_D1_2420_703p01.sh
+           echo "which type of generator do you want to use?"
+           read opt
+           if [ $opt == "ConExc" ]; then
+               ./subSimRec_D1_2420_703p01_ConExc.sh ConExc
+           elif [ $opt == "KKMC" ]; then
+               ./subSimRec_D1_2420_703p01_KKMC.sh
+           else
+               echo "please check the generator you want to use!"
+           fi
            ;;
 
     0.3.2) echo "Single D tag -- run on signal MC sample..."
@@ -197,7 +205,15 @@ case $option in
 
     0.4.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
            cd scripts/gen_script/gen_mc/psipp
-           ./subSimRec_psipp_703p01.sh
+           echo "which type of generator do you want to use?"
+           read opt
+           if [ $opt == "ConExc" ]; then
+               ./subSimRec_psipp_703p01_ConExc.sh ConExc
+           elif [ $opt == "KKMC" ]; then
+               ./subSimRec_psipp_703p01_KKMC.sh
+           else
+               echo "please check the generator you want to use!"
+           fi
            ;;
 
     0.4.2) echo "Single D tag -- run on signal MC sample..."
@@ -217,7 +233,15 @@ case $option in
 
     0.5.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
            cd scripts/gen_script/gen_mc/DDPIPI
-           ./subSimRec_D_D_PI_PI_703p01.sh
+           echo "which type of generator do you want to use?"
+           read opt
+           if [ $opt == "ConExc" ]; then
+               ./subSimRec_D_D_PI_PI_703p01_ConExc.sh ConExc
+           elif [ $opt == "KKMC" ]; then
+               ./subSimRec_D_D_PI_PI_703p01_KKMC.sh
+           else
+               echo "please check the generator you want to use!"
+           fi
            ;;
 
     0.5.2) echo "Single D tag -- run on signal MC sample..."
@@ -1043,7 +1067,15 @@ case $option in
 
     0.31.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
             cd scripts/gen_script/gen_mc/D1_2420
-            ./subSimRec_D1_2420_705.sh
+            echo "which type of generator do you want to use?"
+            read opt
+            if [ $opt == "ConExc" ]; then
+                ./subSimRec_D1_2420_705_ConExc.sh ConExc
+            elif [ $opt == "KKMC" ]; then
+                ./subSimRec_D1_2420_705_KKMC.sh
+            else
+                echo "please check the generator you want to use!"
+            fi
             ;;
 
     0.31.2) echo "Single D tag -- run on signal MC sample..."
@@ -1062,7 +1094,15 @@ case $option in
 
     0.32.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
             cd scripts/gen_script/gen_mc/psipp
-            ./subSimRec_psipp_705.sh
+            echo "which type of generator do you want to use?"
+            read opt
+            if [ $opt == "ConExc" ]; then
+                ./subSimRec_psipp_705_ConExc.sh ConExc
+            elif [ $opt == "KKMC" ]; then
+                ./subSimRec_psipp_705_KKMC.sh
+            else
+                echo "please check the generator you want to use!"
+            fi
             ;;
 
     0.32.2) echo "Single D tag -- run on signal MC sample..."
@@ -1081,7 +1121,15 @@ case $option in
 
     0.33.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
             cd scripts/gen_script/gen_mc/DDPIPI
-            ./subSimRec_D_D_PI_PI_705.sh
+            echo "which type of generator do you want to use?"
+            read opt
+            if [ $opt == "ConExc" ]; then
+                ./subSimRec_D_D_PI_PI_705_ConExc.sh ConExc
+            elif [ $opt == "KKMC" ]; then
+                ./subSimRec_D_D_PI_PI_705_KKMC.sh
+            else
+                echo "please check the generator you want to use!"
+            fi
             ;;
 
     0.33.2) echo "Single D tag -- run on signal MC sample..."

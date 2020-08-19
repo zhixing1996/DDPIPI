@@ -50,8 +50,12 @@ def convert(path_in, path_out, mode, ecms):
 
         m_rm_D = array('d', [999.])
         m_rm_pipi = array('d', [999.])
+        m_rawm_D = array('d', [999.])
+        m_rm_Dpipi = array('d', [999.])
         t_out.Branch('rm_D', m_rm_D, 'm_rm_D/D')
         t_out.Branch('rm_pipi', m_rm_pipi, 'm_rm_pipi/D')
+        t_out.Branch('rawm_D', m_rawm_D, 'm_rawm_D/D')
+        t_out.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
 
         rm_D_low, rm_D_up, temp = param_rm_D(ecms)
         rm_pipi_low, rm_pipi_up = param_rm_pipi(ecms)
@@ -66,9 +70,13 @@ def convert(path_in, path_out, mode, ecms):
                 continue
             m_rm_D[0] = t_in.m_rm_D
             m_rm_pipi[0] = t_in.m_rm_pipi
+            m_rawm_D[0] = t_in.m_rawm_D
+            m_rm_Dpipi[0] = t_in.m_rm_Dpipi
             t_out.Fill()
             m_rm_D[0] = t_in.m_rm_Dmiss
             m_rm_pipi[0] = t_in.m_rm_pipi
+            m_rawm_D[0] = t_in.m_rawm_D
+            m_rm_Dpipi[0] = t_in.m_rm_Dpipi
             t_out.Fill()
 
         f_out.cd()
@@ -85,7 +93,7 @@ def main():
     path_in = []
     path_out = []
     mode = []
-    if ecms > 4290:
+    if ecms > 4311:
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_after.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_sideband.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_after.root')
@@ -103,7 +111,7 @@ def main():
         mode.append('DDPIPI')
         convert(path_in, path_out, mode, ecms)
 
-    if ecms <= 4290:
+    if ecms <= 4311:
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_after.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_sideband.root')
         path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_after.root')

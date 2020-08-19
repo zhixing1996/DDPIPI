@@ -85,7 +85,7 @@ def set_histo_style(h1, h2, h3, h4, h5, xtitle, ytitle, ymax):
     h1.GetYaxis().SetTitle(ytitle)
     h1.GetYaxis().CenterTitle()
     h1.GetYaxis().SetRangeUser(0, ymax)
-    h1.SetFillColor(1)
+    h1.SetLineColor(1)
     h2.SetFillColor(2)
     h3.SetFillColor(3)
     h4.SetFillColor(4)
@@ -182,7 +182,7 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root')
-            ymax = 70
+            ymax = 45
             xmin = 3.7
             xmax = 4.1
             xbins = 200
@@ -192,7 +192,7 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_after.root')
-            ymax = 70
+            ymax = 45
             xmin = 3.7
             xmax = 4.1
             xbins = 200
@@ -218,7 +218,7 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root')
-            ymax = 130
+            ymax = 90
             xmin = 3.7
             xmax = 4.1
             xbins = 200
@@ -228,7 +228,7 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_after.root')
-            ymax = 130
+            ymax = 90
             xmin = 3.7
             xmax = 4.1
             xbins = 200
@@ -254,7 +254,7 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_before.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root')
-            ymax = 30
+            ymax = 25
             xmin = 3.7
             xmax = 4.3
             xbins = 300
@@ -264,7 +264,7 @@ if __name__ == '__main__':
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_after.root')
             path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_after.root')
-            ymax = 30
+            ymax = 25
             xmin = 3.7
             xmax = 4.3
             xbins = 300

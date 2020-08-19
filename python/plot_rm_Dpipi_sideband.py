@@ -63,7 +63,7 @@ def set_histo_style(h, xtitle, ytitle, ymax):
     h.GetYaxis().SetTitle(ytitle)
     h.GetYaxis().CenterTitle()
     h.GetYaxis().SetRangeUser(0, ymax)
-    h.SetFillColor(1)
+    h.SetLineColor(1)
 
 def set_canvas_style(mbc):
     mbc.SetFillColor(0)

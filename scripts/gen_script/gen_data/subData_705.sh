@@ -27,7 +27,7 @@ do
     cp -rf $HOME/bes/DDPIPI/v0.2/python/make_data.py ./
     chmod u+x make_data.py
     cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-    python make_data.py $PARAM_5 $PARAM_1 $PARAM_2 $PARAM_0
+    python make_data.py $PARAM_5 $PARAM_1 $PARAM_2 $PARAM_0 $PARAM_3
     cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/subAna.sh ./
     chmod u+x subAna.sh
     sh subAna.sh data

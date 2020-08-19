@@ -9,7 +9,7 @@ do
     PARAM_0=${arr[0]} # int energy point
     PARAM_1=${arr[1]} # ruNo low
     PARAM_2=${arr[2]} # ruNo up
-    PARAM_3=`echo "scale=4; ${arr[3]} / 1000" | bc -l` # float energy poit
+    PARAM_3=${arr[3]} # float energy point
     PARAM_4=${arr[4]} # luminosity
     WORKAREA=$HOME"/bes/DDPIPI/v0.2"
     mkdir -p $WORKAREA/scripts/sigMC/psipp/$PARAM_0
@@ -23,7 +23,7 @@ do
     rm -rf sigMC_psipp_PI_PI_VSS_$PARAM_0*txt
     cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
     cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-    ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/dst sigMC psipp_PI_PI VSS psipp $PARAM_0 2
+    ./make_mc.py /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/dst sigMC psipp_PI_PI VSS psipp $PARAM_0 $PARAM_3 2
     cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
     rm -rf *boss*
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/rootfile/*root

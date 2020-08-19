@@ -45,7 +45,7 @@ def save_before(file_in, file_out, ecms, region):
     if region == 'raw_signal':
         signal_low = 1.86965 - width(ecms)/2.
         signal_up = 1.86965 + width(ecms)/2.
-        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < 20)'
+        cut_base = '(m_rawm_D > ' + str(signal_low) + ' && m_rawm_D < ' + str(signal_up) + ' && m_chi2_kf < 200)'
         cut = cut_base 
 
     if region == 'raw_sidebandlow':
@@ -53,7 +53,7 @@ def save_before(file_in, file_out, ecms, region):
         signal_up = 1.86965 + width(ecms)/2.
         sidebandlow_up = signal_low - (signal_up - signal_low)
         sidebandlow_low = sidebandlow_up - (signal_up - signal_low)
-        cut_base = '(m_rawm_D > ' + str(sidebandlow_low) + '&& m_rawm_D < ' + str(sidebandlow_up) + ' && m_chi2_kf < 20)'
+        cut_base = '(m_rawm_D > ' + str(sidebandlow_low) + '&& m_rawm_D < ' + str(sidebandlow_up) + ' && m_chi2_kf < 200)'
         cut = cut_base 
 
     if region == 'raw_sidebandup':
@@ -61,7 +61,7 @@ def save_before(file_in, file_out, ecms, region):
         signal_up = 1.86965 + width(ecms)/2.
         sidebandup_low = signal_up + (signal_up - signal_low)
         sidebandup_up = sidebandup_low + (signal_up - signal_low)
-        cut_base = '(m_rawm_D > ' + str(sidebandup_low) + '&& m_rawm_D < ' + str(sidebandup_up) + ' && m_chi2_kf < 20)'
+        cut_base = '(m_rawm_D > ' + str(sidebandup_low) + '&& m_rawm_D < ' + str(sidebandup_up) + ' && m_chi2_kf < 200)'
         cut = cut_base 
 
     if region == 'STDDmiss_signal':

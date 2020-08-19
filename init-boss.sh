@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 
-# cd besenv/703p01
-# cd besenv/703
-cd besenv/705
+# cd besenv/703p01/cmthome
+cd besenv/705/cmthome
 
+source setupCVS.csh
 source setupCMT.csh
 cmt config
 source setup.csh
 
-# cd $HOME/bes/DDPIPI/v0.2/TestRelease/703p01/TestRelease-00-00-86/cmt
-# cd $HOME/bes/DDPIPI/v0.2/TestRelease/703/TestRelease-00-00-86/cmt
-cd $HOME/bes/DDPIPI/v0.2/TestRelease/705/TestRelease-00-00-88/cmt
+# cd $HOME/bes/DDPIPI/v0.2/besenv/703p01/TestRelease/TestRelease-00-00-86/cmt
+cd $HOME/bes/DDPIPI/v0.2/besenv/705/TestRelease/TestRelease-00-00-92/cmt
 
-cmt br cmt config
-
-cmt br gmake
+cmt config
+source setup.csh
 
 cd $HOME/bes/DDPIPI/v0.2
