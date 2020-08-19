@@ -14,13 +14,15 @@ This is a work about measuring cross sections of DDPIPI
 
 BOSS version 7.0.3.p01(XYZ data, inclusive MC)
 
+BOSS version 7.0.5(new XYZ data, inclusive MC, data sample above 4600 MeV)
+
 This is only need to be done for the first time after clone the code:
 
-> source init-boss.sh
+> source init_boss_703p01.sh/init_boss_705.sh
 
 ## Setup
 
-> source setup.sh
+> source setup_703p01.sh/setup_705.sh
 
 ## Build code
 
