@@ -30,20 +30,14 @@ do
     sed -i "s/TEMP_1/$PARAM_1/g" jobOptions_sim_sig_D1_2420_D_$PARAM_0\.sh
     sed -i "s/TEMP_2/$PARAM_2/g" jobOptions_sim_sig_D1_2420_D_$PARAM_0\.sh
     sed -i "s/TEMP_3/$PARAM_3/g" jobOptions_sim_sig_D1_2420_D_$PARAM_0\.sh
-    temp=$(echo "-0.222+$PARAM_3"|bc)
-    thre=4.290
-    if [ `expr $temp \> $thre` -eq 0 ]; then
-        PARAM_6=$thre
-    else
-        PARAM_6=$thre
-    fi
+    thre=4.2935
+    PARAM_6=$thre
     sed -i "s/TEMP_6/$PARAM_6/g" jobOptions_sim_sig_D1_2420_D_$PARAM_0\.sh
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/rtraw/*.rtraw
     sh jobOptions_sim_sig_D1_2420_D_$PARAM_0\.sh 0 9 5000
     cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/jobOptions_rec_sig_D1_2420_D_tempE_705.sh ./jobOptions_rec_sig_D1_2420_D_$PARAM_0\.sh
     sed -i "s/TEMP_0/$PARAM_0/g" jobOptions_rec_sig_D1_2420_D_$PARAM_0\.sh
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/dst/*.dst
-    echo "6"
     sh jobOptions_rec_sig_D1_2420_D_$PARAM_0\.sh 0 9
     cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subSimRec.sh ./
     sh subSimRec.sh jobOptions_sim_sig_D1_2420_D_$PARAM_0 jobOptions_rec_sig_D1_2420_D_$PARAM_0 subSimRec_D1_2420_$PARAM_0\_705 0 9

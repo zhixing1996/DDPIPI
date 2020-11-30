@@ -1,7 +1,7 @@
 # echo "setup DDecayAlg DDecayAlg-00-00-03 in /afs/ihep.ac.cn/users/j/jingmq/bes/DDPIPI/v0.2/Analysis/Physics"
 
 if ( $?CMTROOT == 0 ) then
-  setenv CMTROOT /afs/ihep.ac.cn/bes3/offline/ExternalLib/SLC6/contrib/CMT/v1r25
+  setenv CMTROOT /cvmfs/bes3.ihep.ac.cn/bes3sw/ExternalLib/SLC6/contrib/CMT/v1r25
 endif
 source ${CMTROOT}/mgr/setup.csh
 set cmtDDecayAlgtempfile=`${CMTROOT}/mgr/cmt -quiet build temporary_name`

@@ -69,6 +69,8 @@ class DDecay : public Algorithm {
         bool m_pid;
         bool m_debug;
         double m_Ecms;
+        double m_W_m_Kpipi;
+        double m_W_rm_Dpipi;
 
         // judgement variables
         bool stat_DTagTool;
@@ -79,6 +81,9 @@ class DDecay : public Algorithm {
         bool stat_fitpi0;
         bool stat_fitpi0_STDDmiss;
         bool stat_fitSecondVertex_STDDmiss;
+        bool stat_fitSecondVertex_Dtrk;
+        bool has_lep;
+        bool has_lep_STDDmiss;
         
         // common info
         int runNo;
@@ -86,34 +91,16 @@ class DDecay : public Algorithm {
         long flag1;
 
         // All McTruth info
+        double p4_mc_all[100][4];
         int pdgid[100];
         int motheridx[100];
         int idxmc;
 
-        // Dstst McTruth info
-        double p4_pip[4];
-        double p4_pim[4];
-        double p4_D1[4];
-        double p4_D2[4];
-        double p4_Dstst[4];
-
-        // psi(3770) McTruth info
-        double p4_pip_psi[4];
-        double p4_pim_psi[4];
-        double p4_psi[4];
-        double p4_Dp_psi[4];
-        double p4_Dm_psi[4];
-
-        // X(3842) McTruth info
-        double p4_pip_X3842[4];
-        double p4_pim_X3842[4];
-        double p4_X3842[4];
-        double p4_Dp_X3842[4];
-        double p4_Dm_X3842[4];
-
-        // DpDm McTruth info
-        int DpId;
-        int DmId;
+        // background check
+        int n_p;
+        int n_pbar;
+        int n_Kp;
+        int n_Km;
 
         // DTagTool
         EvtRecDTagCol::iterator dtag_iter_end;
@@ -162,11 +149,19 @@ class DDecay : public Algorithm {
         NTuple::Item<double> m_chi2_kf_up;
         NTuple::Item<int> m_n_count;
         NTuple::Item<int> m_n_othertrks;
+        NTuple::Item<int> m_n_otherleps;
+        NTuple::Item<int> m_n_p;
+        NTuple::Item<int> m_n_pbar;
+        NTuple::Item<int> m_n_Kp;
+        NTuple::Item<int> m_n_Km;
         NTuple::Matrix<double> m_rawp4_otherMdctrk;
         NTuple::Matrix<double> m_rawp4_otherMdcKaltrk;
+        NTuple::Matrix<double> m_rawp4_otherlep;
+        NTuple::Matrix<double> m_vtx_otherMdcKaltrk;
         NTuple::Item<int> m_charge_otherMdctrk;
         NTuple::Item<int> m_n_othershws;
         NTuple::Matrix<double> m_rawp4_othershw;
+        NTuple::Matrix<double> m_vtx_othershw;
         NTuple::Item<int> m_n_pi0;
         NTuple::Array<double> m_chi2_pi0;
         NTuple::Matrix<double> m_p4_pi0;
@@ -175,23 +170,12 @@ class DDecay : public Algorithm {
         NTuple::Item<int> m_idxmc;
         NTuple::Array<int> m_pdgid;
         NTuple::Array<int> m_motheridx;
-        NTuple::Array<double> m_p4_pip;
-        NTuple::Array<double> m_p4_pim;
-        NTuple::Array<double> m_p4_Dstst;
-        NTuple::Array<double> m_p4_D1; // D comes from D1_2420
-        NTuple::Array<double> m_p4_D2; // D comes out of D1_2420
-        NTuple::Array<double> m_p4_pip_psi;
-        NTuple::Array<double> m_p4_pim_psi;
-        NTuple::Array<double> m_p4_psi;
-        NTuple::Array<double> m_p4_Dp_psi;
-        NTuple::Array<double> m_p4_Dm_psi;
-        NTuple::Array<double> m_p4_pip_X3842;
-        NTuple::Array<double> m_p4_pim_X3842;
-        NTuple::Array<double> m_p4_X3842;
-        NTuple::Array<double> m_p4_Dp_X3842;
-        NTuple::Array<double> m_p4_Dm_X3842;
-        NTuple::Item<int> m_Id_Dp;
-        NTuple::Item<int> m_Id_Dm;
+        NTuple::Matrix<double> m_p4_mc_all;
+        // for sys error
+        NTuple::Item<double> m_chi2_svf_Dtrk;
+        NTuple::Item<double> m_ctau_svf_Dtrk;
+        NTuple::Item<double> m_L_svf_Dtrk;
+        NTuple::Item<double> m_Lerr_svf_Dtrk;
 
         // Ntuple2 info
         NTuple::Tuple* m_tuple2;
@@ -232,14 +216,25 @@ class DDecay : public Algorithm {
         NTuple::Item<int> m_idxmc_STDDmiss;
         NTuple::Array<int> m_pdgid_STDDmiss;
         NTuple::Array<int> m_motheridx_STDDmiss;
+        NTuple::Matrix<double> m_p4_mc_all_STDDmiss;
         NTuple::Item<int> m_charge_left_STDDmiss;
         NTuple::Item<int> m_n_othertrks_STDDmiss;
+        NTuple::Item<int> m_n_otherleps_STDDmiss;
+        NTuple::Item<int> m_n_p_STDDmiss;
+        NTuple::Item<int> m_n_pbar_STDDmiss;
+        NTuple::Item<int> m_n_Kp_STDDmiss;
+        NTuple::Item<int> m_n_Km_STDDmiss;
         NTuple::Matrix<double> m_rawp4_otherMdctrk_STDDmiss;
         NTuple::Matrix<double> m_rawp4_otherMdcKaltrk_STDDmiss;
+        NTuple::Matrix<double> m_vtx_otherMdcKaltrk_STDDmiss;
+        NTuple::Matrix<double> m_rawp4_otherlep_STDDmiss;
         NTuple::Array<double> m_rawp4_tagPiplus_STDDmiss;
         NTuple::Array<double> m_rawp4_tagPiminus_STDDmiss;
+        NTuple::Array<double> m_vtx_tagPiplus_STDDmiss;
+        NTuple::Array<double> m_vtx_tagPiminus_STDDmiss;
         NTuple::Item<int> m_n_othershws_STDDmiss;
         NTuple::Matrix<double> m_rawp4_othershw_STDDmiss;
+        NTuple::Matrix<double> m_vtx_othershw_STDDmiss;
         NTuple::Item<int> m_n_pi0_STDDmiss;
         NTuple::Array<double> m_chi2_pi0_STDDmiss;
         NTuple::Matrix<double> m_p4_pi0_STDDmiss;
@@ -251,38 +246,28 @@ class DDecay : public Algorithm {
         NTuple::Item<int> m_matched_piplus;
         NTuple::Item<int> m_matched_piminus;
         NTuple::Item<double> m_rm_Dpipi_STDDmiss;
-        NTuple::Array<double> m_p4_pip_STDDmiss;
-        NTuple::Array<double> m_p4_pim_STDDmiss;
-        NTuple::Array<double> m_p4_Dstst_STDDmiss;
-        NTuple::Array<double> m_p4_D1_STDDmiss; // D comes from D1_2420
-        NTuple::Array<double> m_p4_D2_STDDmiss; // D comes out of D1_2420
-        NTuple::Array<double> m_p4_pip_psi_STDDmiss;
-        NTuple::Array<double> m_p4_pim_psi_STDDmiss;
-        NTuple::Array<double> m_p4_psi_STDDmiss;
-        NTuple::Array<double> m_p4_Dp_psi_STDDmiss;
-        NTuple::Array<double> m_p4_Dm_psi_STDDmiss;
-        NTuple::Array<double> m_p4_pip_X3842_STDDmiss;
-        NTuple::Array<double> m_p4_pim_X3842_STDDmiss;
-        NTuple::Array<double> m_p4_X3842_STDDmiss;
-        NTuple::Array<double> m_p4_Dp_X3842_STDDmiss;
-        NTuple::Array<double> m_p4_Dm_X3842_STDDmiss;
-        NTuple::Item<int> m_Id_Dp_STDDmiss;
-        NTuple::Item<int> m_Id_Dm_STDDmiss;
+        NTuple::Array<double> m_p4_mcall_truth;
         NTuple::Array<double> m_p4_piplus_truth;
         NTuple::Array<double> m_p4_piminus_truth;
         NTuple::Array<double> m_p4_Dplus_truth;
         NTuple::Array<double> m_p4_Dminus_truth;
 
+        // Ntuple3 info
+        NTuple::Tuple* m_tuple3;
+        NTuple::Item<int> m_runNo_Truth;
+        NTuple::Item<int> m_evtNo_Truth;
+        NTuple::Item<int> m_idxmc_Truth;
+        NTuple::Array<int> m_pdgid_Truth;
+        NTuple::Array<int> m_motheridx_Truth;
+        NTuple::Matrix<double> m_p4_mc_all_Truth;
+
         // functions
         void clearVariables();
         void recordVariables();
         void recordVariables_STDDmiss();
+        void recordVariables_Truth();
         void saveAllMcTruthInfo();
         bool saveTruth();
-        void saveDststMcTruthInfo();
-        void savePsi_3770McTruthInfo();
-        void saveX_3842McTruthInfo();
-        void saveDpDmMcTruthInfo();
         bool useDTagTool();
         bool tagSingleD();
         bool saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon);
@@ -294,6 +279,7 @@ class DDecay : public Algorithm {
         double fitKM_STDDmiss_low(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double sidebandlow_mean);
         double fitKM_STDDmiss_up(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double sidebandup_mean);
         bool fitSecondVertex_STDDmiss(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus);
+        bool fitSecondVertex_Dtrk(WTrackParameter &Dpiplus, WTrackParameter &Dpiminus);
         bool fitpi0(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);
         bool fitpi0_STDDmiss(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);
         bool saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth);

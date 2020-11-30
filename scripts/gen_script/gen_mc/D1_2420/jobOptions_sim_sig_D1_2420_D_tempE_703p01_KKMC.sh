@@ -39,7 +39,7 @@ do
     echo "KKMC.ParticleDecayThroughEvtGen = true;" >> $SIM_NAME
     echo "KKMC.ThresholdCut = TEMP_6;" >> $SIM_NAME # 4.35826 - 3*74e-3
     echo "KKMC.RadiationCorrection = 1;" >> $SIM_NAME
-    echo "KKMC.TagISR = 1;" >> $SIM_NAME
+    # echo "KKMC.TagISR = 1;" >> $SIM_NAME
     echo "KKMC.TagFSR = 1;" >> $SIM_NAME
     echo "KKMC.ModeIndexExpXS = -2;" >> $SIM_NAME
     echo "KKMC.IHVP = 1;" >> $SIM_NAME

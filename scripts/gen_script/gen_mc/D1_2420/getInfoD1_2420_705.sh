@@ -41,5 +41,8 @@ do
     python get_info.py $FILE_PATH/sigMC_D1_2420_$PARAM_0\.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandup.root $PARAM_3 raw_sidebandup
     echo "STD sideband of $PARAM_0 is done!"
 
+    python get_info.py $FILE_PATH/sigMC_D1_2420_$PARAM_0\.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_truth.root $PARAM_3 truth
+    echo "Truth of $PARAM_0 is done!"
+
     echo "$PARAM_0 is done!"
 done

@@ -32,6 +32,9 @@ do
     python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_before.root $PARAM_0 before raw_signal
     echo "STD signal of $PARAM_0 is done!"
 
+    python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_signal.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_before.root $PARAM_0 before STDDmiss_signal
+    echo "STDDmiss signal of $PARAM_0 is done!"
+
     python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_signal.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_after.root $PARAM_0 after STDDmiss_signal
     echo "STDDmiss signal of $PARAM_0 is done!"
 

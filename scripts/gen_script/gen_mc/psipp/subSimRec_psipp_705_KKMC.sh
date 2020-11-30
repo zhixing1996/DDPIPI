@@ -30,13 +30,8 @@ do
     sed -i "s/TEMP_1/$PARAM_1/g" jobOptions_sim_sig_psipp_PI_PI_$PARAM_0\.sh
     sed -i "s/TEMP_2/$PARAM_2/g" jobOptions_sim_sig_psipp_PI_PI_$PARAM_0\.sh
     sed -i "s/TEMP_3/$PARAM_3/g" jobOptions_sim_sig_psipp_PI_PI_$PARAM_0\.sh
-    temp=$(echo "-0.222+$PARAM_3"|bc)
-    thre=4.05
-    if [ `expr $temp \> $thre` -eq 0 ]; then
-        PARAM_6=$thre
-    else
-        PARAM_6=$thre
-    fi
+    thre=4.0535
+    PARAM_6=$thre
     sed -i "s/TEMP_6/$PARAM_6/g" jobOptions_sim_sig_psipp_PI_PI_$PARAM_0\.sh
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/rtraw/*.rtraw
     sh jobOptions_sim_sig_psipp_PI_PI_$PARAM_0\.sh 0 9 5000

@@ -33,7 +33,6 @@ do
     echo "//**************job options for EvtGen************************" >> $SIM_NAME
     echo "#include \"\$BESEVTGENROOT/share/BesEvtGen.txt\"" >> $SIM_NAME
     echo "EvtDecay.userDecayTableName = \"./ConExc_D1_2420_D.dec\";" >> $SIM_NAME
-    # echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/pdt_703p01.table\";" >> $SIM_NAME
     echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/pdt_705.table\";" >> $SIM_NAME
     echo "EvtDecay.ParentParticle = \"vpho\";" >> $SIM_NAME
     echo "" >> $SIM_NAME

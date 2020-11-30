@@ -21,7 +21,7 @@ do
     if [[ $PARAM_0 == *$shortbar2* ]]; then
         continue
     fi
-    PARAM_3=`echo "scale=4; $PARAM_3 / 1000" | bc -l`
+    PARAM_3=`echo "scale=5; $PARAM_3 / 1000" | bc -l`
     mkdir -p $WORKAREA/sigMC/D1_2420/$PARAM_0
     cd $HOME/bes/DDPIPI/v0.2/python
     rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/*signal*.root
@@ -40,6 +40,9 @@ do
     python get_info.py $FILE_PATH/sigMC_D1_2420_$PARAM_0\.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandlow.root $PARAM_3 raw_sidebandlow
     python get_info.py $FILE_PATH/sigMC_D1_2420_$PARAM_0\.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_raw_sidebandup.root $PARAM_3 raw_sidebandup
     echo "STD sideband of $PARAM_0 is done!"
+
+    python get_info.py $FILE_PATH/sigMC_D1_2420_$PARAM_0\.root $ROOT_PATH/sigMC_D1_2420_$PARAM_0\_truth.root $PARAM_3 truth
+    echo "Truth of $PARAM_0 is done!"
 
     echo "$PARAM_0 is done!"
 done

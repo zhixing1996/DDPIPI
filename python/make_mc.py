@@ -10,7 +10,7 @@ __created__ = "[2019-08-13 Tue 09:29]"
 import sys
 import os
 import math
-from tools import search, group_files_by_num
+from tools import search, group_files_by_num, width, window
 
 def usage():
     sys.stdout.write('''
@@ -65,7 +65,10 @@ def main():
         f.write('#include "$DTAGALGROOT/share/jobOptions_dTag.txt"\n')
         f.write('#include "$DDECAYALGROOT/share/jobOptions_DDecay.txt"\n')
         f.write('#include "$MEASUREDECMSSVCROOT/share/anaOptions.txt"\n')
+        f.write('DDecay.IsMonteCarlo = true;\n')
         f.write('DDecay.Ecms = '+str(float(cms)/1000.)+';\n')
+        f.write('DDecay.W_m_Kpipi = '+str(width(ecms[0:4]))+';\n')
+        f.write('DDecay.W_rm_Dpipi = '+str(window(ecms[0:4]))+';\n')
         f.write('\n')
         f.write('DTag.NeutralDReconstruction  = true;\n')
         f.write('DTag.ChargedDReconstruction  = true;\n')

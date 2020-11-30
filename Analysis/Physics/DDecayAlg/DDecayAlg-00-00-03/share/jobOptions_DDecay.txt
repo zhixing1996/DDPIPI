@@ -19,3 +19,7 @@ DsSelector.UseDeltaMassCuts = true;
 
 #include "$VERTEXFITROOT/share/jobOptions_VertexDbSvc.txt"
 #include "$SIMPLEPIDSVCROOT/share/jobOptions_SimplePIDSvc.txt"
+
+//choose whitch paritcle package to use, default simplepid,  otherwise, particleID
+LocalKaonSelector.useSimplePID = false;
+LocalPionSelector.useSimplePID = false;

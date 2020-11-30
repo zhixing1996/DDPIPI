@@ -29,22 +29,31 @@ do
     echo "Begininning of $PARAM_0!"
 
     python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_raw.root $ROOT_PATH/data_$PARAM_0\_raw_before.root $PARAM_0 before raw_signal
-    echo "STD signal of $PARAM_0 is done!"
+    echo "STD signal of $PARAM_0 is done! (before bkg suppress)"
+
+    python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_signal.root $ROOT_PATH/data_$PARAM_0\_before.root $PARAM_0 before STDDmiss_signal
+    echo "STDDmiss signal of $PARAM_0 is done! (before bkg suppress)"
 
     python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_signal.root $ROOT_PATH/data_$PARAM_0\_after.root $PARAM_0 after STDDmiss_signal
-    echo "STDDmiss signal of $PARAM_0 is done!"
+    echo "STDDmiss signal of $PARAM_0 is done! (after bkg suppress)"
+
+    rm -rf $ROOT_PATH/data_$PARAM_0\_sideband.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandlow_before.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandup_before.root
+    python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_sidebandlow.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandlow_before.root $PARAM_0 before STDDmiss_sidebandlow
+    python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_sidebandup.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandup_before.root $PARAM_0 before STDDmiss_sidebandup
+    hadd $ROOT_PATH/data_$PARAM_0\_sideband_before.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandlow_before.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandup_before.root
+    echo "STDDmiss sideband of $PARAM_0 is done! (before bkg suppress)"
 
     rm -rf $ROOT_PATH/data_$PARAM_0\_sideband.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandlow_after.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandup_after.root
     python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_sidebandlow.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandlow_after.root $PARAM_0 after STDDmiss_sidebandlow
     python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_sidebandup.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandup_after.root $PARAM_0 after STDDmiss_sidebandup
     hadd $ROOT_PATH/data_$PARAM_0\_sideband.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandlow_after.root $ROOT_PATH/data_$PARAM_0\_STDDmiss_sidebandup_after.root
-    echo "STDDmiss sideband of $PARAM_0 is done!"
+    echo "STDDmiss sideband of $PARAM_0 is done! (after bkg suppress)"
 
     rm -rf $ROOT_PATH/data_$PARAM_0\_raw_sideband_before.root $ROOT_PATH/data_$PARAM_0\_raw_sidebandlow_before.root $ROOT_PATH/data_$PARAM_0\_raw_sidebandup_before.root
     python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_raw_sidebandlow.root $ROOT_PATH/data_$PARAM_0\_raw_sidebandlow_before.root $PARAM_0 before raw_sidebandlow
     python apply_cuts.py $ROOT_PATH/data_$PARAM_0\_raw_sidebandup.root $ROOT_PATH/data_$PARAM_0\_raw_sidebandup_before.root $PARAM_0 before raw_sidebandup
     hadd $ROOT_PATH/data_$PARAM_0\_raw_sideband_before.root $ROOT_PATH/data_$PARAM_0\_raw_sidebandlow_before.root $ROOT_PATH/data_$PARAM_0\_raw_sidebandup_before.root
-    echo "raw sideband of $PARAM_0 is done!"
+    echo "raw sideband of $PARAM_0 is done! (after bkg suppress)"
 
     echo "$PARAM_0 is done!"
 done

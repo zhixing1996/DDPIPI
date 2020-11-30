@@ -117,6 +117,12 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.33.1" "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.33.2" "Single D tag -- run on signal MC sample"
 
+    printf "\n\t%-9s  %-40s\n" "0.34"   "[run on inclusive MC (qqbar) @4230MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.34.1" "Single D tag -- run on inclusive MC sample"
+
+    printf "\n\t%-9s  %-40s\n" "0.35"   "[run on inclusive MC (open harm) @4230MeV]"
+    printf "\n\t%-9s  %-40s\n" "0.35.1" "Single D tag -- run on inclusive MC sample"
+
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
 }
@@ -275,7 +281,7 @@ case $option in
            rm -rf incMC_inclusive_qq_4360_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/qqbar incMC inclusive qq qq 4360 30
+           ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/qqbar incMC inclusive qq qq 4360 4358.26 2
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/rootfile/*root
@@ -308,7 +314,7 @@ case $option in
            rm -rf incMC_inclusive_qq_4420_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/qqbar incMC inclusive qq qq 4420 30
+           ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/qqbar incMC inclusive qq qq 4420 4415.58 2
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/rootfile/*root
@@ -341,7 +347,7 @@ case $option in
            rm -rf incMC_inclusive_qq_4600_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/qqbar incMC inclusive qq qq 4600 30
+           ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/qqbar incMC inclusive qq qq 4600 4599.53 2
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/rootfile/*root
@@ -374,7 +380,7 @@ case $option in
            rm -rf incMC_inclusive_DD_4360_*txt
            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-           ./make_mc.py /besfs/groups/psip/psipgroup/665p01-MC/4360/DDbar incMC inclusive DD DD 4360 30
+           ./make_mc.py /besfs/groups/psip/psipgroup/665p01-MC/4360/DDbar incMC inclusive DD DD 4360 4358.26 2
            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
            rm -rf *boss*
            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile/*root
@@ -408,7 +414,7 @@ case $option in
             rm -rf incMC_inclusive_DD_4420_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/DD incMC inclusive DD DD 4420 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/DD incMC inclusive DD DD 4420 4415.58 2
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/rootfile/*root
@@ -441,7 +447,7 @@ case $option in
             rm -rf incMC_inclusive_DD_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/DD incMC inclusive DD DD 4600 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/DD incMC inclusive DD DD 4600 4599.53 2
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/rootfile/*root
@@ -474,7 +480,7 @@ case $option in
             rm -rf incMC_inclusive_bhabha_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/bhabha incMC inclusive bhabha bhabha 4360 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/bhabha incMC inclusive bhabha bhabha 4360 4358.26 2
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4360/rootfile/*root
@@ -507,7 +513,7 @@ case $option in
             rm -rf incMC_inclusive_dimu_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/dimu incMC inclusive dimu dimu 4360 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/dimu incMC inclusive dimu dimu 4360 4358.26 2
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/dimu/4360/rootfile/*root
@@ -540,7 +546,7 @@ case $option in
             rm -rf incMC_inclusive_ditau_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/ditau incMC inclusive ditau ditau 4360 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/ditau incMC inclusive ditau ditau 4360 4358.26 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/ditau/4360/rootfile/*root
@@ -573,7 +579,7 @@ case $option in
             rm -rf incMC_inclusive_digamma_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/digamma incMC inclusive digamma digamma 4360 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/digamma incMC inclusive digamma digamma 4360 4358.26 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/digamma/4360/rootfile/*root
@@ -606,7 +612,7 @@ case $option in
             rm -rf incMC_inclusive_twogamma_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/twogamma incMC inclusive twogamma twogamma 4360 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/twogamma incMC inclusive twogamma twogamma 4360 4358.26 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4360/rootfile/*root
@@ -639,7 +645,7 @@ case $option in
             rm -rf incMC_inclusive_ISR_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/ISR incMC inclusive ISR ISR 4360 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/QED/ISR incMC inclusive ISR ISR 4360 4358.26 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/ISR/4360/rootfile/*root
@@ -672,7 +678,7 @@ case $option in
             rm -rf incMC_inclusive_gammaXYZ_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/res/gammaXYZ incMC inclusive gammaXYZ gammaXYZ 4360 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/res/gammaXYZ incMC inclusive gammaXYZ gammaXYZ 4360 4358.26 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/gammaXYZ/4360/rootfile/*root
@@ -705,7 +711,7 @@ case $option in
             rm -rf incMC_inclusive_hadrons_4360_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/res/hadrons incMC inclusive hadrons hadrons 4360 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4360/res/hadrons incMC inclusive hadrons hadrons 4360 4358.26 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/hadrons/4360/rootfile/*root
@@ -738,7 +744,7 @@ case $option in
             rm -rf incMC_inclusive_bhabha_4420_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/bhabha incMC inclusive bhabha bhabha 4420 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/bhabha incMC inclusive bhabha bhabha 4420 4415.58 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4420/rootfile/*root
@@ -771,7 +777,7 @@ case $option in
             rm -rf incMC_inclusive_dimu_4420_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/mumu incMC inclusive dimu dimu 4420 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/mumu incMC inclusive dimu dimu 4420 4415.58 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/dimu/4420/rootfile/*root
@@ -804,7 +810,7 @@ case $option in
             rm -rf incMC_inclusive_ditau_4420_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/tautau incMC inclusive ditau ditau 4420 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/tautau incMC inclusive ditau ditau 4420 4415.58 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/ditau/4420/rootfile/*root
@@ -837,7 +843,7 @@ case $option in
             rm -rf incMC_inclusive_digamma_4420_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/digamma incMC inclusive digamma digamma 4420 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4420/digamma incMC inclusive digamma digamma 4420 4415.58 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/digamma/4420/rootfile/*root
@@ -870,7 +876,7 @@ case $option in
             rm -rf incMC_inclusive_bhabha_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/QED/bhabha incMC inclusive bhabha bhabha 4600 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/QED/bhabha incMC inclusive bhabha bhabha 4600 4599.53 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/bhabha/4600/rootfile/*root
@@ -903,7 +909,7 @@ case $option in
             rm -rf incMC_inclusive_dimu_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/QED/dimu incMC inclusive dimu dimu 4600 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/QED/dimu incMC inclusive dimu dimu 4600 4599.53 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/dimu/4600/rootfile/*root
@@ -936,7 +942,7 @@ case $option in
             rm -rf incMC_inclusive_ditau_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/QED/ditau incMC inclusive ditau ditau 4600 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/QED/ditau incMC inclusive ditau ditau 4600 4.59953 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/ditau/4600/rootfile/*root
@@ -969,7 +975,7 @@ case $option in
             rm -rf incMC_inclusive_digamma_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/QED/digamma incMC inclusive digamma digamma 4600 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/QED/digamma incMC inclusive digamma digamma 4600 4.59953 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/digamma/4600/rootfile/*root
@@ -1002,7 +1008,7 @@ case $option in
             rm -rf incMC_inclusive_twogamma_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/QED/twogamma incMC inclusive twogamma twogamma 4600 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/QED/twogamma incMC inclusive twogamma twogamma 4600 4.59953 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/twogamma/4600/rootfile/*root
@@ -1035,7 +1041,7 @@ case $option in
             rm -rf incMC_inclusive_LL_4600_*txt
             cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
             cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/LL incMC inclusive LL LL 4600 30
+            ./make_mc.py /besfs/groups/psip/psipgroup/664p01-MC/4600/LL incMC inclusive LL LL 4600 4.59953 30
             cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
             rm -rf *boss*
             rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/LL/4600/rootfile/*root
@@ -1136,4 +1142,71 @@ case $option in
             cd scripts/gen_script/gen_mc/DDPIPI
             ./subAna_D_D_PI_PI_705.sh
             ;;
+
+    # ------------------------------------------
+    #  0.34 run on inclusive MC (qqbar) @4230MeV
+    # ------------------------------------------
+
+    0.34) echo "inclusive MC @4230MeV..."
+          echo "--> E_{CMS}: 4226.26MeV"
+          echo "--> Mode: qqbar"
+          echo "--> Energy Spread: 1.97MeV"
+          echo "--> Event Number: 21,000,000"
+          echo "--> Cross Section: 6.4nb"
+          echo "--> Luminosity: 1091.74pb^{-1}"
+          echo "--> RunNo: 30438~30491, 32239~33484"
+          ;;
+
+    0.34.1) echo "Single D tag -- run on inclusive MC sample..."
+            mkdir -p scripts/incMC/qq/4230
+            cd scripts/incMC/qq/4230
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4230/jobs_inc" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4230/jobs_inc
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/qq/4230/jobs_inc ./jobs_inc
+            fi
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4230/rootfile
+            cd jobs_inc
+            rm -rf incMC_inclusive_qq_4230_*txt
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
+            ./make_mc.py /besfs/groups/psip/psipgroup/665p01-MC/4230/QED/qqbar incMC inclusive qq qq 4230 4226.26 2
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
+            rm -rf *boss*
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4230/rootfile/*root
+            ./subAna.sh incMC_inclusive_qq_4230
+            ;;
+
+    # -----------------------------------------------
+    #  0.35 run on inclusive MC (open charm) @4230MeV
+    # -----------------------------------------------
+
+    0.35) echo "inclusive MC @4230MeV..."
+          echo "--> E_{CMS}: 4226.26MeV"
+          echo "--> Mode: open charm"
+          echo "--> Energy Spread: 2.03MeV"
+          echo "--> Event Number: 21,300,000"
+          echo "--> Cross Section: 6.5nb"
+          echo "--> Luminosity: 1091.74pb^{-1}"
+          echo "--> RunNo: 30438~30491, 32239~33484"
+          ;;
+
+    0.35.1) echo "Single D tag -- run on inclusive MC sample..."
+            mkdir -p scripts/incMC/DD/4230
+            cd scripts/incMC/DD/4230
+            if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4230/jobs_inc" ]; then
+                mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4230/jobs_inc
+                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/incMC/DD/4230/jobs_inc ./jobs_inc
+            fi
+            mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4230/rootfile
+            cd jobs_inc
+            rm -rf incMC_inclusive_DD_4230_*txt
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
+            cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
+            ./make_mc.py /besfs/groups/psip/psipgroup/665p01-MC/4230/DDbar incMC inclusive DD DD 4230 4226.26 2
+            cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
+            rm -rf *boss*
+            rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4230/rootfile/*root
+            ./subAna.sh incMC_inclusive_DD_4230
+            ;;
+
 esac

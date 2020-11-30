@@ -6,7 +6,7 @@ else
     cd besenv/705
     cp /cvmfs/bes3.ihep.ac.cn/bes3sw/cmthome/cmthome-7.0.5-Slc6Centos7Compat ./cmthome -rf
     cd cmthome
-    echo "set WorkArea \"~jingmq/bes/DDPIPI/v0.2\"" >> requirements
+    echo "set WorkArea \"/afs/ihep.ac.cn/users/j/jingmq/bes/DDPIPI/v0.2\"" >> requirements
     echo "path_remove CMTPATH  \"\${WorkArea}\"" >> requirements
     echo "path_prepend CMTPATH  \"\${WorkArea}\"" >> requirements
     source setupCVS.sh
