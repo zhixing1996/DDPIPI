@@ -106,13 +106,13 @@ def draw():
 
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
-    mbc.SaveAs('./figs/sys_err_background_shape.pdf')
+    mbc.SaveAs('./figs/sys_err_fit_range.pdf')
 
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
 
     ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
-    with open('./txts/sys_err_background_shape.txt', 'w') as f:
+    with open('./txts/sys_err_fit_range.txt', 'w') as f:
         for ecm in ecms:
             out = str(ecm/1000.) + '\t' + str(round(ave, 2)) + '\n'
             f.write(out)

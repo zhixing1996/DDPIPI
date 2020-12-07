@@ -636,10 +636,6 @@ def save_raw(f_in, cms, t, region):
     m_has_badshws = array('i', [0])
     m_has_badtrks = array('i', [0])
     m_has_leps = array('i', [0])
-    m_chi2_svf = array('d', [999.])
-    m_ctau_svf = array('d', [999.])
-    m_L_svf = array('d', [999.])
-    m_Lerr_svf = array('d', [999.])
     t.Branch('runNo', m_runNo, 'm_runNo/I')
     t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
     t.Branch('mode', m_mode, 'm_mode/I')
@@ -703,10 +699,6 @@ def save_raw(f_in, cms, t, region):
     t.Branch('has_badtrks', m_has_badtrks, 'm_has_badtrks/I')
     t.Branch('has_badshws', m_has_badshws, 'm_has_badshws/I')
     t.Branch('has_leps', m_has_leps, 'm_has_leps/I')
-    t.Branch('chi2_svf', m_chi2_svf, 'm_chi2_svf/D')
-    t.Branch('ctau_svf', m_ctau_svf, 'm_ctau_svf/D')
-    t.Branch('L_svf', m_L_svf, 'm_L_svf/D')
-    t.Branch('Lerr_svf', m_Lerr_svf, 'm_Lerr_svf/D')
     t_std = f_in.Get('STD')
     nentries = t_std.GetEntries()
     for ientry in xrange(nentries):
@@ -947,10 +939,6 @@ def save_raw(f_in, cms, t, region):
                 m_cos_otherall[0] = ptrack.CosTheta()
                 m_E_othertrks[0] = E_othertrks
                 m_E_othershws[0] = E_othershws
-                m_chi2_svf[0] = t_std.chi2_svf
-                m_ctau_svf[0] = t_std.ctau_svf
-                m_L_svf[0] = t_std.L_svf
-                m_Lerr_svf[0] = t_std.Lerr_svf
                 t.Fill()
 
 def save_truth(f_in, cms, t, region):

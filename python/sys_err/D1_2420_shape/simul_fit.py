@@ -203,6 +203,7 @@ def fit(ecms, patch, path):
     pdf_DDPIPI_rm_pipi = RooHistPdf('pdf_DDPIPI_rm_pipi', 'pdf_DDPIPI_rm_pipi', RooArgSet(rm_pipi), hist_DDPIPI_rm_pipi, 2)
     mean_rm_pipi = RooRealVar('mean_rm_pipi', 'mean_rm_pipi', 0, -0.01, 0.01)
     sigma_rm_pipi = RooRealVar('sigma_rm_pipi', 'sigma_rm_pipi', 0.00123, 0., 0.02)
+    if ecms == '4680':sigma_rm_pipi = RooRealVar('sigma_rm_pipi', 'sigma_rm_pipi', 0.00123, 0., 0.01)
     gauss_rm_pipi = RooGaussian('gaus_rm_pipi', 'guass_rm_pipi', rm_pipi, mean_rm_pipi, sigma_rm_pipi)
     rm_pipi.setBins(xbins_rm_pipi, 'cache')
     covpdf_psipp = RooFFTConvPdf('covpdf_psipp', 'covpdf_psipp', rm_pipi, pdf_psipp_rm_pipi, gauss_rm_pipi)
@@ -620,7 +621,7 @@ def fit(ecms, patch, path):
     canvas_name = './figs/simul_fit_' + str(ecms) + '.pdf'
     c.SaveAs(canvas_name)
 
-    # raw_input('Enter anything to end...')
+    raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]

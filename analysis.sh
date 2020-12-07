@@ -480,12 +480,12 @@ case $option in
            # chmod u+x psipp_Sub_703p01
            # hep_sub -g physics psipp_Sub_703p01 -o jobs.out -e jobs.err
 
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_705.sh .
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_705 .
-           echo "#!/bin/bash" > Data_Sub_705
-           echo "./getInfoData_705.sh" >> Data_Sub_705
-           chmod u+x Data_Sub_705
-           hep_sub -g physics Data_Sub_705 -o jobs.out -e jobs.err
+           #         cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_705.sh .
+           #         cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_705 .
+           #         echo "#!/bin/bash" > Data_Sub_705
+           #         echo "./getInfoData_705.sh" >> Data_Sub_705
+           #         chmod u+x Data_Sub_705
+           #         hep_sub -g physics Data_Sub_705 -o jobs.out -e jobs.err
 
            # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/getInfoD1_2420_705.sh .
            # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/D1_2420_Base_705 .

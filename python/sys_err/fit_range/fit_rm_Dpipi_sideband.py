@@ -154,14 +154,14 @@ def fit(path, shape_path, ecms, patch):
     sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_signal, gauss)
 
     # background
-    if ndf == 6:
+    if ndf == 4:
         a = RooRealVar('a', 'a', 0., -99., 99.)
         b = RooRealVar('b', 'b', 0., -99., 99.)
         if ecms == 4640:
             a = RooRealVar('a', 'a', 0., -9., 9.)
             b = RooRealVar('b', 'b', 0., -9., 9.)
         bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
-    if ndf == 5:
+    if ndf == 3:
         a = RooRealVar('a', 'a', 0., -99., 99.)
         bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
 

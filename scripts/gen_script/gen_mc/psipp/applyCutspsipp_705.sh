@@ -38,11 +38,5 @@ do
     python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_signal.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_after.root $PARAM_0 after STDDmiss_signal
     echo "STDDmiss signal of $PARAM_0 is done!"
 
-    rm -rf $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sideband_before.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandlow_before.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandup_before.root
-    python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandlow.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandlow_before.root $PARAM_0 before raw_sidebandlow
-    python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandup.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandup_before.root $PARAM_0 before raw_sidebandup
-    hadd $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sideband_before.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandlow_before.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandup_before.root
-    echo "raw sideband of $PARAM_0 is done!"
-
     echo "$PARAM_0 is done!"
 done

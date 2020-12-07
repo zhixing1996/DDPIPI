@@ -36,11 +36,6 @@ do
     python get_info.py $FILE_PATH/sigMC_D_D_PI_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw.root $PARAM_3 raw_signal
     echo "STD of $PARAM_0 is done!"
 
-    rm -rf $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sidebandlow.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sidebandup.root
-    python get_info.py $FILE_PATH/sigMC_D_D_PI_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sidebandlow.root $PARAM_3 raw_sidebandlow
-    python get_info.py $FILE_PATH/sigMC_D_D_PI_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sidebandup.root $PARAM_3 raw_sidebandup
-    echo "STD sideband of $PARAM_0 is done!"
-
     python get_info.py $FILE_PATH/sigMC_D_D_PI_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_truth.root $PARAM_3 truth
     echo "Truth of $PARAM_0 is done!"
 

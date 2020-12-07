@@ -59,7 +59,7 @@ NAME
     fit_rm_Dpipi.py
 
 SYNOPSIS
-    ./fit_rm_Dpipi.py [ecms] [mode]
+    ./fit_rm_Dpipi.py [ecms] [mode] [patch]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -72,7 +72,7 @@ def set_pavetext(pt):
     pt.SetFillStyle(0)
     pt.SetBorderSize(0)
     pt.SetTextAlign(10)
-    pt.SetTextSize(0.04)
+    pt.SetTextSize(0.06)
 
 def set_xframe_style(xframe, xtitle, ytitle):
     xframe.GetXaxis().SetTitle(xtitle)
@@ -105,7 +105,7 @@ def set_canvas_style(mbc):
     mbc.SetBottomMargin(0.15)
     mbc.SetGrid()
 
-def fit(path, shape_path, ecms, mode):
+def fit(path, shape_path, ecms, mode, patch):
     try:
         f_data = TFile(path[0])
         t_data = f_data.Get('save')
@@ -128,13 +128,26 @@ def fit(path, shape_path, ecms, mode):
     data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
 
     # signal
+    f_param = open('../../fit_xs/txts/param_' + str(ecms) + '_' + patch + '.txt', 'r')
+    lines_param = f_param.readlines()
     f_shape = TFile(shape_path, 'READ')
     h_shape = f_shape.Get('h_hist')
     h_signal = RooDataHist('h_shape', 'h_shape', RooArgList(rm_Dpipi), h_shape)
     pdf_signal = RooHistPdf('pdf_signal', 'pdf_signal', RooArgSet(rm_Dpipi), h_signal, 0)
-    mean_low, mean_up, sigma_up =  param_rm_Dpipi(ecms)
-    mean = RooRealVar('mean', 'mean of gaussian', 0., mean_low, mean_up)
-    sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up)
+    for line_param in lines_param:
+        rs_param = line_param.rstrip('\n')
+        rs_param = filter(None, rs_param.split(" "))
+        ndf = float(float(rs_param[0]))
+        a_val = float(float(rs_param[1]))
+        if ndf == 6:
+            b_val = float(float(rs_param[2]))
+            mean_val = float(float(rs_param[3]))
+            sigma_val = float(float(rs_param[4]))
+        else:
+            mean_val = float(float(rs_param[2]))
+            sigma_val = float(float(rs_param[3]))
+    mean = RooRealVar('mean', 'mean of gaussian', mean_val)
+    sigma = RooRealVar('sigma', 'sigma of gaussian', sigma_val)
     gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
     rm_Dpipi.setBins(xbins, 'cache')
     sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_signal, gauss)
@@ -142,6 +155,9 @@ def fit(path, shape_path, ecms, mode):
     # background
     a = RooRealVar('a', 'a', 0, -99, 99)
     b = RooRealVar('b', 'b', 0, -99, 99)
+    if ecms == 4237:
+        a = RooRealVar('a', 'a', 0, -1, 1)
+        b = RooRealVar('b', 'b', 0, -1, 1)
     if ecms == 4400:
         a = RooRealVar('a', 'a', 0, -1, 1)
         b = RooRealVar('b', 'b', 0, -1, 1)
@@ -177,9 +193,14 @@ def fit(path, shape_path, ecms, mode):
     curve = xframe.getObject(1)
     histo = xframe.getObject(0)
     pt_title = '#chi^{2}/ndf = ' +  str(round(curve.chiSquare(histo, ndf)*ndf, 2)) + '/' + str(ndf) + '=' + str(round(curve.chiSquare(histo, ndf), 2))
-    pt = TPaveText(0.6, 0.8, 0.85, 0.85, "BRNDC")
+    pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
     set_pavetext(pt)
     pt.Draw()
+    pt_title = str(ecms) + ' MeV: '
+    pt.AddText(pt_title)
+    pt_title = '#chi^{2}/ndf = '
+    pt.AddText(pt_title)
+    pt_title = str(round(curve.chiSquare(histo, ndf)*ndf, 2)) + '/' + str(ndf) + '=' + str(round(curve.chiSquare(histo, ndf), 2))
     pt.AddText(pt_title)
 
     window_low = 1.86965 - window(ecms)/2.
@@ -218,20 +239,21 @@ def fit(path, shape_path, ecms, mode):
     f_factor.write(out)
     f_factor.close()
 
-    # raw_input('enter anything to end...')
+    raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]
-    if len(args)<2:
+    if len(args)<3:
         return usage()
     ecms = int(args[0])
     mode = args[1]
+    patch = args[2]
 
     path = []
     shape_path = ''
     path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
     shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
-    fit(path, shape_path, ecms, mode)
+    fit(path, shape_path, ecms, mode, patch)
 
 if __name__ == '__main__':
     main()

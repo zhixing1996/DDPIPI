@@ -155,8 +155,8 @@ def fit(path, shape_path, ecms, patch):
 
     # background
     if ecms == 4440:
-        a = RooRealVar('a', 'a', 0, -9, 9)
-        b = RooRealVar('b', 'b', 0, -9, 9)
+        a = RooRealVar('a', 'a', 0, -1, 1)
+        b = RooRealVar('b', 'b', 0, -1, 1)
         bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
     if ndf == 6:
         a = RooRealVar('a', 'a', 0., -99., 99.)
@@ -236,7 +236,7 @@ def fit(path, shape_path, ecms, patch):
     f_sig_tot.write(out_tot)
     f_sig_tot.close()
 
-    # raw_input('enter anything to end...')
+    raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]

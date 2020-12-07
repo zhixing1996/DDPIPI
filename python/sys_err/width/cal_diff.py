@@ -40,10 +40,10 @@ def sys_err(patch):
 
     ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
     for ecm in ecms:
-        path_factor_data = '../../fit_xs/txts/fit_xs/factor_m_Kpipi_' + str(ecm) + '_data.txt'
+        path_factor_data = '../../fit_xs/txts/factor_m_Kpipi_' + str(ecm) + '_data.txt'
         f_factor_data = open(path_factor_data, 'r')
         lines_factor_data = f_factor_data.readlines()
-        path_factor_MC = '../../fit_xs/txts/fit_xs/factor_m_Kpipi_' + str(ecm) + '_MC.txt'
+        path_factor_MC = '../../fit_xs/txts/factor_m_Kpipi_' + str(ecm) + '_MC.txt'
         f_factor_MC = open(path_factor_MC, 'r')
         lines_factor_MC = f_factor_MC.readlines()
 

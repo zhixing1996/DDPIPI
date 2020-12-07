@@ -101,11 +101,6 @@ StatusCode DDecay::initialize() {
             status = m_tuple1->addIndexedItem("pdgid", m_idxmc, m_pdgid);
             status = m_tuple1->addIndexedItem("motheridx", m_idxmc, m_motheridx);
             status = m_tuple1->addIndexedItem("p4_mc_all", m_idxmc, 4, m_p4_mc_all);
-            // for sys error
-            status = m_tuple1->addItem("chi2_svf", m_chi2_svf_Dtrk);
-            status = m_tuple1->addItem("L_svf", m_L_svf_Dtrk);
-            status = m_tuple1->addItem("Lerr_svf", m_Lerr_svf_Dtrk);
-            status = m_tuple1->addItem("ctau_svf", m_ctau_svf_Dtrk);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple1) << endmsg;
@@ -516,15 +511,13 @@ bool DDecay::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon)
 
         if (m_debug) std::cout<<" D: ntrk  nshw " << n_trkD << "  " << n_shwD << std::endl;
 
-        WTrackParameter Dpiplus;
-        WTrackParameter Dpiminus;
+        vwtrkpara_charge.clear();
         HepLorentzVector pK;
         HepLorentzVector ppi;
         m_matched_D = 0;
         m_matched_D_STDDmiss = 0;
         int tag_K_Match = 1;
         DTagTool dtagTool;
-        int count = 0;
         for (int j = 0; j < n_trkD; j++) {
             RecMdcKalTrack* KalTrk = Dtrks[j]->mdcKalTrack();
             // to fill Kaon candidates
@@ -558,12 +551,8 @@ bool DDecay::saveCandD(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon)
                 ppi.setE(KalTrk->p4(mass[2])[3]);
                 if (m_matched_D || tag_K_Match == 1) m_matched_D = MatchMC(ppi, "D_tag");
                 if (m_matched_D_STDDmiss || tag_K_Match == 1) m_matched_D_STDDmiss = MatchMC(ppi, "D_tag");
-                if (count == 0) Dpiplus = WTrackParameter(mass[2], KalTrk->getZHelix(), KalTrk->getZError());
-                if (count == 1) Dpiminus = WTrackParameter(mass[2], KalTrk->getZHelix(), KalTrk->getZError());
-                count++;
             }
         }
-        stat_fitSecondVertex_Dtrk = fitSecondVertex_Dtrk(Dpiplus, Dpiminus);
 
         // to check the vector in each dtag item
         if (m_debug) {
@@ -759,63 +748,6 @@ bool DDecay::fitSecondVertex_STDDmiss(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vw
     m_ctau_svf_STDDmiss = svtxfit->ctau();
     m_L_svf_STDDmiss = svtxfit->decayLength();
     m_Lerr_svf_STDDmiss = svtxfit->decayLengthError();
-    return true;
-}
-
-bool DDecay::fitSecondVertex_Dtrk(WTrackParameter &Dpiplus, WTrackParameter &Dpiminus) {
-    m_chi2_svf_Dtrk = 999.;
-    m_L_svf_Dtrk = 999.;
-    m_Lerr_svf_Dtrk = 99.;
-    m_ctau_svf_Dtrk = 999.;
-    Hep3Vector ip(0, 0, 0);
-    HepSymMatrix ipEx(3, 0);
-    IVertexDbSvc* vtxsvc;
-    Gaudi::svcLocator()->service("VertexDbSvc", vtxsvc);
-    if (vtxsvc->isVertexValid()) {
-        double* dbv = vtxsvc->PrimaryVertex();
-        double* vv = vtxsvc->SigmaPrimaryVertex();
-        ip.setX(dbv[0]);
-        ip.setY(dbv[1]);
-        ip.setZ(dbv[2]);
-        ipEx[0][0] = vv[0] * vv[0];
-        ipEx[1][1] = vv[1] * vv[1];
-        ipEx[2][2] = vv[2] * vv[2];
-    }
-    else false;
-    VertexParameter bs;
-    bs.setVx(ip);
-    bs.setEvx(ipEx);
-    HepPoint3D vx(0., 0., 0.);
-    HepSymMatrix Evx(3, 0);
-    double bx = 1E+6;
-    double by = 1E+6;
-    double bz = 1E+6;
-    Evx[0][0] = bx * bx;
-    Evx[1][1] = by * by;
-    Evx[2][2] = bz * bz;
-    // vertex fit
-    VertexParameter vxpar;
-    vxpar.setVx(vx);
-    vxpar.setEvx(Evx);
-    VertexFit *vtxfit = VertexFit::instance();
-    vtxfit->init();
-    vtxfit->AddTrack(0, Dpiplus);
-    vtxfit->AddTrack(1, Dpiminus);
-    vtxfit->AddVertex(0, vxpar, 0, 1);
-    if (!(vtxfit->Fit(0))) return false;
-    vtxfit->Swim(0);
-    vtxfit->BuildVirtualParticle(0);
-    // second vertex fit
-    SecondVertexFit *svtxfit = SecondVertexFit::instance();
-    svtxfit->init();
-    svtxfit->setPrimaryVertex(bs);
-    svtxfit->AddTrack(0, vtxfit->wVirtualTrack(0));
-    svtxfit->setVpar(vtxfit->vpar(0));
-    if (!svtxfit->Fit()) return false;
-    m_chi2_svf_Dtrk = svtxfit->chisq();
-    m_ctau_svf_Dtrk = svtxfit->ctau();
-    m_L_svf_Dtrk = svtxfit->decayLength();
-    m_Lerr_svf_Dtrk = svtxfit->decayLengthError();
     return true;
 }
 
@@ -1523,12 +1455,13 @@ bool DDecay::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_pho
             }
             HepLorentzVector ecms(0.011*cms, 0, 0, cms);
             double rm_Dpipi = (ecms - pD - pPip - pPim).m();
-            chi2_kf_STDDmiss = 9999;
-            m_chi2_kf_STDDmiss = 9999;
-            chi2_kf_STDDmiss_low = 9999;
-            m_chi2_kf_STDDmiss_low = 9999;
-            chi2_kf_STDDmiss_up = 9999;
-            m_chi2_kf_STDDmiss_up = 9999;
+            // please pay attention: PLEASE DO NOT CHANGE THE DEFAULT VALUE OF CHI2 VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            chi2_kf_STDDmiss = 999;
+            m_chi2_kf_STDDmiss = 999;
+            chi2_kf_STDDmiss_low = 999;
+            m_chi2_kf_STDDmiss_low = 999;
+            chi2_kf_STDDmiss_up = 999;
+            m_chi2_kf_STDDmiss_up = 999;
             if (rm_Dpipi > low && rm_Dpipi < up) {
                 m_rm_Dpipi_STDDmiss = rm_Dpipi;
                 chi2_kf_STDDmiss = fitKM_STDDmiss(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
@@ -1540,7 +1473,8 @@ bool DDecay::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_pho
                 chi2_kf_STDDmiss_up = fitKM_STDDmiss_up(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, sidebandup_mean);
             }
             if (m_debug) std::cout << "Start recording region info if passed the requirement" << std::endl;
-            if (fabs(chi2_kf_STDDmiss) < 999.) {
+            // please pay attention: PLEASE DO NOT CHANGE THE DEFAULT VALUE OF CHI2 VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (fabs(chi2_kf_STDDmiss) < 9999.) {
                 SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
                 for (int k = 0; k < n_trkD; k++) {
                     RecMdcKalTrack* KalTrk = Dtrks[k]->mdcKalTrack();
