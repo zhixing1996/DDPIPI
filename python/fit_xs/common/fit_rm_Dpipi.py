@@ -72,7 +72,7 @@ def set_pavetext(pt):
     pt.SetFillStyle(0)
     pt.SetBorderSize(0)
     pt.SetTextAlign(10)
-    pt.SetTextSize(0.04)
+    pt.SetTextSize(0.06)
 
 def set_xframe_style(xframe, xtitle, ytitle):
     xframe.GetXaxis().SetTitle(xtitle)
@@ -146,9 +146,28 @@ def fit(path, shape_path, ecms, patch):
     h_shape = f_shape.Get('h_hist')
     h_signal = RooDataHist('h_shape', 'h_shape', RooArgList(rm_Dpipi), h_shape)
     pdf_signal = RooHistPdf('pdf_signal', 'pdf_signal', RooArgSet(rm_Dpipi), h_signal, 0)
-    mean_low, mean_up, sigma_up =  param_rm_Dpipi(ecms)
-    mean = RooRealVar('mean', 'mean of gaussian', 0., mean_low, mean_up)
-    sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up)
+
+    f_param = open('../txts/param_' + str(ecms) + '_' + patch + '.txt', 'r')
+    lines_param = f_param.readlines()
+    for line_param in lines_param:
+        rs_param = line_param.rstrip('\n')
+        rs_param = filter(None, rs_param.split(" "))
+        ndf = float(float(rs_param[0]))
+        a_val = float(float(rs_param[1]))
+        if ndf == 6:
+            b_val = float(float(rs_param[2]))
+            mean_val = float(float(rs_param[3]))
+            sigma_val = float(float(rs_param[4]))
+        else:
+            mean_val = float(float(rs_param[2]))
+            sigma_val = float(float(rs_param[3]))
+    mean = RooRealVar('mean', 'mean of gaussian', mean_val)
+    sigma = RooRealVar('sigma', 'sigma of gaussian', sigma_val)
+
+
+    # mean_low, mean_up, sigma_up =  param_rm_Dpipi(ecms)
+    # mean = RooRealVar('mean', 'mean of gaussian', 0., mean_low, mean_up)
+    # sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up)
     gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
     rm_Dpipi.setBins(xbins, 'cache')
     sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_signal, gauss)
@@ -156,7 +175,7 @@ def fit(path, shape_path, ecms, patch):
     # background
     a = RooRealVar('a', 'a', 0, -99, 99)
     b = RooRealVar('b', 'b', 0, -99, 99)
-    if ecms == 4640:
+    if ecms == 4600:
         a = RooRealVar('a', 'a', 0, -9, 9)
         b = RooRealVar('b', 'b', 0, -9, 9)
     if ecms == 4400:
@@ -219,7 +238,7 @@ def fit(path, shape_path, ecms, patch):
             chi2_tot += pull * pull
             nbin += 1
             ytot, avg, eyl, eyh = 0, 0, 0, 0
-    pt = TPaveText(0.17, 0.17, 0.3, 0.3, "BRNDC")
+    pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
     set_pavetext(pt)
     pt.Draw()
     pt_title = str(ecms) + ' MeV: '

@@ -385,10 +385,10 @@ def fit(ecms, patch, path):
         f_xs_D1_2420 = open(path_xs_D1_2420, 'a')
         if ecms == 4340: f_xs_D1_2420.write('sample energy luminosity br     nsignal nserrl nserrh eff    isr   vp   N0\n')
         if ecms == 4420 or ecms == 4680:
-            f_xs_D1_2420.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, n2420.getVal(), n2420.getError(), n2420.getError(), eff_D1_2420, ISR_D1_2420, VP_D1_2420, 100000))
+            f_xs_D1_2420.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, xs_D1_2420, xserr_D1_2420, xserr_D1_2420, eff_D1_2420, ISR_D1_2420, VP_D1_2420, 100000))
             f_xs_D1_2420.write('\n')
         else:
-            f_xs_D1_2420.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, n2420.getVal(), n2420.getError(), n2420.getError(), eff_D1_2420, ISR_D1_2420, VP_D1_2420, 50000))
+            f_xs_D1_2420.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, xs_D1_2420, xserr_D1_2420, xserr_D1_2420, eff_D1_2420, ISR_D1_2420, VP_D1_2420, 50000))
             f_xs_D1_2420.write('\n')
         f_xs_D1_2420.close()
 
@@ -397,10 +397,10 @@ def fit(ecms, patch, path):
     f_xs_psipp = open(path_xs_psipp, 'a')
     if ecms == 4190: f_xs_psipp.write('sample energy luminosity br     nsignal nserrl nserrh eff    isr   vp   N0\n')
     if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420 or ecms == 4680:
-        f_xs_psipp.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, npsipp.getVal(), npsipp.getError(), npsipp.getError(), eff_psipp, ISR_psipp, VP_psipp, 100000))
+        f_xs_psipp.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, xs_psipp, xserr_psipp, xserr_psipp, eff_psipp, ISR_psipp, VP_psipp, 100000))
         f_xs_psipp.write('\n')
     else:
-        f_xs_psipp.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, npsipp.getVal(), npsipp.getError(), npsipp.getError(), eff_psipp, ISR_psipp, VP_psipp, 50000))
+        f_xs_psipp.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, xs_psipp, xserr_psipp, xserr_psipp, eff_psipp, ISR_psipp, VP_psipp, 50000))
         f_xs_psipp.write('\n')
     f_xs_psipp.close()
 
@@ -409,10 +409,10 @@ def fit(ecms, patch, path):
     f_xs_DDPIPI = open(path_xs_DDPIPI, 'a')
     if ecms == 4190: f_xs_DDPIPI.write('sample energy luminosity br     nsignal nserrl nserrh eff    isr   vp   N0\n')
     if ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420 or ecms == 4680:
-        f_xs_DDPIPI.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, nDDPIPI.getVal(), nDDPIPI.getError(), nDDPIPI.getError(), eff_DDPIPI, ISR_DDPIPI, VP_DDPIPI, 100000))
+        f_xs_DDPIPI.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, xs_DDPIPI, xserr_DDPIPI, xserr_DDPIPI, eff_DDPIPI, ISR_DDPIPI, VP_DDPIPI, 100000))
         f_xs_DDPIPI.write('\n')
     else:
-        f_xs_DDPIPI.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, nDDPIPI.getVal(), nDDPIPI.getError(), nDDPIPI.getError(), eff_DDPIPI, ISR_DDPIPI, VP_DDPIPI, 50000))
+        f_xs_DDPIPI.write('{:.0f}    {:<10.5f}{:<10.2f}{:<10.4f}{:<10.1f}{:<10.1f}{:<10.1f}{:<10.5f}{:<10.3f}{:<10.3f}{:<10.1f}'.format(ecms, ECMS(ecms), lum, 0.0938, xs_DDPIPI, xserr_DDPIPI, xserr_DDPIPI, eff_DDPIPI, ISR_DDPIPI, VP_DDPIPI, 50000))
         f_xs_DDPIPI.write('\n')
     f_xs_DDPIPI.close()
 

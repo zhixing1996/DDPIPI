@@ -67,7 +67,7 @@ def mix(path_in, path_out, mode, ecms, patch, sample):
             except:
                 '''
                 '''
-    tot = 0
+    tot = 0.0000000000000000000000001
     for i in xrange(len(omega)): tot += omega[i]
     for i in xrange(len(omega)): omega[i] = omega[i]/tot
 
@@ -126,7 +126,7 @@ def main():
             mix(path_in, path_out, mode, ecms, patch, sample)
 
         if ecms <= 4316:
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/sys_err/psipp_shape/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw.root')
+            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sys_err/psipp_shape/sigMC_psipp_' + str(ecms) + '_raw.root')
             path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw.root')
             path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/psipp_shape/sigMC_mixed_width_' + str(ecms) + '_raw.root')
             mode.append('psipp')

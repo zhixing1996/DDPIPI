@@ -70,7 +70,7 @@ def xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_p
         else:
             eff_D1_2420 = N_D1_2420/50000.
 
-    xs_D1_2420, xserr_D1_2420, ISR_D1_2420, VP, lum, Br = 0., 0., 1., 1., 1., 0.0938
+    xs_D1_2420, xserr_D1_2420, ISR_D1_2420, VP, lum, Br = 0., 0., 0, 1., 1., 0.0938
     if ecms > 4316:
         D1_2420_path = './txts/xs_D1_2420_' + patch + '.txt'
         with open(D1_2420_path, 'r') as f:
@@ -200,7 +200,9 @@ def xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_p
     path_xs_read = './txts/xs_info_' + str(ecms) + '_read_' + patch + '.txt'
     f_xs_read = open(path_xs_read, 'w')
     out_read = str(ecms) + ' '
-    out_read += str(int(N_data)) + ' '
+    out_read += str(int(N_data)) + ' ' + str(int(Err_data)) + ' '
+    out_read += str(int(N_sideband)) + ' ' + str(int(Err_sideband)) + ' '
+    out_read += str(round(factor_mKpipi, 4)) + ' '
     out_read += str(round(eff_D1_2420*100, 2)) + ' '
     out_read += str(round(eff_psipp*100, 2)) + ' '
     out_read += str(round(eff_DDPIPI*100, 2)) + ' '

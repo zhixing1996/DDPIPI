@@ -77,41 +77,20 @@ def draw(mode, patch):
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
 
-    if mode == 'total':
-        path_sys_err = '../sys_err/sum/txts/sys_err_total.txt'
-        f_sys_err = open(path_sys_err, 'r')
-        sys_err_lines = f_sys_err.readlines()
-        count = 0
-        for sys_err_line in sys_err_lines:
-            sys_err_rs = sys_err_line.rstrip('\n')
-            sys_err_rs = filter(None, sys_err_rs.split('\t'))
-            sys_err[count] = float(sys_err_rs[1])/100.
-            count += 1
-
     f = open(path, 'r')
     lines = f.readlines()
-    if mode == 'total':
-        if not os.path.exists('./txts/'):
-            os.makedirs('./txts/')
-        path_out = './txts/xs_total_err_' + patch + '.txt'
-        f_out = open(path_out, 'w')
     count = 0
     for line in lines:
         rs = line.rstrip('\n')
         rs = filter(None, rs.split(' '))
-        ecms[count] = float(rs[0])
+        ecms[count] = ECMS(int(float(rs[0])*1000))
         ecms_err[count] = 0.0022
         xs[count] = float(rs[1])
         xs_err[count] = float(rs[2])
-        if mode == 'total':
-            out = str(round(ecms[count], 2)) + '\t' + str(round(xs[count], 2)) + ' $\pm$ ' + str(fabs(round(float(rs[2]), 2))) + ' $\pm$ ' + str(fabs(round(float(rs[1])*sys_err[count], 2))) + '\n'
-            f_out.write(out)
         count += 1
-    if mode == 'total':
-        f_out.close()
 
     grerr = TGraphErrors(N, ecms, xs, ecms_err, xs_err)
-    xtitle = 'E_{cms}(GeV)'
+    xtitle = '#sqrt{s}(GeV)'
     if mode == 'D1_2420':
         ytitle = '#sigma(e^{+}e^{-}#rightarrowD_{1}(2420)D)(pb)'
     if mode == 'psipp':
@@ -119,7 +98,7 @@ def draw(mode, patch):
     if mode == 'DDPIPI':
         ytitle = '#sigma(e^{+}e^{-}#rightarrowD^{+}D^{-}#pi^{+}#pi^{-})(PHSP)(pb)'
     if mode == 'total':
-        ytitle = '#sigma(e^{+}e^{-}#rightarrowD^{+}D^{-}#pi^{+}#pi^{-})(pb)'
+        ytitle = '#sigma(e^{+}e^{-}#rightarrow#pi^{+}#pi^{-}D^{+}D^{-})(pb)'
     set_graph_style(grerr, xtitle, ytitle)
     grerr.Draw('AP')
 

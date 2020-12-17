@@ -115,11 +115,6 @@ def fit(path, shape_path, ecms, mode, patch):
     except:
         logging.error('File paths are invalid!')
 
-    if mode == 'upper_limit':
-        if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530 or ecms == 4575 or ecms == 4610):
-            print str(ecms) + ' MeV\'s sigma is larger than 5 sigma, no need to calculate upper limit!'
-            sys.exit()
-
     mbc = TCanvas('mbc', 'mbc', 1000, 700)
     set_canvas_style(mbc)
 
@@ -133,223 +128,54 @@ def fit(path, shape_path, ecms, mode, patch):
     rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
     data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
 
-    if not mode == 'upper_limit':
-        is_OK = 2
-        chi2_ndf = 999.
-        while True:
-            # signal
-            f_shape = TFile(shape_path, 'READ')
-            h_shape = f_shape.Get('h_hist')
-            h_signal = RooDataHist('h_shape', 'h_shape', RooArgList(rm_Dpipi), h_shape)
-            pdf_signal = RooHistPdf('pdf_signal', 'pdf_signal', RooArgSet(rm_Dpipi), h_signal, 0)
-            mean_low, mean_up, sigma_up =  param_rm_Dpipi(ecms)
-            if not mode == 'data': mean_low, mean_up, sigma_up = mean_low*(1 + random.uniform(-1, 1)), mean_up*(1 + random.uniform(-1, 1)), sigma_up*(1 + random.uniform(-1, 1))
-            if sigma_up > 0.001: sigma_up += 0.001
-            mean = RooRealVar('mean', 'mean of gaussian', 0., mean_low, mean_up)
-            sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up)
-            gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
-            rm_Dpipi.setBins(xbins, 'cache')
-            sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_signal, gauss)
-
-            # background
-            a = RooRealVar('a', 'a', 0, -99, 99)
-            b = RooRealVar('b', 'b', 0, -99, 99)
-            if ecms == 4700:
-                a = RooRealVar('a', 'a', 0, -3, 3)
-                b = RooRealVar('b', 'b', 0, -3, 3)
-            if ecms == 4640:
-                a = RooRealVar('a', 'a', 0, -9, 9)
-                b = RooRealVar('b', 'b', 0, -9, 9)
-            if ecms == 4600:
-                a = RooRealVar('a', 'a', 0, -1, 1)
-                b = RooRealVar('b', 'b', 0, -1, 1)
-            if ecms == 4440:
-                a = RooRealVar('a', 'a', 0, -3, 1)
-                b = RooRealVar('b', 'b', 0, -3, 1)
-            if ecms == 4400:
-                a = RooRealVar('a', 'a', 0, -1, 1)
-                b = RooRealVar('b', 'b', 0, -1, 1)
-            if ecms == 4380:
-                a = RooRealVar('a', 'a', 0, -1, 1)
-                b = RooRealVar('b', 'b', 0, -1, 1)
-            c = RooRealVar('c', 'c', 0, -99, 99)
-            d = RooRealVar('c', 'c', 0, -99, 99)
-            bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
-            n_free = 6
-            if ecms == 4237 or ecms == 4245 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4360 or ecms == 4390:
-                bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
-                n_free = 5
-            if ecms == 4290 or ecms == 4315 or ecms == 4340 or ecms == 4575 or ecms == 4620:
-                bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
-                n_free = 5
-
-            # event number
-            nsig = RooRealVar('nsig', 'nsig', 100, -500000, 500000)
-            nbkg = RooRealVar('nbkg', 'nbkg', 80, 0, 500000)
-
-            # fit model
-            model = RooAddPdf('model', 'sigpdf + bkgpdf', RooArgList(sigpdf, bkgpdf), RooArgList(nsig, nbkg))
-            if mode == 'none_sig': model = RooAddPdf('model', 'bkgpdf', RooArgList(bkgpdf), RooArgList(nbkg))
-
-            results = model.fitTo(data, RooFit.Save())
-            is_OK = int(results.covQual())
-
-            # plot results
-            xframe = rm_Dpipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
-            data.plotOn(xframe)
-            model.plotOn(xframe)
-            if not mode == 'none_sig': model.plotOn(xframe, RooFit.Components('sigpdf'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
-            model.plotOn(xframe, RooFit.Components('bkgpdf'), RooFit.LineColor(kGreen), RooFit.LineWidth(2), RooFit.LineStyle(1))
-            xtitle = 'RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})(GeV)'
-            content = (xmax - xmin)/xbins * 1000
-            ytitle = 'Events/%.1f MeV'%content
-            set_xframe_style(xframe, xtitle, ytitle)
-            xframe.Draw()
-
-            if mode == 'data' or mode == 'DDPIPI' or mode == 'psipp' or mode == 'D1_2420' or mode == 'MC':
-                fr = model.fitTo(data, RooFit.Extended(kTRUE), RooFit.Save(kTRUE))
-                curve = xframe.getObject(1)
-                histo = xframe.getObject(0)
-                chi2_tot, nbin, ytot, avg, eyl, eyh = 0, 0, 0, 0, 0, 0
-                x = array('d', 999*[0])
-                y = array('d', 999*[0])
-                for i in xrange(xbins):
-                    histo.GetPoint(i, x, y)
-                    exl = histo.GetEXlow()[i]
-                    exh = histo.GetEXhigh()[i]
-                    avg += curve.average(x[0] - exl, x[0] + exh)
-                    ytot += y[0]
-                    eyl += histo.GetEYlow()[i]  * histo.GetEYlow()[i]
-                    eyh += histo.GetEYhigh()[i] * histo.GetEYhigh()[i]
-                    if ytot >= 7:
-                        if ytot > avg:
-                            pull = (ytot - avg)/sqrt(eyl)
-                        else:
-                            pull = (ytot - avg)/sqrt(eyh)
-                        chi2_tot += pull * pull
-                        nbin += 1
-                        ytot, avg, eyl, eyh = 0, 0, 0, 0
-                if mode == 'data': pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
-                else: pt = TPaveText(0.17, 0.7, 0.3, 0.85, "BRNDC")
-                set_pavetext(pt)
-                pt.Draw()
-                pt_title = str(ecms) + ' MeV: '
-                pt.AddText(pt_title)
-                n_param = results.floatParsFinal().getSize()
-                pt_title = '#chi^{2}/ndf = '
-                pt.AddText(pt_title)
-                pt_title = str(round(chi2_tot, 2)) + '/' + str(nbin - n_param -1) + '=' + str(round(chi2_tot/(nbin - n_param -1), 2))
-                chi2_ndf = chi2_tot/(nbin - n_param -1)
-                pt.AddText(pt_title)
-                print 'chi2 vs ndf = ' + str(round(chi2_tot/(nbin - n_param -1), 2))
-
-            if not os.path.exists('./figs/'):
-                os.makedirs('./figs/')
-            mbc.SaveAs('./figs/fit_rm_Dpipi_' + str(ecms) + '_' + mode + '.pdf')
-
-            if not os.path.exists('./txts/'):
-                os.makedirs('./txts/')
-            path_sig = './txts/' + mode + '_signal_events_'+ str(ecms) +'_' + patch + '.txt'
-            f_sig = open(path_sig, 'w')
-            out = str(nsig.getVal()) + ' ' + str(nsig.getError()) + '\n'
-            f_sig.write(out)
-            f_sig.close()
-            if mode == 'data':
-                path_sig_tot = './txts/' + mode + '_signal_events_total_' + patch + '.txt'
-                f_sig_tot = open(path_sig_tot, 'a')
-                out_tot = str(ecms) + '\t' + str(int(nsig.getVal())) + '\t' + str(int(nsig.getError())) + '\n'
-                f_sig_tot.write(out_tot)
-                f_sig_tot.close()
-                path_param = './txts/param_'+ str(ecms) +'_' + patch + '.txt'
-                f_param = open(path_param, 'w')
-                param = str(n_free) + ' '
-                param += str(a.getVal()) + ' '
-                if n_free == 6:
-                    param += str(b.getVal()) + ' '
-                param += str(mean.getVal()) + ' '
-                param += str(sigma.getVal()) + ' '
-                f_param.write(param)
-                f_param.close()
-
-            if mode == 'data' or mode == 'D1_2420' or mode == 'DDPIPI' or mode == 'psipp' or mode == 'MC':
-                signal_low = 1.86965 - window(ecms)/2.
-                signal_up = 1.86965 + window(ecms)/2.
-                rm_Dpipi.setRange('srange', signal_low, signal_up)
-                rm_Dpipi.setRange('allrange', xmin, xmax)
-                nsrange = sigpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('srange'))
-                nallrange = sigpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('allrange'))
-                n_signal = nsrange.getVal()/nallrange.getVal() * (nsig.getVal())
-                n_all = nsig.getVal()
-                n_signal_err = nsrange.getVal()/nallrange.getVal() * (nsig.getError())
-                n_all_err = nsig.getError()
-                factor = n_signal/n_all
-                factor_err = sqrt(abs(factor*(1 - factor)/n_all))
-                print 'factor = n(signal) / n(all) = ' + str(round(factor, 4)) + '+/-' + str(round(factor_err, 4))
-                path_factor = './txts/factor_rm_Dpipi_' + str(ecms) + '_' + mode + '.txt'
-                f_factor = open(path_factor, 'w')
-                out = str(round(factor, 4)) + ' ' + str(round(factor_err, 4)) + '\n'
-                f_factor.write(out)
-                f_factor.close()
-
-            if mode == 'data' or mode == 'none_sig':
-                path_out = './txts/significance_likelihood_total_' + str(ecms) + '.txt'
-                f_out = open(path_out, 'a')
-                # -log(L) minimum
-                sig_out = str(results.minNll()) + '\n'
-                f_out.write(sig_out)
-                f_out.close()
-
-            if mode == 'data': is_OK = -1
-
-            if is_OK == -1: break
-            if (is_OK != 2 and chi2_ndf < 2.): break
-
-        raw_input('enter anything to end...')
-
-    if mode == 'upper_limit':
-        n_offset, step_size, step_n = upl_rm_Dpipi(ecms)
-        offset = False
-        offsetValue = 0.
-        if not os.path.exists('./txts/'):
-            os.makedirs('./txts/')
-
-        path_out = './txts/upper_limit_likelihood_total_'+ str(ecms) +'.txt'
-        f_out = open(path_out, 'w')
-
-        f_param = open('./txts/param_' + str(ecms) + '_' + patch + '.txt', 'r')
-        lines_param = f_param.readlines()
-        for line_param in lines_param:
-            rs_param = line_param.rstrip('\n')
-            rs_param = filter(None, rs_param.split(" "))
-            ndf = float(float(rs_param[0]))
-            a_val = float(float(rs_param[1]))
-            if ndf == 6:
-                b_val = float(float(rs_param[2]))
-                mean_val = float(float(rs_param[3]))
-                sigma_val = float(float(rs_param[4]))
-            else:
-                mean_val = float(float(rs_param[2]))
-                sigma_val = float(float(rs_param[3]))
-
+    is_OK = 2
+    chi2_ndf = 999.
+    while True:
         # signal
         f_shape = TFile(shape_path, 'READ')
         h_shape = f_shape.Get('h_hist')
         h_signal = RooDataHist('h_shape', 'h_shape', RooArgList(rm_Dpipi), h_shape)
         pdf_signal = RooHistPdf('pdf_signal', 'pdf_signal', RooArgSet(rm_Dpipi), h_signal, 0)
-        mean = RooRealVar('mean', 'mean of gaussian', mean_val)
-        sigma = RooRealVar('sigma', 'sigma of gaussian', sigma_val)
+        mean_low, mean_up, sigma_up =  param_rm_Dpipi(ecms)
+        if not mode == 'data': mean_low, mean_up, sigma_up = mean_low*(1 + random.uniform(-1, 1)), mean_up*(1 + random.uniform(-1, 1)), sigma_up*(1 + random.uniform(-1, 1))
+        if sigma_up > 0.001: sigma_up += 0.001
+        mean = RooRealVar('mean', 'mean of gaussian', 0., mean_low, mean_up)
+        sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up)
         gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
         rm_Dpipi.setBins(xbins, 'cache')
         sigpdf = RooFFTConvPdf('sigpdf', 'sigpdf', rm_Dpipi, pdf_signal, gauss)
 
         # background
-        if ndf == 6:
-            a = RooRealVar('a', 'a', a_val)
-            b = RooRealVar('b', 'b', b_val)
-            bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
-        if ndf == 5:
-            a = RooRealVar('a', 'a', a_val)
+        a = RooRealVar('a', 'a', 0, -99, 99)
+        b = RooRealVar('b', 'b', 0, -99, 99)
+        if ecms == 4700:
+            a = RooRealVar('a', 'a', 0, -3, 3)
+            b = RooRealVar('b', 'b', 0, -3, 3)
+        if ecms == 4640:
+            a = RooRealVar('a', 'a', 0, -9, 9)
+            b = RooRealVar('b', 'b', 0, -9, 9)
+        if ecms == 4600:
+            a = RooRealVar('a', 'a', 0, -1, 1)
+            b = RooRealVar('b', 'b', 0, -1, 1)
+        if ecms == 4440:
+            a = RooRealVar('a', 'a', 0, -3, 1)
+            b = RooRealVar('b', 'b', 0, -3, 1)
+        if ecms == 4400:
+            a = RooRealVar('a', 'a', 0, -1, 1)
+            b = RooRealVar('b', 'b', 0, -1, 1)
+        if ecms == 4380:
+            a = RooRealVar('a', 'a', 0, -1, 1)
+            b = RooRealVar('b', 'b', 0, -1, 1)
+        c = RooRealVar('c', 'c', 0, -99, 99)
+        d = RooRealVar('c', 'c', 0, -99, 99)
+        bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
+        n_free = 6
+        if ecms == 4237 or ecms == 4245 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4360 or ecms == 4390:
             bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
+            n_free = 5
+        if ecms == 4290 or ecms == 4315 or ecms == 4340 or ecms == 4575 or ecms == 4620:
+            bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
+            n_free = 5
 
         # event number
         nsig = RooRealVar('nsig', 'nsig', 100, -500000, 500000)
@@ -357,18 +183,124 @@ def fit(path, shape_path, ecms, mode, patch):
 
         # fit model
         model = RooAddPdf('model', 'sigpdf + bkgpdf', RooArgList(sigpdf, bkgpdf), RooArgList(nsig, nbkg))
+        if mode == 'none_sig': model = RooAddPdf('model', 'bkgpdf', RooArgList(bkgpdf), RooArgList(nbkg))
 
-        for i in xrange(step_n):
-            nsignal = n_offset + i * step_size
-            nsig.setVal(nsignal)
-            nsig.setConstant()
-            results = model.fitTo(data, RooFit.Save())
-            if not offset:
-                offsetValue = results.minNll()
-                offset = True
-            line = str(nsignal) + ' ' + str(TMath.Exp(offsetValue - results.minNll())) + '\n'
-            f_out.write(line)
-        f_out.close()
+        results = model.fitTo(data, RooFit.Save())
+        is_OK = int(results.covQual())
+
+        # plot results
+        xframe = rm_Dpipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
+        data.plotOn(xframe)
+        model.plotOn(xframe)
+        if not mode == 'none_sig': model.plotOn(xframe, RooFit.Components('sigpdf'), RooFit.LineColor(kRed), RooFit.LineWidth(2), RooFit.LineStyle(1))
+        model.plotOn(xframe, RooFit.Components('bkgpdf'), RooFit.LineColor(kGreen), RooFit.LineWidth(2), RooFit.LineStyle(1))
+        xtitle = 'RM(D^{+}#pi^{+}_{0}#pi^{-}_{0})(GeV)'
+        content = (xmax - xmin)/xbins * 1000
+        ytitle = 'Events/%.1f MeV'%content
+        set_xframe_style(xframe, xtitle, ytitle)
+        xframe.Draw()
+
+        if mode == 'data' or mode == 'DDPIPI' or mode == 'psipp' or mode == 'D1_2420' or mode == 'MC':
+            fr = model.fitTo(data, RooFit.Extended(kTRUE), RooFit.Save(kTRUE))
+            curve = xframe.getObject(1)
+            histo = xframe.getObject(0)
+            chi2_tot, nbin, ytot, avg, eyl, eyh = 0, 0, 0, 0, 0, 0
+            x = array('d', 999*[0])
+            y = array('d', 999*[0])
+            for i in xrange(xbins):
+                histo.GetPoint(i, x, y)
+                exl = histo.GetEXlow()[i]
+                exh = histo.GetEXhigh()[i]
+                avg += curve.average(x[0] - exl, x[0] + exh)
+                ytot += y[0]
+                eyl += histo.GetEYlow()[i]  * histo.GetEYlow()[i]
+                eyh += histo.GetEYhigh()[i] * histo.GetEYhigh()[i]
+                if ytot >= 7:
+                    if ytot > avg:
+                        pull = (ytot - avg)/sqrt(eyl)
+                    else:
+                        pull = (ytot - avg)/sqrt(eyh)
+                    chi2_tot += pull * pull
+                    nbin += 1
+                    ytot, avg, eyl, eyh = 0, 0, 0, 0
+            if mode == 'data':
+                if ecms == 4245 or ecms == 4310: pt = TPaveText(0.6, 0.7, 0.75, 0.85, "BRNDC")
+                else: pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
+            else: pt = TPaveText(0.17, 0.7, 0.3, 0.85, "BRNDC")
+            set_pavetext(pt)
+            pt.Draw()
+            pt_title = str(ecms) + ' MeV: '
+            pt.AddText(pt_title)
+            n_param = results.floatParsFinal().getSize()
+            pt_title = '#chi^{2}/ndf = '
+            pt.AddText(pt_title)
+            pt_title = str(round(chi2_tot, 2)) + '/' + str(nbin - n_param -1) + '=' + str(round(chi2_tot/(nbin - n_param -1), 2))
+            chi2_ndf = chi2_tot/(nbin - n_param -1)
+            pt.AddText(pt_title)
+            print 'chi2 vs ndf = ' + str(round(chi2_tot/(nbin - n_param -1), 2))
+
+        if not os.path.exists('./figs/'):
+            os.makedirs('./figs/')
+        mbc.SaveAs('./figs/fit_rm_Dpipi_' + str(ecms) + '_' + mode + '.pdf')
+
+        if not os.path.exists('./txts/'):
+            os.makedirs('./txts/')
+        path_sig = './txts/' + mode + '_signal_events_'+ str(ecms) +'_' + patch + '.txt'
+        f_sig = open(path_sig, 'w')
+        out = str(nsig.getVal()) + ' ' + str(nsig.getError()) + '\n'
+        f_sig.write(out)
+        f_sig.close()
+        if mode == 'data':
+            path_sig_tot = './txts/' + mode + '_signal_events_total_' + patch + '.txt'
+            f_sig_tot = open(path_sig_tot, 'a')
+            out_tot = str(ecms) + '\t' + str(int(nsig.getVal())) + '\t' + str(int(nsig.getError())) + '\n'
+            f_sig_tot.write(out_tot)
+            f_sig_tot.close()
+            path_param = './txts/param_'+ str(ecms) +'_' + patch + '.txt'
+            f_param = open(path_param, 'w')
+            param = str(n_free) + ' '
+            param += str(a.getVal()) + ' '
+            if n_free == 6:
+                param += str(b.getVal()) + ' '
+            param += str(mean.getVal()) + ' '
+            param += str(sigma.getVal()) + ' '
+            f_param.write(param)
+            f_param.close()
+
+        if mode == 'data' or mode == 'D1_2420' or mode == 'DDPIPI' or mode == 'psipp' or mode == 'MC':
+            signal_low = 1.86965 - window(ecms)/2.
+            signal_up = 1.86965 + window(ecms)/2.
+            rm_Dpipi.setRange('srange', signal_low, signal_up)
+            rm_Dpipi.setRange('allrange', xmin, xmax)
+            nsrange = sigpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('srange'))
+            nallrange = sigpdf.createIntegral(RooArgSet(rm_Dpipi), RooFit.NormSet(RooArgSet(rm_Dpipi)), RooFit.Range('allrange'))
+            n_signal = nsrange.getVal()/nallrange.getVal() * (nsig.getVal())
+            n_all = nsig.getVal()
+            n_signal_err = nsrange.getVal()/nallrange.getVal() * (nsig.getError())
+            n_all_err = nsig.getError()
+            factor = n_signal/n_all
+            factor_err = sqrt(abs(factor*(1 - factor)/n_all))
+            print 'factor = n(signal) / n(all) = ' + str(round(factor, 4)) + '+/-' + str(round(factor_err, 4))
+            path_factor = './txts/factor_rm_Dpipi_' + str(ecms) + '_' + mode + '.txt'
+            f_factor = open(path_factor, 'w')
+            out = str(round(factor, 4)) + ' ' + str(round(factor_err, 4)) + '\n'
+            f_factor.write(out)
+            f_factor.close()
+
+        if mode == 'data' or mode == 'none_sig':
+            path_out = './txts/significance_likelihood_total_' + str(ecms) + '.txt'
+            f_out = open(path_out, 'a')
+            # -log(L) minimum
+            sig_out = str(results.minNll()) + '\n'
+            f_out.write(sig_out)
+            f_out.close()
+
+        if mode == 'data' or mode == 'none_sig': is_OK = -1
+
+        if is_OK == -1: break
+        if (is_OK != 2 and chi2_ndf < 2.): break
+
+    # raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]

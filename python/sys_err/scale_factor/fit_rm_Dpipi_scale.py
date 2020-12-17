@@ -193,7 +193,8 @@ def fit(path, shape_path, ecms, mode, patch):
     curve = xframe.getObject(1)
     histo = xframe.getObject(0)
     pt_title = '#chi^{2}/ndf = ' +  str(round(curve.chiSquare(histo, ndf)*ndf, 2)) + '/' + str(ndf) + '=' + str(round(curve.chiSquare(histo, ndf), 2))
-    pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
+    if ecms == 4245 or ecms == 4310: pt = TPaveText(0.6, 0.7, 0.75, 0.85, "BRNDC")
+    else: pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
     set_pavetext(pt)
     pt.Draw()
     pt_title = str(ecms) + ' MeV: '

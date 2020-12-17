@@ -152,8 +152,8 @@ def fit(path, shape_path, ecms, mode, patch):
             a = RooRealVar('a', 'a', 0, -3, 3)
             b = RooRealVar('b', 'b', 0, -3, 3)
         if ecms == 4640:
-            a = RooRealVar('a', 'a', 0, -9, 9)
-            b = RooRealVar('b', 'b', 0, -9, 9)
+            a = RooRealVar('a', 'a', 0, -1, 1)
+            b = RooRealVar('b', 'b', 0, -1, 1)
         if ecms == 4600:
             a = RooRealVar('a', 'a', 0, -1, 1)
             b = RooRealVar('b', 'b', 0, -1, 1)
@@ -164,6 +164,9 @@ def fit(path, shape_path, ecms, mode, patch):
             a = RooRealVar('a', 'a', 0, -1, 1)
             b = RooRealVar('b', 'b', 0, -1, 1)
         if ecms == 4380:
+            a = RooRealVar('a', 'a', 0, -1, 1)
+            b = RooRealVar('b', 'b', 0, -1, 1)
+        if ecms == 4200:
             a = RooRealVar('a', 'a', 0, -1, 1)
             b = RooRealVar('b', 'b', 0, -1, 1)
         c = RooRealVar('c', 'c', 0, -99, 99)
@@ -267,8 +270,8 @@ def fit(path, shape_path, ecms, mode, patch):
         if mode == 'data': is_OK = -1
 
         if is_OK == -1: break
-        if (is_OK != 2 and chi2_ndf < 2.): break
-
+        if (is_OK != 2 and chi2_ndf < 3. and ecms > 4221): break
+        if (is_OK != 2 and chi2_ndf < 5. and ecms < 4221): break
 
     raw_input('enter anything to end...')
 

@@ -339,29 +339,43 @@ void DDecay::saveAllMcTruthInfo() {
         idxmc = 0;
         for (; iter_mc != mcParticleCol->end(); iter_mc++) {
             pid = (*iter_mc)->particleProperty();
-            if (pid == 9030443) {
-               if (!(*iter_mc)->decayFromGenerator()) continue;
-               p4_mc_all[idxmc][0] = (*iter_mc)->initialFourMomentum().px();
-               p4_mc_all[idxmc][1] = (*iter_mc)->initialFourMomentum().py();
-               p4_mc_all[idxmc][2] = (*iter_mc)->initialFourMomentum().pz();
-               p4_mc_all[idxmc][3] = (*iter_mc)->initialFourMomentum().e();
-               idx = (*iter_mc)->trackIndex();
-               midx = ((*iter_mc)->mother()).trackIndex();
-               pdgid[idxmc] = pid;
-               if (idx == midx || midx == 0) motheridx[idxmc] = idx - 1;
-               else motheridx[idxmc] = midx - 1;
-               idxmc++;
-            }
-            else {
-                 if (!(*iter_mc)->decayFromGenerator()) continue;
-                 p4_mc_all[idxmc][0] = (*iter_mc)->initialFourMomentum().px();
-                 p4_mc_all[idxmc][1] = (*iter_mc)->initialFourMomentum().py();
-                 p4_mc_all[idxmc][2] = (*iter_mc)->initialFourMomentum().pz();
-                 p4_mc_all[idxmc][3] = (*iter_mc)->initialFourMomentum().e();
-                 pdgid[idxmc] = (*iter_mc)->particleProperty();
-                 motheridx[idxmc] = ((*iter_mc)->mother()).trackIndex();
-                 idxmc++;
-            }
+            // if (!(*iter_mc)->decayFromGenerator()) {std::cout << pid << std::endl;}
+            p4_mc_all[idxmc][0] = (*iter_mc)->initialFourMomentum().px();
+            p4_mc_all[idxmc][1] = (*iter_mc)->initialFourMomentum().py();
+            p4_mc_all[idxmc][2] = (*iter_mc)->initialFourMomentum().pz();
+            p4_mc_all[idxmc][3] = (*iter_mc)->initialFourMomentum().e();
+            idx = (*iter_mc)->trackIndex();
+            midx = ((*iter_mc)->mother()).trackIndex();
+            pdgid[idxmc] = pid;
+            if (idx == midx || midx == 0) motheridx[idxmc] = idx - 1;
+            else motheridx[idxmc] = midx - 1;
+            idxmc++;
+
+            // if (pid == 9030443) {
+            //     if (!(*iter_mc)->decayFromGenerator()) continue;
+            //     // if (!(*iter_mc)->decayFromGenerator()) {std::cout << pid << std::endl; continue;}
+            //     p4_mc_all[idxmc][0] = (*iter_mc)->initialFourMomentum().px();
+            //     p4_mc_all[idxmc][1] = (*iter_mc)->initialFourMomentum().py();
+            //     p4_mc_all[idxmc][2] = (*iter_mc)->initialFourMomentum().pz();
+            //     p4_mc_all[idxmc][3] = (*iter_mc)->initialFourMomentum().e();
+            //     idx = (*iter_mc)->trackIndex();
+            //     midx = ((*iter_mc)->mother()).trackIndex();
+            //     pdgid[idxmc] = pid;
+            //     if (idx == midx || midx == 0) motheridx[idxmc] = idx - 1;
+            //     else motheridx[idxmc] = midx - 1;
+            //     idxmc++;
+            // }
+            // else {
+            //     if (!(*iter_mc)->decayFromGenerator()) continue;
+            //     // if (!(*iter_mc)->decayFromGenerator()) {std::cout << pid << std::endl; continue;}
+            //     p4_mc_all[idxmc][0] = (*iter_mc)->initialFourMomentum().px();
+            //     p4_mc_all[idxmc][1] = (*iter_mc)->initialFourMomentum().py();
+            //     p4_mc_all[idxmc][2] = (*iter_mc)->initialFourMomentum().pz();
+            //     p4_mc_all[idxmc][3] = (*iter_mc)->initialFourMomentum().e();
+            //     pdgid[idxmc] = (*iter_mc)->particleProperty();
+            //     motheridx[idxmc] = ((*iter_mc)->mother()).trackIndex();
+            //     idxmc++;
+            // }
         }
         recordVariables_Truth();
         if (m_debug) std::cout << " PDG.SIZE():  " << idxmc << std::endl;

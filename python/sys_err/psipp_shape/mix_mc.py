@@ -64,7 +64,7 @@ def mix(path_in, path_out, ecms, xmin, xmax, xbins, patch):
             except:
                 '''
                 '''
-    tot = 0
+    tot = 0.000000000000000000000000001
     for i in xrange(len(omega)): tot += omega[i]
     for i in xrange(len(omega)): omega[i] = omega[i]/tot
 
@@ -125,9 +125,8 @@ def main():
     xmin, xmax, xbins = 1.75, 1.95, 100 # RM(Dpipi) fit range
 
     if mode == 'MC_signal':
-        if not process == 'psipp':
-            path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/'+process+'/'+str(ecms)+'/sys_err/psipp_shape/sigMC_' + process + '_'+str(ecms)+'_raw_before.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/psipp_shape/shape_'+process+'_'+str(ecms)+'_signal.root'
+        path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/'+process+'/'+str(ecms)+'/sys_err/psipp_shape/sigMC_' + process + '_'+str(ecms)+'_raw_before.root'
+        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/psipp_shape/shape_'+process+'_'+str(ecms)+'_signal.root'
         shape_MC_raw(ecms, mode, path_in, path_out, xmin, xmax, xbins)
 
     if mode == 'MC_mix':

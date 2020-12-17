@@ -1,6 +1,6 @@
 #!/bin/sh
 PATCH=$1
-rm -rf $HOME/bes/DDPIPI/v0.2/python/fit_xs/txts/xs_upper_limit_total.txt
+rm -rf $HOME/bes/DDPIPI/v0.2/python/upper_limit/txts/xs_upper_limit_total.txt
 cat ECMS_Base | while read line
 do
     str=$line
@@ -22,9 +22,9 @@ do
     if [[ $PARAM_0 == *$shortbar2* ]]; then
         continue
     fi
-    cd $HOME/bes/DDPIPI/v0.2/python/fit_xs
+    cd $HOME/bes/DDPIPI/v0.2/python/upper_limit
     echo "Begininning of $PARAM_0!"
-    python fit_rm_Dpipi.py $PARAM_0 upper_limit $PATCH
-    python upper_limit.py $PARAM_0 total $PATCH
+    python fit_rm_Dpipi.py $PARAM_0 $PATCH
+    # python upper_limit.py $PARAM_0 total $PATCH
     echo "$PARAM_0 is done!"
 done

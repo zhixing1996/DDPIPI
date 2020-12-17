@@ -42,7 +42,6 @@ def mix(path_in, path_out, ecms, xmin, xmax, xbins, patch):
             except:
                 '''
                 '''
-    else: omega[0] = 0.
     DDPIPI_path = './txts/xs_DDPIPI_' + patch + '.txt'
     with open(DDPIPI_path, 'r') as f:
         for line in f.readlines():
@@ -122,9 +121,8 @@ def main():
     xmin, xmax, xbins = 1.75, 1.95, 100 # RM(Dpipi) fit range
 
     if mode == 'MC_signal':
-        if not process == 'D1_2420':
-            path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/'+process+'/'+str(ecms)+'/sys_err/D1_2420_shape/sigMC_' + process + '_'+str(ecms)+'_raw_before.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/D1_2420_shape/shape_'+process+'_'+str(ecms)+'_signal.root'
+        path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/'+process+'/'+str(ecms)+'/sys_err/D1_2420_shape/sigMC_' + process + '_'+str(ecms)+'_raw_before.root'
+        path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/D1_2420_shape/shape_'+process+'_'+str(ecms)+'_signal.root'
         shape_MC_raw(ecms, mode, path_in, path_out, xmin, xmax, xbins)
 
     if mode == 'MC_mix':

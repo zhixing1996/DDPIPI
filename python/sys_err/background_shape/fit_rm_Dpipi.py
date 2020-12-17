@@ -115,11 +115,6 @@ def fit(path, shape_path, ecms, mode, patch):
     except:
         logging.error('File paths are invalid!')
 
-    if mode == 'upper_limit':
-        if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530 or ecms == 4575 or ecms == 4610):
-            print str(ecms) + ' MeV\'s sigma is larger than 5 sigma, no need to calculate upper limit!'
-            sys.exit()
-
     mbc = TCanvas('mbc', 'mbc', 1000, 700)
     set_canvas_style(mbc)
 

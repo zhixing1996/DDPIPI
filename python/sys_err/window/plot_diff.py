@@ -99,7 +99,7 @@ def draw():
     pt = TPaveText(0.17, 0.8, 0.3, 0.85, "BRNDC")
     set_pavetext(pt)
     pt.Draw()
-    line = 'Average: ' + str(round(ave, 2)) + '%'
+    line = 'Average: ' + str(round(ave, 1)) + '%'
     pt.AddText(line)
     mbc.Update()
 

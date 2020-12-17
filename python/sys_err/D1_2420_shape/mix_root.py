@@ -45,7 +45,6 @@ def mix(path_in, path_out, mode, ecms, patch, sample):
             except:
                 '''
                 '''
-    else: omega[0] = 0.
     DDPIPI_path = './txts/xs_DDPIPI_' + patch + '.txt'
     with open(DDPIPI_path, 'r') as f:
         for line in f.readlines():

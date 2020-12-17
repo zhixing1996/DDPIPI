@@ -37,7 +37,7 @@ def sys_err(patch):
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
 
-    path_xs_old = '../../python/txts/xs_total_' + patch + '_plot.txt'
+    path_xs_old = '../../fit_xs/txts/xs_total_' + patch + '_plot.txt'
     f_xs_old = open(path_xs_old, 'r')
     lines_xs_old = f_xs_old.readlines()
     path_xs_new = './txts/xs_total_' + patch + '_plot.txt'
@@ -46,22 +46,21 @@ def sys_err(patch):
     path_sys_err = './txts/sys_err_psipp_shape.txt'
     f_sys_err = open(path_sys_err, 'w')
 
-    for line_xs_old, line_xs_new in zip(lines_xs_old, lines_xs_new):
-        rs_xs_old = line_xs_old.rstrip('\n')
-        rs_xs_old = filter(None, rs_xs_old.split(' '))
-        ecms = float(rs_xs_old[0])
-        xs_old = float(rs_xs_old[1])
-        xs_err_old = float(rs_xs_old[2])
-        rs_xs_new = line_xs_new.rstrip('\n')
-        rs_xs_new = filter(None, rs_xs_new.split(' '))
-        xs_new = float(rs_xs_new[1])
-        xs_err_new = float(rs_xs_new[2])
-        if xs_old == 0:
-            diff = 0.
-        else:
-            diff = abs((xs_new - xs_old)/xs_old)
-        out = str(ecms) + '\t' + str(round(diff*100, 1)) + '\n'
-        f_sys_err.write(out)
+    for line_xs_old in lines_xs_old:
+        fargs_old = map(float, line_xs_old.strip().split())
+        ecms = fargs_old[0]
+        xs_old = fargs_old[1]
+        for line_xs_new in lines_xs_new:
+            fargs_new = map(float, line_xs_new.strip().split())
+            if not ecms == fargs_new[0]: continue
+            xs_new = fargs_new[1]
+            if xs_old == 0:
+                diff = 0.
+            else:
+                if xs_new > xs_old: diff = abs((xs_new - xs_old)/xs_new)
+                else: diff = abs((xs_new - xs_old)/xs_old)
+            out = str(ecms) + '\t' + str(round(diff*100, 1)) + '\n'
+            f_sys_err.write(out)
 
     f_sys_err.close()
     f_xs_old.close()

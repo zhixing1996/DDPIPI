@@ -70,7 +70,7 @@ def xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_p
         else:
             eff_D1_2420 = N_D1_2420/50000.
 
-    factor_path = './txts/smul_fit_' + str(ecms) + '_read_' + patch + '.txt'
+    factor_path = './txts/simul_fit_' + str(ecms) + '_read_' + patch + '.txt'
     f_factor = open(factor_path, 'r')
     lines_factor = f_factor.readlines()
     for line_factor in lines_factor:
