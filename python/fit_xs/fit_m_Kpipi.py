@@ -54,7 +54,7 @@ gStyle.SetPadTickX(0)
 gStyle.SetPadTickY(0)
 
 # TGaxis::SetMaxDigits(6)
-TGaxis.SetMaxDigits(3)
+TGaxis.SetMaxDigits(2)
 
 def usage():
     sys.stdout.write('''
@@ -62,7 +62,7 @@ NAME
     fit_m_Kpipi.py
 
 SYNOPSIS
-    ./fit_m_Kpipi.py [ecms] [mode]
+    ./fit_m_Kpipi.py [ecms] [mode] [patch]
 
 AUTHOR
     Maoqiang JING <jingmq@ihep.ac.cn>
@@ -102,7 +102,7 @@ def set_canvas_style(mbc):
     mbc.SetBottomMargin(0.15)
     mbc.SetGrid()
 
-def fit(path, ecms, mode, shape_path):
+def fit(path, ecms, mode, shape_path, patch):
     try:
         f_data = TFile(path[0])
         t_data = f_data.Get('save')
@@ -185,7 +185,7 @@ def fit(path, ecms, mode, shape_path):
 
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
-    path_factor = './txts/factor_m_Kpipi_' + str(ecms) + '_' + mode + '.txt'
+    path_factor = './txts/factor_m_Kpipi_' + str(ecms) + '_' + mode + '_' + patch + '.txt'
     f_factor = open(path_factor, 'w')
     out = str(round(factor, 4)) + ' ' + str(round(factor_err, 4)) + '\n'
     f_factor.write(out)
@@ -195,20 +195,21 @@ def fit(path, ecms, mode, shape_path):
 
 def main():
     args = sys.argv[1:]
-    if len(args)<2:
+    if len(args)<3:
         return usage()
     ecms = int(args[0])
     mode = args[1]
+    patch = args[2]
 
     path = []
     if mode == 'data':
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw.root')
-        shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed_raw.root'
-        fit(path, ecms, mode, shape_path)
+        path.append('/besfs5/groups/cal/dedx/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw.root')
+        shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed_raw.root'
+        fit(path, ecms, mode, shape_path, patch)
     if mode == 'MC':
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sigMC_mixed_width_' + str(ecms) + '_raw.root')
-        shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed_raw.root'
-        fit(path, ecms, mode, shape_path)
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sigMC_mixed_width_' + str(ecms) + '_raw.root')
+        shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed_raw.root'
+        fit(path, ecms, mode, shape_path, patch)
 
 if __name__ == '__main__':
     main()

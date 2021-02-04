@@ -40,10 +40,10 @@ def sys_err(patch):
 
     ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
     for ecm in ecms:
-        path_factor_data = '../../fit_xs/txts/factor_m_Kpipi_' + str(ecm) + '_data.txt'
+        path_factor_data = '../../fit_xs/txts/factor_m_Kpipi_' + str(ecm) + '_data_' + patch + '.txt'
         f_factor_data = open(path_factor_data, 'r')
         lines_factor_data = f_factor_data.readlines()
-        path_factor_MC = '../../fit_xs/txts/factor_m_Kpipi_' + str(ecm) + '_MC.txt'
+        path_factor_MC = '../../fit_xs/txts/factor_m_Kpipi_' + str(ecm) + '_MC_' + patch + '.txt'
         f_factor_MC = open(path_factor_MC, 'r')
         lines_factor_MC = f_factor_MC.readlines()
 
@@ -56,12 +56,11 @@ def sys_err(patch):
             rs_factor_MC = filter(None, rs_factor_MC.split(' '))
             factor_MC = float(rs_factor_MC[0])
             factor_MC_err = float(rs_factor_MC[1])
-            diff = 0.
-            if (factor_MC - factor_data) <= 0.01:
-                diff = (abs(factor_MC - factor_data) + sqrt(factor_data_err**2 + factor_MC_err**2))/factor_data
-            else:
-                diff = sqrt(factor_data_err**2/factor_data + factor_MC_err**2/factor_MC)
-            out = str(ecm/1000.) + '\t' + str(round(diff*100, 1)) + '\n'
+            f = factor_data/factor_MC
+            f_err = sqrt(f**2*(factor_data_err**2/factor_data**2 + factor_MC_err**2/factor_MC**2))
+            if abs(1 - f)/f_err > 1.: sys_err = f_err
+            else: sys_err = abs(1 - f) + f_err
+            out = str(ecm/1000.) + '\t' + str(round(sys_err*100, 1)) + '\t' + str(round(f, 3)) + '\t' + str(round(f_err, 3)) + '\t' + str(round(abs(1 - f)/f_err, 1)) + '\n'
             f_sys_err.write(out)
 
         f_factor_data.close()

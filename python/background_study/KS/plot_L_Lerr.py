@@ -97,40 +97,86 @@ def set_canvas_style(mbc):
 def plot(path, leg_title, ecms, xmin, xmax, xbins):
     try:
         f_data = TFile(path[0])
-        f_sideband = TFile(path[1])
         t_data = f_data.Get('save')
-        t_sideband = f_sideband.Get('save')
         entries_data = t_data.GetEntries()
-        entries_sideband = t_sideband.GetEntries()
         logging.info('data entries :'+str(entries_data))
-        logging.info('sideband entries :'+str(entries_sideband))
     except:
-        logging.error('File paths are invalid!')
+        logging.error(path[0] + 'is invalid!')
+        sys.exit()
+    try:
+        f_side1 = TFile(path[1])
+        t_side1 = f_side1.Get('save')
+        entries_side1 = t_side1.GetEntries()
+        logging.info('data(side1) entries :'+str(entries_side1))
+    except:
+        logging.error(path[1] + ' is invalid!')
+        sys.exit()
+    try:
+        f_side2 = TFile(path[2])
+        t_side2 = f_side2.Get('save')
+        entries_side2 = t_side2.GetEntries()
+        logging.info('data(side2) entries :'+str(entries_side2))
+    except:
+        logging.error(path[2] + ' is invalid!')
+        sys.exit()
+    try:
+        f_side3 = TFile(path[3])
+        t_side3 = f_side3.Get('save')
+        entries_side3 = t_side3.GetEntries()
+        logging.info('data(side3) entries :'+str(entries_side3))
+    except:
+        logging.error(path[3] + ' is invalid!')
+        sys.exit()
+    try:
+        f_side4 = TFile(path[4])
+        t_side4 = f_side4.Get('save')
+        entries_side4 = t_side4.GetEntries()
+        logging.info('data(side4) entries :'+str(entries_side4))
+    except:
+        logging.error(path[4] + ' is invalid!')
         sys.exit()
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
     set_canvas_style(mbc)
     ytitle = 'Entries'
     xtitle = 'L/#Delta_{L}'
-    h_data = TH1F('data', 'data', xbins, xmin, xmax)
-    h_sideband = TH1F('sideband', 'sideband', xbins, xmin, xmax)
     
+    h_data = TH1F('data', 'data', xbins, xmin, xmax)
     set_histo_style(h_data, xtitle, ytitle, 1, -1)
     L_Lerr_fill(t_data, h_data)
 
-    set_histo_style(h_sideband, xtitle, ytitle, 3, 3004)
-    L_Lerr_fill(t_sideband, h_sideband)
+    h_side1 = TH1F('side1', 'side1', xbins, xmin, xmax)
+    set_histo_style(h_side1, xtitle, ytitle, 3, 3004)
+    L_Lerr_fill(t_side1, h_side1)
+    
+    h_side2 = TH1F('side2', 'side2', xbins, xmin, xmax)
+    set_histo_style(h_side2, xtitle, ytitle, 3, 3004)
+    L_Lerr_fill(t_side2, h_side2)
+    
+    h_side3 = TH1F('side3', 'side3', xbins, xmin, xmax)
+    set_histo_style(h_side3, xtitle, ytitle, 3, 3004)
+    L_Lerr_fill(t_side3, h_side3)
+    
+    h_side4 = TH1F('side4', 'side4', xbins, xmin, xmax)
+    set_histo_style(h_side4, xtitle, ytitle, 3, 3004)
+    L_Lerr_fill(t_side4, h_side4)
     
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
     
-    h_sideband.Scale(0.5)
+    h_side1.Add(h_side2)
+    h_side1.Scale(0.5)
+    h_side3.Add(h_side4)
+    h_side3.Scale(0.25)
+    h_side1.Add(h_side3, -1)
     h_data.Draw('E1')
-    h_sideband.Draw('same')
+    hs = THStack('hs', 'Stacked')
+    hs.Add(h_side1)
+    hs.Draw('same')
     h_data.Draw('sameE1')
 
     legend = TLegend(0.17, 0.65, 0.37, 0.85)
-    set_legend(legend, h_data, h_sideband, leg_title)
+    set_legend(legend, h_data, h_side1, leg_title)
     legend.Draw()
 
     mbc.SaveAs('./figs/L_Lerr_'+str(ecms)+'.pdf')
@@ -145,8 +191,11 @@ if __name__ == '__main__':
     ecms = int(args[0])
 
     path = []
-    path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_before.root')
-    path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_sideband_before.root')
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_before.root')
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_side1_before.root')
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_side2_before.root')
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_side3_before.root')
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_side4_before.root')
     leg_title = str(ecms) + ' MeV'
     xmin, xmax, xbins = -12., 20., 200
     plot(path, leg_title, ecms, xmin, xmax, xbins)

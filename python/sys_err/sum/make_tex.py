@@ -43,8 +43,8 @@ def make_sys():
     with open('./texs/total_sys.tex', 'w') as f:
         f.write('\\begin{table}[htp]\n')
         f.write('\t\centering\n')
-        f.write('\t\caption{Systematic uncertainties summarization.}\n')
-        f.write('\t\\begin{tabular}{cccc}\n')
+        f.write('\t\caption{Summary of systematic uncertainties.}\n')
+        f.write('\t\\begin{tabular}{cc|cc}\n')
         f.write('\t\hline\hline\n')
         f.write('\tData Sample& Systematic Uncertainty(\%) & Data Sample& Systematic Uncertainty(\%)\\\\\n')
         f.write('\t\hline\n')

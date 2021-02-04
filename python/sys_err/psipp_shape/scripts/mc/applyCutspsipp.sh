@@ -20,12 +20,12 @@ do
     if [[ $PARAM_0 == *$shortbar2* ]]; then
         continue
     fi
-    WORKAREA=/besfs/users/$USER/bes/DDPIPI/v0.2
+    WORKAREA=/besfs5/users/$USER/bes/DDPIPI/v0.2
     mkdir -p $WORKAREA/sigMC/psipp/$PARAM_0/sys_err/psipp_shape
     cd $HOME/bes/DDPIPI/v0.2/python/sys_err/psipp_shape
-    rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/*before*.root
-    rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/*after*.root
-    ROOT_PATH=/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape
+    rm -rf /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/*before*.root
+    rm -rf /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/*after*.root
+    ROOT_PATH=/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape
 
     echo "Begininning of $PARAM_0!"
 

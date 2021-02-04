@@ -1,7 +1,7 @@
 #!/bin/sh
 PATCH=$1
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/fit_range
+mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range
+mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/fit_range
 cat ECMS_Base | while read line
 do
     str=$line

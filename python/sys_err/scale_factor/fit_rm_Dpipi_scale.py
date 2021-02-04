@@ -129,6 +129,8 @@ def fit(path, shape_path, ecms, mode, patch):
 
     # signal
     f_param = open('../../fit_xs/txts/param_' + str(ecms) + '_' + patch + '.txt', 'r')
+    if ecms == 4390: f_param = open('../../fit_xs/txts/param_4380_' + patch + '.txt', 'r')
+    if ecms == 4575: f_param = open('../../fit_xs/txts/param_4440_' + patch + '.txt', 'r')
     lines_param = f_param.readlines()
     f_shape = TFile(shape_path, 'READ')
     h_shape = f_shape.Get('h_hist')
@@ -155,6 +157,9 @@ def fit(path, shape_path, ecms, mode, patch):
     # background
     a = RooRealVar('a', 'a', 0, -99, 99)
     b = RooRealVar('b', 'b', 0, -99, 99)
+    if ecms == 4700:
+        a = RooRealVar('a', 'a', 0, -1, 1)
+        b = RooRealVar('b', 'b', 0, -1, 1)
     if ecms == 4237:
         a = RooRealVar('a', 'a', 0, -1, 1)
         b = RooRealVar('b', 'b', 0, -1, 1)
@@ -192,17 +197,38 @@ def fit(path, shape_path, ecms, mode, patch):
     fr = model.fitTo(data, RooFit.Extended(kTRUE), RooFit.Save(kTRUE))
     curve = xframe.getObject(1)
     histo = xframe.getObject(0)
-    pt_title = '#chi^{2}/ndf = ' +  str(round(curve.chiSquare(histo, ndf)*ndf, 2)) + '/' + str(ndf) + '=' + str(round(curve.chiSquare(histo, ndf), 2))
-    if ecms == 4245 or ecms == 4310: pt = TPaveText(0.6, 0.7, 0.75, 0.85, "BRNDC")
-    else: pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
+    chi2_tot, nbin, ytot, avg, eyl, eyh = 0, 0, 0, 0, 0, 0
+    x = array('d', 999*[0])
+    y = array('d', 999*[0])
+    for i in xrange(xbins):
+        histo.GetPoint(i, x, y)
+        exl = histo.GetEXlow()[i]
+        exh = histo.GetEXhigh()[i]
+        avg += curve.average(x[0] - exl, x[0] + exh)
+        ytot += y[0]
+        eyl += histo.GetEYlow()[i]  * histo.GetEYlow()[i]
+        eyh += histo.GetEYhigh()[i] * histo.GetEYhigh()[i]
+        if ytot >= 7:
+            if ytot > avg:
+                pull = (ytot - avg)/sqrt(eyl)
+            else:
+                pull = (ytot - avg)/sqrt(eyh)
+            chi2_tot += pull * pull
+            nbin += 1
+            ytot, avg, eyl, eyh = 0, 0, 0, 0
+    if mode == 'data': pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
+    else: pt = TPaveText(0.17, 0.7, 0.3, 0.85, "BRNDC")
     set_pavetext(pt)
     pt.Draw()
     pt_title = str(ecms) + ' MeV: '
     pt.AddText(pt_title)
+    n_param = results.floatParsFinal().getSize()
     pt_title = '#chi^{2}/ndf = '
     pt.AddText(pt_title)
-    pt_title = str(round(curve.chiSquare(histo, ndf)*ndf, 2)) + '/' + str(ndf) + '=' + str(round(curve.chiSquare(histo, ndf), 2))
+    pt_title = str(round(chi2_tot, 2)) + '/' + str(nbin - n_param -1) + '=' + str(round(chi2_tot/(nbin - n_param -1), 2))
     pt.AddText(pt_title)
+    chi2_ndf = chi2_tot/(nbin - n_param -1)
+    print 'chi2 vs ndf = ' + str(round(chi2_tot/(nbin - n_param -1), 2))
 
     window_low = 1.86965 - window(ecms)/2.
     window_up = 1.86965 + window(ecms)/2.
@@ -234,7 +260,7 @@ def fit(path, shape_path, ecms, mode, patch):
 
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
-    path_factor = './txts/scale_factor_' + str(ecms) + '.txt'
+    path_factor = './txts/scale_factor_rm_Dpipi_' + str(ecms) + '.txt'
     f_factor = open(path_factor, 'w')
     out = str(scale_factor) + '\n'
     f_factor.write(out)
@@ -252,8 +278,8 @@ def main():
 
     path = []
     shape_path = ''
-    path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
-    shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
+    shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
     fit(path, shape_path, ecms, mode, patch)
 
 if __name__ == '__main__':

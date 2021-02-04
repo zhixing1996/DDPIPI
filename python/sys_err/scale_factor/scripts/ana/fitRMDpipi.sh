@@ -1,6 +1,6 @@
 #!/bin/sh
 PATCH=$1
-cat ECMS_Base | while read line
+tac ECMS_Base | while read line
 do
     str=$line
     OLD_IFS=$IFS
@@ -26,10 +26,13 @@ do
     thresh=4316
     if [ $PARAM_0 -gt $thresh ]; then
         python fit_rm_Dpipi.py $PARAM_0 D1_2420 $PATCH
+        # python fit_rm_Dpipi_sideband.py $PARAM_0 D1_2420 $PATCH
     fi
-    python fit_rm_Dpipi.py $PARAM_0 data $PATCH
+    # python fit_rm_Dpipi.py $PARAM_0 data $PATCH
     python fit_rm_Dpipi.py $PARAM_0 psipp $PATCH
     python fit_rm_Dpipi.py $PARAM_0 DDPIPI $PATCH
-    python fit_rm_Dpipi_sideband.py $PARAM_0 $PATCH
+    # python fit_rm_Dpipi_sideband.py $PARAM_0 data $PATCH
+    # python fit_rm_Dpipi_sideband.py $PARAM_0 psipp $PATCH
+    # python fit_rm_Dpipi_sideband.py $PARAM_0 DDPIPI $PATCH
     echo "$PARAM_0 is done!"
 done

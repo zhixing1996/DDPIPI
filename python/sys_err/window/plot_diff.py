@@ -8,7 +8,7 @@ __copyright__ = "Copyright (c) Maoqiang JING"
 __created__ = "[2020-11-26 Thr 21:43]"
 
 import ROOT
-from ROOT import TCanvas, gStyle, TGraph, TF1
+from ROOT import TCanvas, gStyle, TGraphErrors, TF1
 from ROOT import TFile, TH1F, TLegend, TPaveText
 from array import array
 import sys, os
@@ -49,7 +49,7 @@ def set_graph_style(gr, xtitle, ytitle):
     gr.GetXaxis().SetLabelSize(0.05)
     gr.GetXaxis().SetRangeUser(4.17, 4.70)
     gr.GetYaxis().SetTitleSize(0.06)
-    gr.GetYaxis().SetTitleOffset(0.8)
+    gr.GetYaxis().SetTitleOffset(0.9)
     gr.GetYaxis().SetLabelOffset(0.01)
     gr.GetYaxis().SetLabelSize(0.05)
     gr.GetXaxis().SetTitle(xtitle)
@@ -68,9 +68,11 @@ def set_canvas_style(mbc):
     mbc.SetGrid()
 
 def draw():
-    N = 12
+    N = 8
     ecms = array('f', N*[0])
-    sys_err = array('f', N*[0])
+    ecms_err = array('f', N*[0])
+    factor = array('f', N*[0])
+    factor_err = array('f', N*[0])
     path = './txts/sys_err_window_raw.txt'
 
     mbc = TCanvas('mbc', 'mbc', 800, 600)
@@ -79,27 +81,38 @@ def draw():
     f = open(path, 'r')
     lines = f.readlines()
     count = 0
-    sum = 0
+    sum_mean = 0
+    sum_err = 0
     for line in lines:
         fargs = map(float, line.strip('\n').strip().split())
         ecms[count] = fargs[0]
-        sys_err[count] = fargs[1]
-        sum += fargs[1]
+        ecms_err[count] = 0.0022
+        factor[count] = fargs[1]
+        factor_err[count] = fargs[2]
+        sum_mean += fargs[1]
+        sum_err += fargs[2]
         count += 1
-    ave = sum/count
 
-    f_ave = TF1('f_ave', str(ave), ecms[0] - 0.2, ecms[-1])
-    gr = TGraph(N, ecms, sys_err)
+    grerr = TGraphErrors(N, ecms, factor, ecms_err, factor_err)
     xtitle = 'E_{cms} (GeV)'
-    ytitle = 'Sys. Uncertainty_{RM(D^{+}#pi_{0}^{+}#pi_{0}^{-})} (%)'
-    set_graph_style(gr, xtitle, ytitle)
-    gr.Draw('AP')
-    f_ave.Draw('same')
+    ytitle = 'f^{RM(D^{+}#pi_{0}^{+}#pi_{0}^{-})}'
+    set_graph_style(grerr, xtitle, ytitle)
+    f = TF1('f', '[0]', ecms[0], ecms[1])
+    grerr.Fit(f)
+    chi2 =  f.GetChisquare()
+    ndf = f.GetNDF()
+    F = f.GetParameter(0)
+    F_err = f.GetParError(0)
+    grerr.Draw('ap')
 
-    pt = TPaveText(0.17, 0.8, 0.3, 0.85, "BRNDC")
+    pt = TPaveText(0.35, 0.65, 0.75, 0.85, "BRNDC")
     set_pavetext(pt)
     pt.Draw()
-    line = 'Average: ' + str(round(ave, 1)) + '%'
+    line = 'f#pm#sigma_{f^{RM(D^{+}#pi_{0}^{+}#pi_{0}^{-})}} = ' + str(round(F, 3)) + '#pm' + str(round(F_err, 3))
+    pt.AddText(line)
+    line = '#chi^{2}/ndf = ' + str(round(chi2, 3)) + '/' + str(round(ndf, 3)) + ' = ' + str(round(chi2/ndf, 3))
+    pt.AddText(line)
+    line = '#Delta_{f^{RM(D^{+}#pi_{0}^{+}#pi_{0}^{-})}}/#sigma_{f^{RM(D^{+}#pi_{0}^{+}#pi_{0}^{-})}}=' + str(round((1 - F)/F_err, 3))
     pt.AddText(line)
     mbc.Update()
 
@@ -110,11 +123,14 @@ def draw():
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
 
+    with open('./txts/f_rm_Dpipi.txt', 'w') as f_out:
+        f_out.write(str(F) + '\n')
+
     ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
-    with open('./txts/sys_err_window.txt', 'w') as f:
+    with open('./txts/sys_err_window.txt', 'w') as f_out:
         for ecm in ecms:
-            out = str(ecm/1000.) + '\t' + str(round(ave, 2)) + '\n'
-            f.write(out)
+            out = str(ecm/1000.) + '\t' + str(round(F_err*100, 1)) + '\n'
+            f_out.write(out)
 
     raw_input('Enter anything to end...')
     

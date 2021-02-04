@@ -1,7 +1,7 @@
 #!/bin/sh
 PATCH=$1
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/scale_factor
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/scale_factor
+mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/scale_factor
+mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/scale_factor
 cat ECMS_Base | while read line
 do
     str=$line
@@ -32,5 +32,6 @@ do
     python mix_mc.py $PARAM_0 MC_signal DDPIPI $PATCH
     python mix_mc.py $PARAM_0 MC_mix none $PATCH
     python mix_mc.py $PARAM_0 raw none $PATCH
+    python mix_mc.py $PARAM_0 scale none $PATCH
     echo "$PARAM_0 is done!"
 done

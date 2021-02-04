@@ -69,7 +69,7 @@ def set_canvas_style(mbc):
     mbc.SetGrid()
 
 def draw():
-    N = 12
+    N = 8
     ecms = array('f', N*[0])
     sys_err = array('f', N*[0])
     path = './txts/sys_err_fit_range_raw.txt'
@@ -89,7 +89,7 @@ def draw():
         count += 1
     ave = sum/count
 
-    f_ave = TF1('f_ave', str(ave), ecms[0] - 0.2, ecms[-1])
+    f_ave = TF1('f_ave', str(ave), ecms[0] - 0.1, ecms[-1] + 0.1)
     gr = TGraph(N, ecms, sys_err)
     xtitle = 'E_{cms} (GeV)'
     ytitle = 'Sys. Uncertainty_{Fit Range} (%)'

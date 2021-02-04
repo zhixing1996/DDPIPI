@@ -38,7 +38,7 @@ def sys_err(patch):
     path_sys_err = './txts/sys_err_window_raw.txt'
     f_sys_err = open(path_sys_err, 'w')
 
-    ecms = [4340, 4360, 4380, 4400, 4420, 4440, 4600, 4620, 4640, 4660, 4680, 4700]
+    ecms = [4340, 4360, 4380, 4400, 4420, 4440, 4600, 4680]
     for ecm in ecms:
         path_factor_data = '../../fit_xs/txts/factor_rm_Dpipi_' + str(ecm) + '_data.txt'
         f_factor_data = open(path_factor_data, 'r')
@@ -56,12 +56,13 @@ def sys_err(patch):
             rs_factor_MC = filter(None, rs_factor_MC.split(' '))
             factor_MC = float(rs_factor_MC[0])
             factor_MC_err = float(rs_factor_MC[1])
-            diff = 0.
-            if (factor_MC - factor_data) <= 0.01:
-                diff = (abs(factor_MC - factor_data) + sqrt(factor_data_err**2 + factor_MC_err**2))/factor_data
-            else:
-                diff = sqrt(factor_data_err**2/factor_data + factor_MC_err**2/factor_MC)
-            out = str(ecm/1000.) + '\t' + str(round(diff*100, 1)) + '\n'
+            f = factor_data/factor_MC
+            f_err = sqrt(f**2*(factor_data_err**2/factor_data**2 + factor_MC_err**2/factor_MC**2))
+            if abs(1 - f)/f_err > 1.: sys_err = f_err
+            else: sys_err = abs(1 - f) + f_err
+            # out = str(ecm/1000.) + '\t' + str(sys_err) + '\n'
+            out = str(ecm/1000.) + '\t' + str(f) + '\t' + str(f_err) + '\n'
+            print str(ecm) + ': factor RM(Dpipi): ' + str(f) + ', Delta_f/sigma_f: ' + str(abs(1 - f)/f_err)
             f_sys_err.write(out)
 
         f_factor_data.close()

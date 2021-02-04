@@ -11,7 +11,7 @@ REC=$2
 SUB=$3
 INPUT=$4
 UPLIMIT=$5
-echo "./subjectSimRec.sh [SIM] [REC] [SUM] [NUM1] [NUM2]"
+echo "./subjectSimRec.sh [SIM] [REC] [SUB] [NUM1] [NUM2]"
 echo "[SIM]: name of sim scripts"
 echo "[REC]: name of rec scripts"
 echo "[SUB]: name of sub scripts"

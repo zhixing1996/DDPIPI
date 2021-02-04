@@ -328,15 +328,15 @@ def upl_rm_Dpipi(ecms):
     if int(ecms == 4190):
         N_OFFSET = 0
         STEP_SIZE = 0.1
-        STEP_N = 400
+        STEP_N = 600
     elif int(ecms == 4200):
         N_OFFSET = 0
-        STEP_SIZE = 0.4
-        STEP_N = 900
+        STEP_SIZE = 0.1
+        STEP_N = 400
     elif int(ecms == 4210):
         N_OFFSET = 0
         STEP_SIZE = 0.5
-        STEP_N = 900
+        STEP_N = 600
     elif int(ecms == 4220):
         N_OFFSET = 0
         STEP_SIZE = 0.4

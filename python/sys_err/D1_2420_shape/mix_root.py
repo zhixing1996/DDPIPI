@@ -108,10 +108,10 @@ def main():
     path_out = []
     mode = []
     if sample == 'raw':
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sys_err/D1_2420_shape/sigMC_D1_2420_' + str(ecms) + '_raw.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw.root')
-        path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw.root')
-        path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/D1_2420_shape/sigMC_mixed_width_' + str(ecms) + '_raw.root')
+        path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sys_err/D1_2420_shape/sigMC_D1_2420_' + str(ecms) + '_raw.root')
+        path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw.root')
+        path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw.root')
+        path_out.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/D1_2420_shape/sigMC_mixed_width_' + str(ecms) + '_raw.root')
         mode.append('D1_2420')
         mode.append('psipp')
         mode.append('DDPIPI')

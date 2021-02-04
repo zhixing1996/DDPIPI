@@ -104,7 +104,7 @@ def param_rm_Dpipi(ecms):
     elif int(ecms == 4440):
         MEAN_LOW = -0.003
         MEAN_UP = 0.003
-        SIGMA_UP = 0.003
+        SIGMA_UP = 0.006
     elif int(ecms == 4470):
         MEAN_LOW = -0.003
         MEAN_UP = 0.003
@@ -126,9 +126,9 @@ def param_rm_Dpipi(ecms):
         MEAN_UP = 0.003
         SIGMA_UP = 0.004
     elif int(ecms == 4620):
-        MEAN_LOW = -0.001
-        MEAN_UP = 0.008
-        SIGMA_UP = 0.006
+        MEAN_LOW = -0.003
+        MEAN_UP = 0.005
+        SIGMA_UP = 0.004
     elif int(ecms == 4640):
         MEAN_LOW = -0.002
         MEAN_UP = 0.003

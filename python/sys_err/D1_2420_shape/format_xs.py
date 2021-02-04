@@ -47,7 +47,7 @@ def format(patch):
     path_xs_total = './txts/xs_total_' + patch + '_plot.txt'
     f_xs_total = open(path_xs_total, 'w')
 
-    ecms = [4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
+    ecms = [4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
     for ecm in ecms:
         xs_info_path = './txts/xs_info_' + str(ecm) + '_read_' + patch + '.txt'
         f_xs_info = open(xs_info_path, 'r')
@@ -56,26 +56,26 @@ def format(patch):
             rs_xs = line_xs.rstrip('\n')
             rs_xs = filter(None, rs_xs.split(' '))
             N_data = int(rs_xs[1])
-            eff_D1_2420 = float(rs_xs[2])/100.
-            eff_psipp = float(rs_xs[3])/100.
-            eff_DDPIPI = float(rs_xs[4])/100.
-            omega_D1_2420 = float(rs_xs[5])
-            omega_psipp = float(rs_xs[6])
-            omega_DDPIPI = float(rs_xs[7])
-            ISR_D1_2420 = float(rs_xs[8])
-            ISR_psipp = float(rs_xs[9])
-            ISR_DDPIPI = float(rs_xs[10])
-            VP = float(rs_xs[11])
-            lum = float(rs_xs[12])
-            Br = float(rs_xs[13])/100.
-            xs = float(rs_xs[14])
-            xs_err = float(rs_xs[15])
-            xs_D1_2420 = float(rs_xs[16])
-            xs_psipp = float(rs_xs[17])
-            xs_DDPIPI = float(rs_xs[18])
-            xserr_D1_2420 = float(rs_xs[19])
-            xserr_psipp = float(rs_xs[20])
-            xserr_DDPIPI = float(rs_xs[21])
+            eff_D1_2420 = float(rs_xs[10])/100.
+            eff_psipp = float(rs_xs[11])/100.
+            eff_DDPIPI = float(rs_xs[12])/100.
+            omega_D1_2420 = float(rs_xs[13])
+            omega_psipp = float(rs_xs[14])
+            omega_DDPIPI = float(rs_xs[15])
+            ISR_D1_2420 = float(rs_xs[16])
+            ISR_psipp = float(rs_xs[17])
+            ISR_DDPIPI = float(rs_xs[18])
+            VP = float(rs_xs[19])
+            lum = float(rs_xs[20])
+            Br = float(rs_xs[21])/100.
+            xs = float(rs_xs[22])
+            xs_err = float(rs_xs[23])
+            xs_D1_2420 = float(rs_xs[24])
+            xs_psipp = float(rs_xs[25])
+            xs_DDPIPI = float(rs_xs[26])
+            xserr_D1_2420 = float(rs_xs[27])
+            xserr_psipp = float(rs_xs[28])
+            xserr_DDPIPI = float(rs_xs[29])
 
         out = '& @'  + str(ecm) + 'MeV& ' + str(N_data)
         out += '& ' + str(eff_D1_2420*100) + '\%& ' + str(eff_psipp*100) + '\%& ' + str(eff_DDPIPI*100) + '\%'
@@ -84,10 +84,11 @@ def format(patch):
         out += '& ' + str(lum) + '& ' + str(Br*100) + '\%& ' + str(xs) + '\pm' + str(xs_err) + '&\\\\\n'
         f_xs.write(out)
 
-        if xserr_D1_2420 > 9999.:
-            xserr_D1_2420 = 0.
-        out_D1_2420 = str(ecm/1000.) + ' ' + str(xs_D1_2420) + ' ' + str(xserr_D1_2420) + '\n'
-        f_xs_D1_2420.write(out_D1_2420)
+        if ecm > 4316:
+            if xserr_D1_2420 > 9999.:
+                xserr_D1_2420 = 0.
+            out_D1_2420 = str(ecm/1000.) + ' ' + str(xs_D1_2420) + ' ' + str(xserr_D1_2420) + '\n'
+            f_xs_D1_2420.write(out_D1_2420)
 
         if xserr_psipp > 9999.:
             xserr_psipp = 0.

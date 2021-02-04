@@ -125,26 +125,26 @@ def main():
 
     if mode == 'MC_signal':
         if not process == 'DDPIPI':
-            path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/'+process+'/'+str(ecms)+'/sigMC_' + process + '_'+str(ecms)+'_raw_before.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_'+process+'_'+str(ecms)+'_signal.root'
+            path_in = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/'+process+'/'+str(ecms)+'/sigMC_' + process + '_'+str(ecms)+'_raw_before.root'
+            path_out = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_'+process+'_'+str(ecms)+'_signal.root'
         if process == 'DDPIPI':
-            path_in = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_raw_before.root'
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_D_D_PI_PI_'+str(ecms)+'_signal.root'
+            path_in = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_raw_before.root'
+            path_out = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_D_D_PI_PI_'+str(ecms)+'_signal.root'
         shape_MC_raw(ecms, path_in, path_out, xmin, xmax, xbins)
 
     if mode == 'MC_mix':
         path_in = []
         path_out = []
         if ecms > 4316:
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_D1_2420_' + str(ecms) + '_signal.root')
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_psipp_' + str(ecms) + '_signal.root')
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_D_D_PI_PI_' + str(ecms) + '_signal.root')
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/fit_range/shape_' + str(ecms) + '_mixed.root'
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_D1_2420_' + str(ecms) + '_signal.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_psipp_' + str(ecms) + '_signal.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_D_D_PI_PI_' + str(ecms) + '_signal.root')
+            path_out = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/fit_range/shape_' + str(ecms) + '_mixed.root'
             mix(path_in, path_out, ecms, xmin, xmax, xbins, patch)
         if ecms <= 4316:
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_psipp_' + str(ecms) + '_signal.root')
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_D_D_PI_PI_' + str(ecms) + '_signal.root')
-            path_out = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/fit_range/shape_' + str(ecms) + '_mixed.root'
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_psipp_' + str(ecms) + '_signal.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_D_D_PI_PI_' + str(ecms) + '_signal.root')
+            path_out = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/fit_range/shape_' + str(ecms) + '_mixed.root'
             mix(path_in, path_out, ecms, xmin, xmax, xbins, patch)
 
 if __name__ == '__main__':

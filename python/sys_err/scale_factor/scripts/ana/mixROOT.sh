@@ -24,5 +24,6 @@ do
     cd $HOME/bes/DDPIPI/v0.2/python/sys_err/scale_factor
     echo "Begininning of $PARAM_0!"
     python mix_root.py $PARAM_0 raw $PATCH
+    python mix_root.py $PARAM_0 scale $PATCH
     echo "$PARAM_0 is done!"
 done

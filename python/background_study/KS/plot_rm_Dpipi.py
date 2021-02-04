@@ -142,7 +142,7 @@ if __name__ == '__main__':
     mode = args[1]
 
     path = []
-    path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_signal.root')
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_signal.root')
     xmin = 1.75
     xmax = 1.95
     plot(path, ecms, xmin, xmax, mode)

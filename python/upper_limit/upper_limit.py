@@ -90,8 +90,9 @@ def upper_limit(path, ecms, patch):
     with open('../fit_xs/txts/xs_info_' + str(ecms) + '_read_' + patch + '.txt') as f:
         for line in f.readlines():
             fargs = map(float, line.strip('\n').strip().split())
-            f, eff_D1_2420, eff_psipp, eff_DDPIPI, omega_D1_2420, omega_psipp, omega_DDPIPI, ISR_D1_2420, ISR_psipp, ISR_DDPIPI, VP, lum, Br = fargs[5], fargs[6]/100., fargs[7]/100., fargs[8]/100., fargs[9], fargs[10], fargs[11], fargs[12],fargs[13], fargs[14], fargs[15], fargs[16], fargs[17]
-    muldel = 1./(2*f*(eff_D1_2420*omega_D1_2420*ISR_D1_2420*VP + eff_psipp*omega_psipp*ISR_psipp*VP + eff_DDPIPI*omega_DDPIPI*ISR_DDPIPI*VP)*Br/100.*lum)
+            f_K_p, f_m_pipi, f_VrVz, f_m_Kpipi, f_rm_Dpipi, eff_D1_2420, eff_psipp, eff_DDPIPI, omega_D1_2420, omega_psipp, omega_DDPIPI, ISR_D1_2420, ISR_psipp, ISR_DDPIPI, VP, lum, Br = fargs[5], fargs[6], fargs[7], fargs[8], fargs[9], fargs[10]/100., fargs[11]/100., fargs[12]/100., fargs[13], fargs[14], fargs[15], fargs[16],fargs[17], fargs[18], fargs[19], fargs[20], fargs[21]/100.
+    f = f_K_p * f_m_pipi * f_VrVz * f_m_Kpipi * f_rm_Dpipi
+    muldel = 1./(2*f*(eff_D1_2420*omega_D1_2420*ISR_D1_2420*VP + eff_psipp*omega_psipp*ISR_psipp*VP + eff_DDPIPI*omega_DDPIPI*ISR_DDPIPI*VP)*Br*lum)
     FCN_sum = 0
 
     with open(path, 'r') as f:

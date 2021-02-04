@@ -125,7 +125,7 @@ def plot(path, leg_title, ecms):
     N_JPIPI = Vr_Vz_count(t_JPIPI, h_JPIPI_Vr, h_JPIPI_Vz)
     
     mbc.cd(1)
-    h_JPIPI_Vr.Scale(0.025)
+    h_JPIPI_Vr.Scale(0.008)
     h_data_Vr.Draw('E1')
     h_JPIPI_Vr.Draw('same')
     h_data_Vr.Draw('sameE1')
@@ -135,7 +135,7 @@ def plot(path, leg_title, ecms):
     legend_Vr.Draw()
 
     mbc.cd(2)
-    h_JPIPI_Vz.Scale(0.025)
+    h_JPIPI_Vz.Scale(0.008)
     h_data_Vz.Draw('E1')
     h_JPIPI_Vz.Draw('same')
     h_data_Vz.Draw('sameE1')
@@ -153,17 +153,22 @@ def plot(path, leg_title, ecms):
     eff_JPIPI = float(N_JPIPI)/entries_JPIPI
     eff_data_err = sqrt(eff_data*(1 - eff_data)/entries_data)
     eff_JPIPI_err = sqrt(eff_JPIPI*(1 - eff_JPIPI)/entries_JPIPI)
-
-    sys_err = sqrt(eff_data_err**2/eff_data**2 + eff_JPIPI_err**2/eff_JPIPI**2)
+    f = eff_data/eff_JPIPI
+    f_err = sqrt(f**2*(eff_data_err**2/eff_data**2 + eff_JPIPI_err**2/eff_JPIPI**2))
+    sys_err = abs(1 - f) + f_err
+    print 'factor VrVz: ' + str(f) + ', Delta_f/sigma_f: ' + str(abs(1 - f)/f_err)
 
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
+
+    with open('./txts/f_VrVz.txt', 'w') as f_out:
+        f_out.write(str(f) + '\n')
     
     ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
-    with open('./txts/sys_err_VrVz.txt', 'w') as f:
+    with open('./txts/sys_err_VrVz.txt', 'w') as f_out:
         for ecm in ecms:
             out = str(ecm/1000.) + '\t' + str(round(sys_err*100, 2)) + '\n'
-            f.write(out)
+            f_out.write(out)
 
     raw_input('Enter anything to end...')
 
@@ -175,7 +180,7 @@ if __name__ == '__main__':
     ecms = int(args[0])
 
     path = []
-    path.append('/besfs/groups/cal/dedx/$USER/bes/PipiJpsi/run/pipi_jpsi/anaroot/data/' + str(ecms) + '/data_' + str(ecms) + '_signal.root')
-    path.append('/besfs/groups/cal/dedx/$USER/bes/PipiJpsi/run/pipi_jpsi/anaroot/mc/JPIPI/' + str(ecms) + '/mc_JPIPI_' + str(ecms) + '_signal.root')
+    path.append('/besfs5/groups/cal/dedx/$USER/bes/PipiJpsi/run/pipi_jpsi/anaroot/data/' + str(ecms) + '/data_' + str(ecms) + '_signal.root')
+    path.append('/besfs5/groups/cal/dedx/$USER/bes/PipiJpsi/run/pipi_jpsi/anaroot/mc/JPIPI/' + str(ecms) + '/mc_JPIPI_' + str(ecms) + '_signal.root')
     leg_title = str(ecms) + ' MeV'
     plot(path, leg_title, ecms)

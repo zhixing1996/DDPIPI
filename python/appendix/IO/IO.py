@@ -169,7 +169,7 @@ def fit(ecms, method, path):
         # rm_D
         model_rm_D.fitTo(set_MC_rm_D)
         frame_rm_D = rm_D.frame(RooFit.Bins(xbins_rm_D), RooFit.Range(xmin_rm_D, xmax_rm_D))
-        xtitle = 'RM(D^{+}))(GeV)'
+        xtitle = 'RM(D^{+})(GeV)'
         content = int((xmax_rm_D - xmin_rm_D)/xbins_rm_D * 1000)
         ytitle = 'Events/%.1f MeV'%content
         set_frame_style(frame_rm_D, xtitle, ytitle)
@@ -204,7 +204,7 @@ def fit(ecms, method, path):
         # rm_Dmiss
         model_rm_Dmiss.fitTo(set_MC_rm_Dmiss)
         frame_rm_Dmiss = rm_Dmiss.frame(RooFit.Bins(xbins_rm_Dmiss), RooFit.Range(xmin_rm_Dmiss, xmax_rm_Dmiss))
-        xtitle = 'RM(D^{+}))(GeV)'
+        xtitle = 'RM(D_{miss}^{-})(GeV)'
         content = int((xmax_rm_Dmiss - xmin_rm_Dmiss)/xbins_rm_Dmiss * 1000)
         ytitle = 'Events/%.1f MeV'%content
         set_frame_style(frame_rm_Dmiss, xtitle, ytitle)
@@ -239,7 +239,7 @@ def fit(ecms, method, path):
         # rm_pipi
         model_rm_pipi.fitTo(set_MC_rm_pipi)
         frame_rm_pipi = rm_pipi.frame(RooFit.Bins(xbins_rm_pipi), RooFit.Range(xmin_rm_pipi, xmax_rm_pipi))
-        xtitle = 'RM(D^{+}))(GeV)'
+        xtitle = 'RM(#pi_{0}^{+}#pi_{0}^{-})(GeV)'
         content = int((xmax_rm_pipi - xmin_rm_pipi)/xbins_rm_pipi * 1000)
         ytitle = 'Events/%.1f MeV'%content
         set_frame_style(frame_rm_pipi, xtitle, ytitle)
@@ -405,7 +405,7 @@ def main():
     method = args[1]
 
     path = []
-    path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/sigMC_D1_2420_'+str(ecms)+'_after.root')
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/sigMC_D1_2420_'+str(ecms)+'_after.root')
     fit(ecms, method, path)
 
 if __name__ == '__main__':

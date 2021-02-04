@@ -574,6 +574,8 @@ add  p Meson       Xdu               30383  1.6000       0.50       1.0     3   
 add  p Meson       anti-Xdu         -30383  1.6000       0.50       1.0	   -3       0       0 0
 add  p Meson       Xss               30363  1.8000       0.50       1.0     0       0       0 457
 add  p Meson       anti-Xss         -30363  1.8000       0.50       1.0     0       0       0 0
+add  p Meson       D_3*0           1041333  2.3000          0.274   0.030   0       0       0 3333
+add  p Meson       anti-D_3*0     -1041333  2.3000          0.274   0.030   0       0       0 0
 *
 * Dummy particles for users to change properties & simulate new particles. 
 * Convention for the numbers after the "dummy": charge spin_serial

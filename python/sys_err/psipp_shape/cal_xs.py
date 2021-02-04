@@ -18,130 +18,211 @@ logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s- %
 gStyle.SetOptTitle(0)
 gStyle.SetOptTitle(0)
 
-def xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_path):
-    f_data = open(data_path, 'r')
-    lines_data = f_data.readlines()
-    for line_data in lines_data:
-        rs_data = line_data.rstrip('\n')
-        rs_data = filter(None, rs_data.split(" "))
-        N_data = float(float(rs_data[0]))
-        Err_data = float(float(rs_data[1]))
+def readN(f_path):
+    with open(f_path, 'r') as f:
+        for line in f.readlines():
+            fargs = map(float, line.strip().split())
+    return fargs
 
-    f_sideband = open(sideband_path, 'r')
-    lines_sideband = f_sideband.readlines()
-    for line_sideband in lines_sideband:
-        rs_sideband = line_sideband.rstrip('\n')
-        rs_sideband = filter(None, rs_sideband.split(" "))
-        N_sideband = float(float(rs_sideband[0]))
-        Err_sideband = float(float(rs_sideband[1]))
-
-    f_psipp = open(psipp_path, 'r')
-    lines_psipp = f_psipp.readlines()
-    for line_psipp in lines_psipp:
-        rs_psipp = line_psipp.rstrip('\n')
-        rs_psipp = filter(None, rs_psipp.split(" "))
-        N_psipp = float(float(rs_psipp[0]))
-
-    f_DDPIPI = open(DDPIPI_path, 'r')
-    lines_DDPIPI = f_DDPIPI.readlines()
-    for line_DDPIPI in lines_DDPIPI:
-        rs_DDPIPI = line_DDPIPI.rstrip('\n')
-        rs_DDPIPI = filter(None, rs_DDPIPI.split(" "))
-        N_DDPIPI = float(float(rs_DDPIPI[0]))
-
-    if (ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420 or ecms == 4680):
-        eff_psipp = N_psipp/100000.
-        eff_DDPIPI = N_DDPIPI/100000.
-    else:
-        eff_psipp = N_psipp/50000.
-        eff_DDPIPI = N_DDPIPI/50000.
+def xs(ecms, patch, signal_path, sideband_path):
+    '''
+    Efficiency
+    '''
+    fargs = readN(signal_path[0])
+    N_data, Err_data = fargs[0], fargs[1]
 
     N_D1_2420 = 0.
+    if ecms > 4316:
+        fargs = readN(signal_path[1])
+        N_D1_2420 = fargs[0]
+
+    fargs = readN(signal_path[2])
+    N_psipp = fargs[0]
+
+    fargs = readN(signal_path[3])
+    N_DDPIPI = fargs[0]
+
+    N_data_sideband = 0
+    Err_data_sideband = 0
+    if ecms == 4400 or ecms == 4420 or ecms == 4440:
+        fargs = readN(sideband_path[0])
+        N_data_sideband, Err_data_sideband = fargs[0], fargs[1]
+
+        N_D1_2420_sideband = 0.
+        if ecms > 4316:
+            fargs = readN(sideband_path[1])
+            N_D1_2420_sideband = fargs[0]
+
+        fargs = readN(sideband_path[2])
+        N_psipp_sideband = fargs[0]
+
+        fargs = readN(sideband_path[3])
+        N_DDPIPI_sideband = fargs[0]
+
+    if (ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420 or ecms == 4680):
+        if ecms == 4400 or ecms == 4420 or ecms == 4440:
+            eff_psipp = (N_psipp - N_psipp_sideband)/100000.
+            eff_DDPIPI = (N_DDPIPI - N_DDPIPI_sideband)/100000.
+        else:
+            eff_psipp = N_psipp/100000.
+            eff_DDPIPI = N_DDPIPI/100000.
+    else:
+        if ecms == 4400 or ecms == 4420 or ecms == 4440:
+            eff_psipp = (N_psipp - N_psipp_sideband)/50000.
+            eff_DDPIPI = (N_DDPIPI - N_DDPIPI_sideband)/50000.
+        else:
+            eff_psipp = N_psipp/50000.
+            eff_DDPIPI = N_DDPIPI/50000.
+
     eff_D1_2420 = 0.
     if ecms > 4316:
-        f_D1_2420 = open(D1_2420_path, 'r')
-        lines_D1_2420 = f_D1_2420.readlines()
-        for line_D1_2420 in lines_D1_2420:
-            rs_D1_2420 = line_D1_2420.rstrip('\n')
-            rs_D1_2420 = filter(None, rs_D1_2420.split(" "))
-            N_D1_2420 = float(float(rs_D1_2420[0]))
         if ecms == 4420 or ecms == 4680:
-            eff_D1_2420 = N_D1_2420/100000.
+            if ecms == 4400 or ecms == 4420 or ecms == 4440:
+                eff_D1_2420 = (N_D1_2420 - N_D1_2420_sideband)/100000.
+            else:
+                eff_D1_2420 = N_D1_2420/100000.
         else:
-            eff_D1_2420 = N_D1_2420/50000.
+            if ecms == 4400 or ecms == 4420 or ecms == 4440:
+                eff_D1_2420 = (N_D1_2420 - N_D1_2420_sideband)/50000.
+            else:
+                eff_D1_2420 = N_D1_2420/50000.
 
-    factor_path = './txts/simul_fit_' + str(ecms) + '_read_' + patch + '.txt'
-    f_factor = open(factor_path, 'r')
-    lines_factor = f_factor.readlines()
-    for line_factor in lines_factor:
-        rs_factor = line_factor.rstrip('\n')
-        rs_factor = filter(None, rs_factor.split(' '))
-        omega_D1_2420 = float(rs_factor[1])
-        omega_psipp = float(rs_factor[2])
-        omega_DDPIPI = float(rs_factor[3])
-        ISR_D1_2420 = float(rs_factor[7])
-        ISR_psipp = float(rs_factor[8])
-        ISR_DDPIPI = float(rs_factor[9])
-        VP = float(rs_factor[10])
-        lum = float(rs_factor[11])
-        Br = float(rs_factor[12])
-        xs_D1_2420 = float(rs_factor[13])
-        xs_psipp = float(rs_factor[14])
-        xs_DDPIPI = float(rs_factor[15])
-        xserr_D1_2420 = float(rs_factor[16])
-        xserr_psipp = float(rs_factor[17])
-        xserr_DDPIPI = float(rs_factor[18])
+    '''
+    ISR_D1_2420, VP, lum, Br
+    '''
+    xs_D1_2420, xserr_D1_2420, ISR_D1_2420, VP, lum, Br = 0., 0., 0, 1., 1., 0.0938
+    if ecms > 4316:
+        D1_2420_path = './txts/xs_D1_2420_' + patch + '.txt'
+        with open(D1_2420_path, 'r') as f:
+            for line in f.readlines():
+                if '#' in line: line = line.strip('#')
+                try:
+                    fargs = map(float, line.strip().strip('\n').split())
+                    if fargs[0] == ecms:
+                        lum = fargs[2]
+                        Br = fargs[3]
+                        xs_D1_2420 = fargs[4]
+                        xserr_D1_2420 = fargs[5]
+                except:
+                    '''
+                    '''
+    DDPIPI_path = './txts/xs_DDPIPI_' + patch + '.txt'
+    with open(DDPIPI_path, 'r') as f:
+        for line in f.readlines():
+            if '#' in line: line = line.strip('#')
+            try:
+                fargs = map(float, line.strip().strip('\n').split())
+                if fargs[0] == ecms:
+                    lum = fargs[2]
+                    Br = fargs[3]
+                    xs_DDPIPI = fargs[4]
+                    xserr_DDPIPI = fargs[5]
+            except:
+                '''
+                '''
+    psipp_path = './txts/xs_psipp_' + patch + '.txt'
+    with open(psipp_path, 'r') as f:
+        for line in f.readlines():
+            if '#' in line: line = line.strip('#')
+            try:
+                fargs = map(float, line.strip().strip('\n').split())
+                if fargs[0] == ecms:
+                    lum = fargs[2]
+                    Br = fargs[3]
+                    xs_psipp = fargs[4]
+                    xserr_psipp = fargs[5]
+            except:
+                '''
+                '''
+    if ecms > 4316:
+        with open('../../txts/factor_info_' + str(ecms) + '_D1_2420_' + patch + '.txt', 'r') as f:
+            for line in f.readlines():
+                fargs = map(float, line.strip().strip('\n').split())
+                ISR_D1_2420, VP = fargs[0], fargs[1]
+    with open('../../txts/factor_info_' + str(ecms) + '_DDPIPI_' + patch + '.txt', 'r') as f:
+        for line in f.readlines():
+            fargs = map(float, line.strip().strip('\n').split())
+            ISR_DDPIPI, VP = fargs[0], fargs[1]
+    with open('./txts/factor_info_' + str(ecms) + '_psipp_' + patch + '.txt', 'r') as f:
+        for line in f.readlines():
+            fargs = map(float, line.strip().strip('\n').split())
+            ISR_psipp, VP = fargs[0], fargs[1]
+    omega_D1_2420 = xs_D1_2420/(xs_D1_2420 + xs_DDPIPI + xs_psipp)
+    omega_DDPIPI = xs_DDPIPI/(xs_D1_2420 + xs_DDPIPI + xs_psipp)
+    omega_psipp = xs_psipp/(xs_D1_2420 + xs_DDPIPI + xs_psipp)
 
-    mKpipi_data = open('./txts/factor_m_Kpipi_' + str(ecms) + '_data.txt', 'r')
-    lines_mKpipi_data = mKpipi_data.readlines()
-    for line_mKpipi_data in lines_mKpipi_data:
-        rs_mKpipi_data = line_mKpipi_data.rstrip('\n')
-        rs_mKpipi_data = filter(None, rs_mKpipi_data.split(" "))
-        mKpipi_data = float(float(rs_mKpipi_data[0]))
-        mKpipi_data_err = float(float(rs_mKpipi_data[1]))
+    '''
+    f factor
+    '''
+    fargs = readN('../K_p/txts/f_K_p.txt')
+    factor_K_p = fargs[0]
 
-    mKpipi_MC = open('./txts/factor_m_Kpipi_' + str(ecms) + '_MC.txt', 'r')
-    lines_mKpipi_MC = mKpipi_MC.readlines()
-    for line_mKpipi_MC in lines_mKpipi_MC:
-        rs_mKpipi_MC = line_mKpipi_MC.rstrip('\n')
-        rs_mKpipi_MC = filter(None, rs_mKpipi_MC.split(" "))
-        mKpipi_MC = float(float(rs_mKpipi_MC[0]))
-        mKpipi_MC_err = float(float(rs_mKpipi_MC[1]))
+    fargs = readN('../m_pipi/txts/f_m_pipi.txt')
+    factor_m_pipi = fargs[0]
 
-    factor_mKpipi = 1.
-    if (fabs(mKpipi_MC - mKpipi_data)) > 0.01:
-        factor_mKpipi = mKpipi_data/mKpipi_MC
+    fargs = readN('../VrVz/txts/f_VrVz.txt')
+    factor_VrVz = fargs[0]
 
+    with open('./txts/factor_m_Kpipi_' + str(ecms) + '_data_' + patch + '.txt', 'r') as f:
+        for line in f.readlines():
+            fargs = map(float, line.strip().split())
+            mKpipi_data, mKpipi_data_err = fargs[0], fargs[1]
+    with open('./txts/factor_m_Kpipi_' + str(ecms) + '_MC_' + patch + '.txt', 'r') as f:
+        for line in f.readlines():
+            fargs = map(float, line.strip().split())
+            mKpipi_MC, mKpipi_MC_err = fargs[0], fargs[1]
+    f = mKpipi_data/mKpipi_MC
+    f_err = sqrt(f**2*(mKpipi_data_err**2/mKpipi_data**2 + mKpipi_MC_err**2/mKpipi_MC**2))
+    if abs(1 - f)/f_err > 1.: factor_m_Kpipi = f
+    else: factor_m_Kpipi = 1.
+
+    fargs = readN('../window/txts/f_rm_Dpipi.txt')
+    factor_rm_Dpipi = fargs[0]
+
+    '''
+    xs calculation
+    '''
     if omega_D1_2420 == 0:
         flag_D1_2420 = 0
         eff_ISR_VP_D1_2420 = 1
     else:
         flag_D1_2420 = 1
-        eff_ISR_VP_D1_2420 = eff_D1_2420*ISR_D1_2420*omega_D1_2420*VP*factor_mKpipi
+        eff_ISR_VP_D1_2420 = eff_D1_2420*ISR_D1_2420*omega_D1_2420*VP*factor_K_p*factor_m_pipi*factor_VrVz*factor_m_Kpipi*factor_rm_Dpipi
     if omega_psipp == 0:
         flag_psipp = 0
         eff_ISR_VP_psipp = 1
     else:
         flag_psipp = 1
-        eff_ISR_VP_psipp = eff_psipp*ISR_psipp*omega_psipp*VP*factor_mKpipi
+        eff_ISR_VP_psipp = eff_psipp*ISR_psipp*omega_psipp*VP*factor_K_p*factor_m_pipi*factor_VrVz*factor_m_Kpipi*factor_rm_Dpipi
     if omega_DDPIPI == 0:
         flag_DDPIPI = 0
         eff_ISR_VP_DDPIPI = 1
     else:
         flag_DDPIPI = 1
-        eff_ISR_VP_DDPIPI = eff_DDPIPI*ISR_DDPIPI*omega_DDPIPI*VP*factor_mKpipi
-    xs = (N_data - N_sideband/2.)/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
-    xs_err = (sqrt(Err_data*Err_data + (Err_sideband/2.)*(Err_sideband/2.)))/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
+        eff_ISR_VP_DDPIPI = eff_DDPIPI*ISR_DDPIPI*omega_DDPIPI*VP*factor_K_p*factor_m_pipi*factor_VrVz*factor_m_Kpipi*factor_rm_Dpipi
+    if ecms == 4400 or ecms == 4420 or ecms == 4440:
+        xs = (N_data - N_data_sideband/2.)/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
+        xs_err = (sqrt(Err_data*Err_data + (Err_data_sideband/2.)*(Err_data_sideband/2.)))/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
+    else:
+        xs = N_data/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
+        xs_err = Err_data/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
 
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')
     path_xs = './txts/xs_info_' + str(ecms) + '_' + patch + '.txt'
 
+    '''
+    Output
+    '''
     f_xs = open(path_xs, 'w')
     out = '@' + str(ecms) + 'MeV\n'
     out += str(int(N_data)) + ' $\pm$ ' + str(int(Err_data)) + '\n'
-    out += str(int(N_sideband)) + ' $\pm$ ' + str(int(Err_sideband)) + '\n'
-    out += str(round(factor_mKpipi, 4)) + '\n'
+    out += str(int(N_data_sideband)) + ' $\pm$ ' + str(int(Err_data_sideband)) + '\n'
+    out += str(round(factor_K_p, 4)) + '\n'
+    out += str(round(factor_m_pipi, 4)) + '\n'
+    out += str(round(factor_VrVz, 4)) + '\n'
+    out += str(round(factor_m_Kpipi, 4)) + '\n'
+    out += str(round(factor_rm_Dpipi, 4)) + '\n'
     out += str(round(eff_D1_2420*100, 2)) + '\%\n'
     out += str(round(eff_psipp*100, 2)) + '\%\n'
     out += str(round(eff_DDPIPI*100, 2)) + '\%\n'
@@ -161,7 +242,13 @@ def xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_p
     path_xs_read = './txts/xs_info_' + str(ecms) + '_read_' + patch + '.txt'
     f_xs_read = open(path_xs_read, 'w')
     out_read = str(ecms) + ' '
-    out_read += str(int(N_data)) + ' '
+    out_read += str(int(N_data)) + ' ' + str(int(Err_data)) + ' '
+    out_read += str(int(N_data_sideband)) + ' ' + str(int(Err_data_sideband)) + ' '
+    out_read += str(round(factor_K_p, 4)) + ' '
+    out_read += str(round(factor_m_pipi, 4)) + ' '
+    out_read += str(round(factor_VrVz, 4)) + ' '
+    out_read += str(round(factor_m_Kpipi, 4)) + ' '
+    out_read += str(round(factor_rm_Dpipi, 4)) + ' '
     out_read += str(round(eff_D1_2420*100, 2)) + ' '
     out_read += str(round(eff_psipp*100, 2)) + ' '
     out_read += str(round(eff_DDPIPI*100, 2)) + ' '
@@ -195,18 +282,26 @@ if __name__ == '__main__':
         logging.error('python cal_xs.py [ecms] [patch]')
         sys.exit()
 
+    signal_path = []
+    sideband_path = []
     if ecms <= 4316:
-        data_path = './txts/data_signal_events_' + str(ecms) + '_' + patch + '.txt'
-        sideband_path = './txts/sideband_signal_events_' + str(ecms) + '_' + patch + '.txt'
-        psipp_path = './txts/psipp_signal_events_' + str(ecms) + '_' + patch + '.txt'
-        D1_2420_path = ''
-        DDPIPI_path = '../../fit_xs/txts/DDPIPI_signal_events_' + str(ecms) + '_' + patch + '.txt'
-        xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_path)
+        signal_path.append('./txts/data_events_' + str(ecms) + '_' + patch + '.txt')
+        signal_path.append('')
+        signal_path.append('./txts/psipp_events_' + str(ecms) + '_' + patch + '.txt')
+        signal_path.append('../../fit_xs/txts/DDPIPI_events_' + str(ecms) + '_' + patch + '.txt')
+        sideband_path.append('./txts/data_sideband_events_' + str(ecms) + '_' + patch + '.txt')
+        sideband_path.append('')
+        sideband_path.append('./txts/psipp_sideband_events_' + str(ecms) + '_' + patch + '.txt')
+        sideband_path.append('../../fit_xs/txts/DDPIPI_sideband_events_' + str(ecms) + '_' + patch + '.txt')
+        xs(ecms, patch, signal_path, sideband_path)
 
     if ecms > 4316:
-        data_path = './txts/data_signal_events_' + str(ecms) + '_' + patch + '.txt'
-        sideband_path = './txts/sideband_signal_events_' + str(ecms) + '_' + patch + '.txt'
-        psipp_path = './txts/psipp_signal_events_' + str(ecms) + '_' + patch + '.txt'
-        D1_2420_path = '../../fit_xs/txts/D1_2420_signal_events_' + str(ecms) + '_' + patch + '.txt'
-        DDPIPI_path = '../../fit_xs/txts/DDPIPI_signal_events_' + str(ecms) + '_' + patch + '.txt'
-        xs(ecms, patch, data_path, sideband_path, D1_2420_path, psipp_path, DDPIPI_path)
+        signal_path.append('./txts/data_events_' + str(ecms) + '_' + patch + '.txt')
+        signal_path.append('../../fit_xs/txts/D1_2420_events_' + str(ecms) + '_' + patch + '.txt')
+        signal_path.append('./txts/psipp_events_' + str(ecms) + '_' + patch + '.txt')
+        signal_path.append('../../fit_xs/txts/DDPIPI_events_' + str(ecms) + '_' + patch + '.txt')
+        sideband_path.append('./txts/data_sideband_events_' + str(ecms) + '_' + patch + '.txt')
+        sideband_path.append('../../fit_xs/txts/D1_2420_sideband_events_' + str(ecms) + '_' + patch + '.txt')
+        sideband_path.append('./txts/psipp_sideband_events_' + str(ecms) + '_' + patch + '.txt')
+        sideband_path.append('../../fit_xs/txts/DDPIPI_sideband_events_' + str(ecms) + '_' + patch + '.txt')
+        xs(ecms, patch, signal_path, sideband_path)

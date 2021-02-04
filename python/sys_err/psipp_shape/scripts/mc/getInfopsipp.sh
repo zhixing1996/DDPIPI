@@ -21,12 +21,12 @@ do
         continue
     fi
     PARAM_3=`echo "scale=4; $PARAM_3 / 1000" | bc -l`
-    WORKAREA=/besfs/users/$USER/bes/DDPIPI/v0.2
+    WORKAREA=/besfs5/users/$USER/bes/DDPIPI/v0.2
     mkdir -p $WORKAREA/sigMC/psipp/$PARAM_0/sys_err/psipp_shape
     cd $HOME/bes/DDPIPI/v0.2/python/sys_err/psipp_shape
-    rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/*signal*.root
-    rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/*raw*.root
-    ROOT_PATH=/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape
+    rm -rf /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/*signal*.root
+    rm -rf /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/*raw*.root
+    ROOT_PATH=/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape
     FILE_PATH=/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/$PARAM_0/sys_err/psipp_shape/rootfile
     echo "Begining of $PARAM_0!"
 

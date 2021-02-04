@@ -1,7 +1,7 @@
 #!/bin/sh
 PATCH=$1
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape
-mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed
+mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape
+mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed
 cat mix_Base | while read line
 do
     str=$line

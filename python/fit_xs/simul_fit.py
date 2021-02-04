@@ -102,19 +102,15 @@ def set_canvas_style(mbc):
 def fit(ecms, patch, path):
     try:
         f_data = TFile(path[0], 'READ')
-        f_sideband = TFile(path[1], 'READ')
         f_psipp = TFile(path[2], 'READ')
         f_DDPIPI = TFile(path[3], 'READ')
         t_data = f_data.Get('save')
-        t_sideband = f_sideband.Get('save')
         t_psipp = f_psipp.Get('save')
         t_DDPIPI = f_DDPIPI.Get('save')
         entries_data = t_data.GetEntries()
-        entries_sideband = t_sideband.GetEntries()
         entries_psipp = t_psipp.GetEntries()
         entries_DDPIPI = t_DDPIPI.GetEntries()
         logging.info('data('+str(ecms)+') entries :'+str(entries_data))
-        logging.info('sideband('+str(ecms)+') entries :'+str(entries_sideband))
         logging.info('psipp('+str(ecms)+') entries :'+str(entries_psipp))
         logging.info('DDPIPI('+str(ecms)+') entries :'+str(entries_DDPIPI))
         if ecms > 4316:
@@ -122,6 +118,12 @@ def fit(ecms, patch, path):
             t_D1_2420 = f_D1_2420.Get('save')
             entries_D1_2420 = t_D1_2420.GetEntries()
             logging.info('D1(2420)('+str(ecms)+') entries :'+str(entries_D1_2420))
+        f_sideband = TFile(path[1], 'READ')
+        h_sideband_rm_D = f_sideband.Get('h_side_rm_D')
+        h_sideband_rm_Dmiss = f_sideband.Get('h_side_rm_Dmiss')
+        h_sideband_rm_pipi = f_sideband.Get('h_side_rm_pipi')
+        entries_sideband = h_sideband_rm_D.Integral()
+        logging.info('sideband('+str(ecms)+') entries :'+str(entries_sideband))
     except:
         logging.error('Files are invalid!')
         sys.exit()
@@ -129,77 +131,66 @@ def fit(ecms, patch, path):
     N_D1_2420, N_PSIPP, N_DDPIPI = num_rm_D(ecms)
     if ecms > 4316:
         n2420 = RooRealVar('n2420', 'n2420', 500, 0, N_D1_2420)
-    nsideband = RooRealVar('nsideband', 'nsideband', int(entries_sideband/2.))
+    nsideband = RooRealVar('nsideband', 'nsideband', int(entries_sideband))
     npsipp = RooRealVar('npsipp', 'npsipp', 0, N_PSIPP)
     nDDPIPI = RooRealVar('nDDPIPI', 'nDDPIPI', 0, N_DDPIPI)
 
     # model for RM(D)
     xmin_rm_D, xmax_rm_D, temp = param_rm_D(ecms)
-    xbins_rm_D = int((xmax_rm_D - xmin_rm_D)/0.005)
+    if ecms < 4470: xbins_rm_D = int((xmax_rm_D - xmin_rm_D)/0.005)
+    if ecms >= 4470: xbins_rm_D = int((xmax_rm_D - xmin_rm_D)/0.01)
     rm_D = RooRealVar('rm_D', 'rm_D', xmin_rm_D, xmax_rm_D)
     rm_D.setRange('signal', xmin_rm_D, xmax_rm_D)
-    h_sideband_rm_D = TH1F('h_sideband_rm_D', '', xbins_rm_D, xmin_rm_D, xmax_rm_D)
     h_psipp_rm_D = TH1F('h_psipp_rm_D', '', xbins_rm_D, xmin_rm_D, xmax_rm_D)
     h_DDPIPI_rm_D = TH1F('h_DDPIPI_rm_D', '', xbins_rm_D, xmin_rm_D, xmax_rm_D)
 
     cut = ''
-    t_sideband.Project('h_sideband_rm_D', 'rm_D', cut)
     t_psipp.Project('h_psipp_rm_D', 'rm_D', cut)
     t_DDPIPI.Project('h_DDPIPI_rm_D', 'rm_D', cut)
-
     set_data_rm_D = RooDataSet('set_data_rm_D', ' set_data_rm_D', t_data, RooArgSet(rm_D))
     hist_sideband_rm_D = RooDataHist('hist_sideband_rm_D', 'hist_sideband_rm_D', RooArgList(rm_D), h_sideband_rm_D)
     hist_psipp_rm_D = RooDataHist('hist_psipp_rm_D', 'hist_psipp_rm_D', RooArgList(rm_D), h_psipp_rm_D)
     hist_DDPIPI_rm_D = RooDataHist('hist_DDPIPI_rm_D', 'hist_DDPIPI_rm_D', RooArgList(rm_D), h_DDPIPI_rm_D)
-
     pdf_sideband_rm_D = RooHistPdf('pdf_sideband_rm_D', 'pdf_sideband_rm_D', RooArgSet(rm_D), hist_sideband_rm_D, 0)
     pdf_psipp_rm_D = RooHistPdf('pdf_psipp_rm_D', 'pdf_psipp_rm_D', RooArgSet(rm_D), hist_psipp_rm_D, 2)
     pdf_DDPIPI_rm_D = RooHistPdf('pdf_DDPIPI_rm_D', 'pdf_DDPIPI_rm_D', RooArgSet(rm_D), hist_DDPIPI_rm_D, 2)
 
     # model for RM(Dmiss)
     xmin_rm_Dmiss, xmax_rm_Dmiss, temp = param_rm_D(ecms)
-    xbins_rm_Dmiss = int((xmax_rm_Dmiss - xmin_rm_Dmiss)/0.005)
+    if ecms < 4470: xbins_rm_Dmiss = int((xmax_rm_Dmiss - xmin_rm_Dmiss)/0.005)
+    if ecms >= 4470: xbins_rm_Dmiss = int((xmax_rm_Dmiss - xmin_rm_Dmiss)/0.01)
     rm_Dmiss = RooRealVar('rm_Dmiss', 'rm_Dmiss', xmin_rm_Dmiss, xmax_rm_Dmiss)
     rm_Dmiss.setRange('signal', xmin_rm_Dmiss, xmax_rm_Dmiss)
-    h_sideband_rm_Dmiss = TH1F('h_sideband_rm_Dmiss', '', xbins_rm_Dmiss, xmin_rm_Dmiss, xmax_rm_Dmiss)
     h_psipp_rm_Dmiss = TH1F('h_psipp_rm_Dmiss', '', xbins_rm_Dmiss, xmin_rm_Dmiss, xmax_rm_Dmiss)
     h_DDPIPI_rm_Dmiss = TH1F('h_DDPIPI_rm_Dmiss', '', xbins_rm_Dmiss, xmin_rm_Dmiss, xmax_rm_Dmiss)
 
     cut = ''
-    t_sideband.Project('h_sideband_rm_Dmiss', 'rm_Dmiss', cut)
     t_psipp.Project('h_psipp_rm_Dmiss', 'rm_Dmiss', cut)
     t_DDPIPI.Project('h_DDPIPI_rm_Dmiss', 'rm_Dmiss', cut)
-
     set_data_rm_Dmiss = RooDataSet('set_data_rm_Dmiss', ' set_data_rm_Dmiss', t_data, RooArgSet(rm_Dmiss))
     hist_sideband_rm_Dmiss = RooDataHist('hist_sideband_rm_Dmiss', 'hist_sideband_rm_Dmiss', RooArgList(rm_Dmiss), h_sideband_rm_Dmiss)
     hist_psipp_rm_Dmiss = RooDataHist('hist_psipp_rm_Dmiss', 'hist_psipp_rm_Dmiss', RooArgList(rm_Dmiss), h_psipp_rm_Dmiss)
     hist_DDPIPI_rm_Dmiss = RooDataHist('hist_DDPIPI_rm_Dmiss', 'hist_DDPIPI_rm_Dmiss', RooArgList(rm_Dmiss), h_DDPIPI_rm_Dmiss)
-
     pdf_sideband_rm_Dmiss = RooHistPdf('pdf_sideband_rm_Dmiss', 'pdf_sideband_rm_Dmiss', RooArgSet(rm_Dmiss), hist_sideband_rm_Dmiss, 0)
     pdf_psipp_rm_Dmiss = RooHistPdf('pdf_psipp_rm_Dmiss', 'pdf_psipp_rm_Dmiss', RooArgSet(rm_Dmiss), hist_psipp_rm_Dmiss, 2)
     pdf_DDPIPI_rm_Dmiss = RooHistPdf('pdf_DDPIPI_rm_Dmiss', 'pdf_DDPIPI_rm_Dmiss', RooArgSet(rm_Dmiss), hist_DDPIPI_rm_Dmiss, 2)
 
     # model for RM(pipi)
     xmin_rm_pipi, xmax_rm_pipi = param_rm_pipi(ecms)
-    xbins_rm_pipi = int((xmax_rm_pipi - xmin_rm_pipi)/0.005)
-
+    if ecms < 4470: xbins_rm_pipi = int((xmax_rm_pipi - xmin_rm_pipi)/0.005)
+    if ecms >= 4470: xbins_rm_pipi = int((xmax_rm_pipi - xmin_rm_pipi)/0.01)
     rm_pipi = RooRealVar('rm_pipi', 'rm_pipi', xmin_rm_pipi, xmax_rm_pipi)
     rm_pipi.setRange('signal', xmin_rm_pipi, xmax_rm_pipi)
-
-    h_sideband_rm_pipi = TH1F('h_sideband_rm_pipi', '', xbins_rm_pipi, xmin_rm_pipi, xmax_rm_pipi)
     h_psipp_rm_pipi = TH1F('h_psipp_rm_pipi', '', xbins_rm_pipi, xmin_rm_pipi, xmax_rm_pipi)
     h_DDPIPI_rm_pipi = TH1F('h_DDPIPI_rm_pipi', '', xbins_rm_pipi, xmin_rm_pipi, xmax_rm_pipi)
 
     cut = ''
-    t_sideband.Project('h_sideband_rm_pipi', 'rm_pipi', cut)
     t_psipp.Project('h_psipp_rm_pipi', 'rm_pipi', cut)
     t_DDPIPI.Project('h_DDPIPI_rm_pipi', 'rm_pipi', cut)
-
     set_data_rm_pipi = RooDataSet('set_data_rm_pipi', ' set_data_rm_pipi', t_data, RooArgSet(rm_pipi))
     hist_sideband_rm_pipi = RooDataHist('hist_sideband_rm_pipi', 'hist_sideband_rm_pipi', RooArgList(rm_pipi), h_sideband_rm_pipi)
     hist_psipp_rm_pipi = RooDataHist('hist_psipp_rm_pipi', 'hist_psipp_rm_pipi', RooArgList(rm_pipi), h_psipp_rm_pipi)
     hist_DDPIPI_rm_pipi = RooDataHist('hist_DDPIPI_rm_pipi', 'hist_DDPIPI_rm_pipi', RooArgList(rm_pipi), h_DDPIPI_rm_pipi)
-
     pdf_psipp_rm_pipi = RooHistPdf('pdf_psipp_rm_pipi', 'pdf_psipp_rm_pipi', RooArgSet(rm_pipi), hist_psipp_rm_pipi, 2)
     pdf_sideband_rm_pipi = RooHistPdf('pdf_sideband_rm_pipi', 'pdf_sideband_rm_pipi', RooArgSet(rm_pipi), hist_sideband_rm_pipi, 0)
     pdf_DDPIPI_rm_pipi = RooHistPdf('pdf_DDPIPI_rm_pipi', 'pdf_DDPIPI_rm_pipi', RooArgSet(rm_pipi), hist_DDPIPI_rm_pipi, 2)
@@ -217,6 +208,7 @@ def fit(ecms, patch, path):
         hist_D1_2420_rm_D = RooDataHist('hist_D1_2420_rm_D', 'hist_D1_2420_rm_D', RooArgList(rm_D), h_D1_2420_rm_D)
         pdf_D1_2420_rm_D = RooHistPdf('pdf_D1_2420_rm_D', 'pdf_D1_2420_rm_D', RooArgSet(rm_D), hist_D1_2420_rm_D, 2)
         mean_rm_D = RooRealVar('mean_rm_D', 'mean_rm_D', 0, -0.01, 0.01)
+        if ecms == 4680: mean_rm_D = RooRealVar('mean_rm_D', 'mean_rm_D', 0, -0.02, 0.02)
         sigma_rm_D = RooRealVar('sigma_rm_D', 'sigma_rm_D', 0.00123, 0., 0.02)
         gauss_rm_D = RooGaussian('gaus_rm_D', 'guass_rm_D', rm_D, mean_rm_D, sigma_rm_D)
         rm_D.setBins(xbins_rm_D, 'cache')
@@ -233,6 +225,7 @@ def fit(ecms, patch, path):
         hist_D1_2420_rm_Dmiss = RooDataHist('hist_D1_2420_rm_Dmiss', 'hist_D1_2420_rm_Dmiss', RooArgList(rm_Dmiss), h_D1_2420_rm_Dmiss)
         pdf_D1_2420_rm_Dmiss = RooHistPdf('pdf_D1_2420_rm_Dmiss', 'pdf_D1_2420_rm_Dmiss', RooArgSet(rm_Dmiss), hist_D1_2420_rm_Dmiss, 2)
         mean_rm_Dmiss = RooRealVar('mean_rm_Dmiss', 'mean_rm_Dmiss', 0, -0.01, 0.01)
+        if ecms == 4680: mean_rm_Dmiss = RooRealVar('mean_rm_Dmiss', 'mean_rm_Dmiss', 0, -0.02, 0.02)
         sigma_rm_Dmiss = RooRealVar('sigma_rm_Dmiss', 'sigma_rm_Dmiss', 0.00123, 0., 0.02)
         gauss_rm_Dmiss = RooGaussian('gaus_rm_Dmiss', 'guass_rm_Dmiss', rm_Dmiss, mean_rm_Dmiss, sigma_rm_Dmiss)
         rm_Dmiss.setBins(xbins_rm_Dmiss, 'cache')
@@ -380,7 +373,7 @@ def fit(ecms, patch, path):
     f_out_read.close()
 
     if ecms > 4316:
-        path_xs_D1_2420 = './txts/xs_D1_2420_'+ patch +'.txt'
+        path_xs_D1_2420 = './txts/xs_D1_2420_'+ patch +'_num.txt'
         if ecms == 4340 and os.path.isfile(path_xs_D1_2420): os.remove(path_xs_D1_2420)
         f_xs_D1_2420 = open(path_xs_D1_2420, 'a')
         if ecms == 4340: f_xs_D1_2420.write('sample energy luminosity br     nsignal nserrl nserrh eff    isr   vp   N0\n')
@@ -392,7 +385,7 @@ def fit(ecms, patch, path):
             f_xs_D1_2420.write('\n')
         f_xs_D1_2420.close()
 
-    path_xs_psipp = './txts/xs_psipp_'+ patch +'.txt'
+    path_xs_psipp = './txts/xs_psipp_'+ patch +'_num.txt'
     if ecms == 4190 and os.path.isfile(path_xs_psipp): os.remove(path_xs_psipp)
     f_xs_psipp = open(path_xs_psipp, 'a')
     if ecms == 4190: f_xs_psipp.write('sample energy luminosity br     nsignal nserrl nserrh eff    isr   vp   N0\n')
@@ -404,7 +397,7 @@ def fit(ecms, patch, path):
         f_xs_psipp.write('\n')
     f_xs_psipp.close()
 
-    path_xs_DDPIPI = './txts/xs_DDPIPI_'+ patch +'.txt'
+    path_xs_DDPIPI = './txts/xs_DDPIPI_'+ patch +'_num.txt'
     if ecms == 4190 and os.path.isfile(path_xs_DDPIPI): os.remove(path_xs_DDPIPI)
     f_xs_DDPIPI = open(path_xs_DDPIPI, 'a')
     if ecms == 4190: f_xs_DDPIPI.write('sample energy luminosity br     nsignal nserrl nserrh eff    isr   vp   N0\n')
@@ -441,7 +434,7 @@ def fit(ecms, patch, path):
     name.append('Backgrounds')
     if ecms > 4316:
         name.append('D_{1}(2420)^{+}D^{-}')
-    name.append('#psi(3770)#pi^{+}#pi^{-}')
+    name.append('#pi^{+}#pi^{-}#psi(3770)')
     name.append('D^{+}D^{-}#pi^{+}#pi^{-}')
     name.append('Total Fit')
 
@@ -513,7 +506,7 @@ def fit(ecms, patch, path):
     name.append('Backgrounds')
     if ecms > 4316:
         name.append('D_{1}(2420)^{+}D^{-}')
-    name.append('#psi(3770)#pi^{+}#pi^{-}')
+    name.append('#pi^{+}#pi^{-}#psi(3770)')
     name.append('D^{+}D^{-}#pi^{+}#pi^{-}')
     name.append('Total Fit')
 
@@ -585,7 +578,7 @@ def fit(ecms, patch, path):
     name.append('Backgrounds')
     if ecms > 4316:
         name.append('D_{1}(2420)^{+}D^{-}')
-    name.append('#psi(3770)#pi^{+}#pi^{-}')
+    name.append('#pi^{+}#pi^{-}#psi(3770)')
     name.append('D^{+}D^{-}#pi^{+}#pi^{-}')
     name.append('Total Fit')
 
@@ -639,10 +632,29 @@ def fit(ecms, patch, path):
 
     if not os.path.exists('./figs/'):
         os.makedirs('./figs/')
-    canvas_name = './figs/simul_fit_' + str(ecms) + '.pdf'
+    canvas_name = './figs/simul_fit_' + str(ecms) + '_' + patch + '.pdf'
     c.SaveAs(canvas_name)
 
-    # raw_input('Enter anything to end...')
+    with open('./txts/correlation_coefficiency_' + str(ecms) + '.txt', 'w') as f:
+        if ecms > 4316: f.write(str(xs_D1_2420) + ' ')
+        f.write(str(xs_psipp) + ' ')
+        f.write(str(xs_DDPIPI) + ' ')
+        if ecms > 4316: f.write(str(xserr_D1_2420) + ' ')
+        f.write(str(xserr_psipp) + ' ')
+        f.write(str(xserr_DDPIPI) + ' ')
+        if ecms > 4316:
+            f.write(str(fit_result.correlation(n2420, n2420)) + ' ')
+            f.write(str(fit_result.correlation(npsipp, npsipp))+ ' ')
+            f.write(str(fit_result.correlation(nDDPIPI, nDDPIPI)) + ' ')
+            f.write(str(fit_result.correlation(n2420, npsipp)) + ' ')
+            f.write(str(fit_result.correlation(n2420, nDDPIPI)) + ' ')
+            f.write(str(fit_result.correlation(npsipp, nDDPIPI)))
+        else:
+            f.write(str(fit_result.correlation(npsipp, npsipp))+ ' ')
+            f.write(str(fit_result.correlation(nDDPIPI, nDDPIPI)) + ' ')
+            f.write(str(fit_result.correlation(npsipp, nDDPIPI)))
+
+    raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]
@@ -653,18 +665,18 @@ def main():
 
     path = []
     if ecms > 4316:
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_after.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_sideband.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_after.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_after.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/sigMC_D1_2420_'+str(ecms)+'_after.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_after.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_side_'+str(ecms)+'.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_after.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_after.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/sigMC_D1_2420_'+str(ecms)+'_after.root')
         fit(ecms, patch, path)
 
     if ecms <= 4316:
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_after.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_sideband.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_after.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_after.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_after.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_side_'+str(ecms)+'.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_after.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_after.root')
         fit(ecms, patch, path)
 
 if __name__ == '__main__':

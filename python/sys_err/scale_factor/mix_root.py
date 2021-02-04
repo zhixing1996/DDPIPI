@@ -37,6 +37,7 @@ def mix(path_in, path_out, mode, ecms, patch, sample):
     omega = array('d', 3*[999.])
     if ecms > 4316:
         D1_2420_path = './txts/xs_D1_2420_' + patch + '.txt'
+        if mode == 'scale': D1_2420_path = '../../fit_xs/txts/xs_D1_2420_' + patch + '.txt'
         with open(D1_2420_path, 'r') as f:
             for line in f.readlines():
                 if '#' in line: line = line.strip('#')
@@ -48,6 +49,7 @@ def mix(path_in, path_out, mode, ecms, patch, sample):
                     '''
     else: omega[0] = 0.
     DDPIPI_path = './txts/xs_DDPIPI_' + patch + '.txt'
+    if mode == 'scale': DDPIPI_path = '../../fit_xs/txts/xs_DDPIPI_' + patch + '.txt'
     with open(DDPIPI_path, 'r') as f:
         for line in f.readlines():
             if '#' in line: line = line.strip('#')
@@ -58,6 +60,7 @@ def mix(path_in, path_out, mode, ecms, patch, sample):
                 '''
                 '''
     psipp_path = './txts/xs_psipp_' + patch + '.txt'
+    if mode == 'scale': psipp_path = '../../fit_xs/txts/xs_psipp_' + patch + '.txt'
     with open(psipp_path, 'r') as f:
         for line in f.readlines():
             if '#' in line: line = line.strip('#')
@@ -77,8 +80,10 @@ def mix(path_in, path_out, mode, ecms, patch, sample):
     f_out = TFile(path_out[0], 'RECREATE')
     t_out = TTree('save', 'save')
     if sample == 'raw': m_rawm_D = array('d', [999.])
+    if sample == 'scale': m_rawm_D = array('d', [999.])
     if sample == 'raw_before': m_rm_Dpipi = array('d', [999.])
     if sample == 'raw': t_out.Branch('rawm_D', m_rawm_D, 'm_rawm_D/D')
+    if sample == 'scale': t_out.Branch('rawm_D', m_rawm_D, 'm_rawm_D/D')
     if sample == 'raw_before': t_out.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
     for i in xrange(len(path_in)):
         try:
@@ -95,6 +100,7 @@ def mix(path_in, path_out, mode, ecms, patch, sample):
             t_in.GetEntry(ientry)
             if t_in.m_rawm_D > 0.:
                 if sample == 'raw': m_rawm_D[0] = t_in.m_rawm_D
+                if sample == 'scale': m_rawm_D[0] = t_in.m_rawm_D
                 if sample == 'raw_before': m_rm_Dpipi[0] = t_in.m_rm_Dpipi
                 t_out.Fill()
         n += 1
@@ -116,19 +122,38 @@ def main():
     mode = []
     if sample == 'raw':
         if ecms > 4316:
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_raw.root')
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw.root')
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw.root')
-            path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/scale_factor/sigMC_mixed_width_' + str(ecms) + '_raw.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_raw.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw.root')
+            path_out.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/scale_factor/sigMC_mixed_width_' + str(ecms) + '_raw.root')
             mode.append('D1_2420')
             mode.append('psipp')
             mode.append('DDPIPI')
             mix(path_in, path_out, mode, ecms, patch, sample)
 
         if ecms <= 4316:
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw.root')
-            path_in.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw.root')
-            path_out.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/scale_factor/sigMC_mixed_width_' + str(ecms) + '_raw.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_raw.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw.root')
+            path_out.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/scale_factor/sigMC_mixed_width_' + str(ecms) + '_raw.root')
+            mode.append('psipp')
+            mode.append('DDPIPI')
+            mix(path_in, path_out, mode, ecms, patch, sample)
+
+    if sample == 'scale':
+        if ecms > 4316:
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/' + str(ecms) + '/sigMC_D1_2420_' + str(ecms) + '_rm_Dpipi_signal.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_rm_Dpipi_signal.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_rm_Dpipi_signal.root')
+            path_out.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/scale_factor/sigMC_mixed_width_' + str(ecms) + '_raw.root')
+            mode.append('D1_2420')
+            mode.append('psipp')
+            mode.append('DDPIPI')
+            mix(path_in, path_out, mode, ecms, patch, sample)
+
+        if ecms <= 4316:
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/' + str(ecms) + '/sigMC_psipp_' + str(ecms) + '_rm_Dpipi_signal.root')
+            path_in.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_rm_Dpipi_signal.root')
+            path_out.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/scale_factor/sigMC_mixed_width_' + str(ecms) + '_raw.root')
             mode.append('psipp')
             mode.append('DDPIPI')
             mix(path_in, path_out, mode, ecms, patch, sample)

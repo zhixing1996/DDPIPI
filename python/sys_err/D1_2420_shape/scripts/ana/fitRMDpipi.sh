@@ -23,8 +23,9 @@ do
     fi
     cd $HOME/bes/DDPIPI/v0.2/python/sys_err/D1_2420_shape
     echo "Begininning of $PARAM_0!"
-    python fit_rm_Dpipi.py $PARAM_0 data $PATCH
-    python fit_rm_Dpipi_sideband.py $PARAM_0 $PATCH
+    # python fit_rm_Dpipi.py $PARAM_0 data $PATCH
     python fit_rm_Dpipi.py $PARAM_0 D1_2420 $PATCH
+    # python fit_rm_Dpipi_sideband.py $PARAM_0 data $PATCH
+    # python fit_rm_Dpipi_sideband.py $PARAM_0 D1_2420 $PATCH
     echo "$PARAM_0 is done!"
 done

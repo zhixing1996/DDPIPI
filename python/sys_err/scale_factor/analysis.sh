@@ -69,11 +69,10 @@ case $option in
 
     0.1.6) echo "Calculate numbers -- calculating cross section of DDpipi and systerm uncertainties..."
            cd scripts/ana
-           ./calXS_703p01.sh round4
-           ./calXS_705.sh round4
+           ./calXS.sh round3
            cd -
-           ./format_xs.py round4
-           ./cal_diff.py round4
+           ./format_xs.py round3
+           ./cal_diff.py round3
            ;;
 
 esac

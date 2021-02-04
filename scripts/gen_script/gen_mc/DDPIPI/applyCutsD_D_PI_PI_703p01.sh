@@ -12,7 +12,7 @@ do
     PARAM_3=${arr[3]} # float energy poit
     PARAM_4=${arr[4]} # luminosity
     PARAM_5=${arr[5]} # dst path
-    WORKAREA=/besfs/users/$USER/bes/DDPIPI/v0.2
+    WORKAREA=/besfs5/users/$USER/bes/DDPIPI/v0.2
     shortbar1="-1"
     shortbar2="-2"
     if [[ $PARAM_0 == *$shortbar1* ]]; then
@@ -23,13 +23,14 @@ do
     fi
     mkdir -p $WORKAREA/sigMC/DDPIPI/$PARAM_0
     cd $HOME/bes/DDPIPI/v0.2/python
-    rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/$PARAM_0/*before*.root
-    rm -rf /besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/$PARAM_0/*after*.root
-    ROOT_PATH=/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/$PARAM_0
+    rm -rf /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/$PARAM_0/*before*.root
+    rm -rf /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/$PARAM_0/*after*.root
+    ROOT_PATH=/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/$PARAM_0
 
     echo "Begininning of $PARAM_0!"
 
     python apply_cuts.py $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_before.root $PARAM_0 before raw_signal
+    python apply_cuts.py $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_rm_Dpipi_signal.root $PARAM_0 before rm_Dpipi_signal
     echo "STD signal of $PARAM_0 is done!"
 
     python apply_cuts.py $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_signal.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_before.root $PARAM_0 before STDDmiss_signal
@@ -37,6 +38,13 @@ do
 
     python apply_cuts.py $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_signal.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_after.root $PARAM_0 after STDDmiss_signal
     echo "STDDmiss signal of $PARAM_0 is done!"
+
+    rm -rf $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sideband_before.root
+    python apply_cuts.py $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sidebandlow.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sidebandlow_before.root $PARAM_0 before raw_sidebandlow
+    python apply_cuts.py $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sidebandup.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sidebandup_before.root $PARAM_0 before raw_sidebandup
+    hadd $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sideband_before.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sidebandlow_before.root $ROOT_PATH/sigMC_D_D_PI_PI_$PARAM_0\_raw_sidebandup_before.root
+    rm -rf $ROOT_PATH/*low* $ROOT_PATH/*up*
+    echo "raw sideband of $PARAM_0 is done! (after bkg suppress)"
 
     echo "$PARAM_0 is done!"
 done

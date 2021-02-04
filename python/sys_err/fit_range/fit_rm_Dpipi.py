@@ -115,11 +115,6 @@ def fit(path, shape_path, ecms, mode, patch):
     except:
         logging.error('File paths are invalid!')
 
-    if mode == 'upper_limit':
-        if not (ecms == 4190 or ecms == 4200 or ecms == 4210 or ecms == 4220 or ecms == 4237 or ecms == 4245 or ecms == 4246 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4530 or ecms == 4575 or ecms == 4610):
-            print str(ecms) + ' MeV\'s sigma is larger than 5 sigma, no need to calculate upper limit!'
-            sys.exit()
-
     mbc = TCanvas('mbc', 'mbc', 1000, 700)
     set_canvas_style(mbc)
 
@@ -209,6 +204,7 @@ def fit(path, shape_path, ecms, mode, patch):
 
         results = model.fitTo(data, RooFit.Save())
         is_OK = int(results.covQual())
+        status = int(results.status())
 
         # plot results
         xframe = rm_Dpipi.frame(RooFit.Bins(xbins), RooFit.Range(xmin, xmax))
@@ -265,17 +261,12 @@ def fit(path, shape_path, ecms, mode, patch):
 
         if not os.path.exists('./txts/'):
             os.makedirs('./txts/')
-        path_sig = './txts/' + mode + '_signal_events_'+ str(ecms) +'_' + patch + '.txt'
+        path_sig = './txts/' + mode + '_events_'+ str(ecms) +'_' + patch + '.txt'
         f_sig = open(path_sig, 'w')
         out = str(nsig.getVal()) + ' ' + str(nsig.getError()) + '\n'
         f_sig.write(out)
         f_sig.close()
         if mode == 'data':
-            path_sig_tot = './txts/' + mode + '_signal_events_total_' + patch + '.txt'
-            f_sig_tot = open(path_sig_tot, 'a')
-            out_tot = str(ecms) + '\t' + str(int(nsig.getVal())) + '\t' + str(int(nsig.getError())) + '\n'
-            f_sig_tot.write(out_tot)
-            f_sig_tot.close()
             path_param = './txts/param_'+ str(ecms) +'_' + patch + '.txt'
             f_param = open(path_param, 'w')
             param = str(n_free) + ' '
@@ -290,9 +281,10 @@ def fit(path, shape_path, ecms, mode, patch):
         if mode == 'data': is_OK = -1
 
         if is_OK == -1: break
-        if (is_OK != 2 and chi2_ndf < 2.): break
+        if (is_OK == 3 and status == 0 and chi2_ndf < 1.8 and ecms < 4221): break
+        if (is_OK == 3 and status == 0 and chi2_ndf < 1.9 and ecms > 4221): break
 
-    raw_input('enter anything to end...')
+    # raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]
@@ -305,14 +297,14 @@ def main():
     path = []
     shape_path = ''
     if mode == 'data':
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
-        shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/fit_range/shape_' + str(ecms) + '_mixed.root'
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
+        shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/fit_range/shape_' + str(ecms) + '_mixed.root'
     if mode == 'psipp' or mode == 'D1_2420':
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_' + mode + '_' + str(ecms) + '_raw_before.root')
-        shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_' + mode + '_' + str(ecms) + '_signal.root'
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_' + mode + '_' + str(ecms) + '_raw_before.root')
+        shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_' + mode + '_' + str(ecms) + '_signal.root'
     if mode == 'DDPIPI':
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
-        shape_path = '/besfs/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_D_D_PI_PI_' + str(ecms) + '_signal.root'
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
+        shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/fit_range/shape_D_D_PI_PI_' + str(ecms) + '_signal.root'
     fit(path, shape_path, ecms, mode, patch)
 
 if __name__ == '__main__':

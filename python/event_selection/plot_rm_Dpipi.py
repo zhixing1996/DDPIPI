@@ -175,11 +175,11 @@ if __name__ == '__main__':
 
     path = []
     if mode == 'before':
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_raw.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/'+str(ecms)+'/incMC_DD_'+str(ecms)+'_raw.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/'+str(ecms)+'/incMC_qq_'+str(ecms)+'_raw.root')
-        if ecms > 4230: path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/sigMC_D1_2420_'+str(ecms)+'_raw.root')
-        path.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_raw.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_raw.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/DD/'+str(ecms)+'/incMC_DD_'+str(ecms)+'_raw.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/qq/'+str(ecms)+'/incMC_qq_'+str(ecms)+'_raw.root')
+        if ecms > 4230: path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/'+str(ecms)+'/sigMC_D1_2420_'+str(ecms)+'_raw.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/'+str(ecms)+'/sigMC_psipp_'+str(ecms)+'_raw.root')
         leg_title = str(ecms) + ' MeV'
         xmin = 1.8
         xmax = 2.2

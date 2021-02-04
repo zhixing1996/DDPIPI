@@ -341,9 +341,9 @@ case $option in
             echo "Must be executed in bash shell mode and set up topoana environment!"
             mkdir -p scripts/ana/topo
             cd scripts/ana/topo
-            if [ ! -d "/besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo" ]; then
-                mkdir -p /besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo
-                ln -s /besfs/users/$USER/bes/DDPIPI/v0.2/ana/topo ./ana_topo
+            if [ ! -d "/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/topo" ]; then
+                mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/ana/topo
+                ln -s /besfs5/users/$USER/bes/DDPIPI/v0.2/ana/topo ./ana_topo
             fi
             cd ana_topo
             mkdir -p 4360
@@ -352,7 +352,7 @@ case $option in
             cd DD
             rm * -rf
             cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
-            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4360\/incMC_DD_4360_topo.root/g" topoana.card
+            sed -i "s/PATH/\/besfs5\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4360\/incMC_DD_4360_topo.root/g" topoana.card
             sed -i "s/NAME/TopoResult_4360_DD/g" topoana.card
             sed -i "s/cut_chi2_kf/15/g" topoana.card
             topoana.exe topoana.card
@@ -361,7 +361,7 @@ case $option in
             cd qq
             rm * -rf
             cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
-            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/qq\/4360\/incMC_qq_4360_topo.root/g" topoana.card
+            sed -i "s/PATH/\/besfs5\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/qq\/4360\/incMC_qq_4360_topo.root/g" topoana.card
             sed -i "s/NAME/TopoResult_4360_qq/g" topoana.card
             sed -i "s/cut_chi2_kf/15/g" topoana.card
             topoana.exe topoana.card
@@ -372,7 +372,7 @@ case $option in
             cd DD
             rm * -rf
             cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
-            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4420\/incMC_DD_4420_topo.root/g" topoana.card
+            sed -i "s/PATH/\/besfs5\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4420\/incMC_DD_4420_topo.root/g" topoana.card
             sed -i "s/NAME/TopoResult_4420_DD/g" topoana.card
             sed -i "s/cut_chi2_kf/15/g" topoana.card
             topoana.exe topoana.card
@@ -381,7 +381,7 @@ case $option in
             cd qq
             rm * -rf
             cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
-            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/qq\/4420\/incMC_qq_4420_topo.root/g" topoana.card
+            sed -i "s/PATH/\/besfs5\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/qq\/4420\/incMC_qq_4420_topo.root/g" topoana.card
             sed -i "s/NAME/TopoResult_4420_qq/g" topoana.card
             sed -i "s/cut_chi2_kf/15/g" topoana.card
             topoana.exe topoana.card
@@ -392,7 +392,7 @@ case $option in
             cd DD
             rm * -rf
             cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
-            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4600\/incMC_DD_4600_topo.root/g" topoana.card
+            sed -i "s/PATH/\/besfs5\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/DD\/4600\/incMC_DD_4600_topo.root/g" topoana.card
             sed -i "s/NAME/TopoResult_4600_DD/g" topoana.card
             sed -i "s/cut_chi2_kf/15/g" topoana.card
             topoana.exe topoana.card
@@ -401,7 +401,7 @@ case $option in
             cd qq
             rm * -rf
             cp $HOME/bes/DDPIPI/v0.2/scripts/ana_script/topo/topoana.card . -rf
-            sed -i "s/PATH/\/besfs\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/qq\/4600\/incMC_qq_4600_topo.root/g" topoana.card
+            sed -i "s/PATH/\/besfs5\/users\/$USER\/bes\/DDPIPI\/v0.2\/incMC\/qq\/4600\/incMC_qq_4600_topo.root/g" topoana.card
             sed -i "s/NAME/TopoResult_4600_qq/g" topoana.card
             sed -i "s/cut_chi2_kf/15/g" topoana.card
             topoana.exe topoana.card
@@ -447,8 +447,8 @@ case $option in
                ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/ana/sel/jobs_ana ./jobs_ana
            fi
            cd jobs_ana
-           # rm -rf jobs.out
-           # rm -rf jobs.err
+           rm -rf jobs.out
+           rm -rf jobs.err
            mkdir -p jobs.out
            mkdir -p jobs.err
 
@@ -459,54 +459,12 @@ case $option in
            chmod u+x Data_Sub_703p01
            hep_sub -g physics Data_Sub_703p01 -o jobs.out -e jobs.err
 
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/getInfoD1_2420_703p01.sh .
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/D1_2420_Base_703p01 .
-           # echo "#!/bin/bash" > D1_2420_Sub_703p01
-           # echo "./getInfoD1_2420_703p01.sh" >> D1_2420_Sub_703p01
-           # chmod u+x D1_2420_Sub_703p01
-           # hep_sub -g physics D1_2420_Sub_703p01 -o jobs.out -e jobs.err
-
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/getInfoD_D_PI_PI_703p01.sh .
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/DDPIPI_Base_703p01 .
-           # echo "#!/bin/bash" > D_D_PI_PI_Sub_703p01
-           # echo "./getInfoDDPIPI_703p01.sh" >> D_D_PI_PI_Sub_703p01
-           # chmod u+x D_D_PI_PI_Sub_703p01
-           # hep_sub -g physics D_D_PI_PI_Sub_703p01 -o jobs.out -e jobs.err
-
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/getInfopsipp_703p01.sh .
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/psipp_Base_703p01 .
-           # echo "#!/bin/bash" > psipp_Sub_703p01
-           # echo "./getInfopsipp_703p01.sh" >> psipp_Sub_703p01
-           # chmod u+x psipp_Sub_703p01
-           # hep_sub -g physics psipp_Sub_703p01 -o jobs.out -e jobs.err
-
-           #         cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_705.sh .
-           #         cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_705 .
-           #         echo "#!/bin/bash" > Data_Sub_705
-           #         echo "./getInfoData_705.sh" >> Data_Sub_705
-           #         chmod u+x Data_Sub_705
-           #         hep_sub -g physics Data_Sub_705 -o jobs.out -e jobs.err
-
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/getInfoD1_2420_705.sh .
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/D1_2420_Base_705 .
-           # echo "#!/bin/bash" > D1_2420_Sub_705
-           # echo "./getInfoD1_2420_705.sh" >> D1_2420_Sub_705
-           # chmod u+x D1_2420_Sub_705
-           # hep_sub -g physics D1_2420_Sub_705 -o jobs.out -e jobs.err
-
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/getInfoD_D_PI_PI_705.sh .
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/DDPIPI/DDPIPI_Base_705 .
-           # echo "#!/bin/bash" > D_D_PI_PI_Sub_705
-           # echo "./getInfoDDPIPI_705.sh" >> D_D_PI_PI_Sub_705
-           # chmod u+x D_D_PI_PI_Sub_705
-           # hep_sub -g physics D_D_PI_PI_Sub_705 -o jobs.out -e jobs.err
-
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/getInfopsipp_705.sh .
-           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/psipp/psipp_Base_705 .
-           # echo "#!/bin/bash" > psipp_Sub_705
-           # echo "./getInfopsipp_705.sh" >> psipp_Sub_705
-           # chmod u+x psipp_Sub_705
-           # hep_sub -g physics psipp_Sub_705 -o jobs.out -e jobs.err
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_705.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_705 .
+           echo "#!/bin/bash" > Data_Sub_705
+           echo "./getInfoData_705.sh" >> Data_Sub_705
+           chmod u+x Data_Sub_705
+           hep_sub -g physics Data_Sub_705 -o jobs.out -e jobs.err
            ;;
 
     0.4.3) echo "Get samples -- applying cuts..."

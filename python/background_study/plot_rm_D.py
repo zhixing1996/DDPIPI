@@ -179,10 +179,10 @@ if __name__ == '__main__':
     scale = []
 
     if ecms == 4230:
-        incMC.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4230/incMC_DD_4230_before.root')
-        incMC.append('/besfs/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4230/incMC_qq_4230_before.root')
+        incMC.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4230/incMC_DD_4230_before.root')
+        incMC.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4230/incMC_qq_4230_before.root')
         sigMC.append('')
-        sigMC.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4230/sigMC_psipp_4230_before.root')
+        sigMC.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4230/sigMC_psipp_4230_before.root')
         leg_title = str(ecms) + ' MeV'
         scale.append(scale_factor(ecms, 'DD'))
         scale.append(scale_factor(ecms, 'qq'))
@@ -194,10 +194,10 @@ if __name__ == '__main__':
         plot(incMC, sigMC, leg_title, ecms, scale, xmin, xmax, ymax)
 
     if ecms == 4360:
-        incMC.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root')
-        incMC.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root')
-        sigMC.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_before.root')
-        sigMC.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root')
+        incMC.append('/besfs5/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_before.root')
+        incMC.append('/besfs5/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_before.root')
+        sigMC.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_before.root')
+        sigMC.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_before.root')
         leg_title = str(ecms) + ' MeV'
         scale.append(scale_factor(ecms, 'DD'))
         scale.append(scale_factor(ecms, 'qq'))
@@ -209,10 +209,10 @@ if __name__ == '__main__':
         plot(incMC, sigMC, leg_title, ecms, scale, xmin, xmax, ymax)
 
     if ecms == 4420:
-        incMC.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root')
-        incMC.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root')
-        sigMC.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root')
-        sigMC.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root')
+        incMC.append('/besfs5/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_before.root')
+        incMC.append('/besfs5/users/jingmq/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_before.root')
+        sigMC.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_before.root')
+        sigMC.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_before.root')
         leg_title = str(ecms) + ' MeV'
         scale.append(scale_factor(ecms, 'DD'))
         scale.append(scale_factor(ecms, 'qq'))
@@ -224,9 +224,9 @@ if __name__ == '__main__':
         plot(incMC, sigMC, leg_title, ecms, scale, xmin, xmax, ymax)
 
     if ecms == 4600:
-        incMC.append('/besfs/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root')
-        sigMC.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_before.root')
-        sigMC.append('/besfs/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root')
+        incMC.append('/besfs5/users/jingmq/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_before.root')
+        sigMC.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_before.root')
+        sigMC.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_before.root')
         leg_title = str(ecms) + ' MeV'
         scale.append(scale_factor(ecms, 'DD'))
         scale.append(scale_factor(ecms, 'qq'))

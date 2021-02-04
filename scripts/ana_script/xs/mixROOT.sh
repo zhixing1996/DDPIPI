@@ -1,4 +1,5 @@
 #!/bin/sh
+mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed
 PATCH=$1
 cat ECMS_Base | while read line
 do

@@ -38,7 +38,7 @@ def cal_diff(patch1, patch2):
     path_xs_diff = './txts/sys_err_ISR.txt'
     f_xs_diff = open(path_xs_diff, 'w')
 
-    path1 = './txts/xs_total_' + patch1 + '_plot.txt'
+    path1 = '../../fit_xs/txts/xs_total_' + patch1 + '_plot.txt'
     path2 = '../../fit_xs/txts/xs_total_' + patch2 + '_plot.txt'
     XS1, XS2 = open(path1, 'r'), open(path2, 'r')
     for line1, line2 in zip(XS1, XS2):
