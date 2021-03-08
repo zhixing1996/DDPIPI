@@ -44,48 +44,33 @@ def xs(ecms, patch, signal_path, sideband_path):
 
     N_data_sideband = 0
     Err_data_sideband = 0
-    if ecms == 4400 or ecms == 4420 or ecms == 4440:
-        fargs = readN(sideband_path[0])
-        N_data_sideband, Err_data_sideband = fargs[0], fargs[1]
+    fargs = readN(sideband_path[0])
+    N_data_sideband, Err_data_sideband = fargs[0], fargs[1]
 
-        N_D1_2420_sideband = 0.
-        if ecms > 4316:
-            fargs = readN(sideband_path[1])
-            N_D1_2420_sideband = fargs[0]
+    N_D1_2420_sideband = 0.
+    if ecms > 4316:
+        fargs = readN(sideband_path[1])
+        N_D1_2420_sideband = fargs[0]
 
-        fargs = readN(sideband_path[2])
-        N_psipp_sideband = fargs[0]
+    fargs = readN(sideband_path[2])
+    N_psipp_sideband = fargs[0]
 
-        fargs = readN(sideband_path[3])
-        N_DDPIPI_sideband = fargs[0]
+    fargs = readN(sideband_path[3])
+    N_DDPIPI_sideband = fargs[0]
 
     if (ecms == 4190 or ecms == 4210 or ecms == 4220 or ecms == 4230 or ecms == 4260 or ecms == 4420 or ecms == 4680):
-        if ecms == 4400 or ecms == 4420 or ecms == 4440:
-            eff_psipp = (N_psipp - N_psipp_sideband)/100000.
-            eff_DDPIPI = (N_DDPIPI - N_DDPIPI_sideband)/100000.
-        else:
-            eff_psipp = N_psipp/100000.
-            eff_DDPIPI = N_DDPIPI/100000.
+        eff_psipp = (N_psipp - N_psipp_sideband/2.)/100000.
+        eff_DDPIPI = (N_DDPIPI - N_DDPIPI_sideband/2.)/100000.
     else:
-        if ecms == 4400 or ecms == 4420 or ecms == 4440:
-            eff_psipp = (N_psipp - N_psipp_sideband)/50000.
-            eff_DDPIPI = (N_DDPIPI - N_DDPIPI_sideband)/50000.
-        else:
-            eff_psipp = N_psipp/50000.
-            eff_DDPIPI = N_DDPIPI/50000.
+        eff_psipp = (N_psipp - N_psipp_sideband/2.)/50000.
+        eff_DDPIPI = (N_DDPIPI - N_DDPIPI_sideband/2.)/50000.
 
     eff_D1_2420 = 0.
     if ecms > 4316:
         if ecms == 4420 or ecms == 4680:
-            if ecms == 4400 or ecms == 4420 or ecms == 4440:
-                eff_D1_2420 = (N_D1_2420 - N_D1_2420_sideband)/100000.
-            else:
-                eff_D1_2420 = N_D1_2420/100000.
+            eff_D1_2420 = (N_D1_2420 - N_D1_2420_sideband/2.)/100000.
         else:
-            if ecms == 4400 or ecms == 4420 or ecms == 4440:
-                eff_D1_2420 = (N_D1_2420 - N_D1_2420_sideband)/50000.
-            else:
-                eff_D1_2420 = N_D1_2420/50000.
+            eff_D1_2420 = (N_D1_2420 - N_D1_2420_sideband/2.)/50000.
 
     '''
     ISR_D1_2420, VP, lum, Br
@@ -200,12 +185,8 @@ def xs(ecms, patch, signal_path, sideband_path):
     else:
         flag_DDPIPI = 1
         eff_ISR_VP_DDPIPI = eff_DDPIPI*ISR_DDPIPI*omega_DDPIPI*VP*factor_K_p*factor_m_pipi*factor_VrVz*factor_m_Kpipi*factor_rm_Dpipi
-    if ecms == 4400 or ecms == 4420 or ecms == 4440:
-        xs = (N_data - N_data_sideband/2.)/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
-        xs_err = (sqrt(Err_data*Err_data + (Err_data_sideband/2.)*(Err_data_sideband/2.)))/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
-    else:
-        xs = N_data/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
-        xs_err = Err_data/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
+    xs = (N_data - N_data_sideband/2.)/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
+    xs_err = (sqrt(Err_data*Err_data + (Err_data_sideband/2.)*(Err_data_sideband/2.)))/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
 
     if not os.path.exists('./txts/'):
         os.makedirs('./txts/')

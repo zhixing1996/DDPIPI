@@ -144,6 +144,8 @@ def save_missing(f_in, cms, t, region):
     m_Vxy_pim = array('d', [999.])
     m_Vz_pim = array('d', [999.])
     m_cos_theta_pim = array('d', [999.])
+    m_m_Kpipipi1 = array('d', [0])
+    m_m_Kpipipi2 = array('d', [0])
     t.Branch('runNo', m_runNo, 'm_runNo/I')
     t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
     t.Branch('mode', m_mode, 'm_mode/I')
@@ -256,6 +258,8 @@ def save_missing(f_in, cms, t, region):
     t.Branch('Vxy_pim', m_Vxy_pim, 'm_Vxy_pim/D')
     t.Branch('Vz_pim', m_Vz_pim, 'm_Vz_pim/D')
     t.Branch('cos_theta_pim', m_cos_theta_pim, 'm_cos_theta_pim/D')
+    t.Branch('m_Kpipipi1', m_m_Kpipipi1, 'm_m_Kpipipi1/D')
+    t.Branch('m_Kpipipi2', m_m_Kpipipi2, 'm_m_Kpipipi2/D')
     t_in = f_in.Get('STDDmiss')
     nentries = t_in.GetEntries()
     for ientry in range(nentries):
@@ -459,27 +463,35 @@ def save_missing(f_in, cms, t, region):
         m_rm_Kpi2[0] = (cms-pKpi2).M()
         m_m_Dpipi[0] = (pD+pPip+pPim).M()
         m_m_Dmisspipi[0] = (pDmiss+pPip+pPim).M()
-        m_rm_Dpipi[0] = t_in.rm_Dpipi
         m_m_Dmiss[0] = pDmiss.M()
         m_chi2_vf[0] = t_in.chi2_vf
         if region == 'STDDmiss_signal':
             m_chi2_kf[0] = t_in.chi2_kf
+            m_rm_Dpipi[0] = t_in.rm_Dpipi
         if region == 'STDDmiss_side1_low':
             m_chi2_kf[0] = t_in.chi2_kf_side1_low
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side1_low
         if region == 'STDDmiss_side1_up':
             m_chi2_kf[0] = t_in.chi2_kf_side1_up
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side1_up
         if region == 'STDDmiss_side2_low':
             m_chi2_kf[0] = t_in.chi2_kf_side2_low
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side2_low
         if region == 'STDDmiss_side2_up':
             m_chi2_kf[0] = t_in.chi2_kf_side2_up
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side2_up
         if region == 'STDDmiss_side3_low':
             m_chi2_kf[0] = t_in.chi2_kf_side3_low
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side3_low
         if region == 'STDDmiss_side3_up':
             m_chi2_kf[0] = t_in.chi2_kf_side3_up
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side3_up
         if region == 'STDDmiss_side4_low':
             m_chi2_kf[0] = t_in.chi2_kf_side4_low
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side4_low
         if region == 'STDDmiss_side4_up':
             m_chi2_kf[0] = t_in.chi2_kf_side4_up
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side4_up
         m_chi2_svf[0] = t_in.chi2_svf
         m_ctau_svf[0] = t_in.ctau_svf
         m_L_svf[0] = t_in.L_svf
@@ -630,6 +642,8 @@ def save_missing(f_in, cms, t, region):
         m_cos_other_trk_shw[0] = cos(p_othertrk.Vect().Angle(p_othershw.Vect()))
         m_cos_other_trk[0] = p_othertrk.CosTheta()
         m_cos_other_shw[0] = p_othershw.CosTheta()
+        m_m_Kpipipi1[0] = (ptrack_K + rawpPip + rawpPim + ptrack_pi1).M()
+        m_m_Kpipipi2[0] = (ptrack_K + rawpPip + rawpPim + ptrack_pi2).M()
         t.Fill()
 
 def save_raw(f_in, cms, t, region):
@@ -696,6 +710,8 @@ def save_raw(f_in, cms, t, region):
     m_has_badshws = array('i', [0])
     m_has_badtrks = array('i', [0])
     m_has_leps = array('i', [0])
+    m_m_Kpipipi1 = array('d', [0])
+    m_m_Kpipipi2 = array('d', [0])
     t.Branch('runNo', m_runNo, 'm_runNo/I')
     t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
     t.Branch('mode', m_mode, 'm_mode/I')
@@ -759,6 +775,8 @@ def save_raw(f_in, cms, t, region):
     t.Branch('has_badtrks', m_has_badtrks, 'm_has_badtrks/I')
     t.Branch('has_badshws', m_has_badshws, 'm_has_badshws/I')
     t.Branch('has_leps', m_has_leps, 'm_has_leps/I')
+    t.Branch('m_Kpipipi1', m_m_Kpipipi1, 'm_m_Kpipipi1/D')
+    t.Branch('m_Kpipipi2', m_m_Kpipipi2, 'm_m_Kpipipi2/D')
     t_std = f_in.Get('STD')
     nentries = t_std.GetEntries()
     for ientry in xrange(nentries):
@@ -999,6 +1017,8 @@ def save_raw(f_in, cms, t, region):
                 m_cos_otherall[0] = ptrack.CosTheta()
                 m_E_othertrks[0] = E_othertrks
                 m_E_othershws[0] = E_othershws
+                m_m_Kpipipi1[0] = (ptrack_K + pPip + pPim + ptrack_pi1).M()
+                m_m_Kpipipi2[0] = (ptrack_K + pPip + pPim + ptrack_pi2).M()
                 t.Fill()
 
 def save_truth(f_in, cms, t, region):

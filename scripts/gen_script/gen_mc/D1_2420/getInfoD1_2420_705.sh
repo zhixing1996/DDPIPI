@@ -21,7 +21,7 @@ do
     if [[ $PARAM_0 == *$shortbar2* ]]; then
         continue
     fi
-    PARAM_3=`echo "scale=4; $PARAM_3 / 1000" | bc -l`
+    PARAM_3=`echo "scale=5; $PARAM_3 / 1000" | bc -l`
     mkdir -p $WORKAREA/sigMC/D1_2420/$PARAM_0
     cd $HOME/bes/DDPIPI/v0.2/python
     rm -rf /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/*signal*.root

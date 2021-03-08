@@ -144,6 +144,8 @@ def save_missing(f_in, cms, t, region):
     m_Vxy_pim = array('d', [999.])
     m_Vz_pim = array('d', [999.])
     m_cos_theta_pim = array('d', [999.])
+    m_m_Kpipipi1 = array('d', [0])
+    m_m_Kpipipi2 = array('d', [0])
     t.Branch('runNo', m_runNo, 'm_runNo/I')
     t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
     t.Branch('mode', m_mode, 'm_mode/I')
@@ -256,6 +258,8 @@ def save_missing(f_in, cms, t, region):
     t.Branch('Vxy_pim', m_Vxy_pim, 'm_Vxy_pim/D')
     t.Branch('Vz_pim', m_Vz_pim, 'm_Vz_pim/D')
     t.Branch('cos_theta_pim', m_cos_theta_pim, 'm_cos_theta_pim/D')
+    t.Branch('m_Kpipipi1', m_m_Kpipipi1, 'm_m_Kpipipi1/D')
+    t.Branch('m_Kpipipi2', m_m_Kpipipi2, 'm_m_Kpipipi2/D')
     t_in = f_in.Get('STDDmiss')
     nentries = t_in.GetEntries()
     for ientry in range(nentries):
@@ -298,10 +302,22 @@ def save_missing(f_in, cms, t, region):
             ptrack_old.SetPxPyPzE(t_in.p4_Dtrkold[iTrk*4+0], t_in.p4_Dtrkold[iTrk*4+1], t_in.p4_Dtrkold[iTrk*4+2], t_in.p4_Dtrkold[iTrk*4+3])
             if region == 'STDDmiss_signal':
                 ptrack.SetPxPyPzE(t_in.p4_Dtrk[iTrk*4+0], t_in.p4_Dtrk[iTrk*4+1], t_in.p4_Dtrk[iTrk*4+2], t_in.p4_Dtrk[iTrk*4+3])
-            if region == 'STDDmiss_sidebandlow':
-                ptrack.SetPxPyPzE(t_in.p4_Dtrk_low[iTrk*4+0], t_in.p4_Dtrk_low[iTrk*4+1], t_in.p4_Dtrk_low[iTrk*4+2], t_in.p4_Dtrk_low[iTrk*4+3])
-            if region == 'STDDmiss_sidebandup':
-                ptrack.SetPxPyPzE(t_in.p4_Dtrk_up[iTrk*4+0], t_in.p4_Dtrk_up[iTrk*4+1], t_in.p4_Dtrk_up[iTrk*4+2], t_in.p4_Dtrk_up[iTrk*4+3])
+            if region == 'STDDmiss_side1_low':
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk_side1_low[iTrk*4+0], t_in.p4_Dtrk_side1_low[iTrk*4+1], t_in.p4_Dtrk_side1_low[iTrk*4+2], t_in.p4_Dtrk_side1_low[iTrk*4+3])
+            if region == 'STDDmiss_side1_up':
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk_side1_up[iTrk*4+0], t_in.p4_Dtrk_side1_up[iTrk*4+1], t_in.p4_Dtrk_side1_up[iTrk*4+2], t_in.p4_Dtrk_side1_up[iTrk*4+3])
+            if region == 'STDDmiss_side2_low':
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk_side2_low[iTrk*4+0], t_in.p4_Dtrk_side2_low[iTrk*4+1], t_in.p4_Dtrk_side2_low[iTrk*4+2], t_in.p4_Dtrk_side2_low[iTrk*4+3])
+            if region == 'STDDmiss_side2_up':
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk_side2_up[iTrk*4+0], t_in.p4_Dtrk_side2_up[iTrk*4+1], t_in.p4_Dtrk_side2_up[iTrk*4+2], t_in.p4_Dtrk_side2_up[iTrk*4+3])
+            if region == 'STDDmiss_side3_low':
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk_side3_low[iTrk*4+0], t_in.p4_Dtrk_side3_low[iTrk*4+1], t_in.p4_Dtrk_side3_low[iTrk*4+2], t_in.p4_Dtrk_side3_low[iTrk*4+3])
+            if region == 'STDDmiss_side3_up':
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk_side3_up[iTrk*4+0], t_in.p4_Dtrk_side3_up[iTrk*4+1], t_in.p4_Dtrk_side3_up[iTrk*4+2], t_in.p4_Dtrk_side3_up[iTrk*4+3])
+            if region == 'STDDmiss_side4_low':
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk_side4_low[iTrk*4+0], t_in.p4_Dtrk_side4_low[iTrk*4+1], t_in.p4_Dtrk_side4_low[iTrk*4+2], t_in.p4_Dtrk_side4_low[iTrk*4+3])
+            if region == 'STDDmiss_side4_up':
+                ptrack.SetPxPyPzE(t_in.p4_Dtrk_side4_up[iTrk*4+0], t_in.p4_Dtrk_side4_up[iTrk*4+1], t_in.p4_Dtrk_side4_up[iTrk*4+2], t_in.p4_Dtrk_side4_up[iTrk*4+3])
             pD_raw += ptrack_raw
             pD_old += ptrack_old
             pD += ptrack
@@ -330,10 +346,22 @@ def save_missing(f_in, cms, t, region):
             pshower_old.SetPxPyPzE(t_in.p4_Dshwold[iShw*4+0], t_in.p4_Dshwold[iShw*4+1], t_in.p4_Dshwold[iShw*4+2], t_in.p4_Dshwold[iShw*4+3])
             if region == 'STDDmiss_signal':
                 pshower.SetPxPyPzE(t_in.p4_Dshw[iShw*4+0], t_in.p4_Dshw[iShw*4+1], t_in.p4_Dshw[iShw*4+2], t_in.p4_Dshw[iShw*4+3])
-            if region == 'STDDmiss_sidebandlow':
-                pshower.SetPxPyPzE(t_in.p4_Dshw_low[iShw*4+0], t_in.p4_Dshw_low[iShw*4+1], t_in.p4_Dshw_low[iShw*4+2], t_in.p4_Dshw_low[iShw*4+3])
-            if region == 'STDDmiss_sidebandup':
-                pshower.SetPxPyPzE(t_in.p4_Dshw_up[iShw*4+0], t_in.p4_Dshw_up[iShw*4+1], t_in.p4_Dshw_up[iShw*4+2], t_in.p4_Dshw_up[iShw*4+3])
+            if region == 'STDDmiss_side1_low':
+                pshower.SetPxPyPzE(t_in.p4_Dshw_side1_low[iShw*4+0], t_in.p4_Dshw_side1_low[iShw*4+1], t_in.p4_Dshw_side1_low[iShw*4+2], t_in.p4_Dshw_side1_low[iShw*4+3])
+            if region == 'STDDmiss_side1_up':
+                pshower.SetPxPyPzE(t_in.p4_Dshw_side1_up[iShw*4+0], t_in.p4_Dshw_side1_up[iShw*4+1], t_in.p4_Dshw_side1_up[iShw*4+2], t_in.p4_Dshw_side1_up[iShw*4+3])
+            if region == 'STDDmiss_side2_low':
+                pshower.SetPxPyPzE(t_in.p4_Dshw_side2_low[iShw*4+0], t_in.p4_Dshw_side2_low[iShw*4+1], t_in.p4_Dshw_side2_low[iShw*4+2], t_in.p4_Dshw_side2_low[iShw*4+3])
+            if region == 'STDDmiss_side2_up':
+                pshower.SetPxPyPzE(t_in.p4_Dshw_side2_up[iShw*4+0], t_in.p4_Dshw_side2_up[iShw*4+1], t_in.p4_Dshw_side2_up[iShw*4+2], t_in.p4_Dshw_side2_up[iShw*4+3])
+            if region == 'STDDmiss_side3_low':
+                pshower.SetPxPyPzE(t_in.p4_Dshw_side3_low[iShw*4+0], t_in.p4_Dshw_side3_low[iShw*4+1], t_in.p4_Dshw_side3_low[iShw*4+2], t_in.p4_Dshw_side3_low[iShw*4+3])
+            if region == 'STDDmiss_side3_up':
+                pshower.SetPxPyPzE(t_in.p4_Dshw_side3_up[iShw*4+0], t_in.p4_Dshw_side3_up[iShw*4+1], t_in.p4_Dshw_side3_up[iShw*4+2], t_in.p4_Dshw_side3_up[iShw*4+3])
+            if region == 'STDDmiss_side4_low':
+                pshower.SetPxPyPzE(t_in.p4_Dshw_side4_low[iShw*4+0], t_in.p4_Dshw_side4_low[iShw*4+1], t_in.p4_Dshw_side4_low[iShw*4+2], t_in.p4_Dshw_side4_low[iShw*4+3])
+            if region == 'STDDmiss_side4_up':
+                pshower.SetPxPyPzE(t_in.p4_Dshw_side4_up[iShw*4+0], t_in.p4_Dshw_side4_up[iShw*4+1], t_in.p4_Dshw_side4_up[iShw*4+2], t_in.p4_Dshw_side4_up[iShw*4+3])
             pD_raw += pshower_raw
             pD_old += pshower_old
             pD += pshower
@@ -347,14 +375,38 @@ def save_missing(f_in, cms, t, region):
             pPip.SetPxPyPzE(t_in.p4_piplus[0], t_in.p4_piplus[1], t_in.p4_piplus[2], t_in.p4_piplus[3])
             pPim.SetPxPyPzE(t_in.p4_piminus[0], t_in.p4_piminus[1], t_in.p4_piminus[2], t_in.p4_piminus[3])
             pDmiss.SetPxPyPzE(t_in.p4_Dmiss[0], t_in.p4_Dmiss[1], t_in.p4_Dmiss[2], t_in.p4_Dmiss[3])
-        if region == 'STDDmiss_sidebandlow':
-            pPip.SetPxPyPzE(t_in.p4_piplus_low[0], t_in.p4_piplus_low[1], t_in.p4_piplus_low[2], t_in.p4_piplus_low[3])
-            pPim.SetPxPyPzE(t_in.p4_piminus_low[0], t_in.p4_piminus_low[1], t_in.p4_piminus_low[2], t_in.p4_piminus_low[3])
-            pDmiss.SetPxPyPzE(t_in.p4_Dmiss_low[0], t_in.p4_Dmiss_low[1], t_in.p4_Dmiss_low[2], t_in.p4_Dmiss_low[3])
-        if region == 'STDDmiss_sidebandup':
-            pPip.SetPxPyPzE(t_in.p4_piplus_up[0], t_in.p4_piplus_up[1], t_in.p4_piplus_up[2], t_in.p4_piplus_up[3])
-            pPim.SetPxPyPzE(t_in.p4_piminus_up[0], t_in.p4_piminus_up[1], t_in.p4_piminus_up[2], t_in.p4_piminus_up[3])
-            pDmiss.SetPxPyPzE(t_in.p4_Dmiss_up[0], t_in.p4_Dmiss_up[1], t_in.p4_Dmiss_up[2], t_in.p4_Dmiss_up[3])
+        if region == 'STDDmiss_side1_low':
+            pPip.SetPxPyPzE(t_in.p4_piplus_side1_low[0], t_in.p4_piplus_side1_low[1], t_in.p4_piplus_side1_low[2], t_in.p4_piplus_side1_low[3])
+            pPim.SetPxPyPzE(t_in.p4_piminus_side1_low[0], t_in.p4_piminus_side1_low[1], t_in.p4_piminus_side1_low[2], t_in.p4_piminus_side1_low[3])
+            pDmiss.SetPxPyPzE(t_in.p4_Dmiss_side1_low[0], t_in.p4_Dmiss_side1_low[1], t_in.p4_Dmiss_side1_low[2], t_in.p4_Dmiss_side1_low[3])
+        if region == 'STDDmiss_side1_up':
+            pPip.SetPxPyPzE(t_in.p4_piplus_side1_up[0], t_in.p4_piplus_side1_up[1], t_in.p4_piplus_side1_up[2], t_in.p4_piplus_side1_up[3])
+            pPim.SetPxPyPzE(t_in.p4_piminus_side1_up[0], t_in.p4_piminus_side1_up[1], t_in.p4_piminus_side1_up[2], t_in.p4_piminus_side1_up[3])
+            pDmiss.SetPxPyPzE(t_in.p4_Dmiss_side1_up[0], t_in.p4_Dmiss_side1_up[1], t_in.p4_Dmiss_side1_up[2], t_in.p4_Dmiss_side1_up[3])
+        if region == 'STDDmiss_side2_low':
+            pPip.SetPxPyPzE(t_in.p4_piplus_side2_low[0], t_in.p4_piplus_side2_low[1], t_in.p4_piplus_side2_low[2], t_in.p4_piplus_side2_low[3])
+            pPim.SetPxPyPzE(t_in.p4_piminus_side2_low[0], t_in.p4_piminus_side2_low[1], t_in.p4_piminus_side2_low[2], t_in.p4_piminus_side2_low[3])
+            pDmiss.SetPxPyPzE(t_in.p4_Dmiss_side2_low[0], t_in.p4_Dmiss_side2_low[1], t_in.p4_Dmiss_side2_low[2], t_in.p4_Dmiss_side2_low[3])
+        if region == 'STDDmiss_side2_up':
+            pPip.SetPxPyPzE(t_in.p4_piplus_side2_up[0], t_in.p4_piplus_side2_up[1], t_in.p4_piplus_side2_up[2], t_in.p4_piplus_side2_up[3])
+            pPim.SetPxPyPzE(t_in.p4_piminus_side2_up[0], t_in.p4_piminus_side2_up[1], t_in.p4_piminus_side2_up[2], t_in.p4_piminus_side2_up[3])
+            pDmiss.SetPxPyPzE(t_in.p4_Dmiss_side2_up[0], t_in.p4_Dmiss_side2_up[1], t_in.p4_Dmiss_side2_up[2], t_in.p4_Dmiss_side2_up[3])
+        if region == 'STDDmiss_side3_low':
+            pPip.SetPxPyPzE(t_in.p4_piplus_side3_low[0], t_in.p4_piplus_side3_low[1], t_in.p4_piplus_side3_low[2], t_in.p4_piplus_side3_low[3])
+            pPim.SetPxPyPzE(t_in.p4_piminus_side3_low[0], t_in.p4_piminus_side3_low[1], t_in.p4_piminus_side3_low[2], t_in.p4_piminus_side3_low[3])
+            pDmiss.SetPxPyPzE(t_in.p4_Dmiss_side3_low[0], t_in.p4_Dmiss_side3_low[1], t_in.p4_Dmiss_side3_low[2], t_in.p4_Dmiss_side3_low[3])
+        if region == 'STDDmiss_side3_up':
+            pPip.SetPxPyPzE(t_in.p4_piplus_side3_up[0], t_in.p4_piplus_side3_up[1], t_in.p4_piplus_side3_up[2], t_in.p4_piplus_side3_up[3])
+            pPim.SetPxPyPzE(t_in.p4_piminus_side3_up[0], t_in.p4_piminus_side3_up[1], t_in.p4_piminus_side3_up[2], t_in.p4_piminus_side3_up[3])
+            pDmiss.SetPxPyPzE(t_in.p4_Dmiss_side3_up[0], t_in.p4_Dmiss_side3_up[1], t_in.p4_Dmiss_side3_up[2], t_in.p4_Dmiss_side3_up[3])
+        if region == 'STDDmiss_side4_low':
+            pPip.SetPxPyPzE(t_in.p4_piplus_side4_low[0], t_in.p4_piplus_side4_low[1], t_in.p4_piplus_side4_low[2], t_in.p4_piplus_side4_low[3])
+            pPim.SetPxPyPzE(t_in.p4_piminus_side4_low[0], t_in.p4_piminus_side4_low[1], t_in.p4_piminus_side4_low[2], t_in.p4_piminus_side4_low[3])
+            pDmiss.SetPxPyPzE(t_in.p4_Dmiss_side4_low[0], t_in.p4_Dmiss_side4_low[1], t_in.p4_Dmiss_side4_low[2], t_in.p4_Dmiss_side4_low[3])
+        if region == 'STDDmiss_side4_up':
+            pPip.SetPxPyPzE(t_in.p4_piplus_side4_up[0], t_in.p4_piplus_side4_up[1], t_in.p4_piplus_side4_up[2], t_in.p4_piplus_side4_up[3])
+            pPim.SetPxPyPzE(t_in.p4_piminus_side4_up[0], t_in.p4_piminus_side4_up[1], t_in.p4_piminus_side4_up[2], t_in.p4_piminus_side4_up[3])
+            pDmiss.SetPxPyPzE(t_in.p4_Dmiss_side4_up[0], t_in.p4_Dmiss_side4_up[1], t_in.p4_Dmiss_side4_up[2], t_in.p4_Dmiss_side4_up[3])
         rawpPip.SetPxPyPzE(t_in.rawp4_tagPiplus[0], t_in.rawp4_tagPiplus[1], t_in.rawp4_tagPiplus[2], t_in.rawp4_tagPiplus[3])
         rawpPim.SetPxPyPzE(t_in.rawp4_tagPiminus[0], t_in.rawp4_tagPiminus[1], t_in.rawp4_tagPiminus[2], t_in.rawp4_tagPiminus[3])
         pPi0.SetPxPyPzE(t_in.p4_pi0_save[0], t_in.p4_pi0_save[1], t_in.p4_pi0_save[2], t_in.p4_pi0_save[3])
@@ -411,15 +463,35 @@ def save_missing(f_in, cms, t, region):
         m_rm_Kpi2[0] = (cms-pKpi2).M()
         m_m_Dpipi[0] = (pD+pPip+pPim).M()
         m_m_Dmisspipi[0] = (pDmiss+pPip+pPim).M()
-        m_rm_Dpipi[0] = t_in.rm_Dpipi
         m_m_Dmiss[0] = pDmiss.M()
         m_chi2_vf[0] = t_in.chi2_vf
         if region == 'STDDmiss_signal':
             m_chi2_kf[0] = t_in.chi2_kf
-        if region == 'STDDmiss_sidebandlow':
-            m_chi2_kf[0] = t_in.chi2_kf_low
-        if region == 'STDDmiss_sidebandup':
-            m_chi2_kf[0] = t_in.chi2_kf_up
+            m_rm_Dpipi[0] = t_in.rm_Dpipi
+        if region == 'STDDmiss_side1_low':
+            m_chi2_kf[0] = t_in.chi2_kf_side1_low
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side1_low
+        if region == 'STDDmiss_side1_up':
+            m_chi2_kf[0] = t_in.chi2_kf_side1_up
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side1_up
+        if region == 'STDDmiss_side2_low':
+            m_chi2_kf[0] = t_in.chi2_kf_side2_low
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side2_low
+        if region == 'STDDmiss_side2_up':
+            m_chi2_kf[0] = t_in.chi2_kf_side2_up
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side2_up
+        if region == 'STDDmiss_side3_low':
+            m_chi2_kf[0] = t_in.chi2_kf_side3_low
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side3_low
+        if region == 'STDDmiss_side3_up':
+            m_chi2_kf[0] = t_in.chi2_kf_side3_up
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side3_up
+        if region == 'STDDmiss_side4_low':
+            m_chi2_kf[0] = t_in.chi2_kf_side4_low
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side4_low
+        if region == 'STDDmiss_side4_up':
+            m_chi2_kf[0] = t_in.chi2_kf_side4_up
+            m_rm_Dpipi[0] = t_in.rm_Dpipi_side4_up
         m_chi2_svf[0] = t_in.chi2_svf
         m_ctau_svf[0] = t_in.ctau_svf
         m_L_svf[0] = t_in.L_svf
@@ -570,6 +642,8 @@ def save_missing(f_in, cms, t, region):
         m_cos_other_trk_shw[0] = cos(p_othertrk.Vect().Angle(p_othershw.Vect()))
         m_cos_other_trk[0] = p_othertrk.CosTheta()
         m_cos_other_shw[0] = p_othershw.CosTheta()
+        m_m_Kpipipi1[0] = (ptrack_K + rawpPip + rawpPim + ptrack_pi1).M()
+        m_m_Kpipipi2[0] = (ptrack_K + rawpPip + rawpPim + ptrack_pi2).M()
         t.Fill()
 
 def save_raw(f_in, cms, t, region):
@@ -636,6 +710,8 @@ def save_raw(f_in, cms, t, region):
     m_has_badshws = array('i', [0])
     m_has_badtrks = array('i', [0])
     m_has_leps = array('i', [0])
+    m_m_Kpipipi1 = array('d', [0])
+    m_m_Kpipipi2 = array('d', [0])
     t.Branch('runNo', m_runNo, 'm_runNo/I')
     t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
     t.Branch('mode', m_mode, 'm_mode/I')
@@ -699,6 +775,8 @@ def save_raw(f_in, cms, t, region):
     t.Branch('has_badtrks', m_has_badtrks, 'm_has_badtrks/I')
     t.Branch('has_badshws', m_has_badshws, 'm_has_badshws/I')
     t.Branch('has_leps', m_has_leps, 'm_has_leps/I')
+    t.Branch('m_Kpipipi1', m_m_Kpipipi1, 'm_m_Kpipipi1/D')
+    t.Branch('m_Kpipipi2', m_m_Kpipipi2, 'm_m_Kpipipi2/D')
     t_std = f_in.Get('STD')
     nentries = t_std.GetEntries()
     for ientry in xrange(nentries):
@@ -939,6 +1017,8 @@ def save_raw(f_in, cms, t, region):
                 m_cos_otherall[0] = ptrack.CosTheta()
                 m_E_othertrks[0] = E_othertrks
                 m_E_othershws[0] = E_othershws
+                m_m_Kpipipi1[0] = (ptrack_K + pPip + pPim + ptrack_pi1).M()
+                m_m_Kpipipi2[0] = (ptrack_K + pPip + pPim + ptrack_pi2).M()
                 t.Fill()
 
 def save_truth(f_in, cms, t, region):
@@ -1001,7 +1081,7 @@ def main():
     cms = TLorentzVector(0.011*ecms, 0, 0, ecms)
     if region == 'raw_signal' or region == 'raw_sidebandlow' or region == 'raw_sidebandup':
         save_raw(f_in, cms, t_out, region)
-    if region == 'STDDmiss_signal' or region == 'STDDmiss_sidebandlow' or region == 'STDDmiss_sidebandup':
+    if region == 'STDDmiss_signal' or region == 'STDDmiss_side1_low' or region == 'STDDmiss_side1_up' or region == 'STDDmiss_side2_low' or region == 'STDDmiss_side2_up' or region == 'STDDmiss_side3_low' or region == 'STDDmiss_side3_up' or region == 'STDDmiss_side4_low' or region == 'STDDmiss_side4_up':
         save_missing(f_in, cms, t_out, region)
     if region == 'truth':
         save_truth(f_in, cms, t_truth, region)

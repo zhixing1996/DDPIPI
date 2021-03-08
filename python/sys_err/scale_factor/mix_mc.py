@@ -130,10 +130,10 @@ def main():
 
     if mode == 'MC_signal':
         if not process == 'DDPIPI':
-            path_in = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/'+process+'/'+str(ecms)+'/sigMC_' + process + '_'+str(ecms)+'_raw_before.root'
+            path_in = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/'+process+'/'+str(ecms)+'/sigMC_' + process + '_'+str(ecms)+'_raw_after.root'
             path_out = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/scale_factor/shape_'+process+'_'+str(ecms)+'_signal.root'
         if process == 'DDPIPI':
-            path_in = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_raw_before.root'
+            path_in = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/'+str(ecms)+'/sigMC_D_D_PI_PI_'+str(ecms)+'_raw_after.root'
             path_out = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/scale_factor/shape_D_D_PI_PI_'+str(ecms)+'_signal.root'
         shape_MC_raw(ecms, mode, path_in, path_out, xmin, xmax, xbins)
 

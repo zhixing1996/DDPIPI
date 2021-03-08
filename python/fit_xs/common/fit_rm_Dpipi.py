@@ -120,7 +120,7 @@ def fit(path, shape_path, ecms, patch):
     xmin = 1.75
     xmax = 1.95
     xbins = 100
-    f_data = TFile('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before_strip.root', 'recreate')
+    f_data = TFile('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_after_strip.root', 'recreate')
     t_data = TTree('save', 'save')
     m_rm_Dpipi = array('d', [999.])
     t_data.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
@@ -277,7 +277,7 @@ def main():
 
     path = []
     shape_path = ''
-    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_after.root')
     shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
     fit(path, shape_path, ecms, patch)
 

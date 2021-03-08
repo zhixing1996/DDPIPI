@@ -303,13 +303,13 @@ def main():
     path = []
     shape_path = ''
     if mode == 'data':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_after.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/scale_factor/shape_' + str(ecms) + '_mixed.root'
     if mode == 'psipp' or mode == 'D1_2420':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_' + mode + '_' + str(ecms) + '_raw_before.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_' + mode + '_' + str(ecms) + '_raw_after.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/scale_factor/shape_' + mode + '_' + str(ecms) + '_signal.root'
     if mode == 'DDPIPI':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_after.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/scale_factor/shape_D_D_PI_PI_' + str(ecms) + '_signal.root'
     fit(path, shape_path, ecms, mode, patch)
 

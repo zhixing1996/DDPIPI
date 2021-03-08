@@ -60,9 +60,9 @@ def cal(ecms):
             OM0_err = omega0_err.subs({XS0:xs0, XS1:xs1, XS2:xs2, SIGMA0:sigma0, SIGMA1:sigma1, SIGMA2:sigma2, V00:v00, V11:v11, V22:v22, V01:v01, V02:v02, V12:v12})
             OM1_err = omega1_err.subs({XS0:xs0, XS1:xs1, XS2:xs2, SIGMA0:sigma0, SIGMA1:sigma1, SIGMA2:sigma2, V00:v00, V11:v11, V22:v22, V01:v01, V02:v02, V12:v12})
             OM2_err = omega2_err.subs({XS0:xs0, XS1:xs1, XS2:xs2, SIGMA0:sigma0, SIGMA1:sigma1, SIGMA2:sigma2, V00:v00, V11:v11, V22:v22, V01:v01, V02:v02, V12:v12})
-            f.write(str(OM0) + ' ' + str(OM0_err) + '\n')
-            f.write(str(OM1) + ' ' + str(OM1_err) + '\n')
-            f.write(str(OM2) + ' ' + str(OM2_err) + '\n')
+            f.write(str(OM0) + ' ' + str(sqrt(OM0_err)) + '\n')
+            f.write(str(OM1) + ' ' + str(sqrt(OM1_err)) + '\n')
+            f.write(str(OM2) + ' ' + str(sqrt(OM2_err)) + '\n')
     else:
         XS0, XS1 = symbols('XS0 XS1', real = True)
         SIGMA0, SIGMA1 = symbols('SIGMA0 SIGMA1', real = True)
@@ -85,8 +85,8 @@ def cal(ecms):
             OM1 = omega1.subs({XS0:xs0, XS1:xs1})
             OM0_err = omega0_err.subs({XS0:xs0, XS1:xs1, SIGMA0:sigma0, SIGMA1:sigma1, V00:v00, V11:v11, V01:v01})
             OM1_err = omega1_err.subs({XS0:xs0, XS1:xs1, SIGMA0:sigma0, SIGMA1:sigma1, V00:v00, V11:v11, V01:v01})
-            f.write(str(OM0) + ' ' + str(OM0_err) + '\n')
-            f.write(str(OM1) + ' ' + str(OM1_err) + '\n')
+            f.write(str(OM0) + ' ' + str(sqrt(OM0_err)) + '\n')
+            f.write(str(OM1) + ' ' + str(sqrt(OM1_err)) + '\n')
 
 if __name__ == '__main__':
     args = sys.argv[1:]

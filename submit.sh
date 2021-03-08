@@ -265,4 +265,85 @@ case $option in
            ./subincMC_703p01.sh
            ;;
 
+    # -----------------------------------------------------------
+    #  0.10 signal MC of psi(4260)->DDPI(PHSP) reconstructed @705
+    # -----------------------------------------------------------
+    
+    0.10) echo "signal MC of psi(4260)->DDPI(PHSP) reconstructed @705..."
+         echo "--> Process: psi(4260)->DDPI"
+         echo "--> Generation mode: psi(4260)->DDPI PHSH; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+         ;;
+
+    0.10.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
+           cd scripts/gen_script/gen_mc/DDPI
+           echo "which type of generator do you want to use?"
+           read opt
+           if [ $opt == "ConExc" ]; then
+               ./subSimRec_D_D_PI_703p01_ConExc.sh ConExc
+           elif [ $opt == "KKMC" ]; then
+               ./subSimRec_D_D_PI_703p01_KKMC.sh
+           else
+               echo "please check the generator you want to use!"
+           fi
+           ;;
+
+    0.10.2) echo "Single D tag -- run on signal MC sample..."
+           cd scripts/gen_script/gen_mc/DDPI
+           ./subAna_D_D_PI_703p01.sh
+           ;;
+
+    # ------------------------------------------------------------
+    #  0.11 signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @705
+    # ------------------------------------------------------------
+    
+    0.11) echo "signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @705..."
+         echo "--> Process: psi(4260)->DDPIPI"
+         echo "--> Generation mode: psi(4260)->DDPIPI PHSH; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+         ;;
+
+    0.11.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
+           cd scripts/gen_script/gen_mc/DstDPI
+           echo "which type of generator do you want to use?"
+           read opt
+           if [ $opt == "ConExc" ]; then
+               ./subSimRec_Dst_D_PI_705_ConExc.sh ConExc
+           elif [ $opt == "KKMC" ]; then
+               ./subSimRec_Dst_D_PI_703p01_KKMC.sh
+           else
+               echo "please check the generator you want to use!"
+           fi
+           ;;
+
+    0.11.2) echo "Single D tag -- run on signal MC sample..."
+           cd scripts/gen_script/gen_mc/DstDPI
+           ./subAna_Dst_D_PI_703p01.sh
+           ;;
+
+    # ------------------------------------------------------------
+    #  0.12 signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @705
+    # ------------------------------------------------------------
+    
+    0.12) echo "signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @705..."
+         echo "--> Process: psi(4260)->DDPIPI"
+         echo "--> Generation mode: psi(4260)->DDPIPI PHSH; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
+         ;;
+
+    0.12.1) echo "Simulation & Reconstruction -- generate signal MC sample..."
+           cd scripts/gen_script/gen_mc/DDPIPIinc
+           echo "which type of generator do you want to use?"
+           read opt
+           if [ $opt == "ConExc" ]; then
+               ./subSimRec_D_D_PI_PI_inc_705_ConExc.sh ConExc
+           elif [ $opt == "KKMC" ]; then
+               ./subSimRec_D_D_PI_PI_inc_703p01_KKMC.sh
+           else
+               echo "please check the generator you want to use!"
+           fi
+           ;;
+
+    0.12.2) echo "Single D tag -- run on signal MC sample..."
+           cd scripts/gen_script/gen_mc/DDPIPIinc
+           ./subAna_D_D_PI_PI_inc_703p01.sh
+           ;;
+
 esac

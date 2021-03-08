@@ -25,6 +25,6 @@ do
     cd $HOME/bes/DDPIPI/v0.2/python/fit_xs
     echo "Begininning of $PARAM_0!"
     python mix_root.py $PARAM_0 raw $PATCH
-    python mix_root.py $PARAM_0 raw_before $PATCH
+    python mix_root.py $PARAM_0 raw_after $PATCH
     echo "$PARAM_0 is done!"
 done

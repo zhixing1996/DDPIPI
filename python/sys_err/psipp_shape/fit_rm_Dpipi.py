@@ -143,7 +143,7 @@ def fit(path, shape_path, ecms, mode, patch):
         sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up)
         if mode == 'data' and (ecms == 4390 or ecms == 4575):
             if ecms == 4390: f_param = open('./txts/param_4380_' + patch + '.txt', 'r')
-            if ecms == 4575: f_param = open('./txts/param_4440_' + patch + '.txt', 'r')
+            if ecms == 4575 or ecms == 4530: f_param = open('./txts/param_4440_' + patch + '.txt', 'r')
             lines_param = f_param.readlines()
             for line_param in lines_param:
                 rs_param = line_param.rstrip('\n')
@@ -166,6 +166,9 @@ def fit(path, shape_path, ecms, mode, patch):
         # background
         a = RooRealVar('a', 'a', 0, -99, 99)
         b = RooRealVar('b', 'b', 0, -99, 99)
+        if ecms == 4700:
+            a = RooRealVar('a', 'a', 0, -3, 3)
+            b = RooRealVar('b', 'b', 0, -3, 3)
         if ecms == 4680:
             a = RooRealVar('a', 'a', 0, -3, 3)
             b = RooRealVar('b', 'b', 0, -3, 3)
@@ -185,8 +188,8 @@ def fit(path, shape_path, ecms, mode, patch):
             a = RooRealVar('a', 'a', 0, -1, 1)
             b = RooRealVar('b', 'b', 0, -1, 1)
         if ecms == 4200:
-            a = RooRealVar('a', 'a', 0, -1, 1)
-            b = RooRealVar('b', 'b', 0, -1, 1)
+            a = RooRealVar('a', 'a', 0, -3, 3)
+            b = RooRealVar('b', 'b', 0, -3, 3)
         c = RooRealVar('c', 'c', 0, -99, 99)
         d = RooRealVar('c', 'c', 0, -99, 99)
         bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
@@ -300,14 +303,11 @@ def main():
     path = []
     shape_path = ''
     if mode == 'data':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_after.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/psipp_shape/shape_' + str(ecms) + '_mixed.root'
-    if mode == 'psipp' or mode == 'D1_2420':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_' + mode + '_' + str(ecms) + '_raw_before.root')
+    if mode == 'psipp':
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sys_err/psipp_shape/sigMC_' + mode + '_' + str(ecms) + '_raw_after.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/psipp_shape/shape_' + mode + '_' + str(ecms) + '_signal.root'
-    if mode == 'DDPIPI':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
-        shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/psipp_shape/shape_D_D_PI_PI_' + str(ecms) + '_signal.root'
     fit(path, shape_path, ecms, mode, patch)
 
 if __name__ == '__main__':

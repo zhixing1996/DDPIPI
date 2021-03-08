@@ -167,8 +167,8 @@ def fit(path, shape_path, ecms, mode, patch):
         a = RooRealVar('a', 'a', 0, -1, 1)
         b = RooRealVar('b', 'b', 0, -1, 1)
     if ecms == 4640:
-        a = RooRealVar('a', 'a', 0, -9, 9)
-        b = RooRealVar('b', 'b', 0, -9, 9)
+        a = RooRealVar('a', 'a', 0, -1, 1)
+        b = RooRealVar('b', 'b', 0, -1, 1)
     c = RooRealVar('c', 'c', 0, -99, 99)
     d = RooRealVar('c', 'c', 0, -99, 99)
     bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
@@ -278,7 +278,7 @@ def main():
 
     path = []
     shape_path = ''
-    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_after.root')
     shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
     fit(path, shape_path, ecms, mode, patch)
 

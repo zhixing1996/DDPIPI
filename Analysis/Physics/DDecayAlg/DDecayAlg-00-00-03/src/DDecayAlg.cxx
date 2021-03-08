@@ -1688,7 +1688,7 @@ bool DDecay::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_pho
             m_vtx_otherMdcKaltrk[m_n_othertrks][2] = cos(mdcKalTrk->theta());
             mdcKalTrk->setPidType(RecMdcKalTrack::kaon);
             for (int j = 0; j < 4; j++) {
-                m_rawp4_otherMdctrk[m_n_othertrks][j] = mdcTrk->p4(mass[2])[j];
+                m_rawp4_otherMdctrk[m_n_othertrks][j] = mdcTrk->p4(mass[3])[j];
                 m_rawp4_otherMdcKaltrk[m_n_othertrks][j] = mdcKalTrk->p4(mass[3])[j];
             }
             m_rawp4_otherMdctrk[m_n_othertrks][4] = mdcTrk->chi2();

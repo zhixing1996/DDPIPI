@@ -29,11 +29,18 @@ do
 
     echo "Begininning of $PARAM_0!"
 
-    python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_before.root $PARAM_0 before raw_signal
+    python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_after.root $PARAM_0 after raw_signal
     echo "STD signal of $PARAM_0 is done!"
 
     python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_signal.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_after.root $PARAM_0 after STDDmiss_signal
     echo "STDDmiss signal of $PARAM_0 is done!"
+
+    rm -rf $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sideband_after.root
+    python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandlow.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandlow_after.root $PARAM_0 after raw_sidebandlow
+    python apply_cuts.py $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandup.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandup_after.root $PARAM_0 after raw_sidebandup
+    hadd $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sideband_after.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandlow_after.root $ROOT_PATH/sigMC_psipp_$PARAM_0\_raw_sidebandup_after.root
+    # rm -rf $ROOT_PATH/*low* $ROOT_PATH/*up*
+    echo "raw sideband of $PARAM_0 is done! (after bkg suppress)"
 
     echo "$PARAM_0 is done!"
 done

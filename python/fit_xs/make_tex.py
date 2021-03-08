@@ -27,6 +27,107 @@ DATE
     December 2020
 \n''')
 
+def make_f(patch):
+    D1_2420_signal, D1_2420_side  = [], []
+    DDPIPI_signal, DDPIPI_side  = [], []
+    psipp_signal, psipp_side  = [], []
+    SAMPLES = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
+    for SAMPLE in SAMPLES:
+        if SAMPLE > 4320:
+            with open('./txts/D1_2420_events_'+str(SAMPLE)+'_'+patch+'.txt', 'r') as f:
+                lines = f.readlines()
+                for line in lines:
+                    try:
+                        fargs = map(float, line.strip('\n').strip().split())
+                        D1_2420_signal.append(fargs[0])
+                    except:
+                        '''
+                        '''
+            with open('./txts/D1_2420_sideband_events_'+str(SAMPLE)+'_'+patch+'.txt', 'r') as f:
+                lines = f.readlines()
+                for line in lines:
+                    try:
+                        fargs = map(float, line.strip('\n').strip().split())
+                        D1_2420_side.append(fargs[0])
+                    except:
+                        '''
+                        '''
+        with open('./txts/psipp_events_'+str(SAMPLE)+'_'+patch+'.txt', 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                try:
+                    fargs = map(float, line.strip('\n').strip().split())
+                    psipp_signal.append(fargs[0])
+                except:
+                    '''
+                    '''
+        with open('./txts/psipp_sideband_events_'+str(SAMPLE)+'_'+patch+'.txt', 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                try:
+                    fargs = map(float, line.strip('\n').strip().split())
+                    psipp_side.append(fargs[0])
+                except:
+                    '''
+                    '''
+        with open('./txts/DDPIPI_events_'+str(SAMPLE)+'_'+patch+'.txt', 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                try:
+                    fargs = map(float, line.strip('\n').strip().split())
+                    DDPIPI_signal.append(fargs[0])
+                except:
+                    '''
+                    '''
+        with open('./txts/DDPIPI_sideband_events_'+str(SAMPLE)+'_'+patch+'.txt', 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                try:
+                    fargs = map(float, line.strip('\n').strip().split())
+                    DDPIPI_side.append(fargs[0])
+                except:
+                    '''
+                    '''
+    f_D1_2420, f_DDPIPI, f_psipp = [], [], []
+    for n, n_side in zip(D1_2420_signal, D1_2420_side):
+        f_D1_2420.append(round(n_side/n*100, 1))
+    for n, n_side in zip(psipp_signal, psipp_side):
+        f_psipp.append(round(n_side/n*100, 1))
+    for n, n_side in zip(DDPIPI_signal, DDPIPI_side):
+        f_DDPIPI.append(round(n_side/n*100, 1))
+
+    if not os.path.exists('./texs/'):
+        os.makedirs('./texs/')
+    with open('./texs/f_signal_side.tex', 'w') as f:
+        f.write('\\begin{table}[htp]\n')
+        f.write('\t\centering\n')
+        f.write('\t\caption{The ratios of the number of events fitted from $RM(D^{+}\pi_{0}^{+}\pi_{0}^{-})$ distributions between $M(K^{-}\pi^{+}\pi^{+})$ signal and sideband MC samples.}\n')
+        f.write('\t\\begin{tabular}{cccc|cccc}\n')
+        f.write('\t\hline\hline\n')
+        f.write('\tSample& $R_{0}$ & $R_{1}$ & $R_{2}$ & Sample& $R_{0}$ & $R_{1}$ & $R_{2}$\\\\\n')
+        f.write('\t\hline\n')
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[0],  f_psipp[0], f_DDPIPI[0], SAMPLES[16], f_D1_2420[16-14], f_psipp[16], f_DDPIPI[16]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[1],  f_psipp[1], f_DDPIPI[1], SAMPLES[17], f_D1_2420[17-14], f_psipp[17], f_DDPIPI[17]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[2],  f_psipp[2], f_DDPIPI[2], SAMPLES[18], f_D1_2420[18-14], f_psipp[18], f_DDPIPI[18]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[3],  f_psipp[3], f_DDPIPI[3], SAMPLES[19], f_D1_2420[19-14], f_psipp[19], f_DDPIPI[19]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[4],  f_psipp[4], f_DDPIPI[4], SAMPLES[20], f_D1_2420[20-14], f_psipp[20], f_DDPIPI[20]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[5],  f_psipp[5], f_DDPIPI[5], SAMPLES[21], f_D1_2420[21-14], f_psipp[21], f_DDPIPI[21]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[6],  f_psipp[6], f_DDPIPI[6], SAMPLES[22], f_D1_2420[22-14], f_psipp[22], f_DDPIPI[22]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[7],  f_psipp[7], f_DDPIPI[7], SAMPLES[23], f_D1_2420[23-14], f_psipp[23], f_DDPIPI[23]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[8],  f_psipp[8], f_DDPIPI[8], SAMPLES[24], f_D1_2420[24-14], f_psipp[24], f_DDPIPI[24]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[9],  f_psipp[9], f_DDPIPI[9], SAMPLES[25], f_D1_2420[25-14], f_psipp[25], f_DDPIPI[25]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[10], f_psipp[10], f_DDPIPI[10], SAMPLES[26], f_D1_2420[26-14], f_psipp[26], f_DDPIPI[26]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[11], f_psipp[11], f_DDPIPI[11], SAMPLES[27], f_D1_2420[27-14], f_psipp[27], f_DDPIPI[27]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[12], f_psipp[12], f_DDPIPI[12], SAMPLES[28], f_D1_2420[28-14], f_psipp[28], f_DDPIPI[28]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[13], f_psipp[13], f_DDPIPI[13], SAMPLES[29], f_D1_2420[29-14], f_psipp[29], f_DDPIPI[29]))
+        f.write('\t{:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[14], f_D1_2420[14-14], f_psipp[14], f_DDPIPI[14], SAMPLES[30], f_D1_2420[30-14], f_psipp[30], f_DDPIPI[30]))
+        f.write('\t{:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$& -    & -    & -    & -    \\\\\n'.format(SAMPLES[15], f_D1_2420[15-14], f_psipp[15], f_DDPIPI[15]))
+        f.write('\t\hline\hline\n')
+        f.write('\t\end{tabular}\n')
+        f.write('\t\label{table6-0}\n')
+        f.write('\end{table}\n')
+        f.write('\n\n')
+
 def make_total(patch):
     sample, N_sig, N_side, N_sig_err, N_side_err = [], [], [], [], []
     lum, xs, xs_err = [], [], []
@@ -141,8 +242,8 @@ def make_xs(patch):
                 f.write('\t\hline\n')
                 f.write('\t$N'+'_{\\rm{signal}}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N_sig[0+i*5], N_sig_err[0+i*5], N_sig[1+i*5], N_sig_err[1+i*5], N_sig[2+i*5], N_sig_err[2+i*5], N_sig[3+i*5], N_sig_err[3+i*5], N_sig[4+i*5], N_sig_err[4+i*5]))
                 f.write('\t$N'+'_{\\rm{sideband}}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N_side[0+i*5], N_side_err[0+i*5], N_side[1+i*5], N_side_err[1+i*5], N_side[2+i*5], N_side_err[2+i*5], N_side[3+i*5], N_side_err[3+i*5], N_side[4+i*5], N_side_err[4+i*5]))
-                f.write('\t$'+'f^{K\\nrightarrow}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_K_p[0+i*5], F_K_p[1+i*5], F_K_p[2+i*5], F_K_p[3+i*5], F_K_p[4+i*5]))
-                f.write('\t$'+'f^{M(\pi^{+}\pi^{-})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_m_pipi[0+i*5], F_m_pipi[1+i*5], F_m_pipi[2+i*5], F_m_pipi[3+i*5], F_m_pipi[4+i*5]))
+                f.write('\t$'+'f^{K\\nrightarrow p}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_K_p[0+i*5], F_K_p[1+i*5], F_K_p[2+i*5], F_K_p[3+i*5], F_K_p[4+i*5]))
+                f.write('\t$'+'f^{M(\pi_{0}^{+}\pi_{0}^{-})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_m_pipi[0+i*5], F_m_pipi[1+i*5], F_m_pipi[2+i*5], F_m_pipi[3+i*5], F_m_pipi[4+i*5]))
                 f.write('\t$'+'f^{V_{xy, z}}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_VrVz[0+i*5], F_VrVz[1+i*5], F_VrVz[2+i*5], F_VrVz[3+i*5], F_VrVz[4+i*5]))
                 f.write('\t$'+'f^{M(K^{-}\pi^{+}\pi^{+})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_m_Kpipi[0+i*5], F_m_Kpipi[1+i*5], F_m_Kpipi[2+i*5], F_m_Kpipi[3+i*5], F_m_Kpipi[4+i*5]))
                 f.write('\t$'+'f^{RM(D^{+}\pi_{0}^{+}\pi_{0}^{-})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_rm_Dpipi[0+i*5], F_rm_Dpipi[1+i*5], F_rm_Dpipi[2+i*5], F_rm_Dpipi[3+i*5], F_rm_Dpipi[4+i*5]))
@@ -172,8 +273,8 @@ def make_xs(patch):
                 f.write('\t\hline\n')
                 f.write('\t$N'+'_{\\rm{signal}}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N_sig[0+i*5], N_sig_err[0+i*5], N_sig[1+i*5], N_sig_err[1+i*5], N_sig[2+i*5], N_sig_err[2+i*5], N_sig[3+i*5], N_sig_err[3+i*5], N_sig[4+i*5], N_sig_err[4+i*5], N_sig[5+i*5], N_sig_err[5+i*5]))
                 f.write('\t$N'+'_{\\rm{sideband}}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N_side[0+i*5], N_side_err[0+i*5], N_side[1+i*5], N_side_err[1+i*5], N_side[2+i*5], N_side_err[2+i*5], N_side[3+i*5], N_side_err[3+i*5], N_side[4+i*5], N_side_err[4+i*5], N_side[5+i*5], N_side_err[5+i*5]))
-                f.write('\t$'+'f^{K\\nrightarrow}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_K_p[0+i*5], F_K_p[1+i*5], F_K_p[2+i*5], F_K_p[3+i*5], F_K_p[4+i*5], F_K_p[5+i*5]))
-                f.write('\t$'+'f^{M(\pi^{+}\pi^{-})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_m_pipi[0+i*5], F_m_pipi[1+i*5], F_m_pipi[2+i*5], F_m_pipi[3+i*5], F_m_pipi[4+i*5], F_m_pipi[5+i*5]))
+                f.write('\t$'+'f^{K\\nrightarrow p}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_K_p[0+i*5], F_K_p[1+i*5], F_K_p[2+i*5], F_K_p[3+i*5], F_K_p[4+i*5], F_K_p[5+i*5]))
+                f.write('\t$'+'f^{M(\pi_{0}^{+}\pi_{0}^{-})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_m_pipi[0+i*5], F_m_pipi[1+i*5], F_m_pipi[2+i*5], F_m_pipi[3+i*5], F_m_pipi[4+i*5], F_m_pipi[5+i*5]))
                 f.write('\t$'+'f^{V_{xy, z}}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_VrVz[0+i*5], F_VrVz[1+i*5], F_VrVz[2+i*5], F_VrVz[3+i*5], F_VrVz[4+i*5], F_VrVz[5+i*5]))
                 f.write('\t$'+'f^{M(K^{-}\pi^{+}\pi^{+})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_m_Kpipi[0+i*5], F_m_Kpipi[1+i*5], F_m_Kpipi[2+i*5], F_m_Kpipi[3+i*5], F_m_Kpipi[4+i*5], F_m_Kpipi[5+i*5]))
                 f.write('\t$'+'f^{RM(D^{+}\pi_{0}^{+}\pi_{0}^{-})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_rm_Dpipi[0+i*5], F_rm_Dpipi[1+i*5], F_rm_Dpipi[2+i*5], F_rm_Dpipi[3+i*5], F_rm_Dpipi[4+i*5], F_rm_Dpipi[5+i*5]))
@@ -194,9 +295,9 @@ def make_xs(patch):
                 f.write('\end{table}\n')
                 f.write('\n\n')
 
-def make_simul():
+def make_simul(patch):
     xs0, xs1, xs2 = [], [], []
-    with open('./txts/xs_D1_2420_round3.txt', 'r') as f:
+    with open('./txts/xs_D1_2420_' + patch + '.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             try:
@@ -205,7 +306,7 @@ def make_simul():
             except:
                 '''
                 '''
-    with open('./txts/xs_psipp_round3.txt', 'r') as f:
+    with open('./txts/xs_psipp_' + patch + '.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             try:
@@ -214,7 +315,7 @@ def make_simul():
             except:
                 '''
                 '''
-    with open('./txts/xs_DDPIPI_round3.txt', 'r') as f:
+    with open('./txts/xs_DDPIPI_' + patch + '.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             try:
@@ -225,7 +326,7 @@ def make_simul():
                 '''
     N0, N1, N2, eff0, eff1, eff2, one_del0, one_del1, one_del2, VP = [], [], [], [], [], [], [], [], [], []
     sample, lum, omega0, omega1, omega2, N0_err, N1_err, N2_err = [], [], [], [], [], [], [], []
-    with open('./txts/xs_D1_2420_round3_num.txt', 'r') as f:
+    with open('./txts/xs_D1_2420_' + patch + '_num.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             try:
@@ -233,11 +334,14 @@ def make_simul():
                 N0.append(int(fargs[4]))
                 N0_err.append(int(sqrt(3)*fargs[5]))
                 eff0.append(round(fargs[7], 3))
-                one_del0.append(round(fargs[8], 2))
+                with open('../txts/factor_info_' + str(int(fargs[0])) + '_D1_2420_' + patch + '.txt', 'r') as ff:
+                    for l in ff.readlines():
+                        ffargs = map(float, l.strip().strip('\n').split())
+                        one_del0.append(round(ffargs[0], 2))
             except:
                 '''
                 '''
-    with open('./txts/xs_psipp_round3_num.txt', 'r') as f:
+    with open('./txts/xs_psipp_' + patch + '_num.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             try:
@@ -247,12 +351,15 @@ def make_simul():
                 N1.append(int(fargs[4]))
                 N1_err.append(int(sqrt(3)*fargs[5]))
                 eff1.append(round(fargs[7], 3))
-                one_del1.append(round(fargs[8], 2))
-                VP.append(round(fargs[9], 2))
+                with open('../txts/factor_info_' + str(int(fargs[0])) + '_psipp_' + patch + '.txt', 'r') as ff:
+                    for l in ff.readlines():
+                        ffargs = map(float, l.strip().strip('\n').split())
+                        one_del1.append(round(ffargs[0], 2))
+                        VP.append(round(ffargs[1], 2))
             except:
                 '''
                 '''
-    with open('./txts/xs_DDPIPI_round3_num.txt', 'r') as f:
+    with open('./txts/xs_DDPIPI_' + patch + '_num.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
             try:
@@ -260,10 +367,14 @@ def make_simul():
                 N2.append(int(fargs[4]))
                 N2_err.append(int(sqrt(3)*fargs[5]))
                 eff2.append(round(fargs[7], 3))
-                one_del2.append(round(fargs[8], 2))
+                with open('../txts/factor_info_' + str(int(fargs[0])) + '_DDPIPI_' + patch + '.txt', 'r') as ff:
+                    for l in ff.readlines():
+                        ffargs = map(float, l.strip().strip('\n').split())
+                        one_del2.append(round(ffargs[0], 2))
             except:
                 '''
                 '''
+
     omega0, omega1, omega2 = [], [], []
     omega0_err, omega1_err, omega2_err = [], [], []
     num = 0
@@ -277,12 +388,12 @@ def make_simul():
             else:
                 psipp_args = map(float, lines[0].strip().split())
                 DDPIPI_args = map(float, lines[1].strip().split())
-        if SAM > 4316: omega0.append(round(D1_2420_args[0], 3))
-        omega1.append(round(psipp_args[0], 3))
-        omega2.append(round(DDPIPI_args[0], 3))
-        if SAM > 4316: omega0_err.append(round(D1_2420_args[1], 3))
-        omega1_err.append(round(psipp_args[1], 3))
-        omega2_err.append(round(DDPIPI_args[1], 3))
+        if SAM > 4316: omega0.append(round(D1_2420_args[0], 2))
+        omega1.append(round(psipp_args[0], 2))
+        omega2.append(round(DDPIPI_args[0], 2))
+        if SAM > 4316: omega0_err.append(round(D1_2420_args[1], 2))
+        omega1_err.append(round(psipp_args[1], 2))
+        omega2_err.append(round(DDPIPI_args[1], 2))
         num += 1
 
     if not os.path.exists('./texs/'):
@@ -417,9 +528,10 @@ def main():
         return usage()
     patch = args[0]
 
-    make_simul()
+    make_simul(patch)
     make_xs(patch)
     make_total(patch)
+    make_f(patch)
 
 if __name__ == '__main__':
     main()

@@ -435,7 +435,7 @@ def fit(ecms, patch, path):
     if ecms > 4316:
         name.append('D_{1}(2420)^{+}D^{-}')
     name.append('#pi^{+}#pi^{-}#psi(3770)')
-    name.append('D^{+}D^{-}#pi^{+}#pi^{-}')
+    name.append('#pi^{+}#pi^{-}D^{+}D^{-}')
     name.append('Total Fit')
 
     lg_rm_D = TLegend(.15, .65, .35, .95)
@@ -507,7 +507,7 @@ def fit(ecms, patch, path):
     if ecms > 4316:
         name.append('D_{1}(2420)^{+}D^{-}')
     name.append('#pi^{+}#pi^{-}#psi(3770)')
-    name.append('D^{+}D^{-}#pi^{+}#pi^{-}')
+    name.append('#pi^{+}#pi^{-}D^{+}D^{-}')
     name.append('Total Fit')
 
     lg_rm_Dmiss = TLegend(.15, .65, .35, .95)
@@ -579,7 +579,7 @@ def fit(ecms, patch, path):
     if ecms > 4316:
         name.append('D_{1}(2420)^{+}D^{-}')
     name.append('#pi^{+}#pi^{-}#psi(3770)')
-    name.append('D^{+}D^{-}#pi^{+}#pi^{-}')
+    name.append('#pi^{+}#pi^{-}D^{+}D^{-}')
     name.append('Total Fit')
 
     lg_rm_pipi = TLegend(.55, .65, .75, .95)
@@ -654,7 +654,7 @@ def fit(ecms, patch, path):
             f.write(str(fit_result.correlation(nDDPIPI, nDDPIPI)) + ' ')
             f.write(str(fit_result.correlation(npsipp, nDDPIPI)))
 
-    raw_input('Enter anything to end...')
+    # raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]

@@ -84,5 +84,5 @@ if __name__ == '__main__':
     ecms = int(args[0])
 
     path =[]
-    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_raw_before.root')
+    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_raw_after.root')
     common(ecms, path)

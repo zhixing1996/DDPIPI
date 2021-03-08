@@ -1,6 +1,6 @@
 #!/bin/sh
 PATCH=$1
-cat ECMS_Base | while read line
+tac ECMS_Base | while read line
 do
     str=$line
     OLD_IFS=$IFS

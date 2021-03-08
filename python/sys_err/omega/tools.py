@@ -253,9 +253,9 @@ def param_rm_Dpipi(ecms):
         MEAN_UP = 0.003
         SIGMA_UP = 0.002
     elif int(ecms == 4237):
-        MEAN_LOW = -0.003
-        MEAN_UP = 0.003
-        SIGMA_UP = 0.004
+        MEAN_LOW = -0.002
+        MEAN_UP = 0.002
+        SIGMA_UP = 0.002
     elif int(ecms == 4245):
         MEAN_LOW = -0.0015
         MEAN_UP = 0.001
@@ -309,9 +309,9 @@ def param_rm_Dpipi(ecms):
         MEAN_UP = 0.003
         SIGMA_UP = 0.006
     elif int(ecms == 4420):
-        MEAN_LOW = -0.003
-        MEAN_UP = 0.003
-        SIGMA_UP = 0.006
+        MEAN_LOW = -0.002
+        MEAN_UP = 0.002
+        SIGMA_UP = 0.001
     elif int(ecms == 4440):
         MEAN_LOW = -0.003
         MEAN_UP = 0.003
@@ -353,9 +353,9 @@ def param_rm_Dpipi(ecms):
         MEAN_UP = 0.003
         SIGMA_UP = 0.008
     elif int(ecms == 4700):
-        MEAN_LOW = -0.003
+        MEAN_LOW = -0.005
         MEAN_UP = 0.005
-        SIGMA_UP = 0.004
+        SIGMA_UP = 0.002
     return MEAN_LOW, MEAN_UP, SIGMA_UP
 
 # upper limit parameter of rm(Dpipi) fit

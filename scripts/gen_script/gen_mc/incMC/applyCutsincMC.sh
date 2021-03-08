@@ -21,17 +21,18 @@ do
     fi
     mkdir -p $WORKAREA/incMC/$PARAM_1/$PARAM_0
     cd $HOME/bes/DDPIPI/v0.2/python
+    SOURCE_PATH=/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/$PARAM_1/$PARAM_0/rootfile
     ROOT_PATH=/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/$PARAM_1/$PARAM_0
 
     echo "Begininning of $PARAM_0!"
 
-    python apply_cuts.py $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_raw.root $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_raw_before.root $PARAM_0 before raw_signal
+    python apply_cuts.py $SOURCE_PATH/incMC_$PARAM_1\_$PARAM_0\_raw.root $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_raw_before.root $PARAM_0 before raw_signal
     echo "STD signal of $PARAM_0 is done!"
 
-    python apply_cuts.py $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_signal.root $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_before.root $PARAM_0 before STDDmiss_signal
+    python apply_cuts.py $SOURCE_PATH/incMC_$PARAM_1\_$PARAM_0\_signal.root $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_before.root $PARAM_0 before STDDmiss_signal
     echo "STDDmiss signal of $PARAM_0 is done! (before bkg suppress)"
 
-    python apply_cuts.py $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_signal.root $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_after.root $PARAM_0 after STDDmiss_signal
+    python apply_cuts.py $SOURCE_PATH/incMC_$PARAM_1\_$PARAM_0\_signal.root $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_after.root $PARAM_0 after STDDmiss_signal
     echo "STDDmiss signal of $PARAM_0 is done!"
 
     echo "$PARAM_0 is done!"

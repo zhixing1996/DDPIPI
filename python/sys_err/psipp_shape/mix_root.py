@@ -77,9 +77,9 @@ def mix(path_in, path_out, mode, ecms, patch, sample):
     f_out = TFile(path_out[0], 'RECREATE')
     t_out = TTree('save', 'save')
     if sample == 'raw': m_rawm_D = array('d', [999.])
-    if sample == 'raw_before': m_rm_Dpipi = array('d', [999.])
+    if sample == 'raw_after': m_rm_Dpipi = array('d', [999.])
     if sample == 'raw': t_out.Branch('rawm_D', m_rawm_D, 'm_rawm_D/D')
-    if sample == 'raw_before': t_out.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
+    if sample == 'raw_after': t_out.Branch('rm_Dpipi', m_rm_Dpipi, 'm_rm_Dpipi/D')
     for i in xrange(len(path_in)):
         try:
             f_in = TFile(path_in[i])
@@ -95,7 +95,7 @@ def mix(path_in, path_out, mode, ecms, patch, sample):
             t_in.GetEntry(ientry)
             if t_in.m_rawm_D > 0.:
                 if sample == 'raw': m_rawm_D[0] = t_in.m_rawm_D
-                if sample == 'raw_before': m_rm_Dpipi[0] = t_in.m_rm_Dpipi
+                if sample == 'raw_after': m_rm_Dpipi[0] = t_in.m_rm_Dpipi
                 t_out.Fill()
         n += 1
     f_out.cd()

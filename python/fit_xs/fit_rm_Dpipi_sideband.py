@@ -137,7 +137,7 @@ def fit(path, shape_path, ecms, mode, patch):
         h_signal = RooDataHist('h_shape', 'h_shape', RooArgList(rm_Dpipi), h_shape)
         pdf_signal = RooHistPdf('pdf_signal', 'pdf_signal', RooArgSet(rm_Dpipi), h_signal, 0)
         mean_low, mean_up, sigma_up =  param_rm_Dpipi(ecms)
-        if not mode == 'data': mean_low, mean_up, sigma_up = mean_low*(1 + random.uniform(-1, 1)), mean_up*(1 + random.uniform(-1, 1)), sigma_up*(1 + random.uniform(-1, 1))
+        if not (mode == 'data_before' or mode == 'data_after'): mean_low, mean_up, sigma_up = mean_low*(1 + random.uniform(-1, 1)), mean_up*(1 + random.uniform(-1, 1)), sigma_up*(1 + random.uniform(-1, 1))
         if sigma_up > 0.001: sigma_up += 0.001
         mean = RooRealVar('mean', 'mean of gaussian', 0., mean_low, mean_up)
         sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up)
@@ -155,7 +155,7 @@ def fit(path, shape_path, ecms, mode, patch):
             else:
                 mean_val = float(float(rs_param[2]))
                 sigma_val = float(float(rs_param[3]))
-        if mode == 'data':
+        if mode == 'data_before' or mode == 'data_after':
             mean = RooRealVar('mean', 'mean of gaussian', mean_val)
             sigma = RooRealVar('sigma', 'sigma of gaussian', sigma_val)
         gauss = RooGaussian('gauss', 'gaussian', rm_Dpipi, mean, sigma)
@@ -166,9 +166,18 @@ def fit(path, shape_path, ecms, mode, patch):
         if ndf == 6:
             a = RooRealVar('a', 'a', 0., -99., 99.)
             b = RooRealVar('b', 'b', 0., -99., 99.)
-            if ecms == 4190:
+            if ecms == 4440:
                 a = RooRealVar('a', 'a', 0., -1., 1.)
                 b = RooRealVar('b', 'b', 0., -1., 1.)
+            if ecms == 4470:
+                a = RooRealVar('a', 'a', 0., -1., 1.)
+                b = RooRealVar('b', 'b', 0., -1., 1.)
+            if ecms == 4260:
+                a = RooRealVar('a', 'a', 0., -1., 1.)
+                b = RooRealVar('b', 'b', 0., -1., 1.)
+            if ecms == 4190:
+                a = RooRealVar('a', 'a', 0., -9., 9.)
+                b = RooRealVar('b', 'b', 0., -9., 9.)
             bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
         if ndf == 5:
             a = RooRealVar('a', 'a', 0., -99., 99.)
@@ -196,7 +205,7 @@ def fit(path, shape_path, ecms, mode, patch):
         set_xframe_style(xframe, xtitle, ytitle)
         xframe.Draw()
 
-        if mode == 'data' or mode == 'DDPIPI' or mode == 'psipp' or mode == 'D1_2420':
+        if mode == 'data_before' or mode == 'data_after' or mode == 'DDPIPI' or mode == 'psipp' or mode == 'D1_2420':
             fr = model.fitTo(data, RooFit.Extended(kTRUE), RooFit.Save(kTRUE))
             curve = xframe.getObject(1)
             histo = xframe.getObject(0)
@@ -219,7 +228,7 @@ def fit(path, shape_path, ecms, mode, patch):
                     chi2_tot += pull * pull
                     nbin += 1
                     ytot, avg, eyl, eyh = 0, 0, 0, 0
-            if mode == 'data':
+            if mode == 'data_before' or mode == 'data_after':
                 if ecms == 4245 or ecms == 4310: pt = TPaveText(0.6, 0.7, 0.75, 0.85, "BRNDC")
                 else: pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
             else: pt = TPaveText(0.17, 0.7, 0.3, 0.85, "BRNDC")
@@ -241,19 +250,25 @@ def fit(path, shape_path, ecms, mode, patch):
 
         if not os.path.exists('./txts/'):
             os.makedirs('./txts/')
-        path_sig = './txts/' + mode + '_sideband_events_'+ str(ecms) +'_' + patch + '.txt'
+        if mode == 'data_after': path_sig = './txts/data_sideband_events_'+ str(ecms) +'_' + patch + '.txt'
+        if not mode == 'data_after': path_sig = './txts/' + mode + '_sideband_events_'+ str(ecms) +'_' + patch + '.txt'
         f_sig = open(path_sig, 'w')
         out = str(nsig.getVal()) + ' ' + str(nsig.getError()) + '\n'
         f_sig.write(out)
         f_sig.close()
 
-        if mode == 'data': is_OK = -1
+        if mode == 'data_before': is_OK = -1
+        if mode == 'data_after': is_OK = -1
+        if mode == 'D1_2420': is_OK = -1
+        if mode == 'psipp': is_OK = -1
+        if mode == 'DDPIPI': is_OK = -1
+        if mode == 'DDPI': is_OK = -1
 
         if is_OK == -1: break
         if (is_OK == 3 and status == 0 and chi2_ndf < 1.8 and ecms < 4221): break
         if (is_OK == 3 and status == 0 and chi2_ndf < 1.5 and ecms > 4221): break
 
-    # raw_input('enter anything to end...')
+    raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]
@@ -263,19 +278,19 @@ def main():
     mode = args[1]
     patch = args[2]
 
-    if not (ecms == 4400 or ecms == 4420 or ecms == 4440) and not mode == 'data':
-        print 'Not need to subtract sideband, just ignore...'
-        sys.exit()
     path = []
     shape_path = ''
-    if mode == 'data':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_sideband_before.root')
+    if mode == 'data_before':
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_sideband_after.root')
+        shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
+    if mode == 'data_after':
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_sideband_after.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
     if mode == 'psipp' or mode == 'D1_2420':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_' + mode + '_' + str(ecms) + '_raw_sideband_before.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_' + mode + '_' + str(ecms) + '_raw_sideband_after.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_' + mode + '_' + str(ecms) + '_signal.root'
     if mode == 'DDPIPI':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_sideband_before.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_sideband_after.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/shape_D_D_PI_PI_' + str(ecms) + '_signal.root'
     fit(path, shape_path, ecms, mode, patch)
 

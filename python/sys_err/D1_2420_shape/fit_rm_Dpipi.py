@@ -181,6 +181,9 @@ def fit(path, shape_path, ecms, mode, patch):
         if ecms == 4440:
             a = RooRealVar('a', 'a', 0, -3, 1)
             b = RooRealVar('b', 'b', 0, -3, 1)
+        if ecms == 4420:
+            a = RooRealVar('a', 'a', 0, -1, 1)
+            b = RooRealVar('b', 'b', 0, -1, 1)
         if ecms == 4400:
             a = RooRealVar('a', 'a', 0, -1, 1)
             b = RooRealVar('b', 'b', 0, -1, 1)
@@ -285,7 +288,7 @@ def fit(path, shape_path, ecms, mode, patch):
 
         if is_OK == -1: break
         if (is_OK == 3 and status == 0 and chi2_ndf < 1.8 and ecms < 4221): break
-        if (is_OK == 3 and status == 0 and chi2_ndf < 2.1 and ecms > 4221): break
+        if (is_OK == 3 and status == 0 and chi2_ndf < 2.5 and ecms > 4221): break
 
     # raw_input('enter anything to end...')
 
@@ -300,14 +303,11 @@ def main():
     path = []
     shape_path = ''
     if mode == 'data':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_before.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_after.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/D1_2420_shape/shape_' + str(ecms) + '_mixed.root'
-    if mode == 'psipp' or mode == 'D1_2420':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_' + mode + '_' + str(ecms) + '_raw_before.root')
+    if mode == 'D1_2420':
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sys_err/D1_2420_shape/sigMC_' + mode + '_' + str(ecms) + '_raw_after.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/D1_2420_shape/shape_' + mode + '_' + str(ecms) + '_signal.root'
-    if mode == 'DDPIPI':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/' + mode + '/' + str(ecms) + '/sigMC_D_D_PI_PI_' + str(ecms) + '_raw_before.root')
-        shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/D1_2420_shape/shape_D_D_PI_PI_' + str(ecms) + '_signal.root'
     fit(path, shape_path, ecms, mode, patch)
 
 if __name__ == '__main__':

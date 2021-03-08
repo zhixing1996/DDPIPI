@@ -2,7 +2,7 @@
 PATCH=$1
 rm $HOME/bes/DDPIPI/v0.2/python/fit_xs/txts/data_signal_events_total_${PATCH}.txt -rf
 rm $HOME/bes/DDPIPI/v0.2/python/fit_xs/txts/sideband_signal_events_total_${PATCH}.txt -rf
-cat ECMS_Base | while read line
+tac ECMS_Base | while read line
 do
     str=$line
     OLD_IFS=$IFS

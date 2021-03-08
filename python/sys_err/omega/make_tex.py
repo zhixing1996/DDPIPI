@@ -43,7 +43,7 @@ def make_sys():
     with open('./texs/omega_sys.tex', 'w') as f:
         f.write('\\begin{table}[htp]\n')
         f.write('\t\centering\n')
-        f.write('\t\caption{Systematic uncertainty caused by $\omega_{i}$.}\n')
+        f.write('\t\caption{Systematic uncertainty caused by the uncertainty of $\omega_{i}$.}\n')
         f.write('\t\\begin{tabular}{cc|cc}\n')
         f.write('\t\hline\hline\n')
         f.write('\tData Sample& Systematic Uncertainty(\%) & Data Sample& Systematic Uncertainty(\%)\\\\\n')

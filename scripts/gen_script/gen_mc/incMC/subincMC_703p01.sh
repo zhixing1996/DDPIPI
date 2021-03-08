@@ -22,7 +22,7 @@ do
     rm -rf incMC_inclusive_$PARAM_1\_$PARAM_0*txt
     cp -rf $HOME/bes/DDPIPI/v0.2/python/make_mc.py ./
     cp -rf $HOME/bes/DDPIPI/v0.2/python/tools.py ./
-    ./make_mc.py $PARAM_3 incMC inclusive $PARAM_1 $PARAM_1 $PARAM_0 $PARAM_2 2
+    ./make_mc.py $PARAM_3 incMC inclusive $PARAM_1 $PARAM_1 $PARAM_0 $PARAM_2 10
     cp -rf $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/subAna.sh ./
     rm -rf *boss*
     rm -rf /scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/$PARAM_1/$PARAM_0/rootfile/*root

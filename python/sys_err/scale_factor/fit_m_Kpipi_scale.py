@@ -147,6 +147,9 @@ def fit(path, ecms, mode, shape_path):
     b = RooRealVar('b', 'b', 0, -99, 99)
     c = RooRealVar('c', 'c', 0, -99, 99)
     d = RooRealVar('c', 'c', 0, -99, 99)
+    if ecms == 4420:
+        a = RooRealVar('a', 'a', 0, -1, 1)
+        b = RooRealVar('b', 'b', 0, -1, 1)
     bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', m_Kpipi, RooArgList(a, b))
 
     # event number
