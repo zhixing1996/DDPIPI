@@ -104,6 +104,13 @@ StatusCode DDecay::initialize() {
             status = m_tuple1->addIndexedItem("pdgid", m_idxmc, m_pdgid);
             status = m_tuple1->addIndexedItem("motheridx", m_idxmc, m_motheridx);
             status = m_tuple1->addIndexedItem("p4_mc_all", m_idxmc, 4, m_p4_mc_all);
+            status = m_tuple1->addItem("n_pipi_combination", m_n_pipi_combination, 0, 200);
+            status = m_tuple1->addIndexedItem("chi2_svf", m_n_pipi_combination, m_chi2_svf);
+            status = m_tuple1->addIndexedItem("ctau_svf", m_n_pipi_combination, m_ctau_svf);
+            status = m_tuple1->addIndexedItem("L_svf", m_n_pipi_combination, m_L_svf);
+            status = m_tuple1->addIndexedItem("Lerr_svf", m_n_pipi_combination, m_Lerr_svf);
+            status = m_tuple1->addIndexedItem("n_pip_svf", m_n_pipi_combination, m_n_pip_svf);
+            status = m_tuple1->addIndexedItem("n_pim_svf", m_n_pipi_combination, m_n_pim_svf);
         }
         else {
             log << MSG::ERROR << "Cannot book N-tuple:" << long(m_tuple1) << endmsg;
@@ -857,6 +864,59 @@ bool DDecay::fitSecondVertex_STDDmiss(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vw
     m_ctau_svf_STDDmiss = svtxfit->ctau();
     m_L_svf_STDDmiss = svtxfit->decayLength();
     m_Lerr_svf_STDDmiss = svtxfit->decayLengthError();
+    return true;
+}
+
+bool DDecay::fitSecondVertex(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus) {
+    Hep3Vector ip(0, 0, 0);
+    HepSymMatrix ipEx(3, 0);
+    IVertexDbSvc* vtxsvc;
+    Gaudi::svcLocator()->service("VertexDbSvc", vtxsvc);
+    if (vtxsvc->isVertexValid()) {
+        double* dbv = vtxsvc->PrimaryVertex();
+        double* vv = vtxsvc->SigmaPrimaryVertex();
+        ip.setX(dbv[0]);
+        ip.setY(dbv[1]);
+        ip.setZ(dbv[2]);
+        ipEx[0][0] = vv[0] * vv[0];
+        ipEx[1][1] = vv[1] * vv[1];
+        ipEx[2][2] = vv[2] * vv[2];
+    }
+    else false;
+    VertexParameter bs;
+    bs.setVx(ip);
+    bs.setEvx(ipEx);
+    HepPoint3D vx(0., 0., 0.);
+    HepSymMatrix Evx(3, 0);
+    double bx = 1E+6;
+    double by = 1E+6;
+    double bz = 1E+6;
+    Evx[0][0] = bx * bx;
+    Evx[1][1] = by * by;
+    Evx[2][2] = bz * bz;
+    // vertex fit
+    VertexParameter vxpar;
+    vxpar.setVx(vx);
+    vxpar.setEvx(Evx);
+    VertexFit *vtxfit = VertexFit::instance();
+    vtxfit->init();
+    vtxfit->AddTrack(0, vwtrkpara_piplus[n_piplus]);
+    vtxfit->AddTrack(1, vwtrkpara_piminus[n_piminus]);
+    vtxfit->AddVertex(0, vxpar, 0, 1);
+    if (!(vtxfit->Fit(0))) return false;
+    vtxfit->Swim(0);
+    vtxfit->BuildVirtualParticle(0);
+    // second vertex fit
+    SecondVertexFit *svtxfit = SecondVertexFit::instance();
+    svtxfit->init();
+    svtxfit->setPrimaryVertex(bs);
+    svtxfit->AddTrack(0, vtxfit->wVirtualTrack(0));
+    svtxfit->setVpar(vtxfit->vpar(0));
+    if (!svtxfit->Fit()) return false;
+    m_chi2_svf[m_n_pipi_combination] = svtxfit->chisq();
+    m_ctau_svf[m_n_pipi_combination] = svtxfit->ctau();
+    m_L_svf[m_n_pipi_combination] = svtxfit->decayLength();
+    m_Lerr_svf[m_n_pipi_combination] = svtxfit->decayLengthError();
     return true;
 }
 
@@ -1857,6 +1917,40 @@ bool DDecay::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_pho
     }
     if (charm > 0) n_Km += 1;
     if (charm < 0) n_Kp += 1;
+
+    VWTrkPara vwtrkpara_pip, vwtrkpara_pim;
+    vwtrkpara_pip.clear();
+    vwtrkpara_pim.clear();
+    int n_tpip = 0;
+    int n_tpim = 0;
+    m_n_pipi_combination = 0;
+    for (int i = 0; i < othertracks.size(); i++) {
+        if (!(dtagTool.isGoodTrack(othertracks[i]))) continue;
+        if (m_rawp4_otherMdcKaltrk[i][4] != 1) continue;
+        if (m_rawp4_otherMdcKaltrk[i][5] != 2) continue;
+        RecMdcKalTrack *mdcKalTrkp = othertracks[i]->mdcKalTrack();
+        vwtrkpara_pip.push_back(WTrackParameter(mass[2], mdcKalTrkp->getZHelix(), mdcKalTrkp->getZError()));
+        n_tpip++;
+        for (int j = 0; j < othertracks.size(); j++) {
+            if (!(dtagTool.isGoodTrack(othertracks[j]))) continue;
+            if (m_rawp4_otherMdcKaltrk[j][4] != -1) continue;
+            if (m_rawp4_otherMdcKaltrk[j][5] != 2) continue;
+            RecMdcKalTrack *mdcKalTrkm = othertracks[j]->mdcKalTrack();
+            vwtrkpara_pim.push_back(WTrackParameter(mass[2], mdcKalTrkm->getZHelix(), mdcKalTrkm->getZError()));
+            n_tpim++;
+            stat_fitSecondVertex = false;
+            stat_fitSecondVertex = fitSecondVertex(vwtrkpara_pip, vwtrkpara_pim, n_tpip-1, n_tpim-1);
+            m_n_pip_svf[m_n_pipi_combination] = i;
+            m_n_pim_svf[m_n_pipi_combination] = j;
+            if (stat_fitSecondVertex == false) {
+                m_chi2_svf[m_n_pipi_combination] = -999;
+                m_ctau_svf[m_n_pipi_combination] = -999;
+                m_L_svf[m_n_pipi_combination] = -999;
+                m_Lerr_svf[m_n_pipi_combination] = -999;
+            }
+            m_n_pipi_combination++;
+        }
+    }
 
     VWTrkPara vwtrkpara_piplus, vwtrkpara_piminus;
     vwtrkpara_piplus.clear();

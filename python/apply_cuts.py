@@ -175,28 +175,28 @@ def save_after(file_in, file_out, ecms, region):
         cut_window = '(m_rm_Dpipi > ' + str(window_side_up_low) + '&& m_rm_Dpipi < ' + str(window_side_up_up) + ')'
 
     cut_DDPI = '(abs(m_Kpipipi1-1.86483) > 0.01 && abs(m_Kpipipi2-1.86483) > 0.01)'
+    cut_num = '(m_n_p == 0 && m_n_pbar == 0)'
+    cut_KS = '(!((m_m_pipi > 0.491036 && m_m_pipi < 0.503471) && abs(m_L_svf/m_Lerr_svf) > 2))'
+    cut_Vxy = '(m_Vxy_Dtrks[0] <= 0.55 && m_Vxy_Dtrks[1] <= 0.55 && m_Vxy_Dtrks[2] <= 0.55 && m_Vxy_pip <= 0.55 && m_Vxy_pim <= 0.55)'
+    cut_Vz = '(m_Vz_Dtrks[0] <= 3 && m_Vz_Dtrks[1] <= 3 && m_Vz_Dtrks[2] <= 3 && m_Vz_pip <= 3 && m_Vz_pim <= 3)'
     if not (region == 'raw_signal' or region == 'raw_sidebandlow' or region == 'raw_sidebandup' or region == 'rm_Dpipi_signal'):
-        cut_num = '(m_n_p == 0 && m_n_pbar == 0)'
-        cut_KS = '(!((m_m_pipi > 0.491036 && m_m_pipi < 0.503471) && abs(m_L_svf/m_Lerr_svf) > 2))'
-        cut_Vxy = '(m_Vxy_Dtrks[0] <= 0.55 && m_Vxy_Dtrks[1] <= 0.55 && m_Vxy_Dtrks[2] <= 0.55 && m_Vxy_pip <= 0.55 && m_Vxy_pim <= 0.55)'
-        cut_Vz = '(m_Vz_Dtrks[0] <= 3 && m_Vz_Dtrks[1] <= 3 && m_Vz_Dtrks[2] <= 3 && m_Vz_pip <= 3 && m_Vz_pim <= 3)'
         cut = cut_base + ' && ' + cut_window + ' && ' + cut_num + ' && ' + cut_KS + ' && ' + cut_Vxy + ' && ' + cut_Vz + ' && ' + cut_DDPI
 
     if region == 'rm_Dpipi_signal':
         cut_window = '(m_rm_Dpipi > ' + str(window_low) + ' && m_rm_Dpipi < ' + str(window_up) + ')'
-        cut = cut_window + ' && ' + cut_DDPI
+        cut = cut_window + ' && ' + cut_num + ' && ' + cut_KS + ' && ' + cut_Vxy + ' && ' + cut_Vz + ' && ' + cut_DDPI
 
     if region == 'raw_signal':
         cut_base = '(m_rawm_D > ' + str(width_low) + ' && m_rawm_D < ' + str(width_up) + ')'
-        cut = cut_base + ' && ' + cut_DDPI
+        cut = cut_base + ' && ' + cut_num + ' && ' + cut_KS + ' && ' + cut_Vxy + ' && ' + cut_Vz + ' && ' + cut_DDPI
 
     if region == 'raw_sidebandlow':
         cut_base = '(m_rawm_D > ' + str(width_side_low_low) + '&& m_rawm_D < ' + str(width_side_low_up) + ')'
-        cut = cut_base + ' && ' + cut_DDPI
+        cut = cut_base + ' && ' + cut_num + ' && ' + cut_KS + ' && ' + cut_Vxy + ' && ' + cut_Vz + ' && ' + cut_DDPI
 
     if region == 'raw_sidebandup':
         cut_base = '(m_rawm_D > ' + str(width_side_up_low) + '&& m_rawm_D < ' + str(width_side_up_up) + ')'
-        cut = cut_base + ' && ' + cut_DDPI
+        cut = cut_base + ' && ' + cut_num + ' && ' + cut_KS + ' && ' + cut_Vxy + ' && ' + cut_Vz + ' && ' + cut_DDPI
 
     t = chain.CopyTree(cut)
     t.SaveAs(file_out)

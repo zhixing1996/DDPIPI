@@ -95,10 +95,10 @@ def main():
         print '***************************************start to search***************************************'
         dst_list = search(dst_list, dst_path, '00' + str(runNo))
         print '***************************************searching ending**************************************'
-        if len(dst_list) > 0 and len(dst_list) < 40:
+        if len(dst_list) > 0 and len(dst_list) < 20:
             write_file(ecms, cms, runNo, dst_list)
-        elif len(dst_list) >= 40:
-            dst_list_groups = group_files_by_num(dst_list, 40)
+        elif len(dst_list) >= 20:
+            dst_list_groups = group_files_by_num(dst_list, 20)
             i = 0
             for dst_list_fill in dst_list_groups:
                 write_file(ecms, cms, runNo, dst_list_fill, i)

@@ -137,6 +137,10 @@ def plot(path, leg_title, ecms):
     xmax = 2.7
     xmin = 2.0
     xbins = int((xmax - xmin)/0.005)
+    if ecms > 4700:
+        xmax = 2.9
+        xmin = 2.0
+        xbins = int((xmax - xmin)/0.01)
     content = (xmax - xmin)/xbins * 1000
     ytitle = 'Events/%.1f MeV'%content
     xtitle = 'M(D^{+}#pi_{0}^{-}) (GeV)'

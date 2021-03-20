@@ -29,11 +29,11 @@ do
 
     echo "Begininning of $PARAM_0!"
 
-    python get_info.py $FILE_PATH/data_$PARAM_0\.root $ROOT_PATH/data_$PARAM_0\_signal.root $PARAM_3 STDDmiss_signal
-    echo "STDDmiss signal of $PARAM_0 is done!"
+    # python get_info.py $FILE_PATH/data_$PARAM_0\.root $ROOT_PATH/data_$PARAM_0\_signal.root $PARAM_3 STDDmiss_signal
+    # echo "STDDmiss signal of $PARAM_0 is done!"
 
-    python get_info.py $FILE_PATH/data_$PARAM_0\.root $ROOT_PATH/data_$PARAM_0\_raw.root $PARAM_3 raw_signal
-    echo "STD signal of $PARAM_0 is done!"
+    # python get_info.py $FILE_PATH/data_$PARAM_0\.root $ROOT_PATH/data_$PARAM_0\_raw.root $PARAM_3 raw_signal
+    # echo "STD signal of $PARAM_0 is done!"
 
     ROOT_PATH=/besfs5/groups/cal/dedx/$USER/bes/DDPIPI/v0.2/data/$PARAM_0
     rm -rf $ROOT_PATH/data_$PARAM_0\_side1_low.root $ROOT_PATH/data_$PARAM_0\_side1_up.root

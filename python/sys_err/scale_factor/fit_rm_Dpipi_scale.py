@@ -216,7 +216,9 @@ def fit(path, shape_path, ecms, mode, patch):
             chi2_tot += pull * pull
             nbin += 1
             ytot, avg, eyl, eyh = 0, 0, 0, 0
-    if mode == 'data': pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
+    if mode == 'data':
+        if ecms == 4245 or ecms == 4310: pt = TPaveText(0.6, 0.7, 0.75, 0.85, "BRNDC")
+        else: pt = TPaveText(0.17, 0.17, 0.3, 0.35, "BRNDC")
     else: pt = TPaveText(0.17, 0.7, 0.3, 0.85, "BRNDC")
     set_pavetext(pt)
     pt.Draw()

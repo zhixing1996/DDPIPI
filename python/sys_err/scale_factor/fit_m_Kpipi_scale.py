@@ -147,6 +147,9 @@ def fit(path, ecms, mode, shape_path):
     b = RooRealVar('b', 'b', 0, -99, 99)
     c = RooRealVar('c', 'c', 0, -99, 99)
     d = RooRealVar('c', 'c', 0, -99, 99)
+    if ecms == 4310:
+        a = RooRealVar('a', 'a', 0, -1, 1)
+        b = RooRealVar('b', 'b', 0, -1, 1)
     if ecms == 4420:
         a = RooRealVar('a', 'a', 0, -1, 1)
         b = RooRealVar('b', 'b', 0, -1, 1)
@@ -203,10 +206,16 @@ def fit(path, ecms, mode, shape_path):
     n_param = results.floatParsFinal().getSize()
     pt_title = '#chi^{2}/ndf = '
     pt.AddText(pt_title)
-    pt_title = str(round(chi2_tot, 2)) + '/' + str(nbin - n_param -1) + '=' + str(round(chi2_tot/(nbin - n_param -1), 2))
-    pt.AddText(pt_title)
-    chi2_ndf = chi2_tot/(nbin - n_param -1)
-    print 'chi2 vs ndf = ' + str(round(chi2_tot/(nbin - n_param -1), 2))
+    if not (nbin - n_param -1) == 0:
+        pt_title = str(round(chi2_tot, 2)) + '/' + str(nbin - n_param -1) + '=' + str(round(chi2_tot/(nbin - n_param -1), 2))
+        pt.AddText(pt_title)
+        chi2_ndf = chi2_tot/(nbin - n_param - 1)
+        print 'chi2 vs ndf = ' + str(round(chi2_tot/(nbin - n_param - 1), 2))
+    else:
+        pt_title = str(round(chi2_tot, 2)) + '/' + str(nbin - n_param) + '=' + str(round(chi2_tot/(nbin - n_param), 2))
+        pt.AddText(pt_title)
+        chi2_ndf = chi2_tot/(nbin - n_param)
+        print 'chi2 vs ndf = ' + str(round(chi2_tot/(nbin - n_param), 2))
 
     width_low = 1.86965 - width(ecms)/2.
     width_up = 1.86965 + width(ecms)/2.

@@ -141,9 +141,10 @@ def fit(path, shape_path, ecms, mode, patch):
         if sigma_up > 0.001: sigma_up += 0.001
         mean = RooRealVar('mean', 'mean of gaussian', 0., mean_low, mean_up)
         sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up)
-        if mode == 'data' and (ecms == 4390 or ecms == 4575):
+        if mode == 'data' and (ecms == 4390 or ecms == 4575 or ecms == 4946):
             if ecms == 4390: f_param = open('./txts/param_4380_' + patch + '.txt', 'r')
             if ecms == 4575: f_param = open('./txts/param_4440_' + patch + '.txt', 'r')
+            if ecms == 4946: f_param = open('./txts/param_4914_' + patch + '.txt', 'r')
             lines_param = f_param.readlines()
             for line_param in lines_param:
                 rs_param = line_param.rstrip('\n')
@@ -315,7 +316,7 @@ def fit(path, shape_path, ecms, mode, patch):
         if (is_OK == 3 and status == 0 and chi2_ndf < 3. and ecms > 4221): break
         if (is_OK == 3 and status == 0 and chi2_ndf < 5. and ecms < 4221): break
 
-    # raw_input('enter anything to end...')
+    raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]

@@ -465,6 +465,13 @@ case $option in
            echo "./getInfoData_705.sh" >> Data_Sub_705
            chmod u+x Data_Sub_705
            hep_sub -g physics Data_Sub_705 -o jobs.out -e jobs.err
+
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_706.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_706 .
+           echo "#!/bin/bash" > Data_Sub_706
+           echo "./getInfoData_706.sh" >> Data_Sub_706
+           chmod u+x Data_Sub_706
+           hep_sub -g physics Data_Sub_706 -o jobs.out -e jobs.err
            ;;
 
     0.4.3) echo "Get samples -- applying cuts..."

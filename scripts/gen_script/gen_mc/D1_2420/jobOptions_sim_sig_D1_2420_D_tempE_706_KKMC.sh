@@ -6,16 +6,16 @@ UPLIMIT=$2
 SEED=3020023
 ENERGYPOINT="TEMP_0"
 
-DIR_NAME="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/psipp/TEMP_0/rtraw/"
+DIR_NAME="/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/TEMP_0/rtraw/"
 EVENT_NO=$3
 
-echo "./jobOptions_sim_sig_psipp_PI_PI_TEMP_0.sh [NUM1] [NUM2] [NUM3]"
+echo "./jobOptions_sim_sig_D1_2420_D_TEMP_0.sh [NUM1] [NUM2] [NUM3]"
 echo "[NUM1]: the minimum number range of job generated"
 echo "[NUM2]: the maximum number range of job generated"
 echo "[NUM3]: the number of events in one job"
 
-JOB_NAME="jobOptions_sim_sig_psipp_PI_PI"
-FILE_NAME="Sig_psipp_PI_PI"
+JOB_NAME="jobOptions_sim_sig_D1_2420_D"
+FILE_NAME="Sig_D1_2420_D"
 
 # steer file for simulation
 echo "steer file for simulation"
@@ -30,12 +30,37 @@ do
 
     echo "#include \"\$OFFLINEEVENTLOOPMGRROOT/share/OfflineEventLoopMgr_Option.txt\"" > $SIM_NAME
     echo "" >> $SIM_NAME
+    echo "//**************job options for generator (KKMC)************************" >> $SIM_NAME
+    echo "#include \"\$KKMCROOT/share/jobOptions_KKMC.txt\"" >> $SIM_NAME
+    echo "KKMC.CMSEnergy = TEMP_3;" >> $SIM_NAME
+    echo "KKMC.BeamEnergySpread = 0.0011;" >> $SIM_NAME
+    echo "KKMC.NumberOfEventPrinted = 1;" >> $SIM_NAME
+    echo "KKMC.GeneratePsi4260 = true;" >> $SIM_NAME
+    echo "KKMC.ParticleDecayThroughEvtGen = true;" >> $SIM_NAME
+    echo "KKMC.ThresholdCut = TEMP_6;" >> $SIM_NAME # 4.35826 - 3*74e-3
+    echo "KKMC.RadiationCorrection = 1;" >> $SIM_NAME
+    # echo "KKMC.TagISR = 1;" >> $SIM_NAME
+    echo "KKMC.TagFSR = 1;" >> $SIM_NAME
+    echo "KKMC.ModeIndexExpXS = -2;" >> $SIM_NAME
+    echo "KKMC.IHVP = 1;" >> $SIM_NAME
+
+    # echo "KKMC.CMSEnergy = TEMP_3;" >> $SIM_NAME
+    # echo "KKMC.BeamEnergySpread=0.0011;" >> $SIM_NAME
+    # echo "KKMC.NumberOfEventPrinted=10;" >> $SIM_NAME
+    # echo "KKMC.GeneratePsi4260=true;" >> $SIM_NAME
+    # echo "KKMC.ResParameterPs6 = {TEMP_3, 74e-3, 0.47e-6};" >> $SIM_NAME
+    # echo "KKMC.ParticleDecayThroughEvtGen = true;" >> $SIM_NAME
+    # echo "KKMC.ThresholdCut = TEMP_6;" >> $SIM_NAME # 4.35826 - 3*74e-3
+    # echo "KKMC.RadiationCorrection = 1;" >> $SIM_NAME
+    # echo "KKMC.TagISR = 1;" >> $SIM_NAME
+    # echo "KKMC.TagFSR = 1;" >> $SIM_NAME
+
+    echo "" >> $SIM_NAME
     echo "//**************job options for EvtGen************************" >> $SIM_NAME
     echo "#include \"\$BESEVTGENROOT/share/BesEvtGen.txt\"" >> $SIM_NAME
-    echo "EvtDecay.userDecayTableName = \"./ConExc_psipp_PI_PI.dec\";" >> $SIM_NAME
-    # echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/pdt_703p01.table\";" >> $SIM_NAME
+    echo "EvtDecay.userDecayTableName = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/psi4260_D1_2420_D.dec\";" >> $SIM_NAME
     echo "EvtDecay.PdtTableDir = \"$HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/decay/pdt_705.table\";" >> $SIM_NAME
-    echo "EvtDecay.ParentParticle = \"vpho\";" >> $SIM_NAME
+    echo "EvtDecay.statDecays = true;" >> $SIM_NAME
     echo "" >> $SIM_NAME
     echo "//**************job options for random number************************" >> $SIM_NAME
     echo "BesRndmGenSvc.RndmSeed = $SEED;" >> $SIM_NAME
@@ -52,6 +77,7 @@ do
     echo "#include \"\$ROOTIOROOT/share/jobOptions_Digi2Root.txt\"" >> $SIM_NAME
     echo "RootCnvSvc.digiRootOutputFile = \"$DIR_NAME$OUTPUT_NAME\";" >> $SIM_NAME
     echo "" >> $SIM_NAME
+
     echo "// OUTPUT PRINTOUT LEVEL" >> $SIM_NAME
     echo "// Set output level threshold (2=DEBUG, 3=INFO, 4=WARNING, 5=ERROR, 6=FATAL )" >> $SIM_NAME
     echo "MessageSvc.OutputLevel  = 5;" >> $SIM_NAME

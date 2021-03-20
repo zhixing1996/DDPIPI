@@ -173,9 +173,9 @@ def fit(path, shape_path, ecms, mode, patch):
             b = RooRealVar('b', 'b', 0, -9, 9)
             c = RooRealVar('c', 'c', 0, -9, 9)
         if ecms == 4600:
-            a = RooRealVar('a', 'a', 0, -1, 1)
-            b = RooRealVar('b', 'b', 0, -1, 1)
-            c = RooRealVar('c', 'c', 0, -1, 1)
+            a = RooRealVar('a', 'a', 0, -9, 9)
+            b = RooRealVar('b', 'b', 0, -9, 9)
+            c = RooRealVar('c', 'c', 0, -9, 9)
         if ecms == 4440:
             a = RooRealVar('a', 'a', 0, -3, 1)
             b = RooRealVar('b', 'b', 0, -3, 1)

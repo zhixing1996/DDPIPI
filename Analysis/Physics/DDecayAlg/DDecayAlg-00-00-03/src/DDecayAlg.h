@@ -95,6 +95,7 @@ class DDecay : public Algorithm {
         bool stat_saveOthershws;
         bool stat_fitpi0;
         bool stat_fitpi0_STDDmiss;
+        bool stat_fitSecondVertex;
         bool stat_fitSecondVertex_STDDmiss;
         bool stat_fitSecondVertex_Dtrk;
         bool has_lep;
@@ -207,11 +208,13 @@ class DDecay : public Algorithm {
         NTuple::Array<int> m_pdgid;
         NTuple::Array<int> m_motheridx;
         NTuple::Matrix<double> m_p4_mc_all;
-        // for sys error
-        NTuple::Item<double> m_chi2_svf_Dtrk;
-        NTuple::Item<double> m_ctau_svf_Dtrk;
-        NTuple::Item<double> m_L_svf_Dtrk;
-        NTuple::Item<double> m_Lerr_svf_Dtrk;
+        NTuple::Item<int> m_n_pipi_combination;
+        NTuple::Array<double> m_chi2_svf;
+        NTuple::Array<double> m_ctau_svf;
+        NTuple::Array<double> m_L_svf;
+        NTuple::Array<double> m_Lerr_svf;
+        NTuple::Array<int> m_n_pip_svf;
+        NTuple::Array<int> m_n_pim_svf;
 
         // Ntuple2 info
         NTuple::Tuple* m_tuple2;
@@ -374,7 +377,7 @@ class DDecay : public Algorithm {
         double fitKM_STDDmiss_side4_low(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double m_Dtag, double m_Dmiss);
         double fitKM_STDDmiss_side4_up(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus, VertexParameter &birth, double m_Dtag, double m_Dmiss);
         bool fitSecondVertex_STDDmiss(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus);
-        bool fitSecondVertex_Dtrk(WTrackParameter &Dpiplus, WTrackParameter &Dpiminus);
+        bool fitSecondVertex(VWTrkPara &vwtrkpara_piplus, VWTrkPara &vwtrkpara_piminus, int n_piplus, int n_piminus);
         bool fitpi0(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);
         bool fitpi0_STDDmiss(VWTrkPara &vwtrkpara_photons, VertexParameter &birth, HepLorentzVector &pD);
         bool saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_photon, VertexParameter &birth);
