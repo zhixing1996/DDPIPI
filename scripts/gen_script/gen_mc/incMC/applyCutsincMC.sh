@@ -27,6 +27,7 @@ do
     echo "Begininning of $PARAM_0!"
 
     python apply_cuts.py $SOURCE_PATH/incMC_$PARAM_1\_$PARAM_0\_raw.root $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_raw_before.root $PARAM_0 before raw_signal
+    python apply_cuts.py $SOURCE_PATH/incMC_$PARAM_1\_$PARAM_0\_raw.root $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_raw_after.root $PARAM_0 after raw_signal
     echo "STD signal of $PARAM_0 is done!"
 
     python apply_cuts.py $SOURCE_PATH/incMC_$PARAM_1\_$PARAM_0\_signal.root $ROOT_PATH/incMC_$PARAM_1\_$PARAM_0\_before.root $PARAM_0 before STDDmiss_signal

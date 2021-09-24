@@ -613,6 +613,8 @@ add  p Meson       D_2*0               425  2.4611          0.043   0.309    0  
 add  p Meson       anti-D_2*0         -425  2.4611          0.043   0.309    0      4       0 0
 add  p Meson       psi(3770)         30443  3.7737          0.0272  0.030   0       2       0 0
 add  p Meson       psi(3D3)        9033443  3.84271         0.00279 0.030   0       6       0 887
+add  p Meson       X(3842)          777777  3.84271         0.0028  0.030   0       6       0 0
+add  p Meson       chic0(3860)      888888  3.862           0.201   0.030   0       0       0 0
 
 *      |           |                     |  |               |       |       |       |       | + KC=Lund internal code
 *      |           |                     |  |               |       |       |       |       + T=c*lifetime (mm, alternative to 
