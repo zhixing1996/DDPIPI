@@ -36,6 +36,7 @@ def search(allfile, root, target):
     for item in items:
         if item[0] == '.':
             continue
+        if 'tmp' in item: continue
         path = os.path.join(root, item)
         if os.path.isdir(path):
             search(allfile, path, target)

@@ -35,10 +35,8 @@ def cal_diff():
     f_sys_err = open(path_sys_err, 'w')
 
     dic = {}
-    # TYPES = ['background_shape', 'BF', 'D1_2420_shape', 'fit_range', 'IntLum', 'ISR', 'K_p', 'm_pipi', 'omega', 'PID', 'scale_factor', 'tracking', 'VP', 'VrVz', 'width', 'window']
-    # TYPES = ['background_shape', 'D1_2420_shape', 'fit_range', 'ISR', 'K_p', 'm_pipi', 'omega', 'scale_factor', 'VrVz', 'width', 'window']
-    TYPES = ['background_shape', 'BF', 'D1_2420_shape', 'fit_range', 'IntLum', 'ISR', 'K_p', 'm_pipi', 'omega', 'PID', 'psipp_shape', 'scale_factor', 'tracking', 'VP', 'VrVz', 'width', 'window']
-    ECMS = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
+    TYPES = ['background_shape', 'BW', 'BF', 'D1_2420_shape', 'fit_range', 'IntLum', 'ISR', 'K_p', 'm_pipi', 'omega', 'PID', 'psipp_shape', 'scale_factor', 'tracking', 'VP', 'VrVz', 'width', 'window', 'HELAMP']
+    ECMS = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700, 4740, 4750, 4780, 4840, 4914, 4946]
     for ECM in ECMS:
         SYS = []
         for TYPE in TYPES:

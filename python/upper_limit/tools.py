@@ -318,6 +318,30 @@ def param_rm_Dpipi(ecms):
         MEAN_LOW = -0.005
         MEAN_UP = 0.005
         SIGMA_UP = 0.008
+    elif int(ecms == 4740):
+        MEAN_LOW = -0.005
+        MEAN_UP = 0.005
+        SIGMA_UP = 0.002
+    elif int(ecms == 4750):
+        MEAN_LOW = -0.005
+        MEAN_UP = 0.005
+        SIGMA_UP = 0.002
+    elif int(ecms == 4780):
+        MEAN_LOW = -0.002
+        MEAN_UP = 0.007
+        SIGMA_UP = 0.004
+    elif int(ecms == 4840):
+        MEAN_LOW = -0.003
+        MEAN_UP = 0.005
+        SIGMA_UP = 0.008
+    elif int(ecms == 4914):
+        MEAN_LOW = -0.003
+        MEAN_UP = 0.005
+        SIGMA_UP = 0.01
+    elif int(ecms == 4946):
+        MEAN_LOW = -0.003
+        MEAN_UP = 0.005
+        SIGMA_UP = 0.006
     return MEAN_LOW, MEAN_UP, SIGMA_UP
 
 # upper limit parameter of rm(Dpipi) fit
@@ -336,11 +360,11 @@ def upl_rm_Dpipi(ecms):
     elif int(ecms == 4210):
         N_OFFSET = 0
         STEP_SIZE = 0.5
-        STEP_N = 600
+        STEP_N = 400
     elif int(ecms == 4220):
         N_OFFSET = 0
         STEP_SIZE = 0.4
-        STEP_N = 900
+        STEP_N = 500
     elif int(ecms == 4237):
         N_OFFSET = 0
         STEP_SIZE = 0.2
@@ -374,6 +398,10 @@ def upl_rm_Dpipi(ecms):
         STEP_SIZE = 0.5
         STEP_N = 800
     elif int(ecms == 4610):
+        N_OFFSET = 0
+        STEP_SIZE = 0.8
+        STEP_N = 800
+    elif int(ecms == 4946):
         N_OFFSET = 0
         STEP_SIZE = 0.8
         STEP_N = 800
@@ -574,6 +602,18 @@ def ECMS(ecms):
         ecm = 4.68188
     if int(ecms) == 4700:
         ecm = 4.70044
+    if int(ecms) == 4740:
+        ecm = 4.73967
+    if int(ecms) == 4750:
+        ecm = 4.75010
+    if int(ecms) == 4780:
+        ecm = 4.78038
+    if int(ecms) == 4840:
+        ecm = 4.84211
+    if int(ecms) == 4914:
+        ecm = 4.91802
+    if int(ecms) == 4946:
+        ecm = 4.95030
     return ecm
 
 # luminosity
@@ -640,6 +680,18 @@ def luminosity(ecms):
         LUM = 528.46 + 1103.27
     if int(ecms) == 4700:
         LUM = 526.20
+    if int(ecms) == 4740:
+        LUM = 143.28
+    if int(ecms) == 4750:
+        LUM = 339.6
+    if int(ecms) == 4780:
+        LUM = 493.83
+    if int(ecms) == 4840:
+        LUM = 514.07
+    if int(ecms) == 4914:
+        LUM = 202.43
+    if int(ecms) == 4946:
+        LUM = 153.7
     return LUM
 
 # range of RM(D/Dmiss)
