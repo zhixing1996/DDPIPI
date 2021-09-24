@@ -127,6 +127,7 @@ def fit(path, ecms, mode, shape_path):
     xmin = 1.82
     xmax = 1.92
     xbins = 50
+    if mode == 'data' and (ecms == 4245 or ecms == 4310): xbins = 25
     m_Kpipi = RooRealVar('rawm_D', 'rawm_D', xmin, xmax)
     data = RooDataSet('data', 'dataset', t_data, RooArgSet(m_Kpipi))
 

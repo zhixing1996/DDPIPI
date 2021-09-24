@@ -124,6 +124,7 @@ def fit(path, shape_path, ecms, mode, patch):
     xmin = 1.75
     xmax = 1.95
     xbins = 100
+    if ecms == 4245 or ecms == 4280 or ecms == 4310 or ecms == 4575: xbins = 50
     rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
     data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
 
@@ -169,6 +170,9 @@ def fit(path, shape_path, ecms, mode, patch):
     if ecms == 4640:
         a = RooRealVar('a', 'a', 0, -1, 1)
         b = RooRealVar('b', 'b', 0, -1, 1)
+    if ecms == 4190:
+        a = RooRealVar('a', 'a', 0, -2, 1)
+        b = RooRealVar('b', 'b', 0, -2, 1)
     c = RooRealVar('c', 'c', 0, -99, 99)
     d = RooRealVar('c', 'c', 0, -99, 99)
     bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
