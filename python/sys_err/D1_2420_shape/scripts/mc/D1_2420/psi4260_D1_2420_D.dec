@@ -4,10 +4,10 @@ Alias A_D_1+ D_1+
 Alias A_D_1- D_1-
 
 Decay  psi(4260)
-1    A_D_1-   D+   HELAMP 0 0 1 0 0 0;
-1    D_1-   A_D+   HELAMP 0 0 1 0 0 0;
-1    A_D_1+   D-   HELAMP 0 0 1 0 0 0;
-1    D_1+   A_D-   HELAMP 0 0 1 0 0 0;
+1    A_D_1-   D+   PHSP;
+1    D_1-   A_D+   PHSP;
+1    A_D_1+   D-   PHSP;
+1    D_1+   A_D-   PHSP;
 Enddecay
 
 Decay A_D_1+
