@@ -1,4 +1,5 @@
 #!/bin/sh
+PATCH=$1
 cat ECMS_Base | while read line
 do
     str=$line
@@ -22,7 +23,6 @@ do
     fi
     cd $HOME/bes/DDPIPI/v0.2/python/sys_err/omega
     echo "Begininning of $PARAM_0!"
-    python fit_m_Kpipi.py $PARAM_0 data
-    python fit_m_Kpipi.py $PARAM_0 MC
+    python convert_root.py $PARAM_0
     echo "$PARAM_0 is done!"
 done

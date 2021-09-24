@@ -10,11 +10,12 @@ usage() {
     printf "\n\t%5-5s\n" "./analysis.sh [OPTION]"
     printf "\nOPTIONS\n"
 
-    printf "\n\t%-9s  %-40s\n" "0.1"   "[Get system uncertainties]"
-    printf "\n\t%-9s  %-40s\n" "0.1.1" "Mix MC -- mix MC according to changed subprocesses ratio"
-    printf "\n\t%-9s  %-40s\n" "0.1.2" "Fit distributions -- fit invariant mass of Kpipi"
-    printf "\n\t%-9s  %-40s\n" "0.1.3" "Fit distributions -- fit recoiling mass of Dpipi"
-    printf "\n\t%-9s  %-40s\n" "0.1.4" "Calculate numbers -- calculate cross section of DDpipi and systerm uncertainties"
+    printf "\n\t%-9s  %-40s\n" "0.1"   "[Sample omega_i]"
+    printf "\n\t%-9s  %-40s\n" "0.1.1" "Sample -- sample omega_i according to convariance matrix"
+    printf "\n\t%-9s  %-40s\n" "0.1.2" "Calculate Numbers -- calculate difference between cross sections"
+    printf "\n\t%-9s  %-40s\n" "0.1.3" "Convert ROOT -- convert ROOT files"
+    printf "\n\t%-9s  %-40s\n" "0.1.4" "Fit Distributions -- fit pulls"
+    printf "\n\t%-9s  %-40s\n" "0.1.5" "Calculate Numbers -- calculate systematic uncertainty"
 
     printf "\n\t%-9s  %-40s\n" ""      ""
     printf "\n\n"
@@ -30,37 +31,35 @@ fi
 
 case $option in
 
-    # ------------------------------
-    #  0.1 Get systerm uncertainties
-    # ------------------------------
+    # -------------------
+    #  0.1 Sample omega_i
+    # -------------------
 
-    0.1) echo "Getting systerm uncertainties..."
-         echo "--> Samples: data, signal MC, PHSP MC"
-         echo "--> Selection Algorithm Version: DDecayAlg-00-00-03"
+    0.1) echo "Sample omega_i..."
          ;;
 
-    0.1.1) echo "Mix MC -- mixing MC according to changed subprocesses ratio..."
+    0.1.1) echo "Sample -- sampling omega_i according to convariance matrix..."
            cd scripts/ana
-           ./mixMC.sh round3
-           ./mixROOT.sh round3
+           ./sampleOmega.sh round2
            ;;
 
-    0.1.2) echo "Fit distributions -- fitting invariant mass of Kpipi..."
+    0.1.2) echo "Calculate Numbers -- calculating difference between cross sections..."
            cd scripts/ana
-           ./factorMKpipi.sh round3
+           ./calDiff.sh round2
            ;;
 
-    0.1.3) echo "Fit distributions -- fitting recoiling mass of Dpipi..."
+    0.1.3) echo "Convert ROOT -- converting ROOT files..."
            cd scripts/ana
-           ./fitRMDpipi.sh round3
+           ./convertROOT.sh round2
            ;;
 
-    0.1.4) echo "Calculate numbers -- calculating cross section of DDpipi and systerm uncertainties..."
+    0.1.4) echo "Fit Distributions -- fitting pulls..."
            cd scripts/ana
-           ./calXS.sh round3
-           cd -
-           ./format_xs.py round3
-           ./cal_diff.py round3
+           ./fitPull.sh
+           ;;
+
+    0.1.5) echo "Calculate Numbers -- calculating systematic uncertainty..."
+           ./format_diff.py && ./make_tex.py
            ;;
 
 esac

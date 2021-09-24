@@ -1,6 +1,6 @@
 #!/bin/sh
 PATCH=$1
-tac ECMS_Base | while read line
+cat ECMS_Base | while read line
 do
     str=$line
     OLD_IFS=$IFS
@@ -23,16 +23,7 @@ do
     fi
     cd $HOME/bes/DDPIPI/v0.2/python/sys_err/omega
     echo "Begininning of $PARAM_0!"
-    thresh=4316
-    if [ $PARAM_0 -gt $thresh ]; then
-        python fit_rm_Dpipi.py $PARAM_0 D1_2420 $PATCH
-        # python fit_rm_Dpipi_sideband.py $PARAM_0 D1_2420 $PATCH
-    fi
-    # python fit_rm_Dpipi.py $PARAM_0 data $PATCH
-    python fit_rm_Dpipi.py $PARAM_0 psipp $PATCH
-    python fit_rm_Dpipi.py $PARAM_0 DDPIPI $PATCH
-    # python fit_rm_Dpipi_sideband.py $PARAM_0 data $PATCH
-    # python fit_rm_Dpipi_sideband.py $PARAM_0 psipp $PATCH
-    # python fit_rm_Dpipi_sideband.py $PARAM_0 DDPIPI $PATCH
+    rm -rf /besfs5/users/$USER/bes/DDPIPI/v0.2/ana/sys_err/omega/$PARAM_0/*
+    python sample.py $PARAM_0 $PATCH
     echo "$PARAM_0 is done!"
 done

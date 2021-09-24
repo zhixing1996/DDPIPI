@@ -1,7 +1,5 @@
 #!/bin/sh
 PATCH=$1
-mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/omega
-mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/omega
 cat ECMS_Base | while read line
 do
     str=$line
@@ -14,6 +12,7 @@ do
     PARAM_2=${arr[2]} # ruNo up
     PARAM_3=${arr[3]} # float energy poit
     PARAM_4=${arr[4]} # luminosity
+    PARAM_5=${arr[5]} # dst path
     shortbar1="-1"
     shortbar2="-2"
     if [[ $PARAM_0 == *$shortbar1* ]]; then
@@ -22,15 +21,8 @@ do
     if [[ $PARAM_0 == *$shortbar2* ]]; then
         continue
     fi
-    echo "Begininning of $PARAM_0!"
     cd $HOME/bes/DDPIPI/v0.2/python/sys_err/omega
-    threshold=4316
-    if [[ $PARAM_0 -gt $threshold ]]; then
-        python mix_mc.py $PARAM_0 MC_signal D1_2420 $PATCH
-    fi
-    python mix_mc.py $PARAM_0 MC_signal psipp $PATCH
-    python mix_mc.py $PARAM_0 MC_signal DDPIPI $PATCH
-    python mix_mc.py $PARAM_0 MC_mix none $PATCH
-    python mix_mc.py $PARAM_0 raw none $PATCH
+    echo "Begininning of $PARAM_0!"
+    python cal_diff.py $PARAM_0 $PATCH
     echo "$PARAM_0 is done!"
 done

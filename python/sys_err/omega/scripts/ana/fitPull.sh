@@ -1,7 +1,4 @@
 #!/bin/sh
-PATCH=$1
-mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/ana/shape/sys_err/omega
-mkdir -p /besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/sys_err/omega
 cat ECMS_Base | while read line
 do
     str=$line
@@ -25,6 +22,6 @@ do
     fi
     cd $HOME/bes/DDPIPI/v0.2/python/sys_err/omega
     echo "Begininning of $PARAM_0!"
-    python mix_root.py $PARAM_0 raw $PATCH
+    python fit_pull.py $PARAM_0
     echo "$PARAM_0 is done!"
 done
