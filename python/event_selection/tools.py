@@ -29,6 +29,12 @@ def scale_factor(ecms, mode):
         if mode == 'qq':
             XS = 18300.0*0.55
             Evt = 20000000.0
+        if mode == 'DDPIPI':
+            XS = 2.92*BR
+            Evt = 100000.0
+        if mode == 'DDPI':
+            XS = 31.79*BR
+            Evt = 100000.0
     if int(ecms) == 4360:
         lum = 543.9
         if mode == 'D1_2420':
@@ -67,6 +73,12 @@ def scale_factor(ecms, mode):
         if mode == 'hadrons':
             XS = 249.9
             Evt = 190000.0
+        if mode == 'DDPIPI':
+            XS = 46.96*BR
+            Evt = 50000.0
+        if mode == 'DDPI':
+            XS = 305.59*BR
+            Evt = 50000.0
     if int(ecms) == 4420:
         lum = 46.80 + 1043.9
         if mode == 'D1_2420':
@@ -93,6 +105,12 @@ def scale_factor(ecms, mode):
         if mode == 'digamma':
             XS = 18600.0
             Evt = 18000000.0
+        if mode == 'DDPIPI':
+            XS = 63.32*BR
+            Evt = 100000.0
+        if mode == 'DDPI':
+            XS = 670.75*BR
+            Evt = 100000.0
     if int(ecms) == 4600:
         lum = 586.9
         if mode == 'D1_2420':
@@ -125,6 +143,12 @@ def scale_factor(ecms, mode):
         if mode == 'LL':
             XS = 350.0
             Evt = 500000.0
+        if mode == 'DDPIPI':
+            XS = 32.77*BR
+            Evt = 50000.0
+        if mode == 'DDPI':
+            XS = 131.56*BR
+            Evt = 50000.0
     ratio = XS*lum/Evt
     return ratio
 

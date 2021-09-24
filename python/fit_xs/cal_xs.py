@@ -185,6 +185,7 @@ def xs(ecms, patch, signal_path, sideband_path):
     else:
         flag_DDPIPI = 1
         eff_ISR_VP_DDPIPI = eff_DDPIPI*ISR_DDPIPI*omega_DDPIPI*VP*factor_K_p*factor_m_pipi*factor_VrVz*factor_m_Kpipi*factor_rm_Dpipi
+    print('sum of weighted ISR*eff: {}'.format(eff_D1_2420*ISR_D1_2420*omega_D1_2420 + eff_psipp*ISR_psipp*omega_psipp + eff_DDPIPI*ISR_DDPIPI*omega_DDPIPI))
     xs = (N_data - N_data_sideband/2.)/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
     xs_err = (sqrt(Err_data*Err_data + (Err_data_sideband/2.)*(Err_data_sideband/2.)))/(2*(flag_D1_2420*eff_ISR_VP_D1_2420 + flag_psipp*eff_ISR_VP_psipp + flag_DDPIPI*eff_ISR_VP_DDPIPI)*Br*lum)
 

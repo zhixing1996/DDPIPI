@@ -84,7 +84,7 @@ def plot(data_path, pt_title, ecms, xmin, xmax, xbins):
     set_canvas_style(mbc)
     content = (xmax - xmin)/xbins * 1000
     ytitle = 'Events/%.1f MeV'%content
-    xtitle = 'M(K^{+}#pi^{+}#pi^{+})(GeV)'
+    xtitle = 'M(K^{-}#pi^{+}#pi^{+})(GeV)'
     h_data = TH1F('data', 'data', xbins, xmin, float(xmax))
     
     set_histo_style(h_data, xtitle, ytitle)
@@ -111,7 +111,7 @@ if __name__ == '__main__':
         sys.exit()
     ecms = int(args[0])
 
-    data_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_raw.root'
+    data_path = '/besfs5/groups/cal/dedx/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_raw.root'
     pt_title = str(ecms) + ' MeV'
     xmin = 1.84
     xmax = 1.89

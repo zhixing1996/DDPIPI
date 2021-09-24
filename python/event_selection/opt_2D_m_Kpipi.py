@@ -136,7 +136,7 @@ def plot(path, pt_title, ecms):
 
     t = [t_incMC, t_DDPIPI, t_DDPI]
     h_FOM = cal_significance(t, ecms)
-    h_FOM.Draw('col')
+    h_FOM.Draw('colz')
     
     pt = TPaveText(0.6, 0.8, 0.85, 0.85, "BRNDC")
     set_pavetext(pt)
@@ -160,7 +160,7 @@ def main():
 
     path = []
     if int(ecms) == 4230:
-        path.append('/scratchfs/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4230/incMC_DD_4230_raw.root')
+        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4230/rootfile/incMC_DD_4230_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4230/sigMC_D_D_PI_PI_4230_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPI/4230/sigMC_D_D_PI_4230_raw.root')
         pt_title = str(ecms) + ' MeV'
@@ -168,7 +168,7 @@ def main():
 
     path = []
     if int(ecms) == 4360:
-        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_raw.root')
+        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile/incMC_DD_4360_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/4360/sigMC_D_D_PI_PI_4360_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/DDPI/4360/sigMC_D_D_PI_4360_raw.root')
         pt_title = str(ecms) + ' MeV'

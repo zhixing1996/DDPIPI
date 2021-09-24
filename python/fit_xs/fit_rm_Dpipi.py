@@ -125,6 +125,7 @@ def fit(path, shape_path, ecms, mode, patch):
     xmin = 1.75
     xmax = 1.95
     xbins = 100
+    if mode == 'data' and (ecms == 4245 or ecms == 4280 or ecms == 4310 or ecms == 4575): xbins = 50
     rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
     data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
 
@@ -141,9 +142,15 @@ def fit(path, shape_path, ecms, mode, patch):
         if sigma_up > 0.001: sigma_up += 0.001
         mean = RooRealVar('mean', 'mean of gaussian', 0., mean_low, mean_up)
         sigma = RooRealVar('sigma', 'sigma of gaussian', 0.001, 0, sigma_up)
-        if mode == 'data' and (ecms == 4390 or ecms == 4575 or ecms == 4946):
+        if mode == 'data' and (ecms == 4245 or ecms == 4390 or ecms == 4575 or ecms == 4946 or ecms == 4237 or ecms == 4220 or ecms == 4210 or ecms == 4200 or ecms == 4190):
+            if ecms == 4190: f_param = open('./txts/param_4230_' + patch + '.txt', 'r')
+            if ecms == 4200: f_param = open('./txts/param_4230_' + patch + '.txt', 'r')
+            if ecms == 4210: f_param = open('./txts/param_4230_' + patch + '.txt', 'r')
+            if ecms == 4220: f_param = open('./txts/param_4230_' + patch + '.txt', 'r')
+            if ecms == 4237: f_param = open('./txts/param_4230_' + patch + '.txt', 'r')
+            if ecms == 4245: f_param = open('./txts/param_4246_' + patch + '.txt', 'r')
             if ecms == 4390: f_param = open('./txts/param_4380_' + patch + '.txt', 'r')
-            if ecms == 4575: f_param = open('./txts/param_4440_' + patch + '.txt', 'r')
+            if ecms == 4575 or ecms == 4530: f_param = open('./txts/param_4440_' + patch + '.txt', 'r')
             if ecms == 4946: f_param = open('./txts/param_4914_' + patch + '.txt', 'r')
             lines_param = f_param.readlines()
             for line_param in lines_param:
@@ -167,6 +174,9 @@ def fit(path, shape_path, ecms, mode, patch):
         # background
         a = RooRealVar('a', 'a', 0, -99, 99)
         b = RooRealVar('b', 'b', 0, -99, 99)
+        if ecms == 4780:
+            a = RooRealVar('a', 'a', 0, -1, 1)
+            b = RooRealVar('b', 'b', 0, -1, 1)
         if ecms == 4700:
             a = RooRealVar('a', 'a', 0, -1, 1)
             b = RooRealVar('b', 'b', 0, -1, 1)
@@ -192,7 +202,7 @@ def fit(path, shape_path, ecms, mode, patch):
         if ecms == 4237 or ecms == 4245 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4360 or ecms == 4390:
             bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
             n_free = 5
-        if ecms == 4290 or ecms == 4315 or ecms == 4340 or ecms == 4575 or ecms == 4620:
+        if ecms == 4290 or ecms == 4315 or ecms == 4340 or ecms == 4575 or ecms == 4620 or ecms == 4740 or ecms == 4750 or ecms == 4780 or ecms == 4840:
             bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a))
             n_free = 5
 
@@ -316,7 +326,7 @@ def fit(path, shape_path, ecms, mode, patch):
         if (is_OK == 3 and status == 0 and chi2_ndf < 3. and ecms > 4221): break
         if (is_OK == 3 and status == 0 and chi2_ndf < 5. and ecms < 4221): break
 
-    raw_input('enter anything to end...')
+    # raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]

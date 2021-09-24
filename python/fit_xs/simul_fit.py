@@ -433,7 +433,7 @@ def fit(ecms, patch, path):
     name.append('Data')
     name.append('Backgrounds')
     if ecms > 4316:
-        name.append('D_{1}(2420)^{+}D^{-}')
+        name.append('D_{1}(2420)^{-}D^{+}')
     name.append('#pi^{+}#pi^{-}#psi(3770)')
     name.append('#pi^{+}#pi^{-}D^{+}D^{-}')
     name.append('Total Fit')
@@ -577,7 +577,7 @@ def fit(ecms, patch, path):
     name.append('Data')
     name.append('Backgrounds')
     if ecms > 4316:
-        name.append('D_{1}(2420)^{+}D^{-}')
+        name.append('D_{1}(2420)^{-}D^{+}')
     name.append('#pi^{+}#pi^{-}#psi(3770)')
     name.append('#pi^{+}#pi^{-}D^{+}D^{-}')
     name.append('Total Fit')
@@ -635,6 +635,21 @@ def fit(ecms, patch, path):
     canvas_name = './figs/simul_fit_' + str(ecms) + '_' + patch + '.pdf'
     c.SaveAs(canvas_name)
 
+    mat_cov = fit_result.covarianceMatrix()
+    with open('./txts/omega_info_' + str(ecms) + '.txt', 'w') as f:
+        if ecms > 4316:
+            # xs_tot = xs_D1_2420 + xs_psipp + xs_DDPIPI
+            out = str(int(n2420.getVal())) + ' ' + str(int(npsipp.getVal())) + ' ' + str(int(nDDPIPI.getVal())) + ' '
+            out += str(mat_cov[3][3]) + ' ' + str(mat_cov[3][4]) + ' ' + str(mat_cov[3][5]) + ' '
+            out += str(mat_cov[4][3]) + ' ' + str(mat_cov[4][4]) + ' ' + str(mat_cov[4][5]) + ' '
+            out += str(mat_cov[5][3]) + ' ' + str(mat_cov[5][4]) + ' ' + str(mat_cov[5][5]) + '\n'
+            f.write(out)
+        else:
+            # xs_tot = xs_psipp + xs_DDPIPI
+            out = str(int(npsipp.getVal())) + ' ' + str(int(nDDPIPI.getVal())) + ' '
+            out += str(mat_cov[1][1]) + ' ' + str(mat_cov[1][2]) + ' '
+            out += str(mat_cov[2][1]) + ' ' + str(mat_cov[2][2]) + '\n'
+            f.write(out)
     with open('./txts/correlation_coefficiency_' + str(ecms) + '.txt', 'w') as f:
         if ecms > 4316: f.write(str(xs_D1_2420) + ' ')
         f.write(str(xs_psipp) + ' ')
@@ -654,7 +669,7 @@ def fit(ecms, patch, path):
             f.write(str(fit_result.correlation(nDDPIPI, nDDPIPI)) + ' ')
             f.write(str(fit_result.correlation(npsipp, nDDPIPI)))
 
-    # raw_input('Enter anything to end...')
+    raw_input('Enter anything to end...')
 
 def main():
     args = sys.argv[1:]

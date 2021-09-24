@@ -91,7 +91,8 @@ def cal_significance(t, ecms):
             m_Kpipi_up = m_D + w_m_Kpipi_max/2.
             rm_Dpipi_low = m_D - w_rm_Dpipi_max/2.
             rm_Dpipi_up = m_D + w_rm_Dpipi_max/2.
-            n_incMC1 = float(t1.GetEntries('(m_rawm_D > %.5f && m_rawm_D < %.5f) && (m_rm_Dpipi > %.5f && m_rm_Dpipi < %.5f)' %(m_Kpipi_low, m_Kpipi_up, rm_Dpipi_low, rm_Dpipi_up))) * scale_factor(ecms, 'qq')
+            if ecms != 4600: n_incMC1 = float(t1.GetEntries('(m_rawm_D > %.5f && m_rawm_D < %.5f) && (m_rm_Dpipi > %.5f && m_rm_Dpipi < %.5f)' %(m_Kpipi_low, m_Kpipi_up, rm_Dpipi_low, rm_Dpipi_up))) * scale_factor(ecms, 'qq')
+            else: n_incMC1 = 0
             n_incMC2 = float(t2.GetEntries('(m_rawm_D > %.5f && m_rawm_D < %.5f) && (m_rm_Dpipi > %.5f && m_rm_Dpipi < %.5f)' %(m_Kpipi_low, m_Kpipi_up, rm_Dpipi_low, rm_Dpipi_up))) * scale_factor(ecms, 'DD')
             if ecms > 4230:
                 n_sigMC1 = float(t3.GetEntries('(m_rawm_D > %.5f && m_rawm_D < %.5f) && (m_rm_Dpipi > %.5f && m_rm_Dpipi < %.5f)' %(m_Kpipi_low, m_Kpipi_up, rm_Dpipi_low, rm_Dpipi_up))) * scale_factor(ecms, 'D1_2420')
@@ -148,7 +149,7 @@ def plot(path, pt_title, ecms):
     else:
         t = [t_incMC1, t_incMC2, t_sigMC1]
     h_FOM = cal_significance(t, ecms)
-    h_FOM.Draw('col')
+    h_FOM.Draw('colz')
     
     pt = TPaveText(0.6, 0.8, 0.85, 0.85, "BRNDC")
     set_pavetext(pt)
@@ -172,16 +173,16 @@ def main():
 
     path = []
     if int(ecms) == 4230:
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4230/incMC_qq_4230_raw.root')
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4230/incMC_DD_4230_raw.root')
+        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4230/rootfile/incMC_qq_4230_raw.root')
+        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4230/rootfile/incMC_DD_4230_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4230/sigMC_psipp_4230_raw.root')
         pt_title = str(ecms) + ' MeV'
         plot(path, pt_title, ecms)
 
     path = []
     if int(ecms) == 4360:
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/incMC_qq_4360_raw.root')
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/incMC_DD_4360_raw.root')
+        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4360/rootfile/incMC_qq_4360_raw.root')
+        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4360/rootfile/incMC_DD_4360_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4360/sigMC_D1_2420_4360_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4360/sigMC_psipp_4360_raw.root')
         pt_title = str(ecms) + ' MeV'
@@ -189,8 +190,8 @@ def main():
 
     path = []
     if int(ecms) == 4420:
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/incMC_qq_4420_raw.root')
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/incMC_DD_4420_raw.root')
+        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4420/rootfile/incMC_qq_4420_raw.root')
+        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4420/rootfile/incMC_DD_4420_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4420/sigMC_D1_2420_4420_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4420/sigMC_psipp_4420_raw.root')
         pt_title = str(ecms) + ' MeV'
@@ -198,8 +199,8 @@ def main():
 
     path = []
     if int(ecms) == 4600:
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/incMC_qq_4600_raw.root')
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/incMC_DD_4600_raw.root')
+        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/qq/4600/rootfile/incMC_qq_4600_raw.root')
+        path.append('/scratchfs/bes/$USER/bes/DDPIPI/v0.2/incMC/DD/4600/rootfile/incMC_DD_4600_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/4600/sigMC_D1_2420_4600_raw.root')
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/psipp/4600/sigMC_psipp_4600_raw.root')
         pt_title = str(ecms) + ' MeV'

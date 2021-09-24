@@ -134,6 +134,7 @@ def save_missing(f_in, cms, t, region):
     m_cos_theta_pim = array('d', [999.])
     m_m_Kpipipi1 = array('d', [0])
     m_m_Kpipipi2 = array('d', [0])
+    m_cos_D = array('d', [999.])
     t.Branch('runNo', m_runNo, 'm_runNo/I')
     t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
     t.Branch('mode', m_mode, 'm_mode/I')
@@ -236,6 +237,7 @@ def save_missing(f_in, cms, t, region):
     t.Branch('cos_theta_pim', m_cos_theta_pim, 'm_cos_theta_pim/D')
     t.Branch('m_Kpipipi1', m_m_Kpipipi1, 'm_m_Kpipipi1/D')
     t.Branch('m_Kpipipi2', m_m_Kpipipi2, 'm_m_Kpipipi2/D')
+    t.Branch('cos_D', m_cos_D, 'm_cos_D/D')
     t_in = f_in.Get('STDDmiss')
     nentries = t_in.GetEntries()
     for ientry in range(nentries):
@@ -608,6 +610,7 @@ def save_missing(f_in, cms, t, region):
         m_cos_other_shw[0] = p_othershw.CosTheta()
         m_m_Kpipipi1[0] = (ptrack_K + rawpPip + rawpPim + ptrack_pi1).M()
         m_m_Kpipipi2[0] = (ptrack_K + rawpPip + rawpPim + ptrack_pi2).M()
+        m_cos_D[0] = pD_raw.CosTheta()
         t.Fill()
 
 def save_raw(f_in, cms, t, region):
@@ -677,6 +680,7 @@ def save_raw(f_in, cms, t, region):
     m_ctau_svf = array('d', [999.])
     m_L_svf = array('d', [999.])
     m_Lerr_svf = array('d', [999.])
+    m_n_count = array('i', [0])
     t.Branch('runNo', m_runNo, 'm_runNo/I')
     t.Branch('evtNo', m_evtNo, 'm_evtNo/I')
     t.Branch('mode', m_mode, 'm_mode/I')
@@ -743,6 +747,7 @@ def save_raw(f_in, cms, t, region):
     t.Branch('ctau_svf', m_ctau_svf, 'm_ctau_svf/D')
     t.Branch('L_svf', m_L_svf, 'm_L_svf/D')
     t.Branch('Lerr_svf', m_Lerr_svf, 'm_Lerr_svf/D')
+    t.Branch('n_count', m_n_count, 'm_n_count/I')
     t_std = f_in.Get('STD')
     nentries = t_std.GetEntries()
     for ientry in xrange(nentries):
@@ -980,6 +985,7 @@ def save_raw(f_in, cms, t, region):
                         m_L_svf[0] = t_std.L_svf[i_pipi]
                         m_Lerr_svf[0] = t_std.Lerr_svf[i_pipi]
                 n_combination += 1
+                m_n_count[0] = t_std.n_count
                 if m_rm_Dpipi[0] > 1.7 and m_rm_Dpipi[0] < 2.0:
                     t.Fill()
 

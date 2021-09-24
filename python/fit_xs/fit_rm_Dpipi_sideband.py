@@ -125,6 +125,8 @@ def fit(path, shape_path, ecms, mode, patch):
     xmin = 1.75
     xmax = 1.95
     xbins = 100
+    if mode == 'data_after' and (ecms == 4245 or ecms == 4280 or ecms == 4310 or ecms == 4575): xbins = 50
+    if mode == 'data_before' and (ecms == 4245 or ecms == 4280 or ecms == 4310 or ecms == 4575): xbins = 50
     rm_Dpipi = RooRealVar('rm_Dpipi', 'rm_Dpipi', xmin, xmax)
     data = RooDataSet('data', 'dataset', t_data, RooArgSet(rm_Dpipi))
 
@@ -281,7 +283,7 @@ def main():
     path = []
     shape_path = ''
     if mode == 'data_before':
-        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_sideband_after.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_sideband_before.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed.root'
     if mode == 'data_after':
         path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw_sideband_after.root')

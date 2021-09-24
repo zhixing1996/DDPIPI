@@ -31,7 +31,7 @@ def make_f(patch):
     D1_2420_signal, D1_2420_side  = [], []
     DDPIPI_signal, DDPIPI_side  = [], []
     psipp_signal, psipp_side  = [], []
-    SAMPLES = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
+    SAMPLES = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700, 4740, 4750, 4780, 4840, 4914, 4946]
     for SAMPLE in SAMPLES:
         if SAMPLE > 4320:
             with open('./txts/D1_2420_events_'+str(SAMPLE)+'_'+patch+'.txt', 'r') as f:
@@ -90,18 +90,18 @@ def make_f(patch):
                     '''
     f_D1_2420, f_DDPIPI, f_psipp = [], [], []
     for n, n_side in zip(D1_2420_signal, D1_2420_side):
-        f_D1_2420.append(round(n_side/n*100, 1))
+        f_D1_2420.append(round(n_side/2./n*100, 1))
     for n, n_side in zip(psipp_signal, psipp_side):
-        f_psipp.append(round(n_side/n*100, 1))
+        f_psipp.append(round(n_side/2./n*100, 1))
     for n, n_side in zip(DDPIPI_signal, DDPIPI_side):
-        f_DDPIPI.append(round(n_side/n*100, 1))
+        f_DDPIPI.append(round(n_side/2./n*100, 1))
 
     if not os.path.exists('./texs/'):
         os.makedirs('./texs/')
     with open('./texs/f_signal_side.tex', 'w') as f:
         f.write('\\begin{table}[htp]\n')
         f.write('\t\centering\n')
-        f.write('\t\caption{The ratios of the number of events fitted from $RM(D^{+}\pi_{0}^{+}\pi_{0}^{-})$ distributions between $M(K^{-}\pi^{+}\pi^{+})$ signal and sideband MC samples.}\n')
+        f.write('\t\caption{The ratios of the number of events fitted from $RM(D^{+}\pi_{0}^{+}\pi_{0}^{-})$ distributions between $M(K^{-}\pi^{+}\pi^{+})$ sideband and signal MC samples.}\n')
         f.write('\t\\begin{tabular}{cccc|cccc}\n')
         f.write('\t\hline\hline\n')
         f.write('\tSample& $R_{0}$ & $R_{1}$ & $R_{2}$ & Sample& $R_{0}$ & $R_{1}$ & $R_{2}$\\\\\n')
@@ -131,7 +131,7 @@ def make_f(patch):
 def make_total(patch):
     sample, N_sig, N_side, N_sig_err, N_side_err = [], [], [], [], []
     lum, xs, xs_err = [], [], []
-    SAMPLES = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
+    SAMPLES = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700, 4740, 4750, 4780, 4840, 4914, 4946]
     for SAMPLE in SAMPLES:
         with open('./txts/xs_info_'+str(SAMPLE)+'_read_'+patch+'.txt', 'r') as f:
             for line in f.readlines():
@@ -158,7 +158,7 @@ def make_total(patch):
             try:
                 fargs = map(float, line.strip('\n').strip('@').strip().split())
                 significance.append(round(fargs[1], 1))
-                if round(fargs[1], 2) < 5: sample_upl.append(int(fargs[0]))
+                if round(fargs[1], 3) < 5: sample_upl.append(int(fargs[0]))
             except:
                 '''
                 '''
@@ -179,7 +179,7 @@ def make_total(patch):
         f.write('\\begin{table}[htp]\n')
         f.write('\t\centering\n')
         f.write('\t\caption{Born cross section of $e^{+}e^{-}\\rightarrow\pi^{+}\pi^{-}D^{+}D^{-}$, the first uncertainties are statistical and the second systematic.}\n')
-        f.write('\t\\resizebox{\\textwidth}{65mm}{\n')
+        f.write('\t\\resizebox{\\textwidth}{75mm}{\n')
         f.write('\t\\begin{tabular}{ccccccccc}\n')
         f.write('\t\hline\hline\n')
         f.write('Sample & $\sqrt{s}$ (MeV) & $\mathscr{L}$ ($\\rm{pb}^{-1}$) & $N_{\\rm{signal}}$ & $N_{\\rm{sideband}}$ & $\sigma\ (\\rm{pb})$ & Statistical Significance & $\sigma_{\\rm{upl}}$ (\\rm{pb}) &\\\\\n')
@@ -202,7 +202,7 @@ def make_xs(patch):
     N_sig, N_side, eff0, eff1, eff2, one_del0, one_del1, one_del2, VP, lum = [], [], [], [], [], [], [], [], [], []
     sample, N_sig_err, N_side_err, xs, xs_err = [], [], [], [], []
     F_K_p, F_m_pipi, F_VrVz, F_m_Kpipi, F_rm_Dpipi = [], [], [], [], []
-    SAMPLES = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
+    SAMPLES = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700, 4740, 4750, 4780, 4840, 4914, 4946]
     for SAMPLE in SAMPLES:
         with open('./txts/xs_info_'+str(SAMPLE)+'_read_'+patch+'.txt', 'r') as f:
             for line in f.readlines():
@@ -231,8 +231,8 @@ def make_xs(patch):
     if not os.path.exists('./texs/'):
         os.makedirs('./texs/')
     with open('./texs/xs_info.tex', 'w') as f:
-        for i in xrange(6):
-            if not i == 5:
+        for i in xrange(8):
+            if not i == 7:
                 f.write('\\begin{table}[htp]\n')
                 f.write('\t\centering\n')
                 f.write('\t\caption{Cross sections of $e^{+}e^{-}\\rightarrow \pi^{+}\pi^{-}D^{+}D^{-}$.}\n')
@@ -259,39 +259,37 @@ def make_xs(patch):
                 f.write('\t$\sigma(\\rm{pb})$ '+'& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(xs[0+i*5], xs_err[0+i*5], xs[1+i*5], xs_err[1+i*5], xs[2+i*5], xs_err[2+i*5], xs[3+i*5], xs_err[3+i*5], xs[4+i*5], xs_err[4+i*5]))
                 f.write('\t\hline\hline\n')
                 f.write('\t\end{tabular}\n')
-                f.write('\t\label{table6-'+str(2+i+8)+'}\n')
+                f.write('\t\label{table6-'+str(2+i+9)+'}\n')
                 f.write('\end{table}\n')
                 f.write('\n\n')
-            if i == 5:
+            if i == 7:
                 f.write('\\begin{table}[htp]\n')
                 f.write('\t\centering\n')
                 f.write('\t\caption{Cross sections of $e^{+}e^{-}\\rightarrow \pi^{+}\pi^{-}D^{+}D^{-}$.}\n')
-                f.write('\t\\resizebox{\\textwidth}{45mm}{\n')
-                f.write('\t\\begin{tabular}{cccccccc}\n')
+                f.write('\t\\begin{tabular}{cccc}\n')
                 f.write('\t\hline\hline\n')
-                f.write('\tData Sample& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(sample[0+i*5], sample[1+i*5], sample[2+i*5], sample[3+i*5], sample[4+i*5], sample[5+i*5]))
+                f.write('\tData Sample& {:^4}& {:^4}&\\\\\n'.format(sample[0+i*5], sample[1+i*5]))
                 f.write('\t\hline\n')
-                f.write('\t$N'+'_{\\rm{signal}}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N_sig[0+i*5], N_sig_err[0+i*5], N_sig[1+i*5], N_sig_err[1+i*5], N_sig[2+i*5], N_sig_err[2+i*5], N_sig[3+i*5], N_sig_err[3+i*5], N_sig[4+i*5], N_sig_err[4+i*5], N_sig[5+i*5], N_sig_err[5+i*5]))
-                f.write('\t$N'+'_{\\rm{sideband}}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N_side[0+i*5], N_side_err[0+i*5], N_side[1+i*5], N_side_err[1+i*5], N_side[2+i*5], N_side_err[2+i*5], N_side[3+i*5], N_side_err[3+i*5], N_side[4+i*5], N_side_err[4+i*5], N_side[5+i*5], N_side_err[5+i*5]))
-                f.write('\t$'+'f^{K\\nrightarrow p}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_K_p[0+i*5], F_K_p[1+i*5], F_K_p[2+i*5], F_K_p[3+i*5], F_K_p[4+i*5], F_K_p[5+i*5]))
-                f.write('\t$'+'f^{M(\pi_{0}^{+}\pi_{0}^{-})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_m_pipi[0+i*5], F_m_pipi[1+i*5], F_m_pipi[2+i*5], F_m_pipi[3+i*5], F_m_pipi[4+i*5], F_m_pipi[5+i*5]))
-                f.write('\t$'+'f^{V_{xy, z}}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_VrVz[0+i*5], F_VrVz[1+i*5], F_VrVz[2+i*5], F_VrVz[3+i*5], F_VrVz[4+i*5], F_VrVz[5+i*5]))
-                f.write('\t$'+'f^{M(K^{-}\pi^{+}\pi^{+})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_m_Kpipi[0+i*5], F_m_Kpipi[1+i*5], F_m_Kpipi[2+i*5], F_m_Kpipi[3+i*5], F_m_Kpipi[4+i*5], F_m_Kpipi[5+i*5]))
-                f.write('\t$'+'f^{RM(D^{+}\pi_{0}^{+}\pi_{0}^{-})}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(F_rm_Dpipi[0+i*5], F_rm_Dpipi[1+i*5], F_rm_Dpipi[2+i*5], F_rm_Dpipi[3+i*5], F_rm_Dpipi[4+i*5], F_rm_Dpipi[5+i*5]))
-                f.write('\t$\epsilon'+'_{0}'+'$ & ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff0[0+i*5], eff0[1+i*5], eff0[2+i*5], eff0[3+i*5], eff0[4+i*5], eff0[5+i*5]))
-                f.write('\t$\epsilon'+'_{1}'+'$ & ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff1[0+i*5], eff1[1+i*5], eff1[2+i*5], eff1[3+i*5], eff1[4+i*5], eff1[5+i*5]))
-                f.write('\t$\epsilon'+'_{2}'+'$ & ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff2[0+i*5], eff2[1+i*5], eff2[2+i*5], eff2[3+i*5], eff2[4+i*5], eff2[5+i*5]))
-                f.write('\t$'+'\mathscr{L}(\\rm{pb}^{-1})'+'$ & {:^6}& {:^6}& {:^6}& {:^6}& {:^6}& {:^6}&\\\\\n'.format(lum[0+i*5], lum[1+i*5], lum[2+i*5], lum[3+i*5], lum[4+i*5], lum[5+i*5]))
-                f.write('\t$(1+\delta)'+'_{0}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(one_del0[0+i*5], one_del0[1+i*5], one_del0[2+i*5], one_del0[3+i*5], one_del0[4+i*5], one_del0[5+i*5]))
-                f.write('\t$(1+\delta)'+'_{1}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(one_del1[0+i*5], one_del1[1+i*5], one_del1[2+i*5], one_del1[3+i*5], one_del1[4+i*5], one_del1[5+i*5]))
-                f.write('\t$(1+\delta)'+'_{2}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(one_del2[0+i*5], one_del2[1+i*5], one_del2[2+i*5], one_del2[3+i*5], one_del2[4+i*5], one_del2[5+i*5]))
-                f.write('\t$\\frac'+'{1}{|1-\Pi|^{2}}_{i}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(VP[0+i*5], VP[1+i*5], VP[2+i*5], VP[3+i*5], VP[4+i*5], VP[5+i*5]))
-                f.write('\t$\mathscr{B}(D^{+}\\rightarrow K^{-}\pi^{+}\pi^{+})$ & 9.38\%& 9.38\%& 9.38\%& 9.38\%& 9.38\%& 9.38\%&\\\\\n')
-                f.write('\t$\sigma(\\rm{pb})$ '+'& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(xs[0+i*5], xs_err[0+i*5], xs[1+i*5], xs_err[1+i*5], xs[2+i*5], xs_err[2+i*5], xs[3+i*5], xs_err[3+i*5], xs[4+i*5], xs_err[4+i*5], xs[5+i*5], xs_err[5+i*5]))
+                f.write('\t$N'+'_{\\rm{signal}}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N_sig[0+i*5], N_sig_err[0+i*5], N_sig[1+i*5], N_sig_err[1+i*5]))
+                f.write('\t$N'+'_{\\rm{sideband}}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N_side[0+i*5], N_side_err[0+i*5], N_side[1+i*5], N_side_err[1+i*5]))
+                f.write('\t$'+'f^{K\\nrightarrow p}'+'$ & {:^4}& {:^4}&\\\\\n'.format(F_K_p[0+i*5], F_K_p[1+i*5]))
+                f.write('\t$'+'f^{M(\pi_{0}^{+}\pi_{0}^{-})}'+'$ & {:^4}& {:^4}&\\\\\n'.format(F_m_pipi[0+i*5], F_m_pipi[1+i*5]))
+                f.write('\t$'+'f^{V_{xy, z}}'+'$ & {:^4}& {:^4}&\\\\\n'.format(F_VrVz[0+i*5], F_VrVz[1+i*5]))
+                f.write('\t$'+'f^{M(K^{-}\pi^{+}\pi^{+})}'+'$ & {:^4}& {:^4}&\\\\\n'.format(F_m_Kpipi[0+i*5], F_m_Kpipi[1+i*5]))
+                f.write('\t$'+'f^{RM(D^{+}\pi_{0}^{+}\pi_{0}^{-})}'+'$ & {:^4}& {:^4}&\\\\\n'.format(F_rm_Dpipi[0+i*5], F_rm_Dpipi[1+i*5]))
+                f.write('\t$\epsilon'+'_{0}'+'$ & ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff0[0+i*5], eff0[1+i*5]))
+                f.write('\t$\epsilon'+'_{1}'+'$ & ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff1[0+i*5], eff1[1+i*5]))
+                f.write('\t$\epsilon'+'_{2}'+'$ & ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff2[0+i*5], eff2[1+i*5]))
+                f.write('\t$'+'\mathscr{L}(\\rm{pb}^{-1})'+'$ & {:^6}& {:^6}&\\\\\n'.format(lum[0+i*5], lum[1+i*5]))
+                f.write('\t$(1+\delta)'+'_{0}'+'$ & {:^4}& {:^4}&\\\\\n'.format(one_del0[0+i*5], one_del0[1+i*5]))
+                f.write('\t$(1+\delta)'+'_{1}'+'$ & {:^4}& {:^4}&\\\\\n'.format(one_del1[0+i*5], one_del1[1+i*5]))
+                f.write('\t$(1+\delta)'+'_{2}'+'$ & {:^4}& {:^4}&\\\\\n'.format(one_del2[0+i*5], one_del2[1+i*5]))
+                f.write('\t$\\frac'+'{1}{|1-\Pi|^{2}}_{i}'+'$ & {:^4}& {:^4}&\\\\\n'.format(VP[0+i*5], VP[1+i*5]))
+                f.write('\t$\mathscr{B}(D^{+}\\rightarrow K^{-}\pi^{+}\pi^{+})$ & 9.38\%& 9.38\%&\\\\\n')
+                f.write('\t$\sigma(\\rm{pb})$ '+'& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(xs[0+i*5], xs_err[0+i*5], xs[1+i*5], xs_err[1+i*5]))
                 f.write('\t\hline\hline\n')
                 f.write('\t\end{tabular}\n')
-                f.write('\t}\n')
-                f.write('\t\label{table6-'+str(2+i+8)+'}\n')
+                f.write('\t\label{table6-'+str(2+i+9)+'}\n')
                 f.write('\end{table}\n')
                 f.write('\n\n')
 
@@ -399,71 +397,82 @@ def make_simul(patch):
     if not os.path.exists('./texs/'):
         os.makedirs('./texs/')
     with open('./texs/simul_fit.tex', 'w') as f:
-        for i in xrange(6):
-            if sample[0+i*5] > 4316: N00, N00_err = N0[0+i*5-14], N0_err[0+i*5-14]
-            else: N00, N00_err = 0, 0
-            if sample[1+i*5] > 4316: N01, N01_err = N0[1+i*5-14], N0_err[1+i*5-14]
-            else: N01, N01_err = 0, 0
-            if sample[2+i*5] > 4316: N02, N02_err = N0[2+i*5-14], N0_err[2+i*5-14]
-            else: N02, N02_err = 0, 0
-            if sample[3+i*5] > 4316: N03, N03_err = N0[3+i*5-14], N0_err[3+i*5-14]
-            else: N03, N03_err = 0, 0
-            if sample[4+i*5] > 4316: N04, N04_err = N0[4+i*5-14], N0_err[4+i*5-14]
-            else: N04, N04_err = 0, 0
-            if sample[0+i*5] > 4316: eff00 = eff0[0+i*5-14]*100
-            else: eff00 = 0.
-            if sample[1+i*5] > 4316: eff01 = eff0[1+i*5-14]*100
-            else: eff01 = 0.
-            if sample[2+i*5] > 4316: eff02 = eff0[2+i*5-14]*100
-            else: eff02 = 0.
-            if sample[3+i*5] > 4316: eff03 = eff0[3+i*5-14]*100
-            else: eff03 = 0.
-            if sample[4+i*5] > 4316: eff04 = eff0[4+i*5-14]*100
-            else: eff04 = 0.
-            if sample[0+i*5] > 4316: one_del00 = one_del0[0+i*5-14]
-            else: one_del00 = 0.
-            if sample[1+i*5] > 4316: one_del01 = one_del0[1+i*5-14]
-            else: one_del01 = 0.
-            if sample[2+i*5] > 4316: one_del02 = one_del0[2+i*5-14]
-            else: one_del02 = 0.
-            if sample[3+i*5] > 4316: one_del03 = one_del0[3+i*5-14]
-            else: one_del03 = 0.
-            if sample[4+i*5] > 4316: one_del04 = one_del0[4+i*5-14]
-            else: one_del04 = 0.
-            if sample[0+i*5] > 4316: omega00 = omega0[0+i*5-14]
-            else: omega00 = 0.
-            if sample[1+i*5] > 4316: omega01 = omega0[1+i*5-14]
-            else: omega01 = 0.
-            if sample[2+i*5] > 4316: omega02 = omega0[2+i*5-14]
-            else: omega02 = 0.
-            if sample[3+i*5] > 4316: omega03 = omega0[3+i*5-14]
-            else: omega03 = 0.
-            if sample[4+i*5] > 4316: omega04 = omega0[4+i*5-14]
-            else: omega04 = 0.
-            if sample[0+i*5] > 4316: omega00 = omega0[0+i*5-14]
-            else: omega00 = 0.
-            if sample[0+i*5] > 4316: omega00_err = omega0_err[0+i*5-14]
-            else: omega00_err = 0.
-            if sample[1+i*5] > 4316: omega01_err = omega0_err[1+i*5-14]
-            else: omega01_err = 0.
-            if sample[2+i*5] > 4316: omega02_err = omega0_err[2+i*5-14]
-            else: omega02_err = 0.
-            if sample[3+i*5] > 4316: omega03_err = omega0_err[3+i*5-14]
-            else: omega03_err = 0.
-            if sample[4+i*5] > 4316: omega04_err = omega0_err[4+i*5-14]
-            else: omega04_err = 0.
-            if i == 5:
-                if sample[5+i*5] > 4316: N05, N05_err = N0[5+i*5-14], N0_err[5+i*5-14]
+        for i in xrange(8):
+            if i == 7:
+                if sample[0+i*5] > 4316: N05, N05_err = N0[0+i*5-14], N0_err[0+i*5-14]
                 else: N05, N05_err = 0, 0
-                if sample[5+i*5] > 4316: eff05 = eff0[5+i*5-14]
+                if sample[0+i*5] > 4316: eff05 = eff0[0+i*5-14]*100
                 else: eff05 = 0.
-                if sample[5+i*5] > 4316: one_del05 = one_del0[5+i*5-14]
+                if sample[0+i*5] > 4316: one_del05 = one_del0[0+i*5-14]
                 else: one_del05 = 0.
-                if sample[5+i*5] > 4316: omega05 = omega0[5+i*5-14]
+                if sample[0+i*5] > 4316: omega05 = omega0[0+i*5-14]
                 else: omega05 = 0.
-                if sample[5+i*5] > 4316: omega05_err = omega0_err[5+i*5-14]
+                if sample[0+i*5] > 4316: omega05_err = omega0_err[0+i*5-14]
                 else: omega05_err = 0.
-            if not i == 5:
+                if sample[1+i*5] > 4316: N06, N06_err = N0[1+i*5-14], N0_err[1+i*5-14]
+                else: N06, N06_err = 0, 0
+                if sample[1+i*5] > 4316: eff06 = eff0[1+i*5-14]*100
+                else: eff06 = 0.
+                if sample[1+i*5] > 4316: one_del06 = one_del0[1+i*5-14]
+                else: one_del06 = 0.
+                if sample[1+i*5] > 4316: omega06 = omega0[1+i*5-14]
+                else: omega06 = 0.
+                if sample[1+i*5] > 4316: omega06_err = omega0_err[1+i*5-14]
+                else: omega06_err = 0.
+            else:
+                if sample[0+i*5] > 4316: N00, N00_err = N0[0+i*5-14], N0_err[0+i*5-14]
+                else: N00, N00_err = 0, 0
+                if sample[1+i*5] > 4316: N01, N01_err = N0[1+i*5-14], N0_err[1+i*5-14]
+                else: N01, N01_err = 0, 0
+                if sample[2+i*5] > 4316: N02, N02_err = N0[2+i*5-14], N0_err[2+i*5-14]
+                else: N02, N02_err = 0, 0
+                if sample[3+i*5] > 4316: N03, N03_err = N0[3+i*5-14], N0_err[3+i*5-14]
+                else: N03, N03_err = 0, 0
+                if sample[4+i*5] > 4316: N04, N04_err = N0[4+i*5-14], N0_err[4+i*5-14]
+                else: N04, N04_err = 0, 0
+                if sample[0+i*5] > 4316: eff00 = eff0[0+i*5-14]*100
+                else: eff00 = 0.
+                if sample[1+i*5] > 4316: eff01 = eff0[1+i*5-14]*100
+                else: eff01 = 0.
+                if sample[2+i*5] > 4316: eff02 = eff0[2+i*5-14]*100
+                else: eff02 = 0.
+                if sample[3+i*5] > 4316: eff03 = eff0[3+i*5-14]*100
+                else: eff03 = 0.
+                if sample[4+i*5] > 4316: eff04 = eff0[4+i*5-14]*100
+                else: eff04 = 0.
+                if sample[0+i*5] > 4316: one_del00 = one_del0[0+i*5-14]
+                else: one_del00 = 0.
+                if sample[1+i*5] > 4316: one_del01 = one_del0[1+i*5-14]
+                else: one_del01 = 0.
+                if sample[2+i*5] > 4316: one_del02 = one_del0[2+i*5-14]
+                else: one_del02 = 0.
+                if sample[3+i*5] > 4316: one_del03 = one_del0[3+i*5-14]
+                else: one_del03 = 0.
+                if sample[4+i*5] > 4316: one_del04 = one_del0[4+i*5-14]
+                else: one_del04 = 0.
+                if sample[0+i*5] > 4316: omega00 = omega0[0+i*5-14]
+                else: omega00 = 0.
+                if sample[1+i*5] > 4316: omega01 = omega0[1+i*5-14]
+                else: omega01 = 0.
+                if sample[2+i*5] > 4316: omega02 = omega0[2+i*5-14]
+                else: omega02 = 0.
+                if sample[3+i*5] > 4316: omega03 = omega0[3+i*5-14]
+                else: omega03 = 0.
+                if sample[4+i*5] > 4316: omega04 = omega0[4+i*5-14]
+                else: omega04 = 0.
+                if sample[0+i*5] > 4316: omega00 = omega0[0+i*5-14]
+                else: omega00 = 0.
+                if sample[0+i*5] > 4316: omega00_err = omega0_err[0+i*5-14]
+                else: omega00_err = 0.
+                if sample[1+i*5] > 4316: omega01_err = omega0_err[1+i*5-14]
+                else: omega01_err = 0.
+                if sample[2+i*5] > 4316: omega02_err = omega0_err[2+i*5-14]
+                else: omega02_err = 0.
+                if sample[3+i*5] > 4316: omega03_err = omega0_err[3+i*5-14]
+                else: omega03_err = 0.
+                if sample[4+i*5] > 4316: omega04_err = omega0_err[4+i*5-14]
+                else: omega04_err = 0.
+            if not i == 7:
                 f.write('\\begin{table}[htp]\n')
                 f.write('\t\centering\n')
                 f.write('\t\caption{Fractions of $e^{+}e^{-}\\rightarrow D_{1}(2420)^{+}D^{-}$, $e^{+}e^{-}\\rightarrow\pi^{+}\pi^{-}\psi(3770)$, and $e^{+}e^{-}\\rightarrow\pi^{+}\pi^{-}D^{+}D^{-}(\sc{PHSP})$.}\n')
@@ -491,33 +500,31 @@ def make_simul(patch):
                 f.write('\t\label{table6-'+str(2+i)+'}\n')
                 f.write('\end{table}\n')
                 f.write('\n\n')
-            if i == 5:
+            if i == 7:
                 f.write('\\begin{table}[htp]\n')
                 f.write('\t\centering\n')
                 f.write('\t\caption{Fractions of $e^{+}e^{-}\\rightarrow D_{1}(2420)^{+}D^{-}$, $e^{+}e^{-}\\rightarrow\pi^{+}\pi^{-}\psi(3770)$, and $e^{+}e^{-}\\rightarrow\pi^{+}\pi^{-}D^{+}D^{-}(\sc{PHSP})$.}\n')
-                f.write('\t\\resizebox{\\textwidth}{41mm}{\n')
-                f.write('\t\t\\begin{tabular}{cccccccc}\n')
+                f.write('\t\t\\begin{tabular}{cccc}\n')
                 f.write('\t\t\hline\hline\n')
-                f.write('\t\tData Sample& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(sample[0+i*5], sample[1+i*5], sample[2+i*5], sample[3+i*5], sample[4+i*5], sample[5+i*5]))
+                f.write('\t\tData Sample& {:^4}& {:^4}&\\\\\n'.format(sample[0+i*5], sample[1+i*5]))
                 f.write('\t\t\hline\n')
-                f.write('\t\t$N'+'_{0}^{\'}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N00, N00_err, N01, N01_err, N02, N02_err, N03, N03_err, N04, N04_err, N05, N05_err))
-                f.write('\t\t$N'+'_{1}^{\'}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N1[0+i*5], N1_err[0+i*5], N1[1+i*5], N1_err[1+i*5], N1[2+i*5], N1_err[2+i*5], N1[3+i*5], N1_err[3+i*5], N1[4+i*5], N1_err[4+i*5], N1[5+i*5], N1_err[5+i*5]))
-                f.write('\t\t$N'+'_{2}^{\'}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N2[0+i*5], N2_err[0+i*5], N2[1+i*5], N2_err[1+i*5], N2[2+i*5], N2_err[2+i*5], N2[3+i*5], N2_err[3+i*5], N2[4+i*5], N2_err[4+i*5], N2[5+i*5], N2_err[5+i*5]))
-                f.write('\t\t$\epsilon'+'_{0}^{\'}'+'$ & ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff00, eff01, eff02, eff03, eff04, eff05))
-                f.write('\t\t$\epsilon'+'_{1}^{\'}'+'$ & ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff1[0+i*5]*100, eff1[1+i*5]*100, eff1[2+i*5]*100, eff1[3+i*5]*100, eff1[4+i*5]*100, eff1[5+i*5]*100))
-                f.write('\t\t$\epsilon'+'_{2}^{\'}'+'$ & ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff2[0+i*5]*100, eff2[1+i*5]*100, eff2[2+i*5]*100, eff2[3+i*5]*100, eff2[4+i*5]*100, eff2[5+i*5]*100))
-                f.write('\t\t$(1+\delta)'+'_{0}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(one_del00, one_del01, one_del02, one_del03, one_del04, one_del05))
-                f.write('\t\t$(1+\delta)'+'_{1}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(one_del1[0+i*5], one_del1[1+i*5], one_del1[2+i*5], one_del1[3+i*5], one_del1[4+i*5], one_del1[5+i*5]))
-                f.write('\t\t$(1+\delta)'+'_{2}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(one_del2[0+i*5], one_del2[1+i*5], one_del2[2+i*5], one_del2[3+i*5], one_del2[4+i*5], one_del1[5+i*5]))
-                f.write('\t\t$\\frac'+'{1}{|1-\Pi|^{2}}_{i}'+'$ & {:^4}& {:^4}& {:^4}& {:^4}& {:^4}& {:^4}&\\\\\n'.format(VP[0+i*5], VP[1+i*5], VP[2+i*5], VP[3+i*5], VP[4+i*5], VP[5+i*5]))
-                f.write('\t\t$\mathscr{B}(D^{+}\\rightarrow K^{-}\pi^{+}\pi^{+})$ & 9.38\%& 9.38\%& 9.38\%& 9.38\%& 9.38\%& 9.38\%&\\\\\n')
-                f.write('\t\t$'+'\mathscr{L}(\\rm{pb}^{-1})'+'$ & {:^6}& {:^6}& {:^6}& {:^6}& {:^6}& {:^6}&\\\\\n'.format(lum[0+i*5], lum[1+i*5], lum[2+i*5], lum[3+i*5], lum[4+i*5], lum[5+i*5]))
-                f.write('\t\t$\omega'+'_{0}'+'$ & ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$ &\\\\\n'.format(omega00, omega00_err, omega01, omega01_err, omega02, omega02_err, omega03, omega03_err, omega04, omega04_err, omega05, omega05_err))
-                f.write('\t\t$\omega'+'_{1}'+'$ & ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$ &\\\\\n'.format(omega1[0+i*5], omega1_err[0+i*5], omega1[1+i*5], omega1_err[1+i*5], omega1[2+i*5], omega1_err[2+i*5], omega1[3+i*5], omega1_err[3+i*5], omega1[4+i*5], omega1_err[4+i*5], omega1[5+i*5], omega1_err[5+i*5]))
-                f.write('\t\t$\omega'+'_{2}'+'$ & ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$ &\\\\\n'.format(omega2[0+i*5], omega2_err[0+i*5], omega2[1+i*5], omega2_err[1+i*5], omega2[2+i*5], omega2_err[2+i*5], omega2[3+i*5], omega2_err[3+i*5], omega2[4+i*5], omega2_err[4+i*5], omega2[5+i*5], omega2_err[5+i*5]))
+                f.write('\t\t$N'+'_{0}^{\'}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N01, N01_err, N06, N06_err))
+                f.write('\t\t$N'+'_{1}^{\'}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N1[0+i*5], N1_err[0+i*5], N1[1+i*5], N1_err[1+i*5]))
+                f.write('\t\t$N'+'_{2}^{\'}'+'$ & {:^4}$\pm${:^4}& {:^4}$\pm${:^4}&\\\\\n'.format(N2[0+i*5], N2_err[0+i*5], N2[1+i*5], N2_err[1+i*5]))
+                f.write('\t\t$\epsilon'+'_{0}^{\'}'+'$ & ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff05, eff06))
+                f.write('\t\t$\epsilon'+'_{1}^{\'}'+'$ & ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff1[0+i*5]*100, eff1[1+i*5]*100))
+                f.write('\t\t$\epsilon'+'_{2}^{\'}'+'$ & ${:^4}\%$& ${:^4}\%$&\\\\\n'.format(eff2[0+i*5]*100, eff2[1+i*5]*100))
+                f.write('\t\t$(1+\delta)'+'_{0}'+'$ & {:^4}& {:^4}&\\\\\n'.format(one_del05, one_del06))
+                f.write('\t\t$(1+\delta)'+'_{1}'+'$ & {:^4}& {:^4}&\\\\\n'.format(one_del1[0+i*5], one_del1[1+i*5]))
+                f.write('\t\t$(1+\delta)'+'_{2}'+'$ & {:^4}& {:^4}&\\\\\n'.format(one_del2[0+i*5], one_del2[1+i*5]))
+                f.write('\t\t$\\frac'+'{1}{|1-\Pi|^{2}}_{i}'+'$ & {:^4}& {:^4}&\\\\\n'.format(VP[0+i*5], VP[1+i*5]))
+                f.write('\t\t$\mathscr{B}(D^{+}\\rightarrow K^{-}\pi^{+}\pi^{+})$ & 9.38\%& 9.38\%&\\\\\n')
+                f.write('\t\t$'+'\mathscr{L}(\\rm{pb}^{-1})'+'$ & {:^6}& {:^6}&\\\\\n'.format(lum[0+i*5], lum[1+i*5]))
+                f.write('\t\t$\omega'+'_{0}'+'$ & ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$ &\\\\\n'.format(omega05, omega05_err, omega06, omega06_err))
+                f.write('\t\t$\omega'+'_{1}'+'$ & ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$ &\\\\\n'.format(omega1[0+i*5], omega1_err[0+i*5], omega1[1+i*5], omega1_err[1+i*5]))
+                f.write('\t\t$\omega'+'_{2}'+'$ & ${:^4}\pm{:^4}$& ${:^4}\pm{:^4}$ &\\\\\n'.format(omega2[0+i*5], omega2_err[0+i*5], omega2[1+i*5], omega2_err[1+i*5]))
                 f.write('\t\t\hline\hline\n')
                 f.write('\t\t\end{tabular}\n')
-                f.write('\t}\n')
                 f.write('\t\label{table6-'+str(2+i)+'}\n')
                 f.write('\end{table}\n')
                 f.write('\n\n')

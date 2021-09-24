@@ -67,7 +67,6 @@ def sys_err(patch):
             out = str(ecms) + '\t' + str(round(diff*100, 1)) + '\n'
             f_sys_err.write(out)
             time_flag = 0
-        if int(ecms*1000) == 4700: break
         if flag == 1:
             f_sys_err.write(str(ecms)+'\t'+'0.\n')
             flag = 0
