@@ -1,5 +1,5 @@
 #!/bin/sh
-cat Data_Base_706 | while read line
+cat Data_Base_707 | while read line
 do
     str=$line
     OLD_IFS=$IFS
