@@ -41,20 +41,20 @@ case $option in
 
     0.1.1) echo "Mix MC -- mixing MC according to ratio..."
            cd scripts/ana
-           ./mixMC.sh round3
+           ./mixMC.sh round2
            ;;
 
     0.1.2) echo "Fit distributions -- fitting recoiling mass of Dpipi..."
            cd scripts/ana
-           ./fitRMDpipi.sh round3
+           ./fitRMDpipi.sh round2
            ;;
 
     0.1.3) echo "Calculate numbers -- calculating cross section of DDpipi and systematic uncertainties..."
            cd scripts/ana
-           ./calXS.sh round3
+           ./calXS.sh round2
            cd -
-           ./format_xs.py round3
-           ./cal_diff.py round3
+           ./format_xs.py round2
+           ./cal_diff.py round2
            ;;
 
     0.1.4) echo "Calculate numbers -- calculating final systematic uncertainties..."

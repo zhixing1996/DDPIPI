@@ -36,7 +36,8 @@ def count(t):
     num = 0
     for ientry in xrange(t.GetEntries()):
         t.GetEntry(ientry)
-        if t.nMatch == 1 and not t.pid_misid_proton == 1: num += 1
+        if abs(t.vfit2_dl/t.vfit2_dle)>2. and abs(t.vfit2_mks-0.497614)<0.008 and abs(t.var_kstar)<0.12 and t.vfitpt>0.1:
+            if t.nMatch == 1 and not t.pid_misid_proton == 1: num += 1
     return num
 
 def cal(path):
@@ -71,7 +72,7 @@ def cal(path):
     with open('./txts/f_K_p.txt', 'w') as f_out:
         f_out.write(str(f) + '\n')
 
-    ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700]
+    ecms = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700, 4740, 4750, 4780, 4840, 4914, 4946]
     with open('./txts/sys_err_K_p.txt', 'w') as f_out:
         for ecm in ecms:
             out = str(ecm/1000.) + '\t' + str(round(sys_err*100, 2)) + '\n'

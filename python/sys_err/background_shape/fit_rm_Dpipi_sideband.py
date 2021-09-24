@@ -176,9 +176,9 @@ def fit(path, shape_path, ecms, mode, patch):
         c = RooRealVar('c', 'c', 0, -99, 99)
         d = RooRealVar('c', 'c', 0, -99, 99)
         if ecms == 4440:
-            a = RooRealVar('a', 'a', 0, -9, 9)
-            b = RooRealVar('b', 'b', 0, -9, 9)
-            c = RooRealVar('c', 'c', 0, -9, 9)
+            a = RooRealVar('a', 'a', 0, -3, 3)
+            b = RooRealVar('b', 'b', 0, -3, 3)
+            c = RooRealVar('c', 'c', 0, -3, 3)
         if ndf == 5:
             bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b, c))
         if ndf == 4:

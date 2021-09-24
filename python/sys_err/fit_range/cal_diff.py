@@ -50,16 +50,22 @@ def sys_err(patch):
         fargs_old = map(float, line_xs_old.strip().split())
         ecms = fargs_old[0]
         xs_old = fargs_old[1]
+        err_xs_old = fargs_old[2]
         for line_xs_new in lines_xs_new:
             fargs_new = map(float, line_xs_new.strip().split())
             if not ecms == fargs_new[0]: continue
             xs_new = fargs_new[1]
+            err_xs_new = fargs_new[2]
             if xs_old == 0:
                 diff = 0.
             else:
-                if xs_new > xs_old: diff = abs((xs_new - xs_old)/xs_new)
-                else: diff = abs((xs_new - xs_old)/xs_old)
-            out = str(ecms) + '\t' + str(round(diff*100, 1)) + '\n'
+                if xs_new > xs_old:
+                    diff = abs((xs_new - xs_old)/xs_new)
+                    err_diff = sqrt(xs_old**2/xs_new**4*err_xs_new**2 + 1./xs_new**2*err_xs_new**2)
+                else:
+                    diff = abs((xs_new - xs_old)/xs_old)
+                    err_diff = sqrt(xs_new**2/xs_old**4*err_xs_old**2 + 1./xs_old**2*err_xs_new**2)
+            out = str(ecms) + '\t' + str(round(diff*100, 1)) + '\t' + str(round(err_diff, 3)) + '\n'
             f_sys_err.write(out)
 
     f_sys_err.close()
