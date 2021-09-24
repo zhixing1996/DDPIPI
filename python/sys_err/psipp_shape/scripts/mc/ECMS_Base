@@ -10,12 +10,15 @@
 4237;49788;50254;4235.7;530.3;/besfs3/offline/data/703-1/xyz/round10/4237/dst
 4245;32141;32226;4241.7;55.88;/besfs3/offline/data/703-1/xyz/round06/4260scan/4245/dst
 4246;50255;50793;4243.8;538.1;/besfs3/offline/data/703-1/xyz/round10/4246/dst
+4260-1;29677;30367;4257.97;828.4;/besfs3/offline/data/703-1/xyz/round06/4260/dst
+4260-2;31561;31981;4257.97;0.;/besfs3/offline/data/703-1/xyz/round06/4260/dst
 4270;50796;51302;4266.8;531.1;/besfs3/offline/data/703-1/xyz/round10/4270/dst
 4280;51303;51498;4277.7;175.7;/besfs3/offline/data/703-1/xyz/round10/4280/dst
 4290;59902;60363;4287.88;500;/besfs4/offline/data/705-1/xyz/round12/4290/dst
 4310;30492;30557;4307.9;45.08;/besfs3/offline/data/703-1/xyz/round06/4260scan/4310/dst
 4315;60364;60805;4312.05;500;/besfs4/offline/data/705-1/xyz/round12/4315/dst
 4340;60808;61242;4337.39;500;/besfs4/offline/data/705-1/xyz/round12/4340/dst
+4360;30616;31279;4358.26;543.9;/besfs3/offline/data/703-1/xyz/round06/4360/dst
 4380;61249;61762;4377.37;500;/besfs4/offline/data/705-1/xyz/round12/4380/dst
 4390;31281;31325;4387.4;55.57;/besfs3/offline/data/703-1/xyz/round06/4360scan/4390/dst
 4400;61763;62285;4396.45;500;/besfs4/offline/data/705-1/xyz/round12/4400/dst
@@ -25,6 +28,7 @@
 4470;36245;36393;4467.1;111.09;/besfs3/offline/data/703-1/xyz/round07/4470/dst
 4530;36398;36588;4527.1;112.12;/besfs3/offline/data/703-1/xyz/round07/4530/dst
 4575;36603;36699;4574.50;48.93;/besfs3/offline/data/703-1/xyz/round07/4575/dst
+4600;35227;36213;4599.53;586.9;/besfs3/offline/data/703-1/xyz/round07/4600/dst
 4610;64314;64360;4612.08;102.50;/besfs4/offline/data/705-1/xyz/round13/4612/dst
 4620;63075;63515;4626.0;510.98;/besfs4/offline/data/705-1/xyz/round13/4620/dst
 4640;63516;63715;4640.0;541.37;/besfs4/offline/data/705-1/xyz/round13/4640/dst
@@ -32,3 +36,9 @@
 4680-1;63867;64015;4682.71;528.46;/besfs4/offline/data/705-1/xyz/round13/4680/dst
 4680-2;64365;65092;4681.88;1103.27;/besfs4/offline/data/705-1/xyz/round13/4680/dst
 4700;64028;64289;4700.0;415.31;/besfs4/offline/data/705-1/xyz/round13/4700/dst
+4740;65208;65297;4739.67;50.70;/besfs4/offline/data/706-1/xyz/round14/opendst
+4750;65322;65491;4750.10;179.12;/besfs4/offline/data/706-1/xyz/round14/opendst
+4780;65495;65645;4780.38;250;/besfs4/offline/data/706-1/xyz/round14/opendst
+4840;65647;65864;4842.11;250;/besfs4/offline/data/706-1/xyz/round14/opendst
+4914;65867;65935;4918.02;100;/besfs4/offline/data/706-1/xyz/round14/opendst
+4946;65938;66224;4950.30;75;/besfs4/offline/data/706-1/xyz/round14/opendst
