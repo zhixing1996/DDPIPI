@@ -101,24 +101,24 @@ case $option in
            cd scripts/mc/D1_2420_001000
            ./synthesizeD1_2420_703p01.sh
            ./getInfoD1_2420_703p01.sh
-           ./getFactorD1_2420_703p01.sh round3
+           ./getFactorD1_2420_703p01.sh round2
            ./synthesizeD1_2420_705.sh
            ./getInfoD1_2420_705.sh
-           ./getFactorD1_2420_705.sh round3
+           ./getFactorD1_2420_705.sh round2
            ./synthesizeD1_2420_707.sh
            ./getInfoD1_2420_707.sh
-           ./getFactorD1_2420_707.sh round3
+           ./getFactorD1_2420_707.sh round2
            cd $HOME/bes/DDPIPI/v0.2/python/sys_err/HELAMP
            cd scripts/mc/D1_2420_100010
            ./synthesizeD1_2420_703p01.sh
            ./getInfoD1_2420_703p01.sh
-           ./getFactorD1_2420_703p01.sh round3
+           ./getFactorD1_2420_703p01.sh round2
            ./synthesizeD1_2420_705.sh
            ./getInfoD1_2420_705.sh
-           ./getFactorD1_2420_705.sh round3
+           ./getFactorD1_2420_705.sh round2
            ./synthesizeD1_2420_707.sh
            ./getInfoD1_2420_707.sh
-           ./getFactorD1_2420_707.sh round3
+           ./getFactorD1_2420_707.sh round2
            ;;
 
     0.1.8) echo "Get samples -- applying cuts: D1_2420 MC and data..."
@@ -157,15 +157,15 @@ case $option in
 
     0.2.3) echo "Fit distributions -- fitting recoiling mass of Dpipi..."
            cd scripts/ana
-           ./fitRMDpipi.sh round3
+           ./fitRMDpipi.sh round2
            ;;
 
     0.2.5) echo "Calculate numbers -- calculating cross section of DDpipi and systerm uncertainties..."
            cd scripts/ana
-           ./calXS.sh round3
+           ./calXS.sh round2
            cd -
-           ./format_xs.py round3
-           ./cal_diff.py round3
+           ./format_xs.py round2
+           ./cal_diff.py round2
            ;;
 
 esac
