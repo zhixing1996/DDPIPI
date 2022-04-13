@@ -30,14 +30,14 @@ do
     FILE_PATH=/scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/DDPI/$PARAM_0/rootfile
     echo "Begining of $PARAM_0!"
 
-    python get_info.py $FILE_PATH/sigMC_D_D_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_$PARAM_0\_signal.root $PARAM_3 STDDmiss_signal
-    echo "STDDmiss of $PARAM_0 is done!"
+    # python get_info.py $FILE_PATH/sigMC_D_D_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_$PARAM_0\_signal.root $PARAM_3 STDDmiss_signal
+    # echo "STDDmiss of $PARAM_0 is done!"
 
-    python get_info.py $FILE_PATH/sigMC_D_D_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_$PARAM_0\_raw.root $PARAM_3 raw_signal
-    echo "STD of $PARAM_0 is done!"
+    # python get_info.py $FILE_PATH/sigMC_D_D_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_$PARAM_0\_raw.root $PARAM_3 raw_signal
+    # echo "STD of $PARAM_0 is done!"
 
-    python get_info.py $FILE_PATH/sigMC_D_D_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_$PARAM_0\_truth.root $PARAM_3 truth
-    echo "Truth of $PARAM_0 is done!"
+    # python get_info.py $FILE_PATH/sigMC_D_D_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_$PARAM_0\_truth.root $PARAM_3 truth
+    # echo "Truth of $PARAM_0 is done!"
 
     rm -rf $ROOT_PATH/sigMC_D_D_PI_$PARAM_0\_raw_sidebandlow.root $ROOT_PATH/sigMC_D_D_PI_$PARAM_0\_raw_sidebandup.root
     python get_info.py $FILE_PATH/sigMC_D_D_PI_$PARAM_0\.root $ROOT_PATH/sigMC_D_D_PI_$PARAM_0\_raw_sidebandlow.root $PARAM_3 raw_sidebandlow

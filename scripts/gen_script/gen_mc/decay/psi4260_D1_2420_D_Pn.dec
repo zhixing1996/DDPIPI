@@ -1,0 +1,15 @@
+AddFactorPn D_1- 0.5
+
+Decay  psi(4260)
+1    D_1-   D+   PHSP;
+Enddecay
+
+Decay D_1-
+1.00  D-   pi+  pi-  PHSP;
+Enddecay
+
+Decay D+
+1.00  K-  pi+  pi+  D_DALITZ;
+Enddecay
+
+End

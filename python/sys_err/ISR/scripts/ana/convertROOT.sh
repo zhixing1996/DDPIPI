@@ -1,6 +1,6 @@
 #!/bin/sh
 PATCH=$1
-cd $HOME/bes/DDPIPI/v0.2/python/sys_err/ISR
+cd /afs/ihep.ac.cn/users/j/jingmq/bes/DDPIPI/v0.2/python/sys_err/ISR
 python format.py D1_2420 isr_eff
 python format.py psipp isr_eff
 python format.py DDPIPI isr_eff

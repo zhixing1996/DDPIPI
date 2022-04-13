@@ -363,7 +363,7 @@ add  p Meson       Upsilon_3(1D)       557 10.15990         0       0       0   
 add  p Meson       Upsilon_1(2D)    130553 10.43490         0       0       0       2       0 419
 add  p Meson       Upsilon_2(2D)     50555 10.44060         0       0       0       4       0 420
 add  p Meson       Upsilon_3(2D)     10557 10.44430         0       0       0       6       0 421
-add  p Meson       sigma_0           10222  0.478           0.600   0       0       0       0 0
+add  p Meson       sigma_0           10222  0.478           0.324   0       0       0       0 0
 add  p Baryon      Delta-             1114  1.234           0.115   0.2    -3      3       0 361
 add  p Baryon      anti-Delta+       -1114  1.234           0.115   0.2     3       3       0 0
 add  p Special     n_diffr            2110  0               0       0       0       1       0 282

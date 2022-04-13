@@ -978,12 +978,12 @@ def save_raw(f_in, cms, t, region):
                 m_Vxy_pim[0] = abs(t_std.vtx_otherMdcKaltrk[iTrk2*3 + 0])
                 m_Vz_pim[0] = abs(t_std.vtx_otherMdcKaltrk[iTrk2*3 + 1])
                 m_cos_theta_pim[0] = abs(t_std.vtx_otherMdcKaltrk[iTrk2*3 + 2])
-                for i_pipi in xrange(t_std.n_pipi_combination):
-                    if i_pipi == n_combination:
-                        m_chi2_svf[0] = t_std.chi2_svf[i_pipi]
-                        m_ctau_svf[0] = t_std.ctau_svf[i_pipi]
-                        m_L_svf[0] = t_std.L_svf[i_pipi]
-                        m_Lerr_svf[0] = t_std.Lerr_svf[i_pipi]
+                # for i_pipi in xrange(t_std.n_pipi_combination):
+                #     if i_pipi == n_combination:
+                #         m_chi2_svf[0] = t_std.chi2_svf[i_pipi]
+                #         m_ctau_svf[0] = t_std.ctau_svf[i_pipi]
+                #         m_L_svf[0] = t_std.L_svf[i_pipi]
+                #         m_Lerr_svf[0] = t_std.Lerr_svf[i_pipi]
                 n_combination += 1
                 m_n_count[0] = t_std.n_count
                 if m_rm_Dpipi[0] > 1.7 and m_rm_Dpipi[0] < 2.0:

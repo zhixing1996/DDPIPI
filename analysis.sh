@@ -466,12 +466,12 @@ case $option in
            # chmod u+x Data_Sub_705
            # hep_sub -g physics Data_Sub_705 -o jobs.out -e jobs.err
 
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_707.sh .
-           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_707 .
-           echo "#!/bin/bash" > Data_Sub_707
-           echo "./getInfoData_707.sh" >> Data_Sub_707
-           chmod u+x Data_Sub_707
-           hep_sub -g physics Data_Sub_707 -o jobs.out -e jobs.err
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/getInfoData_707.sh .
+           # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_data/Data_Base_707 .
+           # echo "#!/bin/bash" > Data_Sub_707
+           # echo "./getInfoData_707.sh" >> Data_Sub_707
+           # chmod u+x Data_Sub_707
+           # hep_sub -g physics Data_Sub_707 -o jobs.out -e jobs.err
 
            # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/getInfoD1_2420_703p01.sh .
            # cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/D1_2420/D1_2420_Base_703p01 .
@@ -514,6 +514,13 @@ case $option in
            # echo "./getInfoD_D_PI_PI_705.sh" >> DDPIPI_Sub_705
            # chmod u+x DDPIPI_Sub_705
            # hep_sub -g physics DDPIPI_Sub_705 -o jobs.out -e jobs.err
+
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/incMC/getInfoincMC.sh .
+           cp $HOME/bes/DDPIPI/v0.2/scripts/gen_script/gen_mc/incMC/incMC_Base .
+           echo "#!/bin/bash" > incMC_Sub_705
+           echo "./getInfoincMC.sh" >> incMC_Sub_705
+           chmod u+x incMC_Sub_705
+           hep_sub -g physics incMC_Sub_705 -o jobs.out -e jobs.err
            ;;
 
     0.4.3) echo "Get samples -- applying cuts..."

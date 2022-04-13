@@ -680,25 +680,25 @@ def param_rm_D(ecms):
 # luminosity
 def luminosity(ecms):
     if int(ecms) == 4190:
-        LUM = 526.7 + 43.33
+        LUM = 523.9 + 43.33
     if int(ecms) == 4200:
-        LUM = 526.0
+        LUM = 525.2
     if int(ecms) == 4210:
-        LUM = 517.1 + 54.95
+        LUM = 517.2 + 54.95
     if int(ecms) == 4220:
-        LUM = 514.6 + 54.60
+        LUM = 513.4 + 54.60
     if int(ecms) == 4230:
         LUM = 44.54 + 1056.4
     if int(ecms) == 4237:
-        LUM = 530.3
+        LUM = 529.1
     if int(ecms) == 4245:
         LUM = 55.88
     if int(ecms) == 4246:
-        LUM = 538.1
+        LUM = 536.3
     if int(ecms) == 4260:
         LUM = 828.4
     if int(ecms) == 4270:
-        LUM = 531.1
+        LUM = 529.7
     if int(ecms) == 4280:
         LUM = 175.7
     if int(ecms) == 4290:
@@ -722,36 +722,35 @@ def luminosity(ecms):
     if int(ecms) == 4440:
         LUM = 569.9
     if int(ecms) == 4470:
-        LUM = 111.09
+        LUM = 111.1
     if int(ecms) == 4530:
-        LUM = 112.12
+        LUM = 112.1
     if int(ecms) == 4575:
-        LUM = 48.93
+        LUM = 48.9
     if int(ecms) == 4600:
         LUM = 586.9
     if int(ecms) == 4610:
-        LUM = 102.50
+        LUM = 103.83
     if int(ecms) == 4620:
-        LUM = 511.06
+        LUM = 521.52
     if int(ecms) == 4640:
-        LUM = 541.37
+        LUM = 552.41
     if int(ecms) == 4660:
-        LUM = 528.63
+        LUM = 529.63
     if int(ecms) == 4680:
-        LUM = 528.46 + 1103.27
+        LUM = 1669.31
     if int(ecms) == 4700:
-        LUM = 526.20
+        LUM = 536.45
     if int(ecms) == 4740:
-        LUM = 143.28
+        LUM = 164.27
     if int(ecms) == 4750:
-        LUM = 339.6
+        LUM = 367.21
     if int(ecms) == 4780:
-        LUM = 493.83
+        LUM = 512.78
     if int(ecms) == 4840:
-        LUM = 514.07
+        LUM = 527.29
     if int(ecms) == 4914:
-        LUM = 202.43
+        LUM = 208.11
     if int(ecms) == 4946:
-        LUM = 153.7
+        LUM = 160.37
     return LUM
-

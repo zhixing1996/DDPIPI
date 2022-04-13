@@ -44,18 +44,18 @@ usage() {
     printf "\n\t%-9s  %-40s\n" "0.9"     "[run on inclusive MC reconstructed @703p01]"
     printf "\n\t%-9s  %-40s\n" "0.9.1"   "Single D tag -- inclusive MC"
 
-    printf "\n\t%-9s  %-40s\n" "0.10"    "[run on data reconstructed @706]"
+    printf "\n\t%-9s  %-40s\n" "0.10"    "[run on data reconstructed @707]"
     printf "\n\t%-9s  %-40s\n" "0.10.1"  "Single D tag -- data"
 
-    printf "\n\t%-9s  %-40s\n" "0.11"    "[run on signal MC of psi(4260)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) reconstructed @706]" 
+    printf "\n\t%-9s  %-40s\n" "0.11"    "[run on signal MC of psi(4260)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) reconstructed @707]" 
     printf "\n\t%-9s  %-40s\n" "0.11.1"  "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.11.2"  "Single D tag -- run on signal MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.12"    "[run on signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @706]"
+    printf "\n\t%-9s  %-40s\n" "0.12"    "[run on signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @707]"
     printf "\n\t%-9s  %-40s\n" "0.12.1"  "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.12.2"  "Single D tag -- run on signal MC sample"
 
-    printf "\n\t%-9s  %-40s\n" "0.13"    "[run on signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @706]"
+    printf "\n\t%-9s  %-40s\n" "0.13"    "[run on signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @707]"
     printf "\n\t%-9s  %-40s\n" "0.13.1"  "Simulation & Reconstruction -- generate signal MC sample"
     printf "\n\t%-9s  %-40s\n" "0.13.2"  "Single D tag -- run on signal MC sample"
 
@@ -289,24 +289,24 @@ case $option in
            ;;
 
     # ------------------------------------
-    #  0.10 run on data reconstructed @706
+    #  0.10 run on data reconstructed @707
     # ------------------------------------
 
-    0.10) echo "data reconstructed @706..."
-          echo "--> Patch: 706"
+    0.10) echo "data reconstructed @707..."
+          echo "--> Patch: 707"
           echo "--> LXSLC: lxslc7"
           ;;
 
     0.10.1) echo "Single D tag -- run on data sample..."
             cd scripts/gen_script/gen_data
-            ./subData_706.sh
+            ./subData_707.sh
             ;;
 
     # -------------------------------------------------------------------------------------------
-    #  0.11 signal MC of psi(4260)->D_1(2420)D(PHSP), D_1(2420)->DPIPI(HELAMP) reconstructed @706
+    #  0.11 signal MC of psi(4260)->D_1(2420)D(PHSP), D_1(2420)->DPIPI(HELAMP) reconstructed @707
     # -------------------------------------------------------------------------------------------
     
-    0.11) echo "signal MC of psi(4260)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) reconstructed @706..."
+    0.11) echo "signal MC of psi(4260)->D1_(2420)D(PHSP), D1_(2420)->DPIPI(HELAMP) reconstructed @707..."
           echo "--> Process: psi(4260)->D1_(2420)D, D1_(2420)->DPIPI"
           echo "--> Generation mode: psi(4260)->D1_(2420)D PHSH; D1_(2420)->DPIPI HELAMP; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
           ;;
@@ -316,9 +316,9 @@ case $option in
             echo "which type of generator do you want to use?"
             read opt
             if [ $opt == "ConExc" ]; then
-                ./subSimRec_D1_2420_706_ConExc.sh ConExc
+                ./subSimRec_D1_2420_707_ConExc.sh ConExc
             elif [ $opt == "KKMC" ]; then
-                ./subSimRec_D1_2420_706_KKMC.sh
+                ./subSimRec_D1_2420_707_KKMC.sh
             else
                 echo "please check the generator you want to use!"
             fi
@@ -326,14 +326,14 @@ case $option in
 
     0.11.2) echo "Single D tag -- run on signal MC sample..."
             cd scripts/gen_script/gen_mc/D1_2420
-            ./subAna_D1_2420_706.sh
+            ./subAna_D1_2420_707.sh
             ;;
 
     # ----------------------------------------------------------------------------------------
-    #  0.12 signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @706
+    #  0.12 signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @707
     # ----------------------------------------------------------------------------------------
 
-    0.12) echo "signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @706..."
+    0.12) echo "signal MC of psi(4260)->psi(3770)PIPI(PHSP), psi(3770)->DD(VSS) reconstructed @707..."
           echo "--> Process: psi(4260)->psi(3770)PIPI, psi(3770)->DD"
           echo "--> Generation mode: psi(4260)->psi(3770)PIPI PHSH; psi(3770)->DD VSS; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
           ;;
@@ -343,9 +343,9 @@ case $option in
             echo "which type of generator do you want to use?"
             read opt
             if [ $opt == "ConExc" ]; then
-                ./subSimRec_psipp_706_ConExc.sh ConExc
+                ./subSimRec_psipp_707_ConExc.sh ConExc
             elif [ $opt == "KKMC" ]; then
-                ./subSimRec_psipp_706_KKMC.sh
+                ./subSimRec_psipp_707_KKMC.sh
             else
                 echo "please check the generator you want to use!"
             fi
@@ -353,14 +353,14 @@ case $option in
 
     0.12.2) echo "Single D tag -- run on signal MC sample..."
             cd scripts/gen_script/gen_mc/psipp
-            ./subAna_psipp_706.sh
+            ./subAna_psipp_707.sh
             ;;
 
     # -------------------------------------------------------------
-    #  0.13 signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @706
+    #  0.13 signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @707
     # -------------------------------------------------------------
     
-    0.13) echo "signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @706..."
+    0.13) echo "signal MC of psi(4260)->DDPIPI(PHSP) reconstructed @707..."
           echo "--> Process: psi(4260)->DDPIPI"
           echo "--> Generation mode: psi(4260)->DDPIPI PHSH; D decay D_DALITZ(assignated mode) or PHSP(inlusive mode)"
           ;;
@@ -370,9 +370,9 @@ case $option in
             echo "which type of generator do you want to use?"
             read opt
             if [ $opt == "ConExc" ]; then
-                ./subSimRec_D_D_PI_PI_706_ConExc.sh ConExc
+                ./subSimRec_D_D_PI_PI_707_ConExc.sh ConExc
             elif [ $opt == "KKMC" ]; then
-                ./subSimRec_D_D_PI_PI_706_KKMC.sh
+                ./subSimRec_D_D_PI_PI_707_KKMC.sh
             else
                 echo "please check the generator you want to use!"
             fi
@@ -380,7 +380,7 @@ case $option in
 
     0.13.2) echo "Single D tag -- run on signal MC sample..."
             cd scripts/gen_script/gen_mc/DDPIPI
-            ./subAna_D_D_PI_PI_706.sh
+            ./subAna_D_D_PI_PI_707.sh
             ;;
 
     # --------------------------------------------------------------

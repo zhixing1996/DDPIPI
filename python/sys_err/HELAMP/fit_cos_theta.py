@@ -136,7 +136,7 @@ def fit(ecms, path):
     nsideband = RooRealVar('nsideband', 'nsideband', int(entries_sideband))
 
     # model for RM(D)
-    xmin, xmax, xbins = -1.1, 1.1, 100
+    xmin, xmax, xbins = -1.1, 1.1, 25
     cos_D = RooRealVar('cos_D', 'cos_D', xmin, xmax)
     cos_D.setRange('signal', xmin, xmax)
 

@@ -148,18 +148,21 @@ def xs(ecms, patch, signal_path, sideband_path):
     fargs = readN('../VrVz/txts/f_VrVz.txt')
     factor_VrVz = fargs[0]
 
-    with open('./txts/factor_m_Kpipi_' + str(ecms) + '_data_' + patch + '.txt', 'r') as f:
-        for line in f.readlines():
-            fargs = map(float, line.strip().split())
-            mKpipi_data, mKpipi_data_err = fargs[0], fargs[1]
-    with open('./txts/factor_m_Kpipi_' + str(ecms) + '_MC_' + patch + '.txt', 'r') as f:
-        for line in f.readlines():
-            fargs = map(float, line.strip().split())
-            mKpipi_MC, mKpipi_MC_err = fargs[0], fargs[1]
-    f = mKpipi_data/mKpipi_MC
-    f_err = sqrt(f**2*(mKpipi_data_err**2/mKpipi_data**2 + mKpipi_MC_err**2/mKpipi_MC**2))
-    if abs(1 - f)/f_err > 1.: factor_m_Kpipi = f
-    else: factor_m_Kpipi = 1.
+    # with open('./txts/factor_m_Kpipi_' + str(ecms) + '_data_' + patch + '.txt', 'r') as f:
+    #     for line in f.readlines():
+    #         fargs = map(float, line.strip().split())
+    #         mKpipi_data, mKpipi_data_err = fargs[0], fargs[1]
+    # with open('./txts/factor_m_Kpipi_' + str(ecms) + '_MC_' + patch + '.txt', 'r') as f:
+    #     for line in f.readlines():
+    #         fargs = map(float, line.strip().split())
+    #         mKpipi_MC, mKpipi_MC_err = fargs[0], fargs[1]
+    # f = mKpipi_data/mKpipi_MC
+    # f_err = sqrt(f**2*(mKpipi_data_err**2/mKpipi_data**2 + mKpipi_MC_err**2/mKpipi_MC**2))
+    # if abs(1 - f)/f_err > 1.: factor_m_Kpipi = f
+    # else: factor_m_Kpipi = 1.
+
+    fargs = readN('../width/txts/f_m_Kpipi.txt')
+    factor_m_Kpipi = fargs[0]
 
     fargs = readN('../window/txts/f_rm_Dpipi.txt')
     factor_rm_Dpipi = fargs[0]

@@ -84,9 +84,11 @@ def plot(path, leg_title, ecms, xmin, xmax, ymin, ymax, bins):
     h_data = TH2F('scatter_data', 'scatter plot of M(Kpipi) and Rm(Dpipi)', bins, xmin, xmax, bins, ymin, ymax)
     set_histo_style(h_data, xtitle, ytitle)
     fill(t_data, h_data)
-    h_data.Draw('COLZ')
+    if ecms == 4230: h_data.Draw('scat=2')
+    elif ecms == 4420: h_data.Draw('scat=0.2')
+    else: h_data.Draw('COLZ')
 
-    pt = TPaveText(0.15, 0.15, 0.25, 0.2, "BRNDC")
+    pt = TPaveText(0.75, 0.75, 0.85, 0.85, "BRNDC")
     set_pavetext(pt)
     pt.Draw()
     pt.AddText(leg_title)
@@ -105,8 +107,10 @@ if __name__ == '__main__':
     ecms = int(args[0])
 
     path = []
-    path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_raw.root')
+    path.append('/besfs5/groups/cal/dedx/$USER/bes/DDPIPI/v0.2/data/'+str(ecms)+'/data_'+str(ecms)+'_raw.root')
     leg_title = str(ecms) + ' MeV'
+    if ecms == 4230: leg_title = '(a)'
+    if ecms == 4420: leg_title = '(b)'
     # xmin = 1.84
     # xmax = 1.89
     # ymin = 1.84

@@ -47,7 +47,7 @@ def set_legend(legend, h1, h2, h3, title, ecms):
 
 def scale(ecms, mode):
     lum = luminosity(ecms)
-    with open('../fit_xs/txts/xs_total_round3_plot.txt', 'r') as f:
+    with open('../fit_xs/txts/xs_total_round2_plot.txt', 'r') as f:
         for line in f.readlines():
             fargs3 = map(float, line.strip().split())
             if ecms == int(fargs3[0]*1000):
@@ -59,6 +59,8 @@ def scale(ecms, mode):
             xs = 670.75
         if ecms == 4600:
             xs = 131.56
+        if ecms == 4840:
+            xs = 52.
     N = 50000
     if not mode == 'DDPI':
         if ecms == 4420 or ecms == 4230:
@@ -187,6 +189,7 @@ if __name__ == '__main__':
     xmin = 1.75
     xmax = 1.95
     xbins = 100
+    if ecms == 4840: ymax = 550
     if ecms == 4420: ymax = 900
     if ecms == 4600: ymax = 550
     if ecms == 4230: ymax = 320

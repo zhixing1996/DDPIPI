@@ -2087,6 +2087,28 @@ bool DDecay::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_pho
             double rm_Dpipi = (ecms - pD - pPip - pPim).m();
             double rm_Dlowpipi = (ecms - pD_low - pPip - pPim).m();
             double rm_Duppipi = (ecms - pD_up - pPip - pPim).m();
+            HepLorentzVector pD_raw;
+            pD_raw.setPx(0.);
+            pD_raw.setPy(0.);
+            pD_raw.setPz(0.);
+            pD_raw.setE(0.);
+            for (int k = 0; k < n_trkD; k++) {
+                HepLorentzVector ptrack;
+                ptrack.setPx(m_rawp4_Dtrk[k][0]);
+                ptrack.setPy(m_rawp4_Dtrk[k][1]);
+                ptrack.setPz(m_rawp4_Dtrk[k][2]);
+                ptrack.setE(m_rawp4_Dtrk[k][3]);
+                pD_raw += ptrack;
+            }
+            for(int k = 0; k < n_shwD; k++) {
+                HepLorentzVector pshower;
+                pshower.setPx(m_rawp4_Dshw[k][0]);
+                pshower.setPy(m_rawp4_Dshw[k][1]);
+                pshower.setPz(m_rawp4_Dshw[k][2]);
+                pshower.setE(m_rawp4_Dshw[k][3]);
+                pD_raw += pshower;
+            }
+            double rrawm_Dpipi = (ecms - pD_raw - pPip - pPim).m();
             if (m_debug) std::cout << "Start recording region info if passed the requirement" << std::endl;
             SmartRefVector<EvtRecTrack> Dtrks = (*dtag_iter)->tracks();
             for (int k = 0; k < n_trkD; k++) {
@@ -2158,54 +2180,63 @@ bool DDecay::saveOthertrks(VWTrkPara &vwtrkpara_charge, VWTrkPara &vwtrkpara_pho
             chi2_kf_STDDmiss_side4_up = 999;
             m_chi2_kf_STDDmiss_side4_up = 999;
             if (rawm_D > mDtag_signal_low && rawm_D < mDtag_signal_up && rm_Dpipi > mDmiss_signal_low && rm_Dpipi < mDmiss_signal_up) {
+            // if (rawm_D > mDtag_signal_low && rawm_D < mDtag_signal_up && rrawm_Dpipi > mDmiss_signal_low && rrawm_Dpipi < mDmiss_signal_up) {
                 m_rm_Dpipi_STDDmiss = rm_Dpipi;
                 chi2_kf_STDDmiss = fitKM_STDDmiss(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth);
                 stat_fitSecondVertex_STDDmiss = false;
                 stat_fitSecondVertex_STDDmiss = fitSecondVertex_STDDmiss(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
             }
             else if (rawm_D > mDtag_signal_low && rawm_D < mDtag_signal_up && rm_Dpipi > mDmiss_sidebandlow_low && rm_Dpipi < mDmiss_sidebandlow_up) {
+            // else if (rawm_D > mDtag_signal_low && rawm_D < mDtag_signal_up && rrawm_Dpipi > mDmiss_sidebandlow_low && rrawm_Dpipi < mDmiss_sidebandlow_up) {
                 m_rm_Dpipi_STDDmiss_side1_low = rm_Dpipi;
                 stat_fitSecondVertex_STDDmiss = false;
                 stat_fitSecondVertex_STDDmiss = fitSecondVertex_STDDmiss(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
                 chi2_kf_STDDmiss_side1_low = fitKM_STDDmiss_side1_low(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, mDcand, sidebandlow_mean);
             }
             else if (rawm_D > mDtag_signal_low && rawm_D < mDtag_signal_up && rm_Dpipi > mDmiss_sidebandup_low && rm_Dpipi < mDmiss_sidebandup_up) {
+            // else if (rawm_D > mDtag_signal_low && rawm_D < mDtag_signal_up && rrawm_Dpipi > mDmiss_sidebandup_low && rrawm_Dpipi < mDmiss_sidebandup_up) {
                 m_rm_Dpipi_STDDmiss_side1_up = rm_Dpipi;
                 stat_fitSecondVertex_STDDmiss = false;
                 stat_fitSecondVertex_STDDmiss = fitSecondVertex_STDDmiss(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
                 chi2_kf_STDDmiss_side1_up = fitKM_STDDmiss_side1_up(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, mDcand, sidebandup_mean);
             }
             else if (rawm_D > mDtag_sidebandlow_low && rawm_D < mDtag_sidebandlow_up && rm_Dlowpipi > mDmiss_signal_low && rm_Dlowpipi < mDmiss_signal_up) {
+            // else if (rawm_D > mDtag_sidebandlow_low && rawm_D < mDtag_sidebandlow_up && rrawm_Dpipi > mDmiss_signal_low && rrawm_Dpipi < mDmiss_signal_up) {
                 m_rm_Dpipi_STDDmiss_side2_low = rm_Dlowpipi;
                 stat_fitSecondVertex_STDDmiss = false;
                 stat_fitSecondVertex_STDDmiss = fitSecondVertex_STDDmiss(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
                 chi2_kf_STDDmiss_side2_low = fitKM_STDDmiss_side2_low(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, mD_low, mDcand);
             }
             else if (rawm_D > mDtag_sidebandlow_low && rawm_D < mDtag_sidebandlow_up && rm_Dlowpipi > mDmiss_sidebandlow_low && rm_Dlowpipi < mDmiss_sidebandlow_up) {
+            // else if (rawm_D > mDtag_sidebandlow_low && rawm_D < mDtag_sidebandlow_up && rrawm_Dpipi > mDmiss_sidebandlow_low && rrawm_Dpipi < mDmiss_sidebandlow_up) {
                 m_rm_Dpipi_STDDmiss_side3_low = rm_Dlowpipi;
                 stat_fitSecondVertex_STDDmiss = false;
                 stat_fitSecondVertex_STDDmiss = fitSecondVertex_STDDmiss(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
                 chi2_kf_STDDmiss_side3_low = fitKM_STDDmiss_side3_low(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, mD_low, sidebandlow_mean);
             }
             else if (rawm_D > mDtag_sidebandlow_low && rawm_D < mDtag_sidebandlow_up && rm_Dlowpipi > mDmiss_sidebandup_low && rm_Dlowpipi < mDmiss_sidebandup_up) {
+            // else if (rawm_D > mDtag_sidebandlow_low && rawm_D < mDtag_sidebandlow_up && rrawm_Dpipi > mDmiss_sidebandup_low && rrawm_Dpipi < mDmiss_sidebandup_up) {
                 m_rm_Dpipi_STDDmiss_side3_up = rm_Dlowpipi;
                 stat_fitSecondVertex_STDDmiss = false;
                 stat_fitSecondVertex_STDDmiss = fitSecondVertex_STDDmiss(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
                 chi2_kf_STDDmiss_side3_up = fitKM_STDDmiss_side3_up(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, mD_low, sidebandup_mean);
             }
             else if (rawm_D > mDtag_sidebandup_low && rawm_D < mDtag_sidebandup_up && rm_Duppipi > mDmiss_signal_low && rm_Duppipi < mDmiss_signal_up) {
+            // else if (rawm_D > mDtag_sidebandup_low && rawm_D < mDtag_sidebandup_up && rrawm_Dpipi > mDmiss_signal_low && rrawm_Dpipi < mDmiss_signal_up) {
                 m_rm_Dpipi_STDDmiss_side2_up = rm_Duppipi;
                 stat_fitSecondVertex_STDDmiss = false;
                 stat_fitSecondVertex_STDDmiss = fitSecondVertex_STDDmiss(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
                 chi2_kf_STDDmiss_side2_up = fitKM_STDDmiss_side2_up(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, mD_up, mDcand);
             }
             else if (rawm_D > mDtag_sidebandup_low && rawm_D < mDtag_sidebandup_up && rm_Duppipi > mDmiss_sidebandlow_low && rm_Duppipi < mDmiss_sidebandlow_up) {
+            // else if (rawm_D > mDtag_sidebandup_low && rawm_D < mDtag_sidebandup_up && rrawm_Dpipi > mDmiss_sidebandlow_low && rrawm_Dpipi < mDmiss_sidebandlow_up) {
                 m_rm_Dpipi_STDDmiss_side4_low = rm_Duppipi;
                 stat_fitSecondVertex_STDDmiss = false;
                 stat_fitSecondVertex_STDDmiss = fitSecondVertex_STDDmiss(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
                 chi2_kf_STDDmiss_side4_low = fitKM_STDDmiss_side4_low(vwtrkpara_charge, vwtrkpara_photon, vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1, birth, mD_up, sidebandlow_mean);
             }
             else if (rawm_D > mDtag_sidebandup_low && rawm_D < mDtag_sidebandup_up && rm_Duppipi > mDmiss_sidebandup_low && rm_Duppipi < mDmiss_sidebandup_up) {
+            // else if (rawm_D > mDtag_sidebandup_low && rawm_D < mDtag_sidebandup_up && rrawm_Dpipi > mDmiss_sidebandup_low && rrawm_Dpipi < mDmiss_sidebandup_up) {
                 m_rm_Dpipi_STDDmiss_side4_up = rm_Duppipi;
                 stat_fitSecondVertex_STDDmiss = false;
                 stat_fitSecondVertex_STDDmiss = fitSecondVertex_STDDmiss(vwtrkpara_piplus, vwtrkpara_piminus, n_piplus-1, n_piminus-1);
@@ -2528,7 +2559,7 @@ int DDecay::MatchMC(HepLorentzVector &p4, std::string MODE) {
                 clst_particle = (*iter_mc);
             }
         }
-        if (clst_ang < 999) {
+        if (clst_ang < 0.017453292519943295) { // larger than 1 degree to disgard extreme situation
             Event::McParticle mom = clst_particle->mother();
             int pid_mom = mom.particleProperty();
             Event::McParticle grandmom = mom.mother();

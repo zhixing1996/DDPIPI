@@ -43,36 +43,36 @@ case $option in
 
     0.1.1) echo "Fit distributions -- fitting recoiling mass of Dpipi(get scale factor)..."
            cd scripts/ana
-           ./fitRMDpipi_scale.sh round2
+           ./fitRMDpipi_scale.sh round3
            ;;
 
     0.1.2) echo "Fit distributions -- simultaneous fitting recoiling mass of D/Dmiss and recoiling mass of pipi..."
            cd scripts/ana
-           ./simul_fit.sh round2
+           ./simul_fit.sh round3
            ;;
 
     0.1.3) echo "Mix MC -- mixing MC according to fitted subprocesses ratio..."
            cd scripts/ana
-           ./mixMC.sh round2
-           ./mixROOT.sh round2
+           ./mixMC.sh round3
+           ./mixROOT.sh round3
            ;;
 
     0.1.4) echo "Fit distributions -- fitting invariant mass of Kpipi..."
            cd scripts/ana
-           ./factorMKpipi.sh round2
+           ./factorMKpipi.sh round3
            ;;
 
     0.1.5) echo "Fit distributions -- fitting recoiling mass of Dpipi..."
            cd scripts/ana
-           ./fitRMDpipi.sh round2
+           ./fitRMDpipi.sh round3
            ;;
 
     0.1.6) echo "Calculate numbers -- calculating cross section of DDpipi and systerm uncertainties..."
            cd scripts/ana
-           ./calXS.sh round2
+           ./calXS.sh round3
            cd -
-           ./format_xs.py round2
-           ./cal_diff.py round2
+           ./format_xs.py round3
+           ./cal_diff.py round3
            ;;
 
 esac

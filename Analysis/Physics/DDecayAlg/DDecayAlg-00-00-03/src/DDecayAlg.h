@@ -110,6 +110,7 @@ class DDecay : public Algorithm {
         double p4_mc_all[100][4];
         int pdgid[100];
         int motheridx[100];
+        int motherid[100];
         int idxmc;
 
         // background check
@@ -351,6 +352,7 @@ class DDecay : public Algorithm {
         NTuple::Item<int> m_idxmc_Truth;
         NTuple::Array<int> m_pdgid_Truth;
         NTuple::Array<int> m_motheridx_Truth;
+        NTuple::Array<int> m_motherid_Truth;
         NTuple::Matrix<double> m_p4_mc_all_Truth;
 
         // functions

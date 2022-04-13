@@ -12,13 +12,14 @@ do
     PARAM_3=`echo "scale=4; ${arr[3]} / 1000" | bc -l` # float energy poit
     PARAM_4=${arr[4]} # luminosity
     WORKAREA=$HOME"/bes/DDPIPI/v0.2"
-    mkdir -p $WORKAREA/scripts/sigMC/DDPIPI/$PARAM_0/sys_err/BW
-    cd $WORKAREA/scripts/sigMC/DDPIPI/$PARAM_0/sys_err/BW
-    if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/DDPIPI/$PARAM_0/sys_err/BW/jobs_sig" ]; then
-      mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/DDPIPI/$PARAM_0/sys_err/BW/jobs_sig
-        ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/DDPIPI/$PARAM_0/sys_err/BW/jobs_sig ./jobs_sig
-    fi
-    cd jobs_sig
+    # mkdir -p $WORKAREA/scripts/sigMC/DDPIPI/$PARAM_0/sys_err/BW
+    # cd $WORKAREA/scripts/sigMC/DDPIPI/$PARAM_0/sys_err/BW
+    # if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/DDPIPI/$PARAM_0/sys_err/BW/jobs_sig" ]; then
+        mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/DDPIPI/$PARAM_0/sys_err/BW/jobs_sig
+    #     ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/DDPIPI/$PARAM_0/sys_err/BW/jobs_sig ./jobs_sig
+    # fi
+    # cd jobs_sig
+    cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/DDPIPI/$PARAM_0/sys_err/BW/jobs_sig
     mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/$PARAM_0/sys_err/BW/rtraw
     mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/DDPIPI/$PARAM_0/sys_err/BW/dst
     rm -rf jobOptions*txt

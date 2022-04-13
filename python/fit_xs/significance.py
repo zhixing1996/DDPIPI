@@ -60,7 +60,7 @@ def main():
     mode = args[1]
 
     path = './txts/significance_likelihood_' + mode + '_' + str(ecms) + '.txt'
-    num_free_para  = 1
+    num_free_para = 1
     significance(ecms, mode, path, num_free_para)
 
 if __name__ == '__main__':

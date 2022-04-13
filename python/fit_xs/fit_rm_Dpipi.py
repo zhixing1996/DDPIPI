@@ -326,7 +326,7 @@ def fit(path, shape_path, ecms, mode, patch):
         if (is_OK == 3 and status == 0 and chi2_ndf < 3. and ecms > 4221): break
         if (is_OK == 3 and status == 0 and chi2_ndf < 5. and ecms < 4221): break
 
-    # raw_input('enter anything to end...')
+    raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]

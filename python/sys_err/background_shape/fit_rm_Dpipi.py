@@ -190,7 +190,7 @@ def fit(path, shape_path, ecms, mode, patch):
             c = RooRealVar('c', 'c', 0, -1, 1)
         bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b, c))
         n_free = 5
-        if ecms == 4237 or ecms == 4245 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4360 or ecms == 4390:
+        if ecms == 4237 or ecms == 4245 or ecms == 4270 or ecms == 4280 or ecms == 4310 or ecms == 4360 or ecms == 4390 or ecms == 4840:
             bkgpdf = RooChebychev('bkgpdf', 'bkgpdf', rm_Dpipi, RooArgList(a, b))
             n_free = 4
         if ecms == 4290 or ecms == 4315 or ecms == 4340 or ecms == 4575 or ecms == 4620:
@@ -287,7 +287,7 @@ def fit(path, shape_path, ecms, mode, patch):
         if (is_OK == 3 and status == 0 and chi2_ndf < 1.8 and ecms < 4221): break
         if (is_OK == 3 and status == 0 and chi2_ndf < 1.9 and ecms > 4221): break
 
-    # raw_input('enter anything to end...')
+    raw_input('enter anything to end...')
 
 def main():
     args = sys.argv[1:]

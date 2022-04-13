@@ -73,8 +73,56 @@ def make_sys():
         f.write('\end{table}\n')
         f.write('\n\n')
 
+def make_draft():
+    SAMPLES = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700, 4740, 4750, 4780, 4840, 4914, 4946]
+    TYPES = ['scale_factor', 'psipp_shape', 'D1_2420_shape', 'BW', 'omega', 'HELAMP']
+    dic = {}
+    for SAMPLE in SAMPLES:
+        SYS = []
+        for TYPE in TYPES:
+            f_type = open('../'+TYPE+'/txts/sys_err_'+TYPE+'.txt', 'r')
+            lines_type = f_type.readlines()
+            for line_type in lines_type:
+                rs_type = line_type.rstrip('\n')
+                rs_type = filter(None, rs_type.split("\t"))
+                ecms = float(rs_type[0])
+                sys = float(rs_type[1])
+                if ecms == SAMPLE/1000.:
+                    SYS.append(sys)
+                    dic[SAMPLE] = SYS
+                    dic.update({SAMPLE:SYS})
+
+    total = []
+    with open('./txts/sys_err_total.txt', 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            fargs = map(float, line.strip().split())
+            total.append(fargs[1])
+
+    with open('./texs/sys_err_draft.tex', 'w') as f:
+        f.write('\\begin{table*}[htp]\n')
+        f.write('\t\centering\n')
+        f.write('\t\caption{Systematic uncertainties from scale factors of $f_{1}$ and $f_{2}$, $\psi(3770)$ and $D_{1}(2420)^{+}$ shape, Breit-Wigners in ISR correction, uncertainties of $\omega_{i}$, and decay mode of $e^{+}e^{-}\\rightarrowD_{1}(2420)^{+}D^{-}$ ($\\textsc{HELAMP}$), the last column shows the overall systematic uncertainty obtained by summing all sources of systematic uncertainties in quadrature by assuming they are uncorrelated.}\n')
+        # f.write('\t\\resizebox{\\textwidth}{75mm}{\n')
+        f.write('\t\\begin{tabular}{ccccccccc}\n')
+        f.write('\t\hline\hline\n')
+        f.write('\tSample & $f_{1}$ and $f_{2}$ & $\psi(3770)$ shape & $D_{1}(2420)^{+}$ shape & Breit-Wigner & $\omega_{i}$ & $\\textsc{HELAMP}$ & overall &\\\\\n')
+        f.write('\t\hline\n')
+        count = 0
+        for SAMPLE in SAMPLES:
+            scale_factor, psipp_shape, D1_2420_shape, BW, omega, HELAMP = dic[SAMPLE]
+            f.write('\t{:^4} & {:^3}\% & {:^3}\% & {:^3}\% & {:^3}\% & {:^3}\% & {:^3}\% & {:^3}\% &\\\\\n'.format(SAMPLE, scale_factor, psipp_shape, D1_2420_shape, BW, omega, HELAMP, total[count]))
+            count += 1
+        f.write('\t\hline\hline\n')
+        f.write('\t\end{tabular}\n')
+        # f.write('\t}\n')
+        f.write('\t\label{table2}\n')
+        f.write('\end{table*}\n')
+        f.write('\n\n')
+
 def main():
     make_sys()
+    make_draft()
 
 if __name__ == '__main__':
     main()

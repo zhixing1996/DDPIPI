@@ -106,27 +106,100 @@ def make_f(patch):
         f.write('\t\hline\hline\n')
         f.write('\tSample& $R_{0}$ & $R_{1}$ & $R_{2}$ & Sample& $R_{0}$ & $R_{1}$ & $R_{2}$\\\\\n')
         f.write('\t\hline\n')
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[0],  f_psipp[0], f_DDPIPI[0], SAMPLES[16], f_D1_2420[16-14], f_psipp[16], f_DDPIPI[16]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[1],  f_psipp[1], f_DDPIPI[1], SAMPLES[17], f_D1_2420[17-14], f_psipp[17], f_DDPIPI[17]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[2],  f_psipp[2], f_DDPIPI[2], SAMPLES[18], f_D1_2420[18-14], f_psipp[18], f_DDPIPI[18]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[3],  f_psipp[3], f_DDPIPI[3], SAMPLES[19], f_D1_2420[19-14], f_psipp[19], f_DDPIPI[19]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[4],  f_psipp[4], f_DDPIPI[4], SAMPLES[20], f_D1_2420[20-14], f_psipp[20], f_DDPIPI[20]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[5],  f_psipp[5], f_DDPIPI[5], SAMPLES[21], f_D1_2420[21-14], f_psipp[21], f_DDPIPI[21]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[6],  f_psipp[6], f_DDPIPI[6], SAMPLES[22], f_D1_2420[22-14], f_psipp[22], f_DDPIPI[22]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[7],  f_psipp[7], f_DDPIPI[7], SAMPLES[23], f_D1_2420[23-14], f_psipp[23], f_DDPIPI[23]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[8],  f_psipp[8], f_DDPIPI[8], SAMPLES[24], f_D1_2420[24-14], f_psipp[24], f_DDPIPI[24]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[9],  f_psipp[9], f_DDPIPI[9], SAMPLES[25], f_D1_2420[25-14], f_psipp[25], f_DDPIPI[25]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[10], f_psipp[10], f_DDPIPI[10], SAMPLES[26], f_D1_2420[26-14], f_psipp[26], f_DDPIPI[26]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[11], f_psipp[11], f_DDPIPI[11], SAMPLES[27], f_D1_2420[27-14], f_psipp[27], f_DDPIPI[27]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[12], f_psipp[12], f_DDPIPI[12], SAMPLES[28], f_D1_2420[28-14], f_psipp[28], f_DDPIPI[28]))
-        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[13], f_psipp[13], f_DDPIPI[13], SAMPLES[29], f_D1_2420[29-14], f_psipp[29], f_DDPIPI[29]))
-        f.write('\t{:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[14], f_D1_2420[14-14], f_psipp[14], f_DDPIPI[14], SAMPLES[30], f_D1_2420[30-14], f_psipp[30], f_DDPIPI[30]))
-        f.write('\t{:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$& -    & -    & -    & -    \\\\\n'.format(SAMPLES[15], f_D1_2420[15-14], f_psipp[15], f_DDPIPI[15]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[0],  f_psipp[0], f_DDPIPI[0], SAMPLES[19], f_D1_2420[19-14], f_psipp[19], f_DDPIPI[19]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[1],  f_psipp[1], f_DDPIPI[1], SAMPLES[20], f_D1_2420[20-14], f_psipp[20], f_DDPIPI[20]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[2],  f_psipp[2], f_DDPIPI[2], SAMPLES[21], f_D1_2420[21-14], f_psipp[21], f_DDPIPI[21]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[3],  f_psipp[3], f_DDPIPI[3], SAMPLES[22], f_D1_2420[22-14], f_psipp[22], f_DDPIPI[22]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[4],  f_psipp[4], f_DDPIPI[4], SAMPLES[23], f_D1_2420[23-14], f_psipp[23], f_DDPIPI[23]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[5],  f_psipp[5], f_DDPIPI[5], SAMPLES[24], f_D1_2420[24-14], f_psipp[24], f_DDPIPI[24]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[6],  f_psipp[6], f_DDPIPI[6], SAMPLES[25], f_D1_2420[25-14], f_psipp[25], f_DDPIPI[25]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[7],  f_psipp[7], f_DDPIPI[7], SAMPLES[26], f_D1_2420[26-14], f_psipp[26], f_DDPIPI[26]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[8],  f_psipp[8], f_DDPIPI[8], SAMPLES[27], f_D1_2420[27-14], f_psipp[27], f_DDPIPI[27]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[9],  f_psipp[9], f_DDPIPI[9], SAMPLES[28], f_D1_2420[28-14], f_psipp[28], f_DDPIPI[28]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[10], f_psipp[10], f_DDPIPI[10], SAMPLES[29], f_D1_2420[29-14], f_psipp[29], f_DDPIPI[29]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[11], f_psipp[11], f_DDPIPI[11], SAMPLES[30], f_D1_2420[30-14], f_psipp[30], f_DDPIPI[30]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[12], f_psipp[12], f_DDPIPI[12], SAMPLES[31], f_D1_2420[31-14], f_psipp[31], f_DDPIPI[31]))
+        f.write('\t{:^4}& -        & ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[13], f_psipp[13], f_DDPIPI[13], SAMPLES[32], f_D1_2420[32-14], f_psipp[32], f_DDPIPI[32]))
+        f.write('\t{:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[14], f_D1_2420[14-14], f_psipp[14], f_DDPIPI[33], SAMPLES[33], f_D1_2420[33-14], f_psipp[33], f_DDPIPI[33]))
+        f.write('\t{:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[15], f_D1_2420[15-14], f_psipp[15], f_DDPIPI[34], SAMPLES[34], f_D1_2420[34-14], f_psipp[34], f_DDPIPI[34]))
+        f.write('\t{:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[16], f_D1_2420[16-14], f_psipp[16], f_DDPIPI[35], SAMPLES[35], f_D1_2420[35-14], f_psipp[35], f_DDPIPI[35]))
+        f.write('\t{:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$& {:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$\\\\\n'.format(SAMPLES[17], f_D1_2420[17-14], f_psipp[17], f_DDPIPI[36], SAMPLES[36], f_D1_2420[36-14], f_psipp[36], f_DDPIPI[36]))
+        f.write('\t{:^4}& ${:^3}\%$& ${:^3}\%$& ${:^3}\%$& -    & -    & -    & -    \\\\\n'.format(SAMPLES[18], f_D1_2420[18-14], f_psipp[18], f_DDPIPI[18]))
         f.write('\t\hline\hline\n')
         f.write('\t\end{tabular}\n')
         f.write('\t\label{table6-0}\n')
         f.write('\end{table}\n')
         f.write('\n\n')
+
+# def make_total(patch):
+#     sample, N_sig, N_side, N_sig_err, N_side_err = [], [], [], [], []
+#     lum, xs, xs_err = [], [], []
+#     SAMPLES = [4190, 4200, 4210, 4220, 4230, 4237, 4245, 4246, 4260, 4270, 4280, 4290, 4310, 4315, 4340, 4360, 4380, 4390, 4400, 4420, 4440, 4470, 4530, 4575, 4600, 4610, 4620, 4640, 4660, 4680, 4700, 4740, 4750, 4780, 4840, 4914, 4946]
+#     for SAMPLE in SAMPLES:
+#         with open('./txts/xs_info_'+str(SAMPLE)+'_read_'+patch+'.txt', 'r') as f:
+#             for line in f.readlines():
+#                 fargs = map(float, line.strip('\n').strip().split())
+#                 sample.append(int(fargs[0]))
+#                 N_sig.append(int(fargs[1]))
+#                 N_sig_err.append(int(fargs[2]))
+#                 N_side.append(int(fargs[3]))
+#                 N_side_err.append(int(fargs[4]))
+#                 lum.append(round(fargs[20], 2))
+#                 xs.append(round(fargs[22], 1))
+#                 xs_err.append(round(fargs[23], 1))
+#     xs_sys_err = []
+#     with open('../sys_err/sum/txts/sys_err_total.txt', 'r') as f:
+#         count = 0
+#         for line in f.readlines():
+#             fargs = map(float, line.strip('\n').strip().split())
+#             xs_sys_err.append(round(xs[count]*fargs[1]/100., 1))
+#             count += 1
+#     sample_upl, significance = [], []
+#     with open('./txts/significance_total.txt', 'r') as f:
+#         lines = f.readlines()
+#         for line in lines:
+#             try:
+#                 fargs = map(float, line.strip('\n').strip('@').strip().split())
+#                 significance.append(round(fargs[1], 1))
+#                 if round(fargs[1], 3) < 5: sample_upl.append(int(fargs[0]))
+#             except:
+#                 '''
+#                 '''
+# 
+#     upl = {}
+#     for SAM in sample_upl:
+#         with open('../upper_limit/txts/upl_'+str(SAM)+'.txt', 'r') as f:
+#             lines = f.readlines()
+#             for line in lines:
+#                 try:
+#                     fargs = map(float, line.strip('\n').strip().split())
+#                     upl[SAM] = round(fargs[1], 1)
+#                 except:
+#                     '''
+#                     '''
+# 
+#     with open('./texs/xs_total.tex', 'w') as f:
+#         f.write('\\begin{table}[htp]\n')
+#         f.write('\t\centering\n')
+#         f.write('\t\caption{Born cross section of $e^{+}e^{-}\\rightarrow\pi^{+}\pi^{-}D^{+}D^{-}$, the first uncertainties are statistical and the second systematic.}\n')
+#         f.write('\t\\resizebox{\\textwidth}{75mm}{\n')
+#         f.write('\t\\begin{tabular}{ccccccccc}\n')
+#         f.write('\t\hline\hline\n')
+#         f.write('Sample & $\sqrt{s}$ (MeV) & $\mathscr{L}$ ($\\rm{pb}^{-1}$) & $N_{\\rm{signal}}$ & $N_{\\rm{sideband}}$ & $\sigma\ (\\rm{pb})$ & Statistical Significance & $\sigma_{\\rm{upl}}$ (\\rm{pb}) &\\\\\n')
+#         f.write('\t\hline\n')
+#         count = 0
+#         for SAM in sample:
+#             if SAM in sample_upl:
+#                 f.write('\t{:^4}& {:^7} & {:^6}  & ${:^4} \pm {:^4}$ & ${:^4} \pm {:^4}$  & ${:^4} \pm {:^4} \pm {:^4}$ & ${:^4}\sigma$ & {:^4} &\\\\\n'.format(SAM, ECMS(SAM)*1000, lum[count], N_sig[count], N_sig_err[count], N_side[count], N_side_err[count], xs[count], xs_err[count], xs_sys_err[count], significance[count], upl[SAM]))
+#             else:
+#                 f.write('\t{:^4}& {:^7} & {:^6}  & ${:^4} \pm {:^4}$ & ${:^4} \pm {:^4}$  & ${:^4} \pm {:^4} \pm {:^4}$ & ${:^4}\sigma$ & -     &\\\\\n'.format(SAM, ECMS(SAM)*1000, lum[count], N_sig[count], N_sig_err[count], N_side[count], N_side_err[count], xs[count], xs_err[count], xs_sys_err[count], significance[count]))
+#             count += 1
+#         f.write('\t\hline\hline\n')
+#         f.write('\t\end{tabular}\n')
+#         f.write('\t}\n')
+#         f.write('\t\label{table10-1}\n')
+#         f.write('\end{table}\n')
+#         f.write('\n\n')
 
 def make_total(patch):
     sample, N_sig, N_side, N_sig_err, N_side_err = [], [], [], [], []
@@ -178,22 +251,25 @@ def make_total(patch):
     with open('./texs/xs_total.tex', 'w') as f:
         f.write('\\begin{table}[htp]\n')
         f.write('\t\centering\n')
-        f.write('\t\caption{Born cross section of $e^{+}e^{-}\\rightarrow\pi^{+}\pi^{-}D^{+}D^{-}$, the first uncertainties are statistical and the second systematic.}\n')
-        f.write('\t\\resizebox{\\textwidth}{75mm}{\n')
-        f.write('\t\\begin{tabular}{ccccccccc}\n')
+        f.write('\t\caption{Cross section of the $e^{+}e^{-}\\rightarrow\pi^{+}\pi^{-}D^{+}D^{-}$ process, the first uncertainties are statistical and the second systematic. The negative significance means that the fitted signal number is negative. $\mathscr{L}$ and $\\sigma_{\\rm ul}$ are integrated luminosity, and upper limit of cross section at 90\\% confidence level, respectively. For the estimation of significance, only statistical uncertainty is considered.}\n')
+        f.write('\t% \\resizebox{\\textwidth}{75mm}{\n')
+        f.write('\t\\begin{tabular}{c c r@{$\\pm$}l r@{$\\pm$}l r@{$\\pm$}c@{$\\pm$}l c c}\n')
+        f.write('\t\\toprule\n')
         f.write('\t\hline\hline\n')
-        f.write('Sample & $\sqrt{s}$ (MeV) & $\mathscr{L}$ ($\\rm{pb}^{-1}$) & $N_{\\rm{signal}}$ & $N_{\\rm{sideband}}$ & $\sigma\ (\\rm{pb})$ & Statistical Significance & $\sigma_{\\rm{upl}}$ (\\rm{pb}) &\\\\\n')
+        f.write('$\sqrt{s}$ (GeV) & $\mathscr{L}$ ($\\rm{pb}^{-1}$) & \\multicolumn{2}{c}{$N_{\\rm{signal}}$} & \\multicolumn{2}{c}{$N_{\\rm{sideband}}$} & \\multicolumn{3}{c}{$\sigma\ (\\rm{pb})$} & Significance & $\sigma_{\\rm{upl}}$ (\\rm{pb})\\\\\n')
         f.write('\t\hline\n')
+        f.write('\t\midrule\n')
         count = 0
         for SAM in sample:
             if SAM in sample_upl:
-                f.write('\t{:^4}& {:^7} & {:^6}  & ${:^4} \pm {:^4}$ & ${:^4} \pm {:^4}$  & ${:^4} \pm {:^4} \pm {:^4}$ & ${:^4}\sigma$ & {:^4} &\\\\\n'.format(SAM, ECMS(SAM)*1000, lum[count], N_sig[count], N_sig_err[count], N_side[count], N_side_err[count], xs[count], xs_err[count], xs_sys_err[count], significance[count], upl[SAM]))
+                f.write('\t{:^7} & {:^6}  & {:^4} & {:^4} & {:^4} & {:^4} & {:^4} & {:^4} & {:^4} & ${:^4}\sigma$ & {:^4} \\\\\n'.format(ECMS(SAM), lum[count], N_sig[count], N_sig_err[count], N_side[count], N_side_err[count], xs[count], xs_err[count], xs_sys_err[count], significance[count], upl[SAM]))
             else:
-                f.write('\t{:^4}& {:^7} & {:^6}  & ${:^4} \pm {:^4}$ & ${:^4} \pm {:^4}$  & ${:^4} \pm {:^4} \pm {:^4}$ & ${:^4}\sigma$ & -     &\\\\\n'.format(SAM, ECMS(SAM)*1000, lum[count], N_sig[count], N_sig_err[count], N_side[count], N_side_err[count], xs[count], xs_err[count], xs_sys_err[count], significance[count]))
+                f.write('\t{:^7} & {:^6}  & {:^4} & {:^4} & {:^4} & {:^4} & {:^4} & {:^4} & {:^4} & ${:^4}\sigma$ & -     \\\\\n'.format(ECMS(SAM), lum[count], N_sig[count], N_sig_err[count], N_side[count], N_side_err[count], xs[count], xs_err[count], xs_sys_err[count], significance[count]))
             count += 1
         f.write('\t\hline\hline\n')
+        f.write('\t\\bottomrule\n')
         f.write('\t\end{tabular}\n')
-        f.write('\t}\n')
+        f.write('\t% }\n')
         f.write('\t\label{table10-1}\n')
         f.write('\end{table}\n')
         f.write('\n\n')

@@ -203,7 +203,8 @@ def main():
 
     path = []
     if mode == 'data':
-        path.append('/besfs5/groups/cal/dedx/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw.root')
+        # path.append('/besfs5/groups/cal/dedx/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_raw.root')
+        path.append('/besfs5/users/$USER/bes/DDPIPI/v0.2/data/' + str(ecms) + '/data_' + str(ecms) + '_rm_Dpipi_signal.root')
         shape_path = '/besfs5/users/$USER/bes/DDPIPI/v0.2/sigMC/mixed/shape_' + str(ecms) + '_mixed_raw.root'
         fit(path, ecms, mode, shape_path, patch)
     if mode == 'MC':

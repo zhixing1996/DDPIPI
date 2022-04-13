@@ -72,7 +72,7 @@ case $option in
            cd scripts/mc
            ./synthesizepsipp.sh
            ./getInfopsipp.sh
-           ./getFactorpsipp.sh round2
+           ./getFactorpsipp.sh round3
            ;;
 
     0.1.6) echo "Get samples -- applying cuts: psipp MC..."
@@ -91,33 +91,33 @@ case $option in
 
     0.2.1) echo "Fit distributions -- simultaneous fitting recoiling mass of D + Dmiss and recoiling mass of pipi..."
            cd scripts/ana
-           ./simul_fit.sh round2
+           ./simul_fit.sh round3
            ;;
 
     0.2.2) echo "Get shapes -- mixing MC shapes..."
            cd scripts/mc
-           ./mixMC.sh round2
+           ./mixMC.sh round3
            cd -
            cd scripts/ana
-           ./mixROOT.sh round2
+           ./mixROOT.sh round3
            ;;
 
     0.2.3) echo "Fit distributions -- fitting invariant mass of Kpipi..."
            cd scripts/ana
-           ./factorMKpipi.sh round2
+           ./factorMKpipi.sh round3
            ;;
 
     0.2.4) echo "Fit distributions -- fitting recoiling mass of Dpipi..."
            cd scripts/ana
-           ./fitRMDpipi.sh round2
+           ./fitRMDpipi.sh round3
            ;;
 
     0.2.5) echo "Calculate numbers -- calculating cross section of DDpipi and systerm uncertainties..."
            cd scripts/ana
-           ./calXS.sh round2
+           ./calXS.sh round3
            cd -
-           ./format_xs.py round2
-           ./cal_diff.py round2
+           ./format_xs.py round3
+           ./cal_diff.py round3
            ;;
 
 esac

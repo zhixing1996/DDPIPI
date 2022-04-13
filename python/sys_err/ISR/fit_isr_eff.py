@@ -125,7 +125,7 @@ def plot(path, pt_title, ecms, xmin, xmax, xbins):
     with open('./txts/isr_eff_'+str(ecms)+'.txt', 'w') as f:
         f.write(str(round(round(sigma/mean*100, 1))) + '\n')
 
-    # raw_input('Enter anything to end...')
+    raw_input('Enter anything to end...')
 
 if __name__ == '__main__':
     args = sys.argv[1:]

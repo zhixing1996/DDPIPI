@@ -13,12 +13,13 @@ do
     PARAM_4=${arr[4]} # luminosity
     WORKAREA=$HOME"/bes/DDPIPI/v0.2"
     mkdir -p $WORKAREA/scripts/sigMC/D1_2420/$PARAM_0/sys_err/BW
-    cd $WORKAREA/scripts/sigMC/D1_2420/$PARAM_0/sys_err/BW
-    if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D1_2420/$PARAM_0/sys_err/BW/jobs_sig" ]; then
-      mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D1_2420/$PARAM_0/sys_err/BW/jobs_sig
-        ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D1_2420/$PARAM_0/sys_err/BW/jobs_sig ./jobs_sig
-    fi
-    cd jobs_sig
+    # cd $WORKAREA/scripts/sigMC/D1_2420/$PARAM_0/sys_err/BW
+    # if [ ! -d "/scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D1_2420/$PARAM_0/sys_err/BW/jobs_sig" ]; then
+        mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D1_2420/$PARAM_0/sys_err/BW/jobs_sig
+    #     ln -s /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D1_2420/$PARAM_0/sys_err/BW/jobs_sig ./jobs_sig
+    # fi
+    # cd jobs_sig
+    cd /scratchfs/bes/$USER/bes/DDPIPI/v0.2/run/gen_mc/sigMC/D1_2420/$PARAM_0/sys_err/BW/jobs_sig
     mkdir -p /scratchfs/bes/$USER/bes/DDPIPI/v0.2/sigMC/D1_2420/$PARAM_0/sys_err/BW/rootfile
     rm -rf sigMC_D1_2420_D_HELAMP_$PARAM_0*txt
     cp -rf $HOME/bes/DDPIPI/v0.2/python/sys_err/BW/make_mc.py ./
